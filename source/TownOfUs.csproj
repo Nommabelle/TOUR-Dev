@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Version>2.5.0</Version>
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+	<PropertyGroup>
+		<GameProvider>Static</GameProvider>
+		<GameVersion>C:\Program Files (x86)\Steam\steamapps\common\Among Us Modded Test 2</GameVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Reactor" Version="1.0.0-rc.1" />
+		<PackageReference Include="Reactor.MSBuild" Version="0.1.5" />
+	</ItemGroup>
+
+	<Target Name="Copy" AfterTargets="Build">
+		<Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="$(GameVersion)/BepInEx/plugins/" />
+	</Target>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\*" />
+    <EmbeddedResource Include="Resources\Hats\**" />
+  </ItemGroup>
+</Project>
