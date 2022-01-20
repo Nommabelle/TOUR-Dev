@@ -9,7 +9,7 @@ using TownOfUs.CrewmateRoles.AltruistMod;
 using TownOfUs.CrewmateRoles.MedicMod;
 using TownOfUs.CrewmateRoles.SwapperMod;
 using TownOfUs.CrewmateRoles.TimeLordMod;
-using TownOfUs.CrewmateRoles.RetributionistMod;
+using TownOfUs.CrewmateRoles.VigilanteMod;
 using TownOfUs.CustomOption;
 using TownOfUs.Extensions;
 using TownOfUs.ImpostorRoles.AssassinMod;
@@ -112,7 +112,7 @@ namespace TownOfUs
 
             SortRoles(NeutralRoles, CustomGameOptions.MaxNeutralRoles);
             SortRoles(CrewmateRoles, crewmates.Count - NeutralRoles.Count);
-            SortRoles(ImpostorRoles, Math.Min(impostors.Count, CustomGameOptions.MaxImpostorRoles));
+            SortRoles(ImpostorRoles, impostors.Count);
             SortRoles(CrewmateModifiers, crewmates.Count);
             SortRoles(GlobalModifiers, crewmates.Count + impostors.Count);
 
@@ -160,9 +160,34 @@ namespace TownOfUs
             foreach (var impostor in impostors)
                 Role.Gen<Role>(typeof(Impostor), impostor, CustomRPC.SetImpostor);
 
+            var canHaveModifier = PlayerControl.AllPlayerControls.ToArray().ToList();
+            canHaveModifier.Shuffle();
+
+            foreach (var (type, rpc, _) in GlobalModifiers)
+            {
+                if (canHaveModifier.Count == 0) break;
+                if(rpc == CustomRPC.SetCouple)
+                {
+                    if (canHaveModifier.Count == 1) continue;
+                        Lover.Gen(canHaveModifier);
+                } else
+                {
+                    Role.Gen<Modifier>(type, canHaveModifier, rpc);
+                }
+            }
+
+            canHaveModifier.RemoveAll(player => (player.Is(RoleEnum.Glitch) || player.Is(RoleEnum.Juggernaut) || player.Is(Faction.Impostors)));
+            canHaveModifier.Shuffle();
+
+            while (canHaveModifier.Count > 0 && CrewmateModifiers.Count > 0)
+            {
+                var (type, rpc, _) = CrewmateModifiers.TakeFirst();
+                Role.Gen<Modifier>(type, canHaveModifier.TakeFirst(), rpc);
+            }
+
             if (executionerList.Count > 0)
             {
-                var targets = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(Faction.Crewmates) && !x.Is(ModifierEnum.Lover) && !x.Is(RoleEnum.Mayor) && !x.Is(RoleEnum.Swapper) && !x.Is(RoleEnum.Retributionist)).ToList();
+                var targets = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(Faction.Crewmates) && !x.Is(ModifierEnum.Lover) && !x.Is(RoleEnum.Mayor) && !x.Is(RoleEnum.Swapper) && !x.Is(RoleEnum.Vigilante)).ToList();
                 foreach (var executioner in executionerList)
                 {
                     if (targets.Count > 0)
@@ -185,31 +210,6 @@ namespace TownOfUs
                         Role.Gen<Role>(typeof(Crewmate), executioner, CustomRPC.SetExecutioner);
                 }
 
-            }
-
-            var canHaveModifier = PlayerControl.AllPlayerControls.ToArray().ToList();
-            canHaveModifier.Shuffle();
-
-            foreach (var (type, rpc, _) in GlobalModifiers)
-            {
-                if (canHaveModifier.Count == 0) break;
-                if(rpc == CustomRPC.SetCouple)
-                {
-                    if (canHaveModifier.Count == 1) continue;
-                        Lover.Gen(canHaveModifier);
-                } else
-                {
-                    Role.Gen<Modifier>(type, canHaveModifier, rpc);
-                }
-            }
-
-            canHaveModifier.RemoveAll(player => (player.Is(RoleEnum.Glitch) || player.Is(Faction.Impostors)));
-            canHaveModifier.Shuffle();
-
-            while (canHaveModifier.Count > 0 && CrewmateModifiers.Count > 0)
-            {
-                var (type, rpc, _) = CrewmateModifiers.TakeFirst();
-                Role.Gen<Modifier>(type, canHaveModifier.TakeFirst(), rpc);
             }
 
             var vanilla = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(RoleEnum.Crewmate)).ToList();
@@ -541,9 +541,9 @@ namespace TownOfUs
                         var toDie = Utils.PlayerById(reader.ReadByte());
                         AssassinKill.MurderPlayer(toDie);
                         break;
-                    case CustomRPC.RetributionistKill:
+                    case CustomRPC.VigilanteKill:
                         var toDie2 = Utils.PlayerById(reader.ReadByte());
-                        RetributionistKill.MurderPlayer(toDie2);
+                        VigilanteKill.MurderPlayer(toDie2);
                         break;
                     case CustomRPC.SetMimic:
                         var glitchPlayer = Utils.PlayerById(reader.ReadByte());
@@ -786,8 +786,8 @@ namespace TownOfUs
                     case CustomRPC.SetAssassin:
                         new Assassin(Utils.PlayerById(reader.ReadByte()));
                         break;
-                    case CustomRPC.SetRetributionist:
-                        new Retributionist(Utils.PlayerById(reader.ReadByte()));
+                    case CustomRPC.SetVigilante:
+                        new Vigilante(Utils.PlayerById(reader.ReadByte()));
                         break;
                     case CustomRPC.SetVeteran:
                         new Veteran(Utils.PlayerById(reader.ReadByte()));
@@ -912,8 +912,8 @@ namespace TownOfUs
                 if (Check(CustomGameOptions.AltruistOn))
                     CrewmateRoles.Add((typeof(Altruist), CustomRPC.SetAltruist, CustomGameOptions.AltruistOn));
 
-                if (Check(CustomGameOptions.RetributionistOn))
-                    CrewmateRoles.Add((typeof(Retributionist), CustomRPC.SetRetributionist, CustomGameOptions.RetributionistOn));
+                if (Check(CustomGameOptions.VigilanteOn))
+                    CrewmateRoles.Add((typeof(Vigilante), CustomRPC.SetVigilante, CustomGameOptions.VigilanteOn));
 
                 if (Check(CustomGameOptions.VeteranOn))
                     CrewmateRoles.Add((typeof(Veteran), CustomRPC.SetVeteran, CustomGameOptions.VeteranOn));

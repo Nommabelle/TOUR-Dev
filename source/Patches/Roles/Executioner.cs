@@ -1,6 +1,3 @@
-using Il2CppSystem.Collections.Generic;
-using UnityEngine;
-
 namespace TownOfUs.Roles
 {
     public class Executioner : Role
@@ -40,6 +37,13 @@ namespace TownOfUs.Roles
         public void Loses()
         {
             Player.Data.IsImpostor = true;
+        }
+
+        protected override void IntroPrefix(IntroCutscene._CoBegin_d__14 __instance)
+        {
+            var executionerTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
+            executionerTeam.Add(PlayerControl.LocalPlayer);
+            __instance.yourTeam = executionerTeam;
         }
     }
 }

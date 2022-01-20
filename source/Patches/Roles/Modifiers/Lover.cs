@@ -41,9 +41,10 @@ namespace TownOfUs.Roles
 
             foreach(var player in canHaveModifiers)
             {
-                if (player.Is(Faction.Impostors) || player.Is(RoleEnum.Glitch))
+                if (player.Is(Faction.Impostors))
                     impostors.Add(player);
-                else crewmates.Add(player);
+                else if(player.Is(Faction.Crewmates)||(player.Is(Faction.Neutral) && !player.Is(RoleEnum.Glitch) && !player.Is(RoleEnum.Juggernaut) && CustomGameOptions.NeutralLovers))
+                    crewmates.Add(player);
             }
 
             if (crewmates.Count < 2 || impostors.Count < 1) return;

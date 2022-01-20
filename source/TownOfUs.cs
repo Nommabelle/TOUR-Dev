@@ -10,7 +10,6 @@ using HarmonyLib;
 using Reactor;
 using Reactor.Extensions;
 using TownOfUs.CustomOption;
-using TownOfUs.Patches.CustomHats;
 using TownOfUs.RainbowMod;
 using UnhollowerBaseLib;
 using UnhollowerRuntimeLib;
@@ -24,7 +23,9 @@ namespace TownOfUs
     public class TownOfUs : BasePlugin
     {
         public const string Id = "com.slushiegoose.townofus";
-        
+        public const string VersionString = "2.5.0.8";
+        public static Version Version = Version.Parse(VersionString);
+
         public static Sprite JanitorClean;
         public static Sprite EngineerFix;
         public static Sprite SwapperSwitch;
@@ -45,7 +46,6 @@ namespace TownOfUs
         public static Sprite IgniteSprite;
         public static Sprite ReviveSprite;
         public static Sprite ButtonSprite;
-        public static Sprite PolusSprite;
         public static Sprite CycleSprite;
         public static Sprite GuessSprite;
         public static Sprite DragSprite;
@@ -99,7 +99,6 @@ namespace TownOfUs
             ButtonSprite = CreateSprite("TownOfUs.Resources.Button.png");
             DragSprite = CreateSprite("TownOfUs.Resources.Drag.png");
             DropSprite = CreateSprite("TownOfUs.Resources.Drop.png");
-            PolusSprite = CreateSprite("TownOfUs.Resources.polus.gg.png");
             CycleSprite = CreateSprite("TownOfUs.Resources.Cycle.png");
             GuessSprite = CreateSprite("TownOfUs.Resources.Guess.png");
             FlashSprite = CreateSprite("TownOfUs.Resources.Flash.png");

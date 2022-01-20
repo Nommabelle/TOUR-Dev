@@ -30,7 +30,7 @@ namespace TownOfUs.Roles
 
         internal override bool Criteria()
         {
-            return Revealed && PlayerControl.LocalPlayer.Data.IsImpostor ||
+            return Revealed && PlayerControl.LocalPlayer.Data.IsImpostor && !Player.Data.IsDead ||
                    base.Criteria();
         }
 
@@ -47,11 +47,11 @@ namespace TownOfUs.Roles
         internal override bool RoleCriteria()
         {
             var localPlayer = PlayerControl.LocalPlayer;
-            if (localPlayer.Data.IsImpostor)
+            if (localPlayer.Data.IsImpostor && !Player.Data.IsDead)
             {
                 return Revealed;
             }
-            else if (Role.GetRole(localPlayer).Faction == Faction.Neutral)
+            else if (Role.GetRole(localPlayer).Faction == Faction.Neutral && !Player.Data.IsDead)
             {
                 return Revealed && CustomGameOptions.SnitchSeesNeutrals;
             }
@@ -72,7 +72,6 @@ namespace TownOfUs.Roles
             if (player != null) player.NameText.color = Color.white;
             if (player != null && (MeetingHud.Instance.state == MeetingHud.VoteStates.Proceeding ||
                                    MeetingHud.Instance.state == MeetingHud.VoteStates.Results)) return PlayerName;
-            if (!CustomGameOptions.RoleUnderName && player == null) return PlayerName;
             Player.nameText.transform.localPosition = new Vector3(
                 0f,
                 Player.Data.HatId == 0U ? 1.5f : 2.0f,
@@ -80,7 +79,7 @@ namespace TownOfUs.Roles
             );
             if(Local)
                 return PlayerName + "\n" + "Crewmate";
-            return PlayerName;
+            return PlayerName + "\n" + "Crewmate";
         }
     }
 }

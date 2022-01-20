@@ -1,7 +1,6 @@
 using HarmonyLib;
 using TownOfUs.Roles;
 using UnityEngine;
-using System.Linq;
 
 namespace TownOfUs.ImpostorRoles.GrenadierMod
 {
@@ -16,12 +15,6 @@ namespace TownOfUs.ImpostorRoles.GrenadierMod
             if (PlayerControl.LocalPlayer == null) return;
             if (PlayerControl.LocalPlayer.Data == null) return;
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Grenadier)) return;
-
-            var system = ShipStatus.Instance.Systems[SystemTypes.Sabotage].Cast<SabotageSystemType>();
-            var specials = system.specials.ToArray();
-            var dummyActive = system.dummy.IsActive;
-            var sabActive = specials.Any(s => s.IsActive);
-            if (sabActive) return;
             var role = Role.GetRole<Grenadier>(PlayerControl.LocalPlayer);
             if (role.FlashButton == null)
             {

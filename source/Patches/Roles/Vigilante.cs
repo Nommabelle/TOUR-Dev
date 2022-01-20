@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace TownOfUs.Roles
 {
-    public class Retributionist : Role
+    public class Vigilante : Role
     {
         public Dictionary<byte, (GameObject, GameObject, TMP_Text)> Buttons = new Dictionary<byte, (GameObject, GameObject, TMP_Text)>();
 
@@ -16,15 +16,15 @@ namespace TownOfUs.Roles
 
         public Dictionary<byte, string> Guesses = new Dictionary<byte, string>();
 
-        public Retributionist(PlayerControl player) : base(player)
+        public Vigilante(PlayerControl player) : base(player)
         {
-            Name = "Retributionist";
+            Name = "Vigilante";
             ImpostorText = () => "Kill impostors during meetings if you can guess their roles";
             TaskText = () => "Guess the roles of impostors mid-meeting to kill them!";
-            Color = Patches.Colors.Retributionist;
-            RoleType = RoleEnum.Retributionist;
+            Color = Patches.Colors.Vigilante;
+            RoleType = RoleEnum.Vigilante;
 
-            RemainingKills = CustomGameOptions.RetributionistKills;
+            RemainingKills = CustomGameOptions.VigilanteKills;
 
             // Adds all the roles that have a non-zero chance of being in the game.
             ColorMapping.Add("Impostor", Colors.Impostor);
@@ -39,7 +39,7 @@ namespace TownOfUs.Roles
             if (CustomGameOptions.GrenadierOn > 0) ColorMapping.Add("Grenadier", Colors.Impostor);
             if (CustomGameOptions.PoisonerOn > 0) ColorMapping.Add("Poisoner", Colors.Impostor);
             // Add Neutral roles if enabled
-            if (CustomGameOptions.RetributionistGuessNeutrals)
+            if (CustomGameOptions.VigilanteGuessNeutrals)
             {
                 if (CustomGameOptions.JesterOn > 0 || CustomGameOptions.ExecutionerOn > 0) ColorMapping.Add("Jester", Colors.Jester);
                 if (CustomGameOptions.AmnesiacOn > 0 || CustomGameOptions.ExecutionerOn > 0) ColorMapping.Add("Amnesiac", Colors.Amnesiac);

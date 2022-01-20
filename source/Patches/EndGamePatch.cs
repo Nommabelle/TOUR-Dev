@@ -40,7 +40,7 @@ namespace TownOfUs.Patches {
                 else if (playerControl.Is(RoleEnum.Seer)) {playerRole = "<color=#FFCC80FF>Seer</color>";}
                 else if (playerControl.Is(RoleEnum.Snitch)) {playerRole = "<color=#D4AF37FF>Snitch</color>";}
                 else if (playerControl.Is(RoleEnum.Spy)) {playerRole = "<color=#CCA3CCFF>Spy</color>";}
-                else if (playerControl.Is(RoleEnum.Retributionist)) {playerRole = "<color=#CCFF00FF>Retributionist</color>"; }
+                else if (playerControl.Is(RoleEnum.Vigilante)) {playerRole = "<color=#CCFF00FF>Vigilante</color>"; }
                 else if (playerControl.Is(RoleEnum.Arsonist)) {playerRole = "<color=#FF4D00FF>Arsonist</color>";}
                 else if (playerControl.Is(RoleEnum.Executioner)) {playerRole = "<color=#8C4005FF>Executioner</color>";}
                 else if (playerControl.Is(RoleEnum.Glitch)) {playerRole = "<color=#00FF00FF>The Glitch</color>";}

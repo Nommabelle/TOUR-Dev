@@ -59,6 +59,9 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 # Releases
 | Among Us - Version| Mod Version | Link |
 |----------|-------------|-----------------|
+| 2021.12.15s & 2021.12.15e | v2.4.1 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v2.4.1/ToU.v2.4.1.zip) |
+| 2021.11.9.5s & 2021.11.9.5e | v2.4.0 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v2.4.0/ToU.v2.4.0.zip) |
+| 2021.6.30s & 2021.6.30e & 2021.7.20e | v2.3.4 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v2.3.4/ToU.v2.3.4.zip) |
 | 2021.6.30s & 2021.6.30e & 2021.7.20e | v2.3.3 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v2.3.3/ToU.v2.3.3.zip) |
 | 2021.6.30s & 2021.6.30e & 2021.7.20e | v2.3.2 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v2.3.2/ToU.v2.3.2.zip) |
 | 2021.6.30s & 2021.6.30e & 2021.7.20e | v2.3.1 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v2.3.1/ToU.v2.3.1.zip) |
@@ -84,6 +87,18 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 
 <details>
   <summary> Changelog </summary>
+  <details>
+  <summary> v2.4.1 </summary>
+  <ul> <li>Support for the new version of Among Us on v2021.12.15</li> </ul>
+  </details>
+  <details>
+  <summary> v2.4.0 </summary>
+  <ul> <li>Support for the new version of Among Us on v2021.11.9.5</li> </ul>
+  </details>
+  <details>
+  <summary> v2.3.4 </summary>
+  <ul> <li>Reverted the change made to Mayor as it had an unintended concequence for Assassin and Retributionist</li> </ul>
+  </details>
   <details>
   <summary> v2.3.3 </summary>
   <ul> <li>Added the remaining hats with credits from ToU v2.2.1-t</li> </ul>
@@ -987,7 +1002,8 @@ If you have any bugs or any need to contact me, join the [Discord Server](https:
 [XtraCube](https://github.com/XtraCube) - For the RainbowMod.\
 [PhasmoFireGod](https://twitch.tv/PhasmoFireGod) - Button Art.\
 [TheOtherRoles](https://github.com/Eisbison/TheOtherRoles) - For the inspiration of the Retributionist and Spy roles.\
-[5up](https://www.twitch.tv/5uppp) and the Submarine Team - For the inspiration of the Grenadier role.
+[5up](https://www.twitch.tv/5uppp) and the Submarine Team - For the inspiration of the Grenadier role.\
+[Guus](https://github.com/OhMyGuus) for support for the new Among Us version (v2021.11.9.5).
 
 [Essentials](https://github.com/DorCoMaNdO/Reactor-Essentials) - For created custom game options.\
 v1.0.3 uses [Essentials](https://github.com/DorCoMaNdO/Reactor-Essentials) directly.\

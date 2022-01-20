@@ -2,12 +2,12 @@
 using TownOfUs.Roles;
 using UnityEngine.UI;
 
-namespace TownOfUs.CrewmateRoles.RetributionistMod
+namespace TownOfUs.CrewmateRoles.VigilanteMod
 {
     [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Confirm))]
-    public class ShowHideButtonsRetri
+    public class ShowHideButtonsVigi
     {
-        public static void HideButtonsRetri(Retributionist role)
+        public static void HideButtonsVigi(Vigilante role)
         {
             foreach (var (_, (cycle, guess, guessText)) in role.Buttons)
             {
@@ -23,7 +23,7 @@ namespace TownOfUs.CrewmateRoles.RetributionistMod
         }
 
         public static void HideSingle(
-            Retributionist role,
+            Vigilante role,
             byte targetId,
             bool killedSelf
         )
@@ -31,10 +31,10 @@ namespace TownOfUs.CrewmateRoles.RetributionistMod
             if (
                 killedSelf ||
                 role.RemainingKills == 0 ||
-                !CustomGameOptions.RetributionistMultiKill
+                !CustomGameOptions.VigilanteMultiKill
             )
             {
-                HideButtonsRetri(role);
+                HideButtonsVigi(role);
                 return;
             }
 
@@ -53,9 +53,9 @@ namespace TownOfUs.CrewmateRoles.RetributionistMod
 
         public static void Prefix(MeetingHud __instance)
         {
-            if (!PlayerControl.LocalPlayer.Is(RoleEnum.Retributionist)) return;
-            var retributionist = Role.GetRole<Retributionist>(PlayerControl.LocalPlayer);
-            HideButtonsRetri(retributionist);
+            if (!PlayerControl.LocalPlayer.Is(RoleEnum.Vigilante)) return;
+            var retributionist = Role.GetRole<Vigilante>(PlayerControl.LocalPlayer);
+            HideButtonsVigi(retributionist);
         }
     }
 }

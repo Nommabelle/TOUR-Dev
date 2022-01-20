@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
-namespace TownOfUs.CrewmateRoles.RetributionistMod
+namespace TownOfUs.CrewmateRoles.VigilanteMod
 {
     [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Start))]
     public class AddButton
@@ -32,7 +32,7 @@ namespace TownOfUs.CrewmateRoles.RetributionistMod
         }
 
 
-        public static void GenButton(Retributionist role, PlayerVoteArea voteArea)
+        public static void GenButton(Vigilante role, PlayerVoteArea voteArea)
         {
             var targetId = voteArea.TargetPlayerId;
             if (IsExempt(voteArea))
@@ -87,7 +87,7 @@ namespace TownOfUs.CrewmateRoles.RetributionistMod
             role.Buttons[targetId] = (cycle, guess, nameText);
         }
 
-        private static Action Cycle(Retributionist role, PlayerVoteArea voteArea, TextMeshPro nameText)
+        private static Action Cycle(Vigilante role, PlayerVoteArea voteArea, TextMeshPro nameText)
         {
             void Listener()
             {
@@ -109,7 +109,7 @@ namespace TownOfUs.CrewmateRoles.RetributionistMod
             return Listener;
         }
 
-        private static Action Guess(Retributionist role, PlayerVoteArea voteArea)
+        private static Action Guess(Vigilante role, PlayerVoteArea voteArea)
         {
             void Listener()
             {
@@ -126,13 +126,13 @@ namespace TownOfUs.CrewmateRoles.RetributionistMod
 
                 var toDie = playerRole.Name == currentGuess ? playerRole.Player : role.Player;
 
-                RetributionistKill.RpcMurderPlayer(toDie);
+                VigilanteKill.RpcMurderPlayer(toDie);
                 role.RemainingKills--;
-                ShowHideButtonsRetri.HideSingle(role, targetId, toDie == role.Player);
+                ShowHideButtonsVigi.HideSingle(role, targetId, toDie == role.Player);
                 if (toDie.IsLover() && CustomGameOptions.BothLoversDie)
                 {
                     var lover = ((Lover)playerModifier).OtherLover.Player;
-                    ShowHideButtonsRetri.HideSingle(role, lover.PlayerId, false);
+                    ShowHideButtonsVigi.HideSingle(role, lover.PlayerId, false);
                 }
             }
 
@@ -141,18 +141,18 @@ namespace TownOfUs.CrewmateRoles.RetributionistMod
 
         public static void Postfix(MeetingHud __instance)
         {
-            foreach (var role in Role.GetRoles(RoleEnum.Retributionist))
+            foreach (var role in Role.GetRoles(RoleEnum.Vigilante))
             {
-                var retributionist = (Retributionist)role;
+                var retributionist = (Vigilante)role;
                 retributionist.Guesses.Clear();
                 retributionist.Buttons.Clear();
                 retributionist.GuessedThisMeeting = false;
             }
 
             if (PlayerControl.LocalPlayer.Data.IsDead) return;
-            if (!PlayerControl.LocalPlayer.Is(RoleEnum.Retributionist)) return;
+            if (!PlayerControl.LocalPlayer.Is(RoleEnum.Vigilante)) return;
 
-            var retributionistRole = Role.GetRole<Retributionist>(PlayerControl.LocalPlayer);
+            var retributionistRole = Role.GetRole<Vigilante>(PlayerControl.LocalPlayer);
             if (retributionistRole.RemainingKills <= 0) return;
             foreach (var voteArea in __instance.playerStates)
             {

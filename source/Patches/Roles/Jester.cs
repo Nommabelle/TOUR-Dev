@@ -35,5 +35,12 @@ namespace TownOfUs.Roles
         {
             Player.Data.IsImpostor = true;
         }
+
+        protected override void IntroPrefix(IntroCutscene._CoBegin_d__14 __instance)
+        {
+            var jesterTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
+            jesterTeam.Add(PlayerControl.LocalPlayer);
+            __instance.yourTeam = jesterTeam;
+        }
     }
 }

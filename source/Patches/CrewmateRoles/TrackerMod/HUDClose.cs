@@ -15,6 +15,7 @@ namespace TownOfUs.CrewmateRoles.TrackerMod
             {
                 var tracker = (Tracker) role;
                 tracker.LastTracked = DateTime.UtcNow;
+                tracker.RemainingTracks = CustomGameOptions.MaxTracks;
                 if (CustomGameOptions.ResetOnNewRound)
                 {
                     tracker.Tracked.RemoveRange(0, tracker.Tracked.Count);

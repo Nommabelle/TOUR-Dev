@@ -23,7 +23,6 @@ namespace TownOfUs.CrewmateRoles.VeteranMod
             var alertButton = DestroyableSingleton<HudManager>.Instance.KillButton;
 
             var role = Role.GetRole<Veteran>(PlayerControl.LocalPlayer);
-            if (role.RemainingAlerts == 0) return;
 
 
             if (isDead)
@@ -31,21 +30,18 @@ namespace TownOfUs.CrewmateRoles.VeteranMod
                 alertButton.gameObject.SetActive(false);
                 alertButton.isActive = false;
             }
+            else if (role.OnAlert)
+            {
+                alertButton.SetCoolDown(role.TimeRemaining, CustomGameOptions.AlertDuration);
+                return;
+            }
             else
             {
                 alertButton.gameObject.SetActive(!MeetingHud.Instance);
                 alertButton.isActive = !MeetingHud.Instance;
                 alertButton.SetCoolDown(role.AlertTimer(), CustomGameOptions.AlertCd);
+                if (role.RemainingAlerts == 0) return;
             }
-
-            if (role.OnAlert)
-            {
-                alertButton.SetCoolDown(role.TimeRemaining, CustomGameOptions.AlertDuration);
-                return;
-            }
-
-            alertButton.SetCoolDown(role.AlertTimer(), CustomGameOptions.AlertCd);
-
 
             alertButton.renderer.color = Palette.EnabledColor;
             alertButton.renderer.material.SetFloat("_Desat", 0f);

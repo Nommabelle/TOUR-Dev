@@ -399,6 +399,10 @@ namespace TownOfUs.Roles
                     __instance.IsUsingMimic = true;
                     __instance.MimicTarget = mimicPlayer;
                     var totalMimickTime = (DateTime.UtcNow - mimicActivation).TotalMilliseconds / 1000;
+                    if (__instance.Player.Data.IsDead)
+                    {
+                        totalMimickTime = CustomGameOptions.MimicDuration;
+                    }
                     mimicText.Text =
                         $"{__instance.ColorString}Mimicking {mimicPlayer.Data.PlayerName} ({CustomGameOptions.MimicDuration - Math.Round(totalMimickTime)}s)</color>";
                     if (totalMimickTime > CustomGameOptions.MimicDuration ||
@@ -703,6 +707,13 @@ namespace TownOfUs.Roles
                     __gInstance.MimicList = null;
                 }
             }
+        }
+
+        protected override void IntroPrefix(IntroCutscene._CoBegin_d__14 __instance)
+        {
+            var glitchTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
+            glitchTeam.Add(PlayerControl.LocalPlayer);
+            __instance.yourTeam = glitchTeam;
         }
     }
 }

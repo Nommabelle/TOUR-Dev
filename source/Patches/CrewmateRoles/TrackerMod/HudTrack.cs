@@ -35,6 +35,7 @@ namespace TownOfUs.CrewmateRoles.TrackerMod
                 trackButton.gameObject.SetActive(!MeetingHud.Instance);
                 trackButton.isActive = !MeetingHud.Instance;
                 trackButton.SetCoolDown(role.TrackerTimer(), CustomGameOptions.TrackCd);
+                if (role.RemainingTracks == 0) return;
 
                 var notTracked = PlayerControl.AllPlayerControls
                     .ToArray()

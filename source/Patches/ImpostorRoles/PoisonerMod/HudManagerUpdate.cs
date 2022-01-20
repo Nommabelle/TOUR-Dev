@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using TownOfUs.Roles;
 using UnityEngine;
+using System.Linq;
 
 namespace TownOfUs.ImpostorRoles.PoisonerMod
 {
@@ -26,7 +27,11 @@ namespace TownOfUs.ImpostorRoles.PoisonerMod
             var position = __instance.KillButton.transform.localPosition;
             role.PoisonButton.transform.localPosition = new Vector3(position.x,
                 __instance.ReportButton.transform.localPosition.y, position.z);
-            Utils.SetTarget(ref role.ClosestPlayer, role.PoisonButton);
+            var notImp = PlayerControl.AllPlayerControls
+                    .ToArray()
+                    .Where(x => !x.Is(Faction.Impostors))
+                    .ToList();
+            Utils.SetTarget(ref role.ClosestPlayer, role.PoisonButton, float.NaN, notImp);
 
             if (role.ClosestPlayer != null) {
                 role.ClosestPlayer.myRend.material.SetColor("_OutlineColor", Palette.Purple);

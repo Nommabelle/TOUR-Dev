@@ -27,10 +27,5 @@ namespace TownOfUs.Roles
             if (flag2) return 0;
             return (num - (float) timeSpan.TotalMilliseconds) / 1000f;
         }
-
-        internal override bool Criteria()
-        {
-            return CustomGameOptions.ShowSheriff || base.Criteria();
-        }
     }
 }

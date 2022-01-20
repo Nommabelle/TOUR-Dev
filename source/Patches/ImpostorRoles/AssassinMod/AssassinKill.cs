@@ -5,7 +5,7 @@ using TownOfUs.Roles;
 using UnityEngine;
 using UnityEngine.UI;
 using TownOfUs.CrewmateRoles.MedicMod;
-using TownOfUs.CrewmateRoles.RetributionistMod;
+using TownOfUs.CrewmateRoles.VigilanteMod;
 using TownOfUs.Roles.Modifiers;
 
 namespace TownOfUs.ImpostorRoles.AssassinMod
@@ -89,10 +89,10 @@ namespace TownOfUs.ImpostorRoles.AssassinMod
                     }
                 }
 
-                if (player.Is(RoleEnum.Retributionist))
+                if (player.Is(RoleEnum.Vigilante))
                 {
-                    var retributionist = Role.GetRole<Retributionist>(PlayerControl.LocalPlayer);
-                    ShowHideButtonsRetri.HideButtonsRetri(retributionist);
+                    var retributionist = Role.GetRole<Vigilante>(PlayerControl.LocalPlayer);
+                    ShowHideButtonsVigi.HideButtonsVigi(retributionist);
                 }
             }
             player.Die(DeathReason.Kill);

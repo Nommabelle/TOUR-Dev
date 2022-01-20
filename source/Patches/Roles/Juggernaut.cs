@@ -3,14 +3,11 @@ using System;
 using System.Linq;
 using TownOfUs.CrewmateRoles.MedicMod;
 using UnityEngine;
-using System.Reflection;
-using Reactor.Extensions;
 
 namespace TownOfUs.Roles
 {
     public class Juggernaut : Role
     {
-        public static AssetBundle bundle = loadBundle();
         public Juggernaut(PlayerControl owner) : base(owner)
         {
             Name = "Juggernaut";
@@ -18,7 +15,7 @@ namespace TownOfUs.Roles
             LastKill = DateTime.UtcNow;
             KillTarget = null;
             RoleType = RoleEnum.Juggernaut;
-            ImpostorText = () => "With each kill you kill cooldown decreases";
+            ImpostorText = () => "With each kill your kill cooldown decreases";
             TaskText = () => "Your power grows with every kill!";
             Faction = Faction.Neutral;
         }
@@ -28,14 +25,6 @@ namespace TownOfUs.Roles
         public PlayerControl KillTarget { get; set; }
         public bool JuggernautWins { get; set; }
         public int JuggKills { get; set; } = 0;
-
-        public static AssetBundle loadBundle()
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            var stream = assembly.GetManifestResourceStream("TownOfUs.Resources.glitchbundle");
-            var assets = stream.ReadFully();
-            return AssetBundle.LoadFromMemory(assets);
-        }
 
         internal override bool EABBNOODFGL(ShipStatus __instance)
         {
@@ -208,6 +197,13 @@ namespace TownOfUs.Roles
                     Utils.RpcMurderPlayer(__gInstance.Player, __gInstance.KillTarget);
                 }
             }
+        }
+
+        protected override void IntroPrefix(IntroCutscene._CoBegin_d__14 __instance)
+        {
+            var juggTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
+            juggTeam.Add(PlayerControl.LocalPlayer);
+            __instance.yourTeam = juggTeam;
         }
     }
 }

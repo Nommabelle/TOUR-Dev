@@ -8,9 +8,9 @@ using UnityEngine.UI;
 using TownOfUs.CrewmateRoles.MedicMod;
 using TownOfUs.ImpostorRoles.AssassinMod;
 
-namespace TownOfUs.CrewmateRoles.RetributionistMod
+namespace TownOfUs.CrewmateRoles.VigilanteMod
 {
-    public class RetributionistKill
+    public class VigilanteKill
     {
         public static void RpcMurderPlayer(PlayerControl player)
 
@@ -24,7 +24,7 @@ namespace TownOfUs.CrewmateRoles.RetributionistMod
         {
             MurderPlayer(voteArea, player);
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                (byte)CustomRPC.RetributionistKill, SendOption.Reliable, -1);
+                (byte)CustomRPC.VigilanteKill, SendOption.Reliable, -1);
             writer.Write(player.PlayerId);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
         }

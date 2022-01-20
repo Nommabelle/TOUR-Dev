@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace TownOfUs.Roles
 {
@@ -11,16 +10,17 @@ namespace TownOfUs.Roles
         public PlayerControl ClosestPlayer;
         public List<byte> Tracked = new List<byte>();
         public DateTime LastTracked { get; set; }
-
-        public KillButtonManager _trackButton;
+        public int RemainingTracks { get; set; }
 
         public Tracker(PlayerControl player) : base(player)
         {
             Name = "Tracker";
-            ImpostorText = () => "Track a players movement";
-            TaskText = () => "Track a players movement";
+            ImpostorText = () => "Track everyone's movement";
+            TaskText = () => "Track suspicious players";
             Color = Patches.Colors.Tracker;
             RoleType = RoleEnum.Tracker;
+
+            RemainingTracks = CustomGameOptions.MaxTracks;
         }
         public float TrackerTimer()
         {
@@ -30,18 +30,6 @@ namespace TownOfUs.Roles
             var flag2 = num - (float) timeSpan.TotalMilliseconds < 0f;
             if (flag2) return 0;
             return (num - (float) timeSpan.TotalMilliseconds) / 1000f;
-        }
-
-
-        public KillButtonManager TrackButton
-        {
-            get => _trackButton;
-            set
-            {
-                _trackButton = value;
-                ExtraButtons.Clear();
-                ExtraButtons.Add(value);
-            }
         }
     }
 }

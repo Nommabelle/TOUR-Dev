@@ -1,6 +1,6 @@
 using HarmonyLib;
 
-namespace TownOfUs.Patches
+namespace TownOfUs
 {
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.SetKillTimer))]
     public static class PatchKillTimer

@@ -152,24 +152,8 @@ namespace TownOfUs.Roles
             return false;
         }
 
-        public virtual List<PlayerControl> GetTeammates()
+        protected virtual void IntroPrefix(IntroCutscene._CoBegin_d__14 __instance)
         {
-            var team = new List<PlayerControl>();
-            if (Faction == Faction.Impostors) {
-                foreach(var player in PlayerControl.AllPlayerControls)
-                {
-                    if (player.Data.IsImpostor) team.Add(player);
-                }
-            } else if (Faction == Faction.Neutral) {
-                team.Add(PlayerControl.LocalPlayer);
-            } else if (Faction == Faction.Crewmates) {
-                foreach (var player in PlayerControl.AllPlayerControls)
-                {
-                    team.Add(player);
-                }
-            }
-
-            return team;
         }
 
         public static void NobodyWinsFunc()
@@ -233,7 +217,7 @@ namespace TownOfUs.Roles
                     PlayerName += $" {modifier.GetColoredSymbol()}";
             }
 
-            if(revealTasks && Faction == Faction.Crewmates)
+            if(revealTasks && (Faction == Faction.Crewmates || RoleType == RoleEnum.Phantom))
                 PlayerName += $" ({TotalTasks - TasksLeft}/{TotalTasks})";
 
             if (player != null && (MeetingHud.Instance.state == MeetingHud.VoteStates.Proceeding ||
@@ -332,6 +316,100 @@ namespace TownOfUs.Roles
         public static IEnumerable<Role> GetRoles(RoleEnum roletype)
         {
             return AllRoles.Where(x => x.RoleType == roletype);
+        }
+
+        public static class IntroCutScenePatch
+        {
+            public static TextMeshPro ModifierText;
+
+            public static float Scale;
+
+            [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.BeginCrewmate))]
+            public static class IntroCutscene_BeginCrewmate
+            {
+                public static void Postfix(IntroCutscene __instance)
+                {
+                    //System.Console.WriteLine("REACHED HERE - CREW");
+                    var modifier = Modifier.GetModifier(PlayerControl.LocalPlayer);
+                    if (modifier != null)
+                        ModifierText = Object.Instantiate(__instance.Title, __instance.Title.transform.parent, false);
+                    //System.Console.WriteLine("MODIFIER TEXT PLEASE WORK");
+                    //                        Scale = ModifierText.scale;
+                    else
+                        ModifierText = null;
+
+                    Lights.SetLights();
+                }
+            }
+
+            [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.BeginImpostor))]
+            public static class IntroCutscene_BeginImpostor
+            {
+                public static void Postfix(IntroCutscene __instance)
+                {
+                    //System.Console.WriteLine("REACHED HERE - IMP");
+                    var modifier = Modifier.GetModifier(PlayerControl.LocalPlayer);
+                    if (modifier != null)
+                        ModifierText = Object.Instantiate(__instance.Title, __instance.Title.transform.parent, false);
+                    //System.Console.WriteLine("MODIFIER TEXT PLEASE WORK");
+                    //                        Scale = ModifierText.scale;
+                    else
+                        ModifierText = null;
+                    Lights.SetLights();
+                }
+            }
+
+            [HarmonyPatch(typeof(IntroCutscene._CoBegin_d__14), nameof(IntroCutscene._CoBegin_d__14.MoveNext))]
+            public static class IntroCutscene_CoBegin__d_MoveNext
+            {
+                public static float TestScale;
+
+                public static void Prefix(IntroCutscene._CoBegin_d__14 __instance)
+                {
+                    var role = GetRole(PlayerControl.LocalPlayer);
+
+                    if (role != null) role.IntroPrefix(__instance);
+                }
+
+                public static void Postfix(IntroCutscene._CoBegin_d__14 __instance)
+                {
+                    var role = GetRole(PlayerControl.LocalPlayer);
+                    var alpha = __instance.__4__this.Title.color.a;
+                    if (role != null && !role.Hidden)
+                    {
+                        __instance.__4__this.Title.text = role.Name;
+                        __instance.__4__this.Title.color = role.Color;
+                        __instance.__4__this.ImpostorText.text = role.ImpostorText();
+                        __instance.__4__this.ImpostorText.gameObject.SetActive(true);
+                        __instance.__4__this.BackgroundBar.material.color = role.Color;
+                        //                        TestScale = Mathf.Max(__instance.__this.Title.scale, TestScale);
+                        //                        __instance.__this.Title.scale = TestScale / role.Scale;
+                    }
+                    /*else if (!__instance.isImpostor)
+                    {
+                        __instance.__this.ImpostorText.text = "Haha imagine being a boring old crewmate";
+                    }*/
+
+                    if (ModifierText != null)
+                    {
+                        var modifier = Modifier.GetModifier(PlayerControl.LocalPlayer);
+                        if (modifier.GetType() == typeof(Lover))
+                        {
+                            ModifierText.text = $"<size=3>{modifier.TaskText()}</size>";
+                        }
+                        else
+                        {
+                            ModifierText.text = "<size=4>Modifier: " + modifier.Name + "</size>";
+                        }
+                        ModifierText.color = modifier.Color;
+
+                        //
+                        ModifierText.transform.position =
+                            __instance.__4__this.transform.position - new Vector3(0f, 2.0f, 0f);
+                        ModifierText.gameObject.SetActive(true);
+                    }
+                }
+            }
         }
 
         [HarmonyPatch(typeof(PlayerControl._CoSetTasks_d__83), nameof(PlayerControl._CoSetTasks_d__83.MoveNext))]

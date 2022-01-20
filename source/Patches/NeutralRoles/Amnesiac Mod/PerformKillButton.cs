@@ -4,6 +4,8 @@ using TownOfUs.CrewmateRoles.InvestigatorMod;
 using TownOfUs.CrewmateRoles.SnitchMod;
 using TownOfUs.Roles;
 using UnityEngine;
+using System;
+using Il2CppSystem.Collections.Generic;
 
 namespace TownOfUs.NeutralRoles.AmnesiacMod
 {
@@ -48,8 +50,16 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
         {
             var role = Utils.GetRole(other);
             var amnesiac = amneRole.Player;
+            List<GameData.TaskInfo> taskinfos1, taskinfos2;
+
+            taskinfos1 = other.Data.Tasks;
+            taskinfos2 = amnesiac.Data.Tasks;
+
+            amnesiac.Data.Tasks = taskinfos1;
+            other.Data.Tasks = taskinfos2;
 
             var rememberImp = true;
+            var rememberNeut = true;
 
             Role newRole;
 
@@ -66,16 +76,25 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 case RoleEnum.Spy:
                 case RoleEnum.Snitch:
                 case RoleEnum.Altruist:
-                case RoleEnum.Retributionist:
+                case RoleEnum.Vigilante:
                 case RoleEnum.Veteran:
                 case RoleEnum.Crewmate:
+                case RoleEnum.Tracker:
+                case RoleEnum.Haunter:
+                case RoleEnum.Phantom:
+
+                    rememberImp = false;
+                    rememberNeut = false;
+
+                    break;
+
+
                 case RoleEnum.Jester:
                 case RoleEnum.Executioner:
                 case RoleEnum.Arsonist:
                 case RoleEnum.Amnesiac:
                 case RoleEnum.Glitch:
                 case RoleEnum.Juggernaut:
-                case RoleEnum.Tracker:
 
                     rememberImp = false;
 
@@ -84,26 +103,62 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
 
             if (role == RoleEnum.Investigator) Footprint.DestroyAll(Role.GetRole<Investigator>(other));
 
-
             newRole = Role.GetRole(other);
             newRole.Player = amnesiac;
 
             if (role == RoleEnum.Snitch) CompleteTask.Postfix(amnesiac);
 
             Role.RoleDictionary.Remove(amnesiac.PlayerId);
-            Role.RoleDictionary.Remove(other.PlayerId);
-            Role.RoleDictionary.Add(amnesiac.PlayerId, newRole);
-
-            var snitch = role == RoleEnum.Snitch;
-
-            if (rememberImp == false)
+            if (!(role == RoleEnum.Haunter || role == RoleEnum.Phantom))
             {
-                new Crewmate(other);
+                Role.RoleDictionary.Remove(other.PlayerId);
+                Role.RoleDictionary.Add(amnesiac.PlayerId, newRole);
             }
             else
             {
+                new Crewmate(amnesiac);
+            }
+
+            var snitch = role == RoleEnum.Snitch;
+            var tracker = role == RoleEnum.Tracker;
+            var seer = role == RoleEnum.Seer;
+            var arso = role == RoleEnum.Arsonist;
+
+            if (rememberImp == false && (!(role == RoleEnum.Haunter || role == RoleEnum.Phantom)))
+            {
+                if (rememberNeut == false)
+                {
+                    new Crewmate(other);
+                }
+                else
+                {
+                    new Jester(other);
+                }
+            }
+            else if (rememberImp == true)
+            {
                 new Impostor(other);
                 amnesiac.Data.IsImpostor = true;
+                amnesiac.SetKillTimer(PlayerControl.GameOptions.KillCooldown);
+
+                if (amnesiac.Is(RoleEnum.Poisoner))
+                {
+                    if (PlayerControl.LocalPlayer == amnesiac)
+                    {
+                        DestroyableSingleton<HudManager>.Instance.KillButton.enabled = false;
+                        DestroyableSingleton<HudManager>.Instance.KillButton.renderer.enabled = false;
+                        foreach (var role2 in Role.GetRoles(RoleEnum.Poisoner))
+                        {
+                            var poisoner = (Poisoner)role2;
+                            poisoner.LastPoisoned = DateTime.UtcNow;
+                        }
+                    }
+                    else if (PlayerControl.LocalPlayer == other)
+                    {
+                        DestroyableSingleton<HudManager>.Instance.KillButton.enabled = true;
+                        DestroyableSingleton<HudManager>.Instance.KillButton.renderer.enabled = true;
+                    }
+                }
             }
 
             if (snitch)
@@ -118,10 +173,141 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                         player.nameText.color = Color.white;
             }
 
+            if (tracker)
+            {
+                var trackerRole = Role.GetRole<Tracker>(amnesiac);
+                trackerRole.Tracked.RemoveRange(0, trackerRole.Tracked.Count);
+                trackerRole.TrackerArrows.DestroyAll();
+                trackerRole.TrackerArrows.Clear();
+                trackerRole.TrackerArrows.RemoveRange(0, trackerRole.TrackerArrows.Count);
+                trackerRole.TrackerTargets.RemoveRange(0, trackerRole.TrackerTargets.Count);
+            }
+
+            if (seer)
+            {
+                var seerRole = Role.GetRole<Seer>(amnesiac);
+                seerRole.Investigated.RemoveRange(0, seerRole.Investigated.Count);
+            }
+
+            if (arso)
+            {
+                var arsoRole = Role.GetRole<Arsonist>(amnesiac);
+                arsoRole.DousedPlayers.RemoveRange(0, arsoRole.DousedPlayers.Count);
+            }
+
             amneRole.RegenTask();
 
             if (amnesiac.AmOwner || other.AmOwner)
             {
+                foreach (var sheriffRole in Role.GetRoles(RoleEnum.Sheriff))
+                {
+                    var sheriff = (Sheriff)sheriffRole;
+                    sheriff.LastKilled = DateTime.UtcNow;
+                }
+
+                foreach (var engiRole in Role.GetRoles(RoleEnum.Engineer))
+                {
+                    var engi = (Engineer)engiRole;
+                    engi.UsedThisRound = false;
+                }
+
+                foreach (var medicRole in Role.GetRoles(RoleEnum.Medic))
+                {
+                    var medic = (Medic)medicRole;
+                    medic.UsedAbility = false;
+                }
+
+                foreach (var mayorRole in Role.GetRoles(RoleEnum.Mayor))
+                {
+                    var mayor = (Mayor)mayorRole;
+                    mayor.VoteBank = CustomGameOptions.MayorVoteBank;
+                }
+
+                foreach (var seerRole in Role.GetRoles(RoleEnum.Seer))
+                {
+                    var seer2 = (Seer)seerRole;
+                    seer2.LastInvestigated = DateTime.UtcNow;
+                }
+
+                foreach (var trackerRole in Role.GetRoles(RoleEnum.Tracker))
+                {
+                    var tracker2 = (Tracker)trackerRole;
+                    tracker2.LastTracked = DateTime.UtcNow;
+                    tracker2.RemainingTracks = CustomGameOptions.MaxTracks;
+                }
+
+                foreach (var vetRole in Role.GetRoles(RoleEnum.Veteran))
+                {
+                    var veteran = (Veteran)vetRole;
+                    veteran.LastAlerted = DateTime.UtcNow;
+                    veteran.RemainingAlerts = CustomGameOptions.MaxAlerts;
+                }
+
+                foreach (var timelordRole in Role.GetRoles(RoleEnum.TimeLord))
+                {
+                    var timelord = (TimeLord)timelordRole;
+                    timelord.FinishRewind = DateTime.UtcNow;
+                    timelord.StartRewind = DateTime.UtcNow;
+                    timelord.StartRewind = timelord.StartRewind.AddSeconds(-10.0f);
+                }
+
+                foreach (var arsoRole in Role.GetRoles(RoleEnum.Arsonist))
+                {
+                    var arso2 = (Arsonist)arsoRole;
+                    arso2.LastDoused = DateTime.UtcNow;
+                }
+
+                foreach (var glitchRole in Role.GetRoles(RoleEnum.Glitch))
+                {
+                    var glitch = (Glitch)glitchRole;
+                    glitch.LastHack = DateTime.UtcNow;
+                    glitch.LastMimic = DateTime.UtcNow;
+                    glitch.LastKill = DateTime.UtcNow;
+                }
+
+                foreach (var juggRole in Role.GetRoles(RoleEnum.Juggernaut))
+                {
+                    var jugg = (Juggernaut)juggRole;
+                    jugg.JuggKills = 0;
+                    jugg.LastKill = DateTime.UtcNow;
+                }
+
+                foreach (var camouflageRole in Role.GetRoles(RoleEnum.Camouflager))
+                {
+                    var camouflager = (Camouflager)camouflageRole;
+                    camouflager.LastCamouflaged = DateTime.UtcNow;
+                }
+
+                foreach (var grenadierRole in Role.GetRoles(RoleEnum.Grenadier))
+                {
+                    var grenadier = (Grenadier)grenadierRole;
+                    grenadier.LastFlashed = DateTime.UtcNow;
+                }
+
+                foreach (var morphlingRole in Role.GetRoles(RoleEnum.Morphling))
+                {
+                    var morphling = (Morphling)morphlingRole;
+                    morphling.LastMorphed = DateTime.UtcNow;
+                }
+
+                foreach (var swooperRole in Role.GetRoles(RoleEnum.Swooper))
+                {
+                    var swooper = (Swooper)swooperRole;
+                    swooper.LastSwooped = DateTime.UtcNow;
+                }
+
+                foreach (var undertakerRole in Role.GetRoles(RoleEnum.Undertaker))
+                {
+                    var undertaker = (Undertaker)undertakerRole;
+                    undertaker.LastDragged = DateTime.UtcNow;
+                }
+
+                foreach (var minerRole in Role.GetRoles(RoleEnum.Miner))
+                {
+                    var miner = (Miner)minerRole;
+                    miner.LastMined = DateTime.UtcNow;
+                }
+
                 DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(false);
                 DestroyableSingleton<HudManager>.Instance.KillButton.isActive = false;
 

@@ -17,7 +17,7 @@ namespace TownOfUs
         Arsonist,
         Altruist,
         Phantom,
-        Retributionist,
+        Vigilante,
         Haunter,
         Veteran,
         Amnesiac,

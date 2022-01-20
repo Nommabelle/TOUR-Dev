@@ -17,9 +17,9 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption MedicOn;
 
         public static CustomHeaderOption CrewKillingRoles;
-        public static CustomNumberOption RetributionistOn;
         public static CustomNumberOption SheriffOn;
         public static CustomNumberOption VeteranOn;
+        public static CustomNumberOption VigilanteOn;
 
         public static CustomHeaderOption CrewSupportRoles;
         public static CustomNumberOption EngineerOn;
@@ -55,25 +55,25 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption MinerOn;
         public static CustomNumberOption UndertakerOn;
 
-        public static CustomHeaderOption Modifiers;
-        public static CustomNumberOption LoversOn;
-        public static CustomNumberOption TorchOn;
+        public static CustomHeaderOption CrewmateModifiers;
+        public static CustomNumberOption BaitOn;
         public static CustomNumberOption DiseasedOn;
-        public static CustomNumberOption FlashOn;
-        public static CustomNumberOption TiebreakerOn;
+        public static CustomNumberOption TorchOn;
+
+        public static CustomHeaderOption GlobalModifiers;
+        public static CustomNumberOption ButtonBarryOn;
         public static CustomNumberOption DrunkOn;
         public static CustomNumberOption BigBoiOn;
-        public static CustomNumberOption ButtonBarryOn;
-        public static CustomNumberOption BaitOn;
+        public static CustomNumberOption FlashOn;
+        public static CustomNumberOption LoversOn;
+        public static CustomNumberOption TiebreakerOn;
 
         public static CustomHeaderOption CustomGameSettings;
         public static CustomToggleOption ColourblindComms;
         public static CustomToggleOption MeetingColourblind;
         public static CustomToggleOption ImpostorSeeRoles;
         public static CustomToggleOption DeadSeeRoles;
-        public static CustomNumberOption MaxImpostorRoles;
         public static CustomNumberOption MaxNeutralRoles;
-        public static CustomToggleOption RoleUnderName;
         public static CustomNumberOption VanillaGame;
         public static CustomNumberOption InitialCooldowns;
         public static CustomToggleOption ParallelMedScans;
@@ -84,7 +84,6 @@ namespace TownOfUs.CustomOption
         public static CustomToggleOption MayorButton;
 
         public static CustomHeaderOption Sheriff;
-        public static CustomToggleOption ShowSheriff;
         public static CustomToggleOption SheriffKillOther;
         public static CustomToggleOption SheriffKillsJester;
         public static CustomToggleOption SheriffKillsGlitch;
@@ -194,10 +193,10 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption UnderdogKillBonus;
         public static CustomToggleOption UnderdogIncreasedKC;
 
-        public static CustomHeaderOption Retributionist;
-        public static CustomNumberOption RetributionistKills;
-        public static CustomToggleOption RetributionistGuessNeutrals;
-        public static CustomToggleOption RetributionistMultiKill;
+        public static CustomHeaderOption Vigilante;
+        public static CustomNumberOption VigilanteKills;
+        public static CustomToggleOption VigilanteGuessNeutrals;
+        public static CustomToggleOption VigilanteMultiKill;
 
         public static CustomHeaderOption Haunter;
         public static CustomNumberOption HaunterTasksRemainingClicked;
@@ -220,6 +219,7 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption UpdateInterval;
         public static CustomNumberOption TrackCooldown;
         public static CustomToggleOption ResetOnNewRound;
+        public static CustomNumberOption MaxTracks;
 
         public static CustomHeaderOption Poisoner;
         public static CustomNumberOption PoisonCooldown;
@@ -229,6 +229,7 @@ namespace TownOfUs.CustomOption
         public static CustomHeaderOption Lovers;
         public static CustomToggleOption BothLoversDie;
         public static CustomNumberOption LovingImpPercent;
+        public static CustomToggleOption NeutralLovers;
 
         public static Func<object, string> PercentFormat { get; } = value => $"{value:0}%";
         private static Func<object, string> CooldownFormat { get; } = value => $"{value:0.0#}s";
@@ -257,11 +258,11 @@ namespace TownOfUs.CustomOption
                 PercentFormat);
 
             CrewKillingRoles = new CustomHeaderOption(num++, "Crewmate Killing Roles");
-            RetributionistOn = new CustomNumberOption(true, num++, "<color=#CCFF00FF>Retributionist</color>", 0f, 0f, 100f, 10f,
-                PercentFormat);
             SheriffOn = new CustomNumberOption(true, num++, "<color=#FFFF00FF>Sheriff</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             VeteranOn = new CustomNumberOption(true, num++, "<color=#998040FF>Veteran</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
+            VigilanteOn = new CustomNumberOption(true, num++, "<color=#CCFF00FF>Vigilante</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
 
             CrewProtectiveRoles = new CustomHeaderOption(num++, "Crewmate Protective Roles");
@@ -325,12 +326,16 @@ namespace TownOfUs.CustomOption
             UndertakerOn = new CustomNumberOption(true, num++, "<color=#FF0000FF>Undertaker</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
 
-            Modifiers = new CustomHeaderOption(num++, "Modifiers");
+            CrewmateModifiers = new CustomHeaderOption(num++, "Crewmate Modifiers");
             BaitOn = new CustomNumberOption(true, num++, "<color=#00B3B3FF>Bait</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
-            ButtonBarryOn = new CustomNumberOption(true, num++, "<color=#E600FFFF>Button Barry</color>", 0f, 0f, 100f, 10f,
-                PercentFormat);
             DiseasedOn = new CustomNumberOption(true, num++, "<color=#808080FF>Diseased</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
+            TorchOn = new CustomNumberOption(true, num++, "<color=#FFFF99FF>Torch</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
+
+            GlobalModifiers = new CustomHeaderOption(num++, "Global Modifiers");
+            ButtonBarryOn = new CustomNumberOption(true, num++, "<color=#E600FFFF>Button Barry</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             DrunkOn = new CustomNumberOption(true, num++, "<color=#758000FF>Drunk</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
@@ -342,24 +347,16 @@ namespace TownOfUs.CustomOption
                 PercentFormat);
             TiebreakerOn = new CustomNumberOption(true, num++, "<color=#99E699FF>Tiebreaker</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
-            TorchOn = new CustomNumberOption(true, num++, "<color=#FFFF99FF>Torch</color>", 0f, 0f, 100f, 10f,
-                PercentFormat);
-
 
             CustomGameSettings =
                 new CustomHeaderOption(num++, "Custom Game Settings");
             ColourblindComms = new CustomToggleOption(num++, "Camouflaged Comms", false);
             MeetingColourblind = new CustomToggleOption(num++, "Camouflaged Meetings", false);
             ImpostorSeeRoles = new CustomToggleOption(num++, "Impostors Can See The Roles Of Their Team", false);
-
             DeadSeeRoles =
                 new CustomToggleOption(num++, "Dead Can See Everyone's Roles", false);
-
-            MaxImpostorRoles =
-                new CustomNumberOption(num++, "Max Impostor Roles", 1f, 1f, 3f, 1f);
             MaxNeutralRoles =
                 new CustomNumberOption(num++, "Max Neutral Roles", 1f, 1f, 5f, 1f);
-            RoleUnderName = new CustomToggleOption(num++, "Role Appears Under Name");
             VanillaGame = new CustomNumberOption(num++, "Probability Of A Completely Vanilla Game", 0f, 0f, 100f, 5f,
                 PercentFormat);
             InitialCooldowns =
@@ -380,7 +377,7 @@ namespace TownOfUs.CustomOption
             FootprintSize = new CustomNumberOption(num++, "Footprint Size", 4f, 1f, 10f, 1f);
 
             FootprintInterval =
-                new CustomNumberOption(num++, "Footprint Interval", 1f, 0.25f, 5f, 0.25f, CooldownFormat);
+                new CustomNumberOption(num++, "Footprint Interval", 0.1f, 0.05f, 1f, 0.05f, CooldownFormat);
             FootprintDuration = new CustomNumberOption(num++, "Footprint Duration", 10f, 1f, 10f, 0.5f, CooldownFormat);
             AnonymousFootPrint = new CustomToggleOption(num++, "Anonymous Footprint", false);
             VentFootprintVisible = new CustomToggleOption(num++, "Footprint Vent Visible", false);
@@ -408,19 +405,14 @@ namespace TownOfUs.CustomOption
             Tracker =
                 new CustomHeaderOption(num++, "<color=#009900FF>Tracker</color>");
             UpdateInterval =
-                new CustomNumberOption(num++, "Arrow Update Interval", 5, 0, 15, 0.5f, CooldownFormat);
+                new CustomNumberOption(num++, "Arrow Update Interval", 5f, 0.5f, 15f, 0.5f, CooldownFormat);
             TrackCooldown =
                 new CustomNumberOption(num++, "Track Cooldown", 25f, 10f, 40f, 2.5f, CooldownFormat);
             ResetOnNewRound = new CustomToggleOption(num++, "Tracker Arrows Reset After Each Round", false);
-
-            Retributionist = new CustomHeaderOption(num++, "<color=#CCFF00FF>Retributionist</color>");
-            RetributionistKills = new CustomNumberOption(num++, "Number Of Retributionist Kills", 1, 1, 15, 1);
-            RetributionistGuessNeutrals = new CustomToggleOption(num++, "Retributionist Can Guess Neutral Roles", false);
-            RetributionistMultiKill = new CustomToggleOption(num++, "Retributionist Can Kill More Than Once Per Meeting", false);
+            MaxTracks = new CustomNumberOption(num++, "Maximum Number Of Tracks Per Round", 3, 1, 15, 1);
 
             Sheriff =
                 new CustomHeaderOption(num++, "<color=#FFFF00FF>Sheriff</color>");
-            ShowSheriff = new CustomToggleOption(num++, "Show Sheriff", false);
             SheriffKillOther =
                 new CustomToggleOption(num++, "Sheriff Miskill Kills Crewmate", false);
             SheriffKillsJester =
@@ -444,6 +436,11 @@ namespace TownOfUs.CustomOption
             AlertDuration =
                 new CustomNumberOption(num++, "Alert Duration", 10, 5, 15, 1f, CooldownFormat);
             MaxAlerts = new CustomNumberOption(num++, "Maximum Number Of Alerts", 5, 1, 15, 1);
+
+            Vigilante = new CustomHeaderOption(num++, "<color=#CCFF00FF>Vigilante</color>");
+            VigilanteKills = new CustomNumberOption(num++, "Number Of Vigilante Kills", 1, 1, 15, 1);
+            VigilanteGuessNeutrals = new CustomToggleOption(num++, "Vigilante Can Guess Neutral Roles", false);
+            VigilanteMultiKill = new CustomToggleOption(num++, "Vigilante Can Kill More Than Once Per Meeting", false);
 
             Altruist = new CustomHeaderOption(num++, "<color=#660000FF>Altruist</color>");
             ReviveDuration =
@@ -602,6 +599,7 @@ namespace TownOfUs.CustomOption
             BothLoversDie = new CustomToggleOption(num++, "Both Lovers Die");
             LovingImpPercent = new CustomNumberOption(num++, "Loving Impostor Probability", 20f, 0f, 100f, 10f,
                 PercentFormat);
+            NeutralLovers = new CustomToggleOption(num++, "Neutral Roles Can Be Lovers");
         }
     }
 }

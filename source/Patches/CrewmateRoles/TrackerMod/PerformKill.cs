@@ -24,6 +24,7 @@ namespace TownOfUs.CrewmateRoles.TrackerMod
                 PlayerControl.LocalPlayer.GetTruePosition()) > maxDistance) return false;
             if (role.ClosestPlayer == null) return false;
             var playerId = role.ClosestPlayer.PlayerId;
+            if (role.RemainingTracks == 0) return false;
 
             if (role.ClosestPlayer.IsOnAlert())
             {
@@ -55,6 +56,7 @@ namespace TownOfUs.CrewmateRoles.TrackerMod
             AmongUsClient.Instance.FinishRpcImmediately(writer);
 
             role.Tracked.Add(role.ClosestPlayer.PlayerId);
+            role.RemainingTracks--;
             role.LastTracked = DateTime.UtcNow;
 
             return false;

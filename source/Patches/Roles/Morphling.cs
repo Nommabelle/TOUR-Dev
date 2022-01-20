@@ -43,6 +43,10 @@ namespace TownOfUs.Roles
         {
             TimeRemaining -= Time.deltaTime;
             Utils.Morph(Player, MorphedPlayer);
+            if (Player.Data.IsDead)
+            {
+                TimeRemaining = 0f;
+            }
         }
 
         public void Unmorph()

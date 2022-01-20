@@ -17,7 +17,7 @@ namespace TownOfUs.Patches
         public readonly static Color Spy = new Color(0.8f, 0.64f, 0.8f, 1f);
         public readonly static Color Snitch = new Color(0.83f, 0.69f, 0.22f, 1f);
         public readonly static Color Altruist = new Color(0.4f, 0f, 0f, 1f);
-        public readonly static Color Retributionist = new Color(0.8f, 1f, 0f, 1f);
+        public readonly static Color Vigilante = new Color(0.8f, 1f, 0f, 1f);
         public readonly static Color Veteran = new Color(0.6f, 0.5f, 0.25f, 1f);
         public readonly static Color Haunter = new Color(0.83f, 0.83f, 0.83f, 1f);
         public readonly static Color Tracker = new Color(0f, 0.6f, 0f, 1f);
