@@ -30,7 +30,6 @@ namespace TownOfUs
         Camouflager,
         Janitor,
         Undertaker,
-        Assassin,
         Underdog,
         Grenadier,
         Poisoner,
@@ -54,5 +53,10 @@ namespace TownOfUs
         BigBoi,
         ButtonBarry,
         Bait
+    }
+
+    public enum AbilityEnum
+    {
+        Assassin
     }
 }

@@ -23,7 +23,6 @@ namespace TownOfUs
         SetArsonist,
         SetAltruist,
         SetUndertaker,
-        SetAssassin,
         SetUnderdog,
         SetVigilante,
         SetGrenadier,
@@ -42,6 +41,7 @@ namespace TownOfUs
         SetButtonBarry,
         SetCouple,
         SetBait,
+        SetAssassin,
 
         SetPhantom,
         PhantomDied,

@@ -22,7 +22,6 @@ namespace TownOfUs.Roles
         public Lover OtherLover { get; set; }
         public bool LoveCoupleWins { get; set; }
         public int Num { get; set; }
-        public bool LoverImpostor { get; set; }
 
         public override List<PlayerControl> GetTeammates()
         {
@@ -56,10 +55,13 @@ namespace TownOfUs.Roles
             var lovingimp = Random.RandomRangeInt(0, 100);
 
             PlayerControl secondLover;
-            if (CustomGameOptions.LovingImpPercent > lovingimp) {
+            if (CustomGameOptions.LovingImpPercent > lovingimp)
+            {
                 var num3 = Random.RandomRangeInt(0, impostors.Count);
                 secondLover = impostors[num3];
-            } else {
+            }
+            else
+            {
                 var num3 = Random.RandomRangeInt(0, crewmates.Count);
                 while (num3 == num)
                 {
@@ -109,7 +111,7 @@ namespace TownOfUs.Roles
             var lover2 = OtherLover.Player;
             {
                 return !lover1.Data.IsDead && !lover1.Data.Disconnected && !lover2.Data.IsDead && !lover2.Data.Disconnected &&
-                       alives.Count() == 4 && LoverImpostor;
+                       alives.Count() == 4 && (lover1.Is(Faction.Impostors) || lover2.Is(Faction.Impostors));
             }
         }
 

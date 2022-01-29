@@ -3,10 +3,11 @@ using System.Linq;
 using TMPro;
 using TownOfUs.Patches;
 using UnityEngine;
+using Hazel;
 
-namespace TownOfUs.Roles
+namespace TownOfUs.Roles.Modifiers
 {
-    public class Assassin : Role
+    public class Assassin : Ability
     {
         public Dictionary<byte, (GameObject, GameObject, TMP_Text)> Buttons = new Dictionary<byte, (GameObject, GameObject, TMP_Text)>();
 
@@ -21,11 +22,9 @@ namespace TownOfUs.Roles
         public Assassin(PlayerControl player) : base(player)
         {
             Name = "Assassin";
-            ImpostorText = () => "Kill during meetings if you can guess their roles";
             TaskText = () => "Guess the roles of the people and kill them mid-meeting";
             Color = Patches.Colors.Impostor;
-            RoleType = RoleEnum.Assassin;
-            Faction = Faction.Impostors;
+            AbilityType = AbilityEnum.Assassin;
 
             RemainingKills = CustomGameOptions.AssassinKills;
 

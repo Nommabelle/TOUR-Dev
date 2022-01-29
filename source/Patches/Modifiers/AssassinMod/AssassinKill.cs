@@ -8,7 +8,7 @@ using TownOfUs.CrewmateRoles.MedicMod;
 using TownOfUs.CrewmateRoles.VigilanteMod;
 using TownOfUs.Roles.Modifiers;
 
-namespace TownOfUs.ImpostorRoles.AssassinMod
+namespace TownOfUs.Modifiers.AssassinMod
 {
     public class AssassinKill
     {

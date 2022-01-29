@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using HarmonyLib;
 
 namespace TownOfUs.Roles
 {
@@ -38,13 +39,18 @@ namespace TownOfUs.Roles
         {
             Enabled = true;
             TimeRemaining -= Time.deltaTime;
-            if (TimeRemaining <= 0) {
+            if (MeetingHud.Instance)
+            {
+                TimeRemaining = 0;
+            }
+            if (TimeRemaining <= 0)
+            {
                 PoisonKill();
             }
         }
         public void PoisonKill()
         {
-            Utils.RpcMurderPlayer(PlayerControl.LocalPlayer, PoisonedPlayer);
+            Utils.RpcMurderPlayer(Player, PoisonedPlayer);
             PoisonedPlayer = null;
             Enabled = false;
             LastPoisoned = DateTime.UtcNow;

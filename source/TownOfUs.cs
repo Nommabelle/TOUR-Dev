@@ -23,8 +23,6 @@ namespace TownOfUs
     public class TownOfUs : BasePlugin
     {
         public const string Id = "com.slushiegoose.townofus";
-        public const string VersionString = "2.5.0.8";
-        public static Version Version = Version.Parse(VersionString);
 
         public static Sprite JanitorClean;
         public static Sprite EngineerFix;

@@ -46,7 +46,6 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption GrenadierOn;
 
         public static CustomHeaderOption ImpostorKillingRoles;
-        public static CustomNumberOption AssassinOn;
         public static CustomNumberOption PoisonerOn;
         public static CustomNumberOption UnderdogOn;
 
@@ -183,6 +182,8 @@ namespace TownOfUs.CustomOption
         public static CustomToggleOption UndertakerVentWithBody;
 
         public static CustomHeaderOption Assassin;
+        public static CustomNumberOption NumberOfAssassins;
+        public static CustomToggleOption AmneTurnAssassin;
         public static CustomNumberOption AssassinKills;
         public static CustomToggleOption AssassinGuessNeutrals;
         public static CustomToggleOption AssassinCrewmateGuess;
@@ -311,8 +312,6 @@ namespace TownOfUs.CustomOption
                 PercentFormat);
 
             ImpostorKillingRoles = new CustomHeaderOption(num++, "Impostor Killing Roles");
-            AssassinOn = new CustomNumberOption(true, num++, "<color=#FF0000FF>Assassin</color>", 0f, 0f, 100f, 10f,
-                PercentFormat);
             PoisonerOn = new CustomNumberOption(true, num++, "<color=#FF0000FF>Poisoner</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             UnderdogOn = new CustomNumberOption(true, num++, "<color=#FF0000FF>Underdog</color>", 0f, 0f, 100f, 10f,
@@ -362,6 +361,15 @@ namespace TownOfUs.CustomOption
             InitialCooldowns =
                 new CustomNumberOption(num++, "Game Start Cooldowns", 10, 10, 30, 2.5f, CooldownFormat);
             ParallelMedScans = new CustomToggleOption(num++, "Parallel Medbay Scans", false);
+
+            Assassin = new CustomHeaderOption(num++, "<color=#FF0000FF>Assassin Ability</color>");
+            NumberOfAssassins = new CustomNumberOption(num++, "Number Of Assassins", 1, 0, 3, 1);
+            AmneTurnAssassin = new CustomToggleOption(num++, "Amnesiac Turned Impostor Gets Ability", false);
+            AssassinKills = new CustomNumberOption(num++, "Number Of Assassin Kills", 1, 1, 15, 1);
+            AssassinCrewmateGuess = new CustomToggleOption(num++, "Assassin Can Guess \"Crewmate\"", false);
+            AssassinGuessNeutrals = new CustomToggleOption(num++, "Assassin Can Guess Neutral Roles", false);
+            AssassinMultiKill = new CustomToggleOption(num++, "Assassin Can Kill More Than Once Per Meeting", false);
+            AssassinSnitchViaCrewmate = new CustomToggleOption(num++, "Assassinate Snitch Via \"Crewmate\" Guess", false);
 
             Haunter =
                 new CustomHeaderOption(num++, "<color=#d3d3d3FF>Haunter</color>");
@@ -562,13 +570,6 @@ namespace TownOfUs.CustomOption
                 new CustomNumberOption(num++, "Swoop Duration", 10, 5, 15, 1f, CooldownFormat);
             SwooperVent =
                 new CustomToggleOption(num++, "Swooper Can Vent", false);
-
-            Assassin = new CustomHeaderOption(num++, "<color=#FF0000FF>Assassin</color>");
-            AssassinKills = new CustomNumberOption(num++, "Number Of Assassin Kills", 1, 1, 15, 1);
-            AssassinCrewmateGuess = new CustomToggleOption(num++, "Assassin Can Guess \"Crewmate\"", false);
-            AssassinGuessNeutrals = new CustomToggleOption(num++, "Assassin Can Guess Neutral Roles", false);
-            AssassinMultiKill = new CustomToggleOption(num++, "Assassin Can Kill More Than Once Per Meeting", false);
-            AssassinSnitchViaCrewmate = new CustomToggleOption(num++, "Assassinate Snitch Via \"Crewmate\" Guess", false);
 
             Poisoner =
                 new CustomHeaderOption(num++, "<color=#FF0000FF>Poisoner</color>");

@@ -12,7 +12,7 @@ using TownOfUs.CrewmateRoles.TimeLordMod;
 using TownOfUs.CrewmateRoles.VigilanteMod;
 using TownOfUs.CustomOption;
 using TownOfUs.Extensions;
-using TownOfUs.ImpostorRoles.AssassinMod;
+using TownOfUs.Modifiers.AssassinMod;
 using TownOfUs.ImpostorRoles.MinerMod;
 using TownOfUs.NeutralRoles.ExecutionerMod;
 using TownOfUs.NeutralRoles.PhantomMod;
@@ -35,6 +35,7 @@ namespace TownOfUs
         private static readonly List<(Type, CustomRPC, int)> ImpostorRoles = new List<(Type, CustomRPC, int)>();
         private static readonly List<(Type, CustomRPC, int)> CrewmateModifiers = new List<(Type, CustomRPC, int)>();
         private static readonly List<(Type, CustomRPC, int)> GlobalModifiers = new List<(Type, CustomRPC, int)>();
+        private static readonly List<(Type, CustomRPC, int)> AssassinModifier = new List<(Type, CustomRPC, int)>();
         private static bool PhantomOn;
         private static bool HaunterOn;
 
@@ -127,6 +128,7 @@ namespace TownOfUs
                 NeutralRoles.Clear();
                 CrewmateModifiers.Clear();
                 GlobalModifiers.Clear();
+                AssassinModifier.Clear();
                 ImpostorRoles.Clear();
                 PhantomOn = false;
                 HaunterOn = false;
@@ -161,7 +163,11 @@ namespace TownOfUs
                 Role.Gen<Role>(typeof(Impostor), impostor, CustomRPC.SetImpostor);
 
             var canHaveModifier = PlayerControl.AllPlayerControls.ToArray().ToList();
+            var canHaveAbility = PlayerControl.AllPlayerControls.ToArray().ToList();
             canHaveModifier.Shuffle();
+            canHaveAbility.RemoveAll(player => !player.Is(Faction.Impostors));
+            canHaveAbility.Shuffle();
+            var assassins = CustomGameOptions.NumberOfAssassins;
 
             foreach (var (type, rpc, _) in GlobalModifiers)
             {
@@ -170,7 +176,8 @@ namespace TownOfUs
                 {
                     if (canHaveModifier.Count == 1) continue;
                         Lover.Gen(canHaveModifier);
-                } else
+                }
+                else
                 {
                     Role.Gen<Modifier>(type, canHaveModifier, rpc);
                 }
@@ -183,6 +190,13 @@ namespace TownOfUs
             {
                 var (type, rpc, _) = CrewmateModifiers.TakeFirst();
                 Role.Gen<Modifier>(type, canHaveModifier.TakeFirst(), rpc);
+            }
+
+            while (canHaveAbility.Count > 0 && assassins > 0)
+            {
+                var (type, rpc, _) = AssassinModifier.Ability();
+                Role.Gen<Ability>(type, canHaveAbility.TakeFirst(), rpc);
+                assassins = assassins - 1;
             }
 
             if (executionerList.Count > 0)
@@ -865,6 +879,7 @@ namespace TownOfUs
                 ImpostorRoles.Clear();
                 CrewmateModifiers.Clear();
                 GlobalModifiers.Clear();
+                AssassinModifier.Clear();
 
                 RecordRewind.points.Clear();
                 Murder.KilledPlayers.Clear();
@@ -944,9 +959,6 @@ namespace TownOfUs
                 if (Check(CustomGameOptions.UndertakerOn))
                     ImpostorRoles.Add((typeof(Undertaker), CustomRPC.SetUndertaker, CustomGameOptions.UndertakerOn));
 
-                if (Check(CustomGameOptions.AssassinOn))
-                    ImpostorRoles.Add((typeof(Assassin), CustomRPC.SetAssassin, CustomGameOptions.AssassinOn));
-
                 if (Check(CustomGameOptions.UnderdogOn))
                     ImpostorRoles.Add((typeof(Underdog), CustomRPC.SetUnderdog, CustomGameOptions.UnderdogOn));
 
@@ -999,6 +1011,9 @@ namespace TownOfUs
 
                 if (Check(CustomGameOptions.LoversOn))
                     GlobalModifiers.Add((typeof(Lover), CustomRPC.SetCouple, CustomGameOptions.LoversOn));
+                #endregion
+                #region Assassin Modifier
+                AssassinModifier.Add((typeof(Assassin), CustomRPC.SetAssassin, 100));
                 #endregion
                 GenEachRole(infected.ToList());
             }

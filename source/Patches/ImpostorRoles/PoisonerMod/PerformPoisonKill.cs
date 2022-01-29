@@ -103,7 +103,6 @@ namespace TownOfUs.ImpostorRoles.PoisonerMod
             role.PoisonedPlayer = target;
             role.PoisonButton.SetTarget(null);
             DestroyableSingleton<HudManager>.Instance.KillButton.SetTarget(null);
-
             role.TimeRemaining = CustomGameOptions.PoisonDuration;
             role.PoisonButton.SetCoolDown(role.TimeRemaining, CustomGameOptions.PoisonDuration);
             role.Player.SetKillTimer(0);

@@ -1,16 +1,16 @@
 using HarmonyLib;
-using TownOfUs.Roles;
+using TownOfUs.Roles.Modifiers;
 
-namespace TownOfUs.ImpostorRoles.AssassinMod
+namespace TownOfUs.Modifiers.AssassinMod
 {
     [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.VotingComplete))] // BBFDNCCEJHI
     public static class VotingComplete
     {
         public static void Postfix(MeetingHud __instance)
         {
-            if (PlayerControl.LocalPlayer.Is(RoleEnum.Assassin))
+            if (PlayerControl.LocalPlayer.Is(AbilityEnum.Assassin))
             {
-                var assassin = Role.GetRole<Assassin>(PlayerControl.LocalPlayer);
+                var assassin = Ability.GetAbility<Assassin>(PlayerControl.LocalPlayer);
                 ShowHideButtons.HideButtons(assassin);
             }
         }

@@ -144,7 +144,7 @@ namespace TownOfUs
 
         public static bool IsLover(this PlayerControl player)
         {
-            return player.Is(ModifierEnum.Lover) || player.Is(ModifierEnum.Lover);
+            return player.Is(ModifierEnum.Lover);
         }
 
         public static bool Is(this PlayerControl player, RoleEnum roleType)
@@ -155,6 +155,11 @@ namespace TownOfUs
         public static bool Is(this PlayerControl player, ModifierEnum modifierType)
         {
             return Modifier.GetModifier(player)?.ModifierType == modifierType;
+        }
+
+        public static bool Is(this PlayerControl player, AbilityEnum abilityType)
+        {
+            return Ability.GetAbility(player)?.AbilityType == abilityType;
         }
 
         public static bool Is(this PlayerControl player, Faction faction)

@@ -397,9 +397,13 @@ namespace TownOfUs.Roles
                         {
                             ModifierText.text = $"<size=3>{modifier.TaskText()}</size>";
                         }
-                        else
+                        else if (modifier.GetType() != typeof(Assassin))
                         {
                             ModifierText.text = "<size=4>Modifier: " + modifier.Name + "</size>";
+                        }
+                        else
+                        {
+                            ModifierText.text = "<size=4> </size>";
                         }
                         ModifierText.color = modifier.Color;
 
@@ -501,6 +505,7 @@ namespace TownOfUs.Roles
 
                 RoleDictionary.Clear();
                 Modifier.ModifierDictionary.Clear();
+                Ability.AbilityDictionary.Clear();
                 Lights.SetLights(Color.white);
             }
         }

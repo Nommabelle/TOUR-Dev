@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
-namespace TownOfUs.ImpostorRoles.AssassinMod
+namespace TownOfUs.Modifiers.AssassinMod
 {
     [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Start))]
     public class AddButton
@@ -144,7 +144,7 @@ namespace TownOfUs.ImpostorRoles.AssassinMod
 
         public static void Postfix(MeetingHud __instance)
         {
-            foreach (var role in Role.GetRoles(RoleEnum.Assassin))
+            foreach (var role in Ability.GetAbilities(AbilityEnum.Assassin))
             {
                 var assassin = (Assassin) role;
                 assassin.Guesses.Clear();
@@ -153,9 +153,9 @@ namespace TownOfUs.ImpostorRoles.AssassinMod
             }
 
             if (PlayerControl.LocalPlayer.Data.IsDead) return;
-            if (!PlayerControl.LocalPlayer.Is(RoleEnum.Assassin)) return;
+            if (!PlayerControl.LocalPlayer.Is(AbilityEnum.Assassin)) return;
 
-            var assassinRole = Role.GetRole<Assassin>(PlayerControl.LocalPlayer);
+            var assassinRole = Ability.GetAbility<Assassin>(PlayerControl.LocalPlayer);
             if (assassinRole.RemainingKills <= 0) return;
             foreach (var voteArea in __instance.playerStates)
             {

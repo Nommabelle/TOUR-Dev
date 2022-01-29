@@ -32,7 +32,6 @@ namespace TownOfUs
         public static int ArsonistOn => (int)Generate.ArsonistOn.Get();
         public static int AltruistOn => (int)Generate.AltruistOn.Get();
         public static int UndertakerOn => (int)Generate.UndertakerOn.Get();
-        public static int AssassinOn => (int)Generate.AssassinOn.Get();
         public static int UnderdogOn => (int)Generate.UnderdogOn.Get();
         public static int PhantomOn => (int)Generate.PhantomOn.Get();
         public static int VigilanteOn => (int)Generate.VigilanteOn.Get();
@@ -127,6 +126,8 @@ namespace TownOfUs
         public static bool AssassinGuessNeutrals => Generate.AssassinGuessNeutrals.Get();
         public static bool AssassinCrewmateGuess => Generate.AssassinCrewmateGuess.Get();
         public static int AssassinKills => (int)Generate.AssassinKills.Get();
+        public static int NumberOfAssassins => (int)Generate.NumberOfAssassins.Get();
+        public static bool AmneTurnAssassin => Generate.AmneTurnAssassin.Get();
         public static bool AssassinMultiKill => Generate.AssassinMultiKill.Get();
         public static bool AssassinSnitchViaCrewmate => Generate.AssassinSnitchViaCrewmate.Get();
         public static float UnderdogKillBonus => Generate.UnderdogKillBonus.Get();

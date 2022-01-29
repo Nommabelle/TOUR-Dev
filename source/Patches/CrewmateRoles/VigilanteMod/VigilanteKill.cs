@@ -6,7 +6,7 @@ using TownOfUs.Roles.Modifiers;
 using UnityEngine;
 using UnityEngine.UI;
 using TownOfUs.CrewmateRoles.MedicMod;
-using TownOfUs.ImpostorRoles.AssassinMod;
+using TownOfUs.Modifiers.AssassinMod;
 
 namespace TownOfUs.CrewmateRoles.VigilanteMod
 {
@@ -80,9 +80,9 @@ namespace TownOfUs.CrewmateRoles.VigilanteMod
 
                 player.myTasks.Insert(0, importantTextTask);
 
-                if (player.Is(RoleEnum.Assassin))
+                if (player.Is(AbilityEnum.Assassin))
                 {
-                    var assassin = Role.GetRole<Assassin>(PlayerControl.LocalPlayer);
+                    var assassin = Ability.GetAbility<Assassin>(PlayerControl.LocalPlayer);
                     ShowHideButtons.HideButtons(assassin);
                 }
             }

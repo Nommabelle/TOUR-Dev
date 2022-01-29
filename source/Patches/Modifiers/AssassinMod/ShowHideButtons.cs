@@ -1,8 +1,8 @@
 ﻿using HarmonyLib;
-using TownOfUs.Roles;
+using TownOfUs.Roles.Modifiers;
 using UnityEngine.UI;
 
-namespace TownOfUs.ImpostorRoles.AssassinMod
+namespace TownOfUs.Modifiers.AssassinMod
 {
     [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Confirm))]
     public class ShowHideButtons
@@ -53,8 +53,8 @@ namespace TownOfUs.ImpostorRoles.AssassinMod
 
         public static void Prefix(MeetingHud __instance)
         {
-            if (!PlayerControl.LocalPlayer.Is(RoleEnum.Assassin)) return;
-            var assassin = Role.GetRole<Assassin>(PlayerControl.LocalPlayer);
+            if (!PlayerControl.LocalPlayer.Is(AbilityEnum.Assassin)) return;
+            var assassin = Ability.GetAbility<Assassin>(PlayerControl.LocalPlayer);
             HideButtons(assassin);
         }
     }

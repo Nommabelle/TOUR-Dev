@@ -6,6 +6,7 @@ using TownOfUs.Roles;
 using UnityEngine;
 using System;
 using Il2CppSystem.Collections.Generic;
+using Object = UnityEngine.Object;
 
 namespace TownOfUs.NeutralRoles.AmnesiacMod
 {
@@ -50,13 +51,8 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
         {
             var role = Utils.GetRole(other);
             var amnesiac = amneRole.Player;
+            List<PlayerTask> tasks1, tasks2;
             List<GameData.TaskInfo> taskinfos1, taskinfos2;
-
-            taskinfos1 = other.Data.Tasks;
-            taskinfos2 = amnesiac.Data.Tasks;
-
-            amnesiac.Data.Tasks = taskinfos1;
-            other.Data.Tasks = taskinfos2;
 
             var rememberImp = true;
             var rememberNeut = true;
@@ -140,17 +136,25 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 new Impostor(other);
                 amnesiac.Data.IsImpostor = true;
                 amnesiac.SetKillTimer(PlayerControl.GameOptions.KillCooldown);
-
+                if (CustomGameOptions.AmneTurnAssassin)
+                {
+                    var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                        (byte)CustomRPC.SetAssassin, SendOption.Reliable, -1);
+                    writer.Write(amnesiac.PlayerId);
+                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                }
                 if (amnesiac.Is(RoleEnum.Poisoner))
                 {
                     if (PlayerControl.LocalPlayer == amnesiac)
                     {
-                        DestroyableSingleton<HudManager>.Instance.KillButton.enabled = false;
-                        DestroyableSingleton<HudManager>.Instance.KillButton.renderer.enabled = false;
                         foreach (var role2 in Role.GetRoles(RoleEnum.Poisoner))
                         {
                             var poisoner = (Poisoner)role2;
                             poisoner.LastPoisoned = DateTime.UtcNow;
+                            if (PlayerControl.LocalPlayer.Is(RoleEnum.Poisoner))
+                            {
+                                DestroyableSingleton<HudManager>.Instance.KillButton.renderer.enabled = false;
+                            }
                         }
                     }
                     else if (PlayerControl.LocalPlayer == other)
@@ -160,6 +164,16 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                     }
                 }
             }
+
+            tasks1 = other.myTasks;
+            taskinfos1 = other.Data.Tasks;
+            tasks2 = amnesiac.myTasks;
+            taskinfos2 = amnesiac.Data.Tasks;
+
+            amnesiac.myTasks = tasks1;
+            amnesiac.Data.Tasks = taskinfos1;
+            other.myTasks = tasks2;
+            other.Data.Tasks = taskinfos2;
 
             if (snitch)
             {
@@ -195,7 +209,21 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 arsoRole.DousedPlayers.RemoveRange(0, arsoRole.DousedPlayers.Count);
             }
 
-            amneRole.RegenTask();
+            if (other.Is(RoleEnum.Crewmate))
+            {
+                var role2 = Role.GetRole<Crewmate>(other);
+                role2.RegenTask();
+            }
+            else if (other.Is(RoleEnum.Jester))
+            {
+                var role2 = Role.GetRole<Jester>(other);
+                role2.RegenTask();
+            }
+            else
+            {
+                var role2 = Role.GetRole<Impostor>(other);
+                role2.RegenTask();
+            }
 
             if (amnesiac.AmOwner || other.AmOwner)
             {
@@ -310,6 +338,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
 
                 DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(false);
                 DestroyableSingleton<HudManager>.Instance.KillButton.isActive = false;
+                
 
                 Lights.SetLights();
             }
