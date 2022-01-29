@@ -115,11 +115,6 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 new Crewmate(amnesiac);
             }
 
-            var snitch = role == RoleEnum.Snitch;
-            var tracker = role == RoleEnum.Tracker;
-            var seer = role == RoleEnum.Seer;
-            var arso = role == RoleEnum.Arsonist;
-
             if (rememberImp == false && (!(role == RoleEnum.Haunter || role == RoleEnum.Phantom)))
             {
                 if (rememberNeut == false)
@@ -147,15 +142,9 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 {
                     if (PlayerControl.LocalPlayer == amnesiac)
                     {
-                        foreach (var role2 in Role.GetRoles(RoleEnum.Poisoner))
-                        {
-                            var poisoner = (Poisoner)role2;
-                            poisoner.LastPoisoned = DateTime.UtcNow;
-                            if (PlayerControl.LocalPlayer.Is(RoleEnum.Poisoner))
-                            {
-                                DestroyableSingleton<HudManager>.Instance.KillButton.renderer.enabled = false;
-                            }
-                        }
+                        var poisonerRole = Role.GetRole<Poisoner>(amnesiac);
+                        poisonerRole.LastPoisoned = DateTime.UtcNow;
+                        DestroyableSingleton<HudManager>.Instance.KillButton.renderer.enabled = false;
                     }
                     else if (PlayerControl.LocalPlayer == other)
                     {
@@ -175,7 +164,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
             other.myTasks = tasks2;
             other.Data.Tasks = taskinfos2;
 
-            if (snitch)
+            if (role == RoleEnum.Snitch)
             {
                 var snitchRole = Role.GetRole<Snitch>(amnesiac);
                 snitchRole.ImpArrows.DestroyAll();
@@ -187,7 +176,38 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                         player.nameText.color = Color.white;
             }
 
-            if (tracker)
+            else if (role == RoleEnum.Sheriff)
+            {
+                var sheriffRole = Role.GetRole<Sheriff>(amnesiac);
+                sheriffRole.LastKilled = DateTime.UtcNow;
+            }
+
+            else if (role == RoleEnum.Engineer)
+            {
+                var engiRole = Role.GetRole<Engineer>(amnesiac);
+                engiRole.UsedThisRound = false;
+            }
+
+            else if (role == RoleEnum.Medic)
+            {
+                var medicRole = Role.GetRole<Medic>(amnesiac);
+                medicRole.UsedAbility = false;
+            }
+
+            else if (role == RoleEnum.Mayor)
+            {
+                var mayorRole = Role.GetRole<Mayor>(amnesiac);
+                mayorRole.VoteBank = CustomGameOptions.MayorVoteBank;
+            }
+
+            else if (role == RoleEnum.Veteran)
+            {
+                var vetRole = Role.GetRole<Veteran>(amnesiac);
+                vetRole.RemainingAlerts = CustomGameOptions.MaxAlerts;
+                vetRole.LastAlerted = DateTime.UtcNow;
+            }
+
+            else if (role == RoleEnum.Tracker)
             {
                 var trackerRole = Role.GetRole<Tracker>(amnesiac);
                 trackerRole.Tracked.RemoveRange(0, trackerRole.Tracked.Count);
@@ -195,18 +215,81 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 trackerRole.TrackerArrows.Clear();
                 trackerRole.TrackerArrows.RemoveRange(0, trackerRole.TrackerArrows.Count);
                 trackerRole.TrackerTargets.RemoveRange(0, trackerRole.TrackerTargets.Count);
+                trackerRole.RemainingTracks = CustomGameOptions.MaxTracks;
+                trackerRole.LastTracked = DateTime.UtcNow;
             }
 
-            if (seer)
+            else if (role == RoleEnum.TimeLord)
+            {
+                var tlRole = Role.GetRole<TimeLord>(amnesiac);
+                tlRole.FinishRewind = DateTime.UtcNow;
+                tlRole.StartRewind = DateTime.UtcNow;
+                tlRole.StartRewind = tlRole.StartRewind.AddSeconds(-10.0f);
+            }
+
+            else if (role == RoleEnum.Seer)
             {
                 var seerRole = Role.GetRole<Seer>(amnesiac);
                 seerRole.Investigated.RemoveRange(0, seerRole.Investigated.Count);
+                seerRole.LastInvestigated = DateTime.UtcNow;
             }
 
-            if (arso)
+            else if (role == RoleEnum.Arsonist)
             {
                 var arsoRole = Role.GetRole<Arsonist>(amnesiac);
                 arsoRole.DousedPlayers.RemoveRange(0, arsoRole.DousedPlayers.Count);
+                arsoRole.LastDoused = DateTime.UtcNow;
+            }
+
+            else if (role == RoleEnum.Glitch)
+            {
+                var glitchRole = Role.GetRole<Glitch>(amnesiac);
+                glitchRole.LastKill = DateTime.UtcNow;
+                glitchRole.LastHack = DateTime.UtcNow;
+                glitchRole.LastMimic = DateTime.UtcNow;
+            }
+
+            else if (role == RoleEnum.Juggernaut)
+            {
+                var juggRole = Role.GetRole<Juggernaut>(amnesiac);
+                juggRole.JuggKills = 0;
+                juggRole.LastKill = DateTime.UtcNow;
+            }
+
+            else if (role == RoleEnum.Camouflager)
+            {
+                var camoRole = Role.GetRole<Camouflager>(amnesiac);
+                camoRole.LastCamouflaged = DateTime.UtcNow;
+            }
+
+            else if (role == RoleEnum.Grenadier)
+            {
+                var grenadeRole = Role.GetRole<Grenadier>(amnesiac);
+                grenadeRole.LastFlashed = DateTime.UtcNow;
+            }
+
+            else if (role == RoleEnum.Morphling)
+            {
+                var morphlingRole = Role.GetRole<Morphling>(amnesiac);
+                morphlingRole.LastMorphed = DateTime.UtcNow;
+            }
+
+            else if (role == RoleEnum.Swooper)
+            {
+                var swooperRole = Role.GetRole<Swooper>(amnesiac);
+                swooperRole.LastSwooped = DateTime.UtcNow;
+            }
+
+            else if (role == RoleEnum.Miner)
+            {
+                var minerRole = Role.GetRole<Miner>(amnesiac);
+                minerRole.LastMined = DateTime.UtcNow;
+            }
+
+            else if (role == RoleEnum.Undertaker)
+            {
+                var dienerRole = Role.GetRole<Undertaker>(amnesiac);
+                dienerRole.LastDragged = DateTime.UtcNow;
             }
 
             if (other.Is(RoleEnum.Crewmate))
@@ -227,118 +310,8 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
 
             if (amnesiac.AmOwner || other.AmOwner)
             {
-                foreach (var sheriffRole in Role.GetRoles(RoleEnum.Sheriff))
-                {
-                    var sheriff = (Sheriff)sheriffRole;
-                    sheriff.LastKilled = DateTime.UtcNow;
-                }
-
-                foreach (var engiRole in Role.GetRoles(RoleEnum.Engineer))
-                {
-                    var engi = (Engineer)engiRole;
-                    engi.UsedThisRound = false;
-                }
-
-                foreach (var medicRole in Role.GetRoles(RoleEnum.Medic))
-                {
-                    var medic = (Medic)medicRole;
-                    medic.UsedAbility = false;
-                }
-
-                foreach (var mayorRole in Role.GetRoles(RoleEnum.Mayor))
-                {
-                    var mayor = (Mayor)mayorRole;
-                    mayor.VoteBank = CustomGameOptions.MayorVoteBank;
-                }
-
-                foreach (var seerRole in Role.GetRoles(RoleEnum.Seer))
-                {
-                    var seer2 = (Seer)seerRole;
-                    seer2.LastInvestigated = DateTime.UtcNow;
-                }
-
-                foreach (var trackerRole in Role.GetRoles(RoleEnum.Tracker))
-                {
-                    var tracker2 = (Tracker)trackerRole;
-                    tracker2.LastTracked = DateTime.UtcNow;
-                    tracker2.RemainingTracks = CustomGameOptions.MaxTracks;
-                }
-
-                foreach (var vetRole in Role.GetRoles(RoleEnum.Veteran))
-                {
-                    var veteran = (Veteran)vetRole;
-                    veteran.LastAlerted = DateTime.UtcNow;
-                    veteran.RemainingAlerts = CustomGameOptions.MaxAlerts;
-                }
-
-                foreach (var timelordRole in Role.GetRoles(RoleEnum.TimeLord))
-                {
-                    var timelord = (TimeLord)timelordRole;
-                    timelord.FinishRewind = DateTime.UtcNow;
-                    timelord.StartRewind = DateTime.UtcNow;
-                    timelord.StartRewind = timelord.StartRewind.AddSeconds(-10.0f);
-                }
-
-                foreach (var arsoRole in Role.GetRoles(RoleEnum.Arsonist))
-                {
-                    var arso2 = (Arsonist)arsoRole;
-                    arso2.LastDoused = DateTime.UtcNow;
-                }
-
-                foreach (var glitchRole in Role.GetRoles(RoleEnum.Glitch))
-                {
-                    var glitch = (Glitch)glitchRole;
-                    glitch.LastHack = DateTime.UtcNow;
-                    glitch.LastMimic = DateTime.UtcNow;
-                    glitch.LastKill = DateTime.UtcNow;
-                }
-
-                foreach (var juggRole in Role.GetRoles(RoleEnum.Juggernaut))
-                {
-                    var jugg = (Juggernaut)juggRole;
-                    jugg.JuggKills = 0;
-                    jugg.LastKill = DateTime.UtcNow;
-                }
-
-                foreach (var camouflageRole in Role.GetRoles(RoleEnum.Camouflager))
-                {
-                    var camouflager = (Camouflager)camouflageRole;
-                    camouflager.LastCamouflaged = DateTime.UtcNow;
-                }
-
-                foreach (var grenadierRole in Role.GetRoles(RoleEnum.Grenadier))
-                {
-                    var grenadier = (Grenadier)grenadierRole;
-                    grenadier.LastFlashed = DateTime.UtcNow;
-                }
-
-                foreach (var morphlingRole in Role.GetRoles(RoleEnum.Morphling))
-                {
-                    var morphling = (Morphling)morphlingRole;
-                    morphling.LastMorphed = DateTime.UtcNow;
-                }
-
-                foreach (var swooperRole in Role.GetRoles(RoleEnum.Swooper))
-                {
-                    var swooper = (Swooper)swooperRole;
-                    swooper.LastSwooped = DateTime.UtcNow;
-                }
-
-                foreach (var undertakerRole in Role.GetRoles(RoleEnum.Undertaker))
-                {
-                    var undertaker = (Undertaker)undertakerRole;
-                    undertaker.LastDragged = DateTime.UtcNow;
-                }
-
-                foreach (var minerRole in Role.GetRoles(RoleEnum.Miner))
-                {
-                    var miner = (Miner)minerRole;
-                    miner.LastMined = DateTime.UtcNow;
-                }
-
                 DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(false);
                 DestroyableSingleton<HudManager>.Instance.KillButton.isActive = false;
-                
 
                 Lights.SetLights();
             }
