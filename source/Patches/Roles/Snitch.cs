@@ -79,7 +79,7 @@ namespace TownOfUs.Roles
             );
             if(Local)
                 return PlayerName + "\n" + "Crewmate";
-            return PlayerName + "\n" + "Crewmate";
+            return PlayerName;
         }
     }
 }
