@@ -131,6 +131,13 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 new Impostor(other);
                 amnesiac.Data.IsImpostor = true;
                 amnesiac.SetKillTimer(PlayerControl.GameOptions.KillCooldown);
+                foreach (var player in PlayerControl.AllPlayerControls)
+                {
+                    if (player.Data.IsImpostor && PlayerControl.LocalPlayer.Data.IsImpostor)
+                    {
+                        player.nameText.color = Patches.Colors.Impostor;
+                    }
+                }
                 if (CustomGameOptions.AmneTurnAssassin)
                 {
                     var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
@@ -292,6 +299,12 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 dienerRole.LastDragged = DateTime.UtcNow;
             }
 
+            else if (!(amnesiac.Is(RoleEnum.Altruist) || amnesiac.Is(RoleEnum.Amnesiac) || amnesiac.Is(Faction.Impostors)))
+            {
+                DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(false);
+                DestroyableSingleton<HudManager>.Instance.KillButton.isActive = false;
+            }
+
             if (other.Is(RoleEnum.Crewmate))
             {
                 var role2 = Role.GetRole<Crewmate>(other);
@@ -308,13 +321,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 role2.RegenTask();
             }
 
-            if (amnesiac.AmOwner || other.AmOwner)
-            {
-                DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(false);
-                DestroyableSingleton<HudManager>.Instance.KillButton.isActive = false;
-
-                Lights.SetLights();
-            }
+            Lights.SetLights();
         }
     }
 }
