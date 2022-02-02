@@ -1074,9 +1074,9 @@ If you have any bugs or any need to contact me, join the [Discord Server](https:
 [Among-Us-Love-Couple-Mod](https://github.com/Woodi-dev/Among-Us-Love-Couple-Mod) - For the inspiration of Lovers role.\
 [ExtraRolesAmongUs](https://github.com/NotHunter101/ExtraRolesAmongUs) - For the Engineer & Medic roles.\
 [TooManyRolesMods](https://github.com/Hardel-DW/TooManyRolesMods) - For the Investigator & Time Lord roles.\
-[TorchMod](https://github.com/tomozbot/TorchMod) - For the inspiration of the Torch Mod.\
+[TorchMod](https://github.com/tomozbot/TorchMod) - For the inspiration of the Torch modifier.\
 [XtraCube](https://github.com/XtraCube) - For the RainbowMod.\
-[PhasmoFireGod](https://twitch.tv/PhasmoFireGod) - Button Art.\
+[PhasmoFireGod](https://twitch.tv/PhasmoFireGod) and [Ophidian](https://www.instagram.com/ixean.studio) - Button Art.\
 [TheOtherRoles](https://github.com/Eisbison/TheOtherRoles) - For the inspiration of the Vigilante, Tracker and Spy roles, as well as the Bait modifier.\
 [5up](https://www.twitch.tv/5uppp) and the Submarine Team - For the inspiration of the Grenadier role.\
 [Guus](https://github.com/OhMyGuus) - For support for the new Among Us versions (v2021.11.9.5 and v2021.12.15).\
