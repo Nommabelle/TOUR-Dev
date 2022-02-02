@@ -474,7 +474,7 @@ Every footprint disappears after a set amount of time.
 |----------|:-------------:|:------:|:------:|
 | Investigator | The percentage probability of the Investigator appearing | Percentage | 0% |
 | Footprint Size | The size of the footprint on a scale of 1 to 10 | Number | 4 |
-| Footprint Interval | The time interval between two footprints | Time | 1s |
+| Footprint Interval | The time interval between two footprints | Time | 0.1s |
 | Footprint Duration | The amount of time that the footprint stays on the ground for | Time | 10s |
 | Anonymous Footprint | When enabled, all footprints are grey instead of the player's colors | Toggle | False
 | Footprint Vent Visible | Whether footprints near vents are shown | Toggle | False
@@ -1079,9 +1079,9 @@ If you have any bugs or any need to contact me, join the [Discord Server](https:
 [PhasmoFireGod](https://twitch.tv/PhasmoFireGod) - Button Art.\
 [TheOtherRoles](https://github.com/Eisbison/TheOtherRoles) - For the inspiration of the Vigilante, Tracker and Spy roles, as well as the Bait modifier.\
 [5up](https://www.twitch.tv/5uppp) and the Submarine Team - For the inspiration of the Grenadier role.\
-[Guus](https://github.com/OhMyGuus) For support for the new Among Us versions (v2021.11.9.5 and v2021.12.15).\
-[ItsTheNumberH](https://github.com/itsTheNumberH/Town-Of-H) For the code used for Bait, Poisoner and partially for Tracker.\
-[Ruiner](https://github.com/ruiner189/Town-Of-Us-Redux) For lovers changed into a modifier and Task Tracking.
+[Guus](https://github.com/OhMyGuus) - For support for the new Among Us versions (v2021.11.9.5 and v2021.12.15).\
+[ItsTheNumberH](https://github.com/itsTheNumberH/Town-Of-H) - For the code used for Bait, Poisoner and partially for Tracker.\
+[Ruiner](https://github.com/ruiner189/Town-Of-Us-Redux) - For lovers changed into a modifier and Task Tracking.
 
 [Essentials](https://github.com/DorCoMaNdO/Reactor-Essentials) - For created custom game options.\
 v1.0.3 uses [Essentials](https://github.com/DorCoMaNdO/Reactor-Essentials) directly.\
