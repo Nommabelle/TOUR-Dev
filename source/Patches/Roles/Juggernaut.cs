@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using TownOfUs.CrewmateRoles.MedicMod;
 using UnityEngine;
+using TownOfUs.Extensions;
 
 namespace TownOfUs.Roles
 {
@@ -56,7 +57,7 @@ namespace TownOfUs.Roles
 
         public void Loses()
         {
-            Player.Data.IsImpostor = true;
+            LostByRPC = true;
         }
 
         public void Update(HudManager __instance)
@@ -90,7 +91,7 @@ namespace TownOfUs.Roles
                 __instance.KillButton.SetTarget(null);
         }
 
-        public bool UseAbility(KillButtonManager __instance)
+        public bool UseAbility(KillButton __instance)
         {
             KillButtonHandler.KillButtonPress(this, __instance);
 
@@ -101,8 +102,8 @@ namespace TownOfUs.Roles
         {
             public static void KillButtonUpdate(Juggernaut __gInstance, HudManager __instance)
             {
-                if (!__gInstance.Player.Data.IsImpostor && Input.GetKeyDown(KeyCode.Q))
-                    __instance.KillButton.PerformKill();
+                if (!__gInstance.Player.Data.IsImpostor() && Input.GetKeyDown(KeyCode.Q))
+                    __instance.KillButton.DoClick();
 
                 __instance.KillButton.gameObject.SetActive(__instance.UseButton.isActiveAndEnabled &&
                                                            !__gInstance.Player.Data.IsDead);
@@ -124,7 +125,7 @@ namespace TownOfUs.Roles
                     __gInstance.KillTarget.myRend.material.SetColor("_OutlineColor", __gInstance.Color);
             }
 
-            public static void KillButtonPress(Juggernaut __gInstance, KillButtonManager __instance)
+            public static void KillButtonPress(Juggernaut __gInstance, KillButton __instance)
             {
                 if (__gInstance.KillTarget != null)
                 {
@@ -199,7 +200,7 @@ namespace TownOfUs.Roles
             }
         }
 
-        protected override void IntroPrefix(IntroCutscene._CoBegin_d__14 __instance)
+        protected override void IntroPrefix(IntroCutscene._CoBegin_d__18 __instance)
         {
             var juggTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
             juggTeam.Add(PlayerControl.LocalPlayer);

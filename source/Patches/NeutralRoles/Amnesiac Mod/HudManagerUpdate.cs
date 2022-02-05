@@ -50,12 +50,12 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
             if (isDead)
             {
                 killButton.gameObject.SetActive(false);
-                killButton.isActive = false;
+                // killButton.isActive = false;
             }
             else
             {
                 killButton.gameObject.SetActive(!MeetingHud.Instance);
-                killButton.isActive = !MeetingHud.Instance;
+                // killButton.isActive = !MeetingHud.Instance;
             }
 
             KillButtonTarget.SetTarget(killButton, closestBody, role);

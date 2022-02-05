@@ -1,6 +1,7 @@
 using System.Linq;
 using HarmonyLib;
 using Reactor;
+using TownOfUs.Extensions;
 using TownOfUs.Roles;
 using UnityEngine;
 
@@ -34,7 +35,7 @@ namespace TownOfUs.CrewmateRoles.SnitchMod
                         {
                             Coroutines.Start(Utils.FlashCoroutine(role.Color));
                         }
-                        else if (PlayerControl.LocalPlayer.Data.IsImpostor || ((PlayerControl.LocalPlayer.Is(RoleEnum.Glitch) || PlayerControl.LocalPlayer.Is(RoleEnum.Juggernaut)) && CustomGameOptions.SnitchSeesNeutrals))
+                        else if (PlayerControl.LocalPlayer.Data.IsImpostor() || ((PlayerControl.LocalPlayer.Is(RoleEnum.Glitch) || PlayerControl.LocalPlayer.Is(RoleEnum.Juggernaut)) && CustomGameOptions.SnitchSeesNeutrals))
                         {
                             Coroutines.Start(Utils.FlashCoroutine(role.Color));
                             var gameObj = new GameObject();
@@ -54,7 +55,7 @@ namespace TownOfUs.CrewmateRoles.SnitchMod
                     if (PlayerControl.LocalPlayer.Is(RoleEnum.Snitch))
                     {
                         Coroutines.Start(Utils.FlashCoroutine(Color.green));
-                        var impostors = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Data.IsImpostor);
+                        var impostors = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Data.IsImpostor());
                         foreach (var imp in impostors)
                         {
                             var gameObj = new GameObject();
@@ -68,7 +69,7 @@ namespace TownOfUs.CrewmateRoles.SnitchMod
                             role.SnitchTargets.Add(imp);
                         }
                     }
-                    else if (PlayerControl.LocalPlayer.Data.IsImpostor || ((PlayerControl.LocalPlayer.Is(RoleEnum.Glitch) || PlayerControl.LocalPlayer.Is(RoleEnum.Juggernaut)) && CustomGameOptions.SnitchSeesNeutrals))
+                    else if (PlayerControl.LocalPlayer.Data.IsImpostor() || ((PlayerControl.LocalPlayer.Is(RoleEnum.Glitch) || PlayerControl.LocalPlayer.Is(RoleEnum.Juggernaut)) && CustomGameOptions.SnitchSeesNeutrals))
                     {
                         Coroutines.Start(Utils.FlashCoroutine(Color.green));
                     }

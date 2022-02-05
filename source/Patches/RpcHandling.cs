@@ -867,11 +867,14 @@ namespace TownOfUs
             }
         }
 
-        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.RpcSetInfected))]
-        public static class RpcSetInfected
+        [HarmonyPatch(typeof(RoleManager), nameof(RoleManager.SelectRoles))]
+        public static class RpcSetRole
         {
-            public static void Prefix([HarmonyArgument(0)] ref Il2CppReferenceArray<GameData.PlayerInfo> infected)
+            public static void Postfix()
             {
+                PluginSingleton<TownOfUs>.Instance.Log.LogMessage("RPC SET ROLE");
+                var infected = GameData.Instance.AllPlayers.ToArray().Where(o => o.IsImpostor());
+
                 Utils.ShowDeadBodies = false;
                 Role.NobodyWins = false;
                 CrewmateRoles.Clear();

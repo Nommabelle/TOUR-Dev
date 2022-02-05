@@ -28,7 +28,7 @@ namespace TownOfUs.CrewmateRoles.VeteranMod
             if (isDead)
             {
                 alertButton.gameObject.SetActive(false);
-                alertButton.isActive = false;
+                // alertButton.isActive = false;
             }
             else if (role.OnAlert)
             {
@@ -38,13 +38,13 @@ namespace TownOfUs.CrewmateRoles.VeteranMod
             else
             {
                 alertButton.gameObject.SetActive(!MeetingHud.Instance);
-                alertButton.isActive = !MeetingHud.Instance;
+                // alertButton.isActive = !MeetingHud.Instance;
                 alertButton.SetCoolDown(role.AlertTimer(), CustomGameOptions.AlertCd);
                 if (role.RemainingAlerts == 0) return;
             }
 
-            alertButton.renderer.color = Palette.EnabledColor;
-            alertButton.renderer.material.SetFloat("_Desat", 0f);
+            alertButton.graphic.color = Palette.EnabledColor;
+            alertButton.graphic.material.SetFloat("_Desat", 0f);
         }
     }
 }

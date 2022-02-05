@@ -10,8 +10,7 @@ namespace TownOfUs
     [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnGameEnd))]
     public class AmongUsClient_OnGameEnd
     {
-        public static void Postfix(AmongUsClient __instance, [HarmonyArgument(0)] GameOverReason reason,
-            [HarmonyArgument(0)] bool showAd)
+        public static void Postfix(AmongUsClient __instance, [HarmonyArgument(0)] EndGameResult endGameResult)
         {
             Utils.potentialWinners.Clear();
             foreach (var player in PlayerControl.AllPlayerControls)
@@ -24,6 +23,13 @@ namespace TownOfUs
     {
         public static void Prefix()
         {
+            var toRemoveColorIds = Role.AllRoles.Where(o => o.LostByRPC).Select(o => o.Player.Data.DefaultOutfit.ColorId).ToArray();
+            var toRemoveWinners = TempData.winners.ToArray().Where(o => toRemoveColorIds.Contains(o.ColorId)).ToArray();
+            for (int i = 0; i < toRemoveWinners.Count(); i++)
+            {
+                TempData.winners.Remove(toRemoveWinners[i]);
+            }
+            
             if (Role.NobodyWins)
             {
                 TempData.winners = new List<WinningPlayerData>();
@@ -37,7 +43,7 @@ namespace TownOfUs
                 {
                     var jester = (Jester)role;
                     if (jester.VotedOut) {
-                        var winners = Utils.potentialWinners.Where(x => x.Name == jester.PlayerName).ToList();
+                        var winners = Utils.potentialWinners.Where(x => x._playerName == jester.PlayerName).ToList();
                         TempData.winners = new List<WinningPlayerData>();
                         foreach (var win in winners)
                         {
@@ -53,7 +59,7 @@ namespace TownOfUs
                     var executioner = (Executioner) role;
                     if (executioner.TargetVotedOut)
                     {
-                        var winners = Utils.potentialWinners.Where(x => x.Name == executioner.PlayerName).ToList();
+                        var winners = Utils.potentialWinners.Where(x => x._playerName == executioner.PlayerName).ToList();
                         TempData.winners = new List<WinningPlayerData>();
                         foreach (var win in winners) TempData.winners.Add(win);
                         return;
@@ -64,7 +70,7 @@ namespace TownOfUs
                     var glitch = (Glitch) role;
                     if (glitch.GlitchWins)
                     {
-                        var winners = Utils.potentialWinners.Where(x => x.Name == glitch.PlayerName).ToList();
+                        var winners = Utils.potentialWinners.Where(x => x._playerName == glitch.PlayerName).ToList();
                         TempData.winners = new List<WinningPlayerData>();
                         foreach (var win in winners) TempData.winners.Add(win);
                         return;
@@ -75,7 +81,7 @@ namespace TownOfUs
                     var juggernaut = (Juggernaut)role;
                     if (juggernaut.JuggernautWins)
                     {
-                        var winners = Utils.potentialWinners.Where(x => x.Name == juggernaut.PlayerName).ToList();
+                        var winners = Utils.potentialWinners.Where(x => x._playerName == juggernaut.PlayerName).ToList();
                         TempData.winners = new List<WinningPlayerData>();
                         foreach (var win in winners) TempData.winners.Add(win);
                         return;
@@ -86,7 +92,7 @@ namespace TownOfUs
                     var arsonist = (Arsonist)role;
                     if (arsonist.ArsonistWins)
                     {
-                        var winners = Utils.potentialWinners.Where(x => x.Name == arsonist.PlayerName).ToList();
+                        var winners = Utils.potentialWinners.Where(x => x._playerName == arsonist.PlayerName).ToList();
                         TempData.winners = new List<WinningPlayerData>();
                         foreach (var win in winners) TempData.winners.Add(win);
                         return;
@@ -97,7 +103,7 @@ namespace TownOfUs
                     var phantom = (Phantom)role;
                     if(phantom.CompletedTasks)
                     {
-                        var winners = Utils.potentialWinners.Where(x => x.Name == phantom.PlayerName).ToList();
+                        var winners = Utils.potentialWinners.Where(x => x._playerName == phantom.PlayerName).ToList();
                         TempData.winners = new List<WinningPlayerData>();
                         foreach (var win in winners) TempData.winners.Add(win);
                     }
@@ -117,8 +123,8 @@ namespace TownOfUs
                         var otherLover = lover.OtherLover;
                         List<WinningPlayerData> winners = new List<WinningPlayerData>();
                         foreach(var player in Utils.potentialWinners){
-                            if (player.Name == lover.PlayerName ||
-                               player.Name == otherLover.PlayerName) winners.Add(player);
+                            if (player._playerName == lover.PlayerName ||
+                               player._playerName == otherLover.PlayerName) winners.Add(player);
                         }
                         TempData.winners = new List<WinningPlayerData>();
                         foreach (var win in winners) TempData.winners.Add(win);

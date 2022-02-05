@@ -8,13 +8,13 @@ using TownOfUs.CrewmateRoles.MedicMod;
 
 namespace TownOfUs.ImpostorRoles.PoisonerMod
 {
-    [HarmonyPatch(typeof(KillButtonManager), nameof(KillButtonManager.PerformKill))]
+    [HarmonyPatch(typeof(KillButton), nameof(KillButton.DoClick))]
     public class PerformPoisonKill
     {
         public static Sprite PoisonSprite => TownOfUs.PoisonSprite;
         public static Sprite PoisonedSprite => TownOfUs.PoisonedSprite;
 
-        public static bool Prefix(KillButtonManager __instance)
+        public static bool Prefix(KillButton __instance)
         {
             var flag = PlayerControl.LocalPlayer.Is(RoleEnum.Poisoner);
             if (!flag) return true;

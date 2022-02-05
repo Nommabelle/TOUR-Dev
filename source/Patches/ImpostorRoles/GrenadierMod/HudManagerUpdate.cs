@@ -19,15 +19,15 @@ namespace TownOfUs.ImpostorRoles.GrenadierMod
             var role = Role.GetRole<Grenadier>(PlayerControl.LocalPlayer);
             if (role.FlashButton == null)
             {
-                role.FlashButton = Object.Instantiate(__instance.KillButton, HudManager.Instance.transform);
-                role.FlashButton.renderer.enabled = true;
+                role.FlashButton = Object.Instantiate(__instance.KillButton, __instance.KillButton.transform.parent);
+                role.FlashButton.graphic.enabled = true;
+                role.FlashButton.GetComponent<AspectPosition>().DistanceFromEdge = TownOfUs.ButtonPosition;
+                role.FlashButton.gameObject.SetActive(false);
             }
 
-            role.FlashButton.renderer.sprite = FlashSprite;
+            role.FlashButton.GetComponent<AspectPosition>().Update();
+            role.FlashButton.graphic.sprite = FlashSprite;
             role.FlashButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
-            var position = __instance.KillButton.transform.localPosition;
-            role.FlashButton.transform.localPosition = new Vector3(position.x,
-                __instance.ReportButton.transform.localPosition.y, position.z);
 
             if (role.Flashed)
             {
@@ -44,13 +44,13 @@ namespace TownOfUs.ImpostorRoles.GrenadierMod
 
             if (sabActive & !dummyActive)
             {
-                role.FlashButton.renderer.color = Palette.DisabledClear;
-                role.FlashButton.renderer.material.SetFloat("_Desat", 1f);
+                role.FlashButton.graphic.color = Palette.DisabledClear;
+                role.FlashButton.graphic.material.SetFloat("_Desat", 1f);
                 return;
             }
 
-            role.FlashButton.renderer.color = Palette.EnabledColor;
-            role.FlashButton.renderer.material.SetFloat("_Desat", 0f);
+            role.FlashButton.graphic.color = Palette.EnabledColor;
+            role.FlashButton.graphic.material.SetFloat("_Desat", 0f);
         }
     }
 }

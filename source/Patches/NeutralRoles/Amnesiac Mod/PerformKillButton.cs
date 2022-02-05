@@ -7,15 +7,16 @@ using UnityEngine;
 using System;
 using Il2CppSystem.Collections.Generic;
 using Object = UnityEngine.Object;
+using TownOfUs.Extensions;
 
 namespace TownOfUs.NeutralRoles.AmnesiacMod
 {
-    [HarmonyPatch(typeof(KillButtonManager), nameof(KillButtonManager.PerformKill))]
+    [HarmonyPatch(typeof(KillButton), nameof(KillButton.DoClick))]
     [HarmonyPriority(Priority.Last)]
     public class PerformKillButton
 
     {
-        public static bool Prefix(KillButtonManager __instance)
+        public static bool Prefix(KillButton __instance)
         {
             if (__instance != DestroyableSingleton<HudManager>.Instance.KillButton) return true;
             var flag = PlayerControl.LocalPlayer.Is(RoleEnum.Amnesiac);
@@ -129,11 +130,12 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
             else if (rememberImp == true)
             {
                 new Impostor(other);
-                amnesiac.Data.IsImpostor = true;
+                amnesiac.Data.Role.TeamType = RoleTeamTypes.Impostor;
+                RoleManager.Instance.SetRole(amnesiac, RoleTypes.Impostor);
                 amnesiac.SetKillTimer(PlayerControl.GameOptions.KillCooldown);
                 foreach (var player in PlayerControl.AllPlayerControls)
                 {
-                    if (player.Data.IsImpostor && PlayerControl.LocalPlayer.Data.IsImpostor)
+                    if (player.Data.IsImpostor() && PlayerControl.LocalPlayer.Data.IsImpostor())
                     {
                         player.nameText.color = Patches.Colors.Impostor;
                     }
@@ -151,12 +153,12 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                     {
                         var poisonerRole = Role.GetRole<Poisoner>(amnesiac);
                         poisonerRole.LastPoisoned = DateTime.UtcNow;
-                        DestroyableSingleton<HudManager>.Instance.KillButton.renderer.enabled = false;
+                        DestroyableSingleton<HudManager>.Instance.KillButton.graphic.enabled = false;
                     }
                     else if (PlayerControl.LocalPlayer == other)
                     {
                         DestroyableSingleton<HudManager>.Instance.KillButton.enabled = true;
-                        DestroyableSingleton<HudManager>.Instance.KillButton.renderer.enabled = true;
+                        DestroyableSingleton<HudManager>.Instance.KillButton.graphic.enabled = true;
                     }
                 }
             }
@@ -302,7 +304,6 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
             else if (!(amnesiac.Is(RoleEnum.Altruist) || amnesiac.Is(RoleEnum.Amnesiac) || amnesiac.Is(Faction.Impostors)))
             {
                 DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(false);
-                DestroyableSingleton<HudManager>.Instance.KillButton.isActive = false;
             }
 
             if (other.Is(RoleEnum.Crewmate))
@@ -320,7 +321,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 var role2 = Role.GetRole<Impostor>(other);
                 role2.RegenTask();
             }
-
+            
             Lights.SetLights();
         }
     }

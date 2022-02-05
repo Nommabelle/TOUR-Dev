@@ -28,12 +28,12 @@ namespace TownOfUs.CrewmateRoles.TrackerMod
             if (isDead)
             {
                 trackButton.gameObject.SetActive(false);
-                trackButton.isActive = false;
+                // trackButton.isActive = false;
             }
             else
             {
                 trackButton.gameObject.SetActive(!MeetingHud.Instance);
-                trackButton.isActive = !MeetingHud.Instance;
+                // trackButton.isActive = !MeetingHud.Instance;
                 trackButton.SetCoolDown(role.TrackerTimer(), CustomGameOptions.TrackCd);
                 if (role.RemainingTracks == 0) return;
 

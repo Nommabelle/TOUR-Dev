@@ -24,7 +24,7 @@ namespace TownOfUs.Modifiers.AssassinMod
             var player = Utils.PlayerById(voteArea.TargetPlayerId);
             if (
                 player == null ||
-                player.Data.IsImpostor ||
+                player.Data.IsImpostor() ||
                 player.Data.IsDead ||
                 player.Data.Disconnected
             ) return true;

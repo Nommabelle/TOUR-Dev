@@ -1,18 +1,19 @@
 using HarmonyLib;
 using TownOfUs.CrewmateRoles.MedicMod;
 using Hazel;
+using TownOfUs.Extensions;
 
 namespace TownOfUs
 {
-    [HarmonyPatch(typeof(KillButtonManager), nameof(KillButtonManager.PerformKill))]
+    [HarmonyPatch(typeof(KillButton), nameof(KillButton.DoClick))]
     public class StopImpKill
     {
         [HarmonyPriority(Priority.First)]
-        public static bool Prefix(KillButtonManager __instance)
+        public static bool Prefix(KillButton __instance)
         {
             if (__instance != DestroyableSingleton<HudManager>.Instance.KillButton) return true;
-            if (!PlayerControl.LocalPlayer.Data.IsImpostor) return true;
-            var target = __instance.CurrentTarget;
+            if (!PlayerControl.LocalPlayer.Data.IsImpostor()) return true;
+            var target = __instance.currentTarget;
             if (target == null) return true;
             if (target.IsOnAlert())
             {

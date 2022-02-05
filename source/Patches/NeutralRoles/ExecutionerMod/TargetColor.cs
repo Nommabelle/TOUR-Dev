@@ -68,7 +68,7 @@ namespace TownOfUs.NeutralRoles.ExecutionerMod
                 var task = new GameObject("JesterTask").AddComponent<ImportantTextTask>();
                 task.transform.SetParent(player.transform, false);
                 task.Text =
-                    $"{jester.ColorString}Role: {jester.Name}\nYour target was killed. Now you get voted out!\nFake Tasks:[]";
+                    $"{jester.ColorString}Role: {jester.Name}\nYour target was killed. Now you get voted out!\nFake Tasks:";
                 player.myTasks.Insert(0, task);
             }
             else if (CustomGameOptions.OnTargetDead == OnTargetDead.Amnesiac)
@@ -77,7 +77,7 @@ namespace TownOfUs.NeutralRoles.ExecutionerMod
                 var task = new GameObject("ShifterTask").AddComponent<ImportantTextTask>();
                 task.transform.SetParent(player.transform, false);
                 task.Text =
-                    $"{amnesiac.ColorString}Role: {amnesiac.Name}\nYour target was killed. Now remember a new role!\nFake Tasks:[]";
+                    $"{amnesiac.ColorString}Role: {amnesiac.Name}\nYour target was killed. Now remember a new role!\nFake Tasks:";
                 player.myTasks.Insert(0, task);
             }
             else

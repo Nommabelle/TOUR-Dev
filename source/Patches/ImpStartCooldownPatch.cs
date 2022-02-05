@@ -1,4 +1,7 @@
 using HarmonyLib;
+using System;
+using UnityEngine;
+using TownOfUs.Extensions;
 
 namespace TownOfUs
 {
@@ -8,10 +11,9 @@ namespace TownOfUs
         [HarmonyPriority(Priority.First)]
         public static void Prefix(PlayerControl __instance, ref float time)
         {
-            if (
-                PlayerControl.GameOptions.KillCooldown > 10
-                && __instance.Data.IsImpostor && time == 10
-                && (__instance.killTimer > time || __instance.killTimer == 0))
+            if (PlayerControl.GameOptions.KillCooldown > 10
+                && __instance.Data.IsImpostor() && time == 10
+                && Math.Abs(__instance.killTimer - time) > 2 * Time.deltaTime)
             {
                 time = CustomGameOptions.InitialCooldowns;
             }

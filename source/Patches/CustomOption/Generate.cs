@@ -72,6 +72,7 @@ namespace TownOfUs.CustomOption
         public static CustomToggleOption MeetingColourblind;
         public static CustomToggleOption ImpostorSeeRoles;
         public static CustomToggleOption DeadSeeRoles;
+        public static CustomToggleOption DeadSeeVotes;
         public static CustomNumberOption MaxNeutralRoles;
         public static CustomNumberOption VanillaGame;
         public static CustomNumberOption InitialCooldowns;
@@ -263,7 +264,7 @@ namespace TownOfUs.CustomOption
                 PercentFormat);
             VeteranOn = new CustomNumberOption(true, num++, "<color=#998040FF>Veteran</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
-            VigilanteOn = new CustomNumberOption(true, num++, "<color=#CCFF00FF>Vigilante</color>", 0f, 0f, 100f, 10f,
+            VigilanteOn = new CustomNumberOption(true, num++, "<color=#FFFF99FF>Vigilante</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
 
             CrewProtectiveRoles = new CustomHeaderOption(num++, "Crewmate Protective Roles");
@@ -354,6 +355,8 @@ namespace TownOfUs.CustomOption
             ImpostorSeeRoles = new CustomToggleOption(num++, "Impostors Can See The Roles Of Their Team", false);
             DeadSeeRoles =
                 new CustomToggleOption(num++, "Dead Can See Everyone's Roles", false);
+            DeadSeeVotes =
+                new CustomToggleOption(num++, "Dead Can See Everyone's Votes", false);
             MaxNeutralRoles =
                 new CustomNumberOption(num++, "Max Neutral Roles", 1f, 1f, 5f, 1f);
             VanillaGame = new CustomNumberOption(num++, "Probability Of A Completely Vanilla Game", 0f, 0f, 100f, 5f,
@@ -445,7 +448,7 @@ namespace TownOfUs.CustomOption
                 new CustomNumberOption(num++, "Alert Duration", 10, 5, 15, 1f, CooldownFormat);
             MaxAlerts = new CustomNumberOption(num++, "Maximum Number Of Alerts", 5, 1, 15, 1);
 
-            Vigilante = new CustomHeaderOption(num++, "<color=#CCFF00FF>Vigilante</color>");
+            Vigilante = new CustomHeaderOption(num++, "<color=#FFFF99FF>Vigilante</color>");
             VigilanteKills = new CustomNumberOption(num++, "Number Of Vigilante Kills", 1, 1, 15, 1);
             VigilanteGuessNeutrals = new CustomToggleOption(num++, "Vigilante Can Guess Neutral Roles", false);
             VigilanteMultiKill = new CustomToggleOption(num++, "Vigilante Can Kill More Than Once Per Meeting", false);

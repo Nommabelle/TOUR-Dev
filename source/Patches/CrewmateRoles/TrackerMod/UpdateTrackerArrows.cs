@@ -2,6 +2,7 @@ using HarmonyLib;
 using TownOfUs.Roles;
 using UnityEngine;
 using TownOfUs.ImpostorRoles.CamouflageMod;
+using TownOfUs.Extensions;
 
 namespace TownOfUs.CrewmateRoles.TrackerMod
 {
@@ -44,13 +45,13 @@ namespace TownOfUs.CrewmateRoles.TrackerMod
                             renderer.sprite = Sprite;
                             if (!CamouflageUnCamouflage.IsCamoed)
                             {
-                                if (RainbowUtils.IsRainbow(player.Data.ColorId))
+                                if (RainbowUtils.IsRainbow(player.GetDefaultOutfit().ColorId))
                                 {
                                     renderer.color = RainbowUtils.Rainbow;
                                 }
                                 else
                                 {
-                                    renderer.color = Palette.PlayerColors[player.Data.ColorId];
+                                    renderer.color = Palette.PlayerColors[player.GetDefaultOutfit().ColorId];
                                 }
                             }
                             else

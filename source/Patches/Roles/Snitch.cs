@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TownOfUs.Extensions;
 using TownOfUs.ImpostorRoles.CamouflageMod;
 using UnityEngine;
 
@@ -30,7 +31,7 @@ namespace TownOfUs.Roles
 
         internal override bool Criteria()
         {
-            return Revealed && PlayerControl.LocalPlayer.Data.IsImpostor && !Player.Data.IsDead ||
+            return Revealed && PlayerControl.LocalPlayer.Data.IsImpostor() && !Player.Data.IsDead ||
                    base.Criteria();
         }
 
@@ -47,7 +48,7 @@ namespace TownOfUs.Roles
         internal override bool RoleCriteria()
         {
             var localPlayer = PlayerControl.LocalPlayer;
-            if (localPlayer.Data.IsImpostor && !Player.Data.IsDead)
+            if (localPlayer.Data.IsImpostor() && !Player.Data.IsDead)
             {
                 return Revealed;
             }
@@ -74,7 +75,7 @@ namespace TownOfUs.Roles
                                    MeetingHud.Instance.state == MeetingHud.VoteStates.Results)) return PlayerName;
             Player.nameText.transform.localPosition = new Vector3(
                 0f,
-                Player.Data.HatId == 0U ? 1.5f : 2.0f,
+                Player.Data.DefaultOutfit.HatId == "hat_NoHat" ? 1.5f : 2.0f,
                 -0.5f
             );
             if(Local)

@@ -13,7 +13,7 @@ namespace TownOfUs.CrewmateRoles.SeerMod
             if (ExileController.Instance == null || obj != ExileController.Instance.gameObject) return;
             foreach (var role in Role.GetRoles(RoleEnum.Seer))
             {
-                var seer = (Seer)role;
+                var seer = (Seer) role;
                 seer.LastInvestigated = DateTime.UtcNow;
             }
         }

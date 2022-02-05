@@ -1,4 +1,5 @@
 using Il2CppSystem.Collections.Generic;
+using TownOfUs.Extensions;
 using UnityEngine;
 
 namespace TownOfUs.Roles
@@ -18,6 +19,13 @@ namespace TownOfUs.Roles
             Faction = Faction.Neutral;
         }
 
+        protected override void IntroPrefix(IntroCutscene._CoBegin_d__18 __instance)
+        {
+            var jesterTeam = new List<PlayerControl>();
+            jesterTeam.Add(PlayerControl.LocalPlayer);
+            __instance.yourTeam = jesterTeam;
+        }
+
         internal override bool EABBNOODFGL(ShipStatus __instance)
         {
             if (!VotedOut || !Player.Data.IsDead && !Player.Data.Disconnected) return true;
@@ -33,14 +41,7 @@ namespace TownOfUs.Roles
 
         public void Loses()
         {
-            Player.Data.IsImpostor = true;
-        }
-
-        protected override void IntroPrefix(IntroCutscene._CoBegin_d__14 __instance)
-        {
-            var jesterTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
-            jesterTeam.Add(PlayerControl.LocalPlayer);
-            __instance.yourTeam = jesterTeam;
+            LostByRPC = true;
         }
     }
 }

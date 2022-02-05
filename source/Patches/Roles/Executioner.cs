@@ -1,3 +1,7 @@
+using Il2CppSystem.Collections.Generic;
+using TownOfUs.Extensions;
+using UnityEngine;
+
 namespace TownOfUs.Roles
 {
     public class Executioner : Role
@@ -20,6 +24,13 @@ namespace TownOfUs.Roles
             Scale = 1.4f;
         }
 
+        protected override void IntroPrefix(IntroCutscene._CoBegin_d__18 __instance)
+        {
+            var executionerteam = new List<PlayerControl>();
+            executionerteam.Add(PlayerControl.LocalPlayer);
+            __instance.yourTeam = executionerteam;
+        }
+
         internal override bool EABBNOODFGL(ShipStatus __instance)
         {
             if (Player.Data.IsDead) return true;
@@ -36,14 +47,7 @@ namespace TownOfUs.Roles
 
         public void Loses()
         {
-            Player.Data.IsImpostor = true;
-        }
-
-        protected override void IntroPrefix(IntroCutscene._CoBegin_d__14 __instance)
-        {
-            var executionerTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
-            executionerTeam.Add(PlayerControl.LocalPlayer);
-            __instance.yourTeam = executionerTeam;
+            LostByRPC = true;
         }
     }
 }

@@ -1,11 +1,13 @@
 using HarmonyLib;
+using Hazel;
 using Reactor;
+using TownOfUs.Extensions;
 using TownOfUs.Roles;
 using UnityEngine;
 
 namespace TownOfUs.CrewmateRoles.MedicMod
 {
-    [HarmonyPatch(typeof(KillButtonManager), nameof(KillButtonManager.PerformKill))]
+    [HarmonyPatch(typeof(KillButton), nameof(KillButton.DoClick))]
     public class StopKill
     {
         public static void BreakShield(byte medicId, byte playerId, bool flag)
@@ -26,10 +28,10 @@ namespace TownOfUs.CrewmateRoles.MedicMod
 
             var player = Utils.PlayerById(playerId);
             foreach (var role in Role.GetRoles(RoleEnum.Medic))
-                if (((Medic)role).ShieldedPlayer.PlayerId == playerId)
+                if (((Medic) role).ShieldedPlayer.PlayerId == playerId)
                 {
-                    ((Medic)role).ShieldedPlayer = null;
-                    ((Medic)role).exShielded = player;
+                    ((Medic) role).ShieldedPlayer = null;
+                    ((Medic) role).exShielded = player;
                     System.Console.WriteLine(player.name + " Is Ex-Shielded");
                 }
 

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hazel;
-using Reactor;
 using Reactor.Extensions;
 using TownOfUs.Extensions;
 using UnityEngine;

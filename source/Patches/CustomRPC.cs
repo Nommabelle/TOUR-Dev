@@ -3,6 +3,7 @@ namespace TownOfUs
     public enum CustomRPC
     {
         SetJester = 100,
+        SetCouple,
         SetMayor,
         SetSheriff,
         SetEngineer,
@@ -39,7 +40,6 @@ namespace TownOfUs
         SetDrunk,
         SetBigBoi,
         SetButtonBarry,
-        SetCouple,
         SetBait,
         SetAssassin,
 

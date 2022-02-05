@@ -7,7 +7,7 @@ namespace TownOfUs.Roles
     public class Poisoner : Role
 
     {
-        public KillButtonManager _poisonButton;
+        public KillButton _poisonButton;
         public PlayerControl ClosestPlayer;
         public DateTime LastPoisoned;
         public PlayerControl PoisonedPlayer;
@@ -24,7 +24,7 @@ namespace TownOfUs.Roles
             Faction = Faction.Impostors;
             PoisonedPlayer = null;
         }
-        public KillButtonManager PoisonButton
+        public KillButton PoisonButton
         {
             get => _poisonButton;
             set

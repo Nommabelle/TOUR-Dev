@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 using System.Linq;
+using TownOfUs.Extensions;
 
 namespace TownOfUs.CrewmateRoles.HaunterMod
 {
@@ -135,8 +136,8 @@ namespace TownOfUs.CrewmateRoles.HaunterMod
             {
                 if (MeetingHud.Instance) return;
                 if (PlayerControl.LocalPlayer.Data.IsDead) return;
-                if (CustomGameOptions.HaunterCanBeClickedBy == HaunterCanBeClickedBy.ImpsOnly && !PlayerControl.LocalPlayer.Data.IsImpostor) return;
-                if (CustomGameOptions.HaunterCanBeClickedBy == HaunterCanBeClickedBy.NonCrew && !(PlayerControl.LocalPlayer.Data.IsImpostor || PlayerControl.LocalPlayer.Is(Faction.Neutral))) return;
+                if (CustomGameOptions.HaunterCanBeClickedBy == HaunterCanBeClickedBy.ImpsOnly && !PlayerControl.LocalPlayer.Data.IsImpostor()) return;
+                if (CustomGameOptions.HaunterCanBeClickedBy == HaunterCanBeClickedBy.NonCrew && !(PlayerControl.LocalPlayer.Data.IsImpostor() || PlayerControl.LocalPlayer.Is(Faction.Neutral))) return;
                 var taskinfos = player.Data.Tasks.ToArray();
                 var tasksLeft = taskinfos.Count(x => !x.Complete);
                 if (tasksLeft <= CustomGameOptions.HaunterTasksRemainingClicked)
