@@ -412,13 +412,6 @@ namespace TownOfUs
 
                         break;
 
-                    /*case CustomRPC.ShifterLose:
-                        foreach (var role in Role.AllRoles)
-                            if (role.RoleType == RoleEnum.Shifter)
-                                ((Shifter) role).Loses();
-
-                        break;*/
-
                     case CustomRPC.AmnesiacLose:
                         foreach (var role in Role.AllRoles)
                             if (role.RoleType == RoleEnum.Amnesiac)

@@ -342,7 +342,7 @@ namespace TownOfUs
 
                 if (target.Is(ModifierEnum.Bait))
                 {
-                    killer.CmdReportDeadBody(GameData.Instance.GetPlayerById(target.PlayerId));
+                    killer.ReportDeadBody(GameData.Instance.GetPlayerById(target.PlayerId));
                 }
 
                 if (killer.Is(RoleEnum.Underdog))
