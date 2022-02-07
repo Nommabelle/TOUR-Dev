@@ -96,6 +96,7 @@ namespace TownOfUs
         Alert,
         Remember,
         Track,
+        BaitReport,
 
         SetGlitch,
         BypassKill,
