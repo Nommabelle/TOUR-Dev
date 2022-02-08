@@ -1,6 +1,5 @@
 using TownOfUs.CrewmateRoles.EngineerMod;
 using TownOfUs.CrewmateRoles.MedicMod;
-using TownOfUs.CrewmateRoles.SeerMod;
 using TownOfUs.CustomOption;
 using TownOfUs.NeutralRoles.ExecutionerMod;
 using TownOfUs.CrewmateRoles.HaunterMod;
@@ -82,9 +81,10 @@ namespace TownOfUs
         public static float MedicReportColorDuration => Generate.MedicReportColorDuration.Get();
         public static bool ShowReports => Generate.MedicReportSwitch.Get();
         public static float SeerCd => Generate.SeerCooldown.Get();
-        public static SeerInfo SeerInfo => (SeerInfo)Generate.SeerInfo.Get();
-        public static SeeReveal SeeReveal => (SeeReveal)Generate.SeeReveal.Get();
-        public static bool NeutralRed => Generate.NeutralRed.Get();
+        public static bool CrewKillingRed => Generate.CrewKillingRed.Get();
+        public static bool NeutBenignRed => Generate.NeutBenignRed.Get();
+        public static bool NeutEvilRed => Generate.NeutEvilRed.Get();
+        public static bool NeutKillingRed => Generate.NeutKillingRed.Get();
         public static float MimicCooldown => Generate.MimicCooldownOption.Get();
         public static float MimicDuration => Generate.MimicDurationOption.Get();
         public static float HackCooldown => Generate.HackCooldownOption.Get();
@@ -112,6 +112,9 @@ namespace TownOfUs
         public static bool ImpostorSeeRoles => Generate.ImpostorSeeRoles.Get();
         public static bool DeadSeeRoles => Generate.DeadSeeRoles.Get();
         public static bool DeadSeeVotes => Generate.DeadSeeVotes.Get();
+        public static bool SeeTasksDuringRound => Generate.SeeTasksDuringRound.Get();
+        public static bool SeeTasksDuringMeeting => Generate.SeeTasksDuringMeeting.Get();
+        public static bool SeeTasksWhenDead => Generate.SeeTasksWhenDead.Get();
         public static float DouseCd => Generate.DouseCooldown.Get();
         public static bool ArsonistGameEnd => Generate.ArsonistGameEnd.Get();
         public static bool ArsonistButton => Generate.ArsonistButton.Get();
@@ -144,6 +147,7 @@ namespace TownOfUs
         public static float GrenadeCd => Generate.GrenadeCooldown.Get();
         public static float GrenadeDuration => Generate.GrenadeDuration.Get();
         public static bool GrenadierVent => Generate.GrenadierVent.Get();
+        public static float FlashRadius => Generate.FlashRadius.Get();
         public static int LovingImpPercent => (int)Generate.LovingImpPercent.Get();
         public static bool KilledOnAlert => Generate.KilledOnAlert.Get();
         public static float AlertCd => Generate.AlertCooldown.Get();
