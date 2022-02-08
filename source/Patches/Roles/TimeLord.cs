@@ -13,6 +13,7 @@ namespace TownOfUs.Roles
             TaskText = () => "Rewind Time!";
             Color = Patches.Colors.TimeLord;
             RoleType = RoleEnum.TimeLord;
+            AddToRoleHistory(RoleType);
             Scale = 1.4f;
         }
 

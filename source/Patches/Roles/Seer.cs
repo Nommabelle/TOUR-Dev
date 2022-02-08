@@ -17,6 +17,7 @@ namespace TownOfUs.Roles
             TaskText = () => "Investigate roles and find the Impostor";
             Color = Patches.Colors.Seer;
             RoleType = RoleEnum.Seer;
+            AddToRoleHistory(RoleType);
         }
 
         public PlayerControl ClosestPlayer;

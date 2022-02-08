@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Text;
 using System.Linq;
 using Reactor.Extensions;
+using TownOfUs.Roles;
 
 namespace TownOfUs.Patches {
 
@@ -32,7 +33,7 @@ namespace TownOfUs.Patches {
             foreach (var playerControl in PlayerControl.AllPlayerControls)
             {
                 playerRole = "";
-                foreach (var role in RoleTracker.RoleHistory.Where(x => x.Key == playerControl.PlayerId))
+                foreach (var role in Role.RoleHistory.Where(x => x.Key == playerControl.PlayerId))
                 {
                     if (role.Value == RoleEnum.Crewmate) {playerRole += "<color=#"+Patches.Colors.Crewmate.ToHtmlStringRGBA()+">Crewmate</color> > ";}
                     else if (role.Value == RoleEnum.Impostor) {playerRole += "<color=#"+Patches.Colors.Impostor.ToHtmlStringRGBA()+">Impostor</color> > ";}

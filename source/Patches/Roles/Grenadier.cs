@@ -24,6 +24,7 @@ namespace TownOfUs.Roles
             TaskText = () => "Blind the crewmates to get sneaky kills";
             Color = Patches.Colors.Impostor;
             RoleType = RoleEnum.Grenadier;
+            AddToRoleHistory(RoleType);
             Faction = Faction.Impostors;
         }
 

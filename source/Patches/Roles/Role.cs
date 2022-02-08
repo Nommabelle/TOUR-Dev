@@ -19,6 +19,7 @@ namespace TownOfUs.Roles
     public abstract class Role
     {
         public static readonly Dictionary<byte, Role> RoleDictionary = new Dictionary<byte, Role>();
+        public static readonly List<KeyValuePair<byte, RoleEnum>> RoleHistory = new List<KeyValuePair<byte, RoleEnum>>();
 
         public static bool NobodyWins;
 
@@ -87,6 +88,11 @@ namespace TownOfUs.Roles
         private bool Equals(Role other)
         {
             return Equals(Player, other.Player) && RoleType == other.RoleType;
+        }
+
+        public void AddToRoleHistory(RoleEnum role)
+        {
+            RoleHistory.Add(KeyValuePair.Create(_player.PlayerId, role));
         }
 
         public override bool Equals(object obj)
@@ -503,6 +509,7 @@ namespace TownOfUs.Roles
                 }
 
                 RoleDictionary.Clear();
+                RoleHistory.Clear();
                 Modifier.ModifierDictionary.Clear();
                 Ability.AbilityDictionary.Clear();
                 Lights.SetLights(Color.white);

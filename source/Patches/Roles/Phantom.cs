@@ -16,6 +16,7 @@ namespace TownOfUs.Roles
             TaskText = () => "Complete all your tasks without being caught!";
             Color = Patches.Colors.Phantom;
             RoleType = RoleEnum.Phantom;
+            AddToRoleHistory(RoleType);
             Faction = Faction.Neutral;
         }
 

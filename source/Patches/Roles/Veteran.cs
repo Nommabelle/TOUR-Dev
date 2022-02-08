@@ -16,6 +16,7 @@ namespace TownOfUs.Roles
             TaskText = () => "You have " + RemainingAlerts + " alerts left";
             Color = Patches.Colors.Veteran;
             RoleType = RoleEnum.Veteran;
+            AddToRoleHistory(RoleType);
 
             RemainingAlerts = CustomGameOptions.MaxAlerts;
         }

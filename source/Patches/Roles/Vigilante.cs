@@ -23,6 +23,7 @@ namespace TownOfUs.Roles
             TaskText = () => "Guess the roles of impostors mid-meeting to kill them!";
             Color = Patches.Colors.Vigilante;
             RoleType = RoleEnum.Vigilante;
+            AddToRoleHistory(RoleType);
 
             RemainingKills = CustomGameOptions.VigilanteKills;
 

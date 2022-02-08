@@ -24,6 +24,7 @@ namespace TownOfUs.Roles
             Color = Patches.Colors.Snitch;
             Hidden = !CustomGameOptions.SnitchOnLaunch;
             RoleType = RoleEnum.Snitch;
+            AddToRoleHistory(RoleType);
         }
 
         public bool Revealed => TasksLeft <= CustomGameOptions.SnitchTasksRemaining;

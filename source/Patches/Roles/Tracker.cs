@@ -19,6 +19,7 @@ namespace TownOfUs.Roles
             TaskText = () => "Track suspicious players";
             Color = Patches.Colors.Tracker;
             RoleType = RoleEnum.Tracker;
+            AddToRoleHistory(RoleType);
 
             RemainingTracks = CustomGameOptions.MaxTracks;
         }

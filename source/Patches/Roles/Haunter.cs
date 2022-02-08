@@ -25,6 +25,7 @@ namespace TownOfUs.Roles
             TaskText = () => "Complete all your tasks to reveal impostors!";
             Color = Patches.Colors.Haunter;
             RoleType = RoleEnum.Haunter;
+            AddToRoleHistory(RoleType);
         }
 
         public void Fade()

@@ -110,6 +110,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
             {
                 Role.RoleDictionary.Remove(other.PlayerId);
                 Role.RoleDictionary.Add(amnesiac.PlayerId, newRole);
+                newRole.AddToRoleHistory(newRole.RoleType);
             }
             else
             {
