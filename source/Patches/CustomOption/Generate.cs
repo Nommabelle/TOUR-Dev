@@ -79,6 +79,11 @@ namespace TownOfUs.CustomOption
         public static CustomToggleOption ParallelMedScans;
         public static CustomToggleOption WhiteNameplates;
 
+        public static CustomHeaderOption TaskTrackingSettings;
+        public static CustomToggleOption SeeTasksDuringRound;
+        public static CustomToggleOption SeeTasksDuringMeeting;
+        public static CustomToggleOption SeeTasksWhenDead;
+
         public static CustomHeaderOption Mayor;
         public static CustomNumberOption MayorVoteBank;
         public static CustomToggleOption MayorAnonymous;
@@ -120,9 +125,10 @@ namespace TownOfUs.CustomOption
 
         public static CustomHeaderOption Seer;
         public static CustomNumberOption SeerCooldown;
-        public static CustomStringOption SeerInfo;
-        public static CustomStringOption SeeReveal;
-        public static CustomToggleOption NeutralRed;
+        public static CustomToggleOption CrewKillingRed;
+        public static CustomToggleOption NeutBenignRed;
+        public static CustomToggleOption NeutEvilRed;
+        public static CustomToggleOption NeutKillingRed;
 
         public static CustomHeaderOption Swapper;
         public static CustomToggleOption SwapperButton;
@@ -211,6 +217,7 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption GrenadeCooldown;
         public static CustomNumberOption GrenadeDuration;
         public static CustomToggleOption GrenadierVent;
+        public static CustomNumberOption FlashRadius;
 
         public static CustomHeaderOption Veteran;
         public static CustomToggleOption KilledOnAlert;
@@ -237,6 +244,7 @@ namespace TownOfUs.CustomOption
         public static Func<object, string> PercentFormat { get; } = value => $"{value:0}%";
         private static Func<object, string> CooldownFormat { get; } = value => $"{value:0.0#}s";
         private static Func<object, string> UsesFormat { get; } = value => (value != null && value.ToString().Equals("0")) ? $"Unlimited" : $"{value}";
+        private static Func<object, string> MultiplierFormat { get; } = value => $"{value:0.0#}x";
 
 
         public static void GenerateAll()
@@ -368,6 +376,12 @@ namespace TownOfUs.CustomOption
             ParallelMedScans = new CustomToggleOption(num++, "Parallel Medbay Scans", false);
             WhiteNameplates = new CustomToggleOption(num++, "Classic Meeting Nameplates", false);
 
+            TaskTrackingSettings =
+                new CustomHeaderOption(num++, "Task Tracking Settings");
+            SeeTasksDuringRound = new CustomToggleOption(num++, "See Tasks During Round", false);
+            SeeTasksDuringMeeting = new CustomToggleOption(num++, "See Tasks During Meetings", false);
+            SeeTasksWhenDead = new CustomToggleOption(num++, "See Tasks When Dead", true);
+
             Assassin = new CustomHeaderOption(num++, "<color=#FF0000FF>Assassin Ability</color>");
             NumberOfAssassins = new CustomNumberOption(num++, "Number Of Assassins", 1, 0, 3, 1);
             AmneTurnAssassin = new CustomToggleOption(num++, "Amnesiac Turned Impostor Gets Ability", false);
@@ -400,13 +414,14 @@ namespace TownOfUs.CustomOption
                 new CustomHeaderOption(num++, "<color=#FFCC80FF>Seer</color>");
             SeerCooldown =
                 new CustomNumberOption(num++, "Seer Cooldown", 25f, 10f, 100f, 2.5f, CooldownFormat);
-            SeerInfo =
-                new CustomStringOption(num++, "Info That Seer Sees", new[] { "Role", "Team" });
-            SeeReveal =
-                new CustomStringOption(num++, "Who Sees That They Are Revealed",
-                    new[] { "Crew", "Imps+Neut", "All", "Nobody" });
-            NeutralRed =
-                new CustomToggleOption(num++, "Neutrals Show Up As Impostors", false);
+            CrewKillingRed =
+                new CustomToggleOption(num++, "Crewmate Killing Roles Show Evil", false);
+            NeutBenignRed =
+                new CustomToggleOption(num++, "Neutral Benign Roles Show Evil", false);
+            NeutEvilRed =
+                new CustomToggleOption(num++, "Neutral Evil Roles Show Evil", false);
+            NeutKillingRed =
+                new CustomToggleOption(num++, "Neutral Killing Roles Show Evil", false);
 
             Snitch = new CustomHeaderOption(num++, "<color=#D4AF37FF>Snitch</color>");
             SnitchOnLaunch =
@@ -556,6 +571,8 @@ namespace TownOfUs.CustomOption
                 new CustomNumberOption(num++, "Flash Grenade Cooldown", 25, 10, 40, 2.5f, CooldownFormat);
             GrenadeDuration =
                 new CustomNumberOption(num++, "Flash Grenade Duration", 10, 5, 15, 1f, CooldownFormat);
+            FlashRadius =
+                new CustomNumberOption(num++, "Flash Radius", 1f, 0.25f, 5f, 0.25f, MultiplierFormat);
             GrenadierVent =
                 new CustomToggleOption(num++, "Grenadier Can Vent", false);
 

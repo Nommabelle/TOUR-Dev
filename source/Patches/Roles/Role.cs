@@ -66,20 +66,6 @@ namespace TownOfUs.Roles
 
         protected internal Faction Faction { get; set; } = Faction.Crewmates;
 
-        protected internal Color FactionColor
-        {
-            get
-            {
-                return Faction switch
-                {
-                    Faction.Crewmates => Color.green,
-                    Faction.Impostors => Color.red,
-                    Faction.Neutral => CustomGameOptions.NeutralRed ? Color.red : Color.grey,
-                    _ => Color.white
-                };
-            }
-        }
-
         public static uint NetId => PlayerControl.LocalPlayer.NetId;
         public string PlayerName { get; set; }
 
@@ -225,7 +211,12 @@ namespace TownOfUs.Roles
             }
 
             if(revealTasks && (Faction == Faction.Crewmates || RoleType == RoleEnum.Phantom))
-                PlayerName += $" ({TotalTasks - TasksLeft}/{TotalTasks})";
+            {
+                if ((Player.Data.IsDead && CustomGameOptions.SeeTasksWhenDead) || (MeetingHud.Instance && CustomGameOptions.SeeTasksDuringMeeting) || (!Player.Data.IsDead && !MeetingHud.Instance && CustomGameOptions.SeeTasksDuringRound))
+                {
+                    PlayerName += $" ({TotalTasks - TasksLeft}/{TotalTasks})";
+                }
+            }
 
             if (player != null && (MeetingHud.Instance.state == MeetingHud.VoteStates.Proceeding ||
                                    MeetingHud.Instance.state == MeetingHud.VoteStates.Results)) return PlayerName;
