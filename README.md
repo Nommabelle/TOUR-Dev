@@ -97,6 +97,14 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 <details>
   <summary> Changelog </summary>
   <details>
+  <summary> v2.5.2 </summary>
+  <ul> <li>Fixed Bait sometimes banning the lobby for hacking once killed</li> </ul>
+  <ul> <li>Tracker Arrows now show before the end of the first interval</li> </ul>
+  <ul> <li>Tracker Arrows now show the rainbow color correctly</li> </ul>
+  <ul> <li>Tracker Arrows now update at the correct interval</li> </ul>
+  <ul> <li>Fixed some code that resulted in increased lag</li> </ul>
+  </details>
+  <details>
   <summary> v2.5.1 </summary>
   <ul> <li>Fixed Amnesiac/Impostor Interaction</li> </ul>
   </details>

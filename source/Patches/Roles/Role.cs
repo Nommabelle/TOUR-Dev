@@ -505,7 +505,7 @@ namespace TownOfUs.Roles
                 }
                 foreach (var role in AllRoles.Where(x => x.RoleType == RoleEnum.Tracker))
                 {
-                    ((Tracker)role).TrackerArrows.DestroyAll();
+                    ((Tracker)role).DestroyAllArrows();
                 }
 
                 RoleDictionary.Clear();

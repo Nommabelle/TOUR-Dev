@@ -77,6 +77,7 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption VanillaGame;
         public static CustomNumberOption InitialCooldowns;
         public static CustomToggleOption ParallelMedScans;
+        public static CustomToggleOption WhiteNameplates;
 
         public static CustomHeaderOption Mayor;
         public static CustomNumberOption MayorVoteBank;
@@ -235,6 +236,7 @@ namespace TownOfUs.CustomOption
 
         public static Func<object, string> PercentFormat { get; } = value => $"{value:0}%";
         private static Func<object, string> CooldownFormat { get; } = value => $"{value:0.0#}s";
+        private static Func<object, string> UsesFormat { get; } = value => (value != null && value.ToString().Equals("0")) ? $"Unlimited" : $"{value}";
 
 
         public static void GenerateAll()
@@ -364,6 +366,7 @@ namespace TownOfUs.CustomOption
             InitialCooldowns =
                 new CustomNumberOption(num++, "Game Start Cooldowns", 10, 10, 30, 2.5f, CooldownFormat);
             ParallelMedScans = new CustomToggleOption(num++, "Parallel Medbay Scans", false);
+            WhiteNameplates = new CustomToggleOption(num++, "Classic Meeting Nameplates", false);
 
             Assassin = new CustomHeaderOption(num++, "<color=#FF0000FF>Assassin Ability</color>");
             NumberOfAssassins = new CustomNumberOption(num++, "Number Of Assassins", 1, 0, 3, 1);
@@ -446,7 +449,7 @@ namespace TownOfUs.CustomOption
                 new CustomNumberOption(num++, "Alert Cooldown", 25, 10, 60, 2.5f, CooldownFormat);
             AlertDuration =
                 new CustomNumberOption(num++, "Alert Duration", 10, 5, 15, 1f, CooldownFormat);
-            MaxAlerts = new CustomNumberOption(num++, "Maximum Number Of Alerts", 5, 1, 15, 1);
+            MaxAlerts = new CustomNumberOption(num++, "Maximum Number Of Alerts", 5, 0, 15, 1, UsesFormat);
 
             Vigilante = new CustomHeaderOption(num++, "<color=#FFFF99FF>Vigilante</color>");
             VigilanteKills = new CustomNumberOption(num++, "Number Of Vigilante Kills", 1, 1, 15, 1);

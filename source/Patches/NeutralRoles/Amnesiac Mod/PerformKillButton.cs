@@ -213,19 +213,15 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
             else if (role == RoleEnum.Veteran)
             {
                 var vetRole = Role.GetRole<Veteran>(amnesiac);
-                vetRole.RemainingAlerts = CustomGameOptions.MaxAlerts;
+                vetRole.UsesLeft = CustomGameOptions.MaxAlerts;
                 vetRole.LastAlerted = DateTime.UtcNow;
             }
 
             else if (role == RoleEnum.Tracker)
             {
                 var trackerRole = Role.GetRole<Tracker>(amnesiac);
-                trackerRole.Tracked.RemoveRange(0, trackerRole.Tracked.Count);
-                trackerRole.TrackerArrows.DestroyAll();
-                trackerRole.TrackerArrows.Clear();
-                trackerRole.TrackerArrows.RemoveRange(0, trackerRole.TrackerArrows.Count);
-                trackerRole.TrackerTargets.RemoveRange(0, trackerRole.TrackerTargets.Count);
-                trackerRole.RemainingTracks = CustomGameOptions.MaxTracks;
+                trackerRole.DestroyAllArrows();
+                trackerRole.UsesLeft = CustomGameOptions.MaxTracks;
                 trackerRole.LastTracked = DateTime.UtcNow;
             }
 

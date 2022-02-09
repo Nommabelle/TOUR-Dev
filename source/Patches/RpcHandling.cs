@@ -590,11 +590,6 @@ namespace TownOfUs
                         Role.GetRole<Seer>(seer).Investigated.Add(otherPlayer.PlayerId);
                         Role.GetRole<Seer>(seer).LastInvestigated = DateTime.UtcNow;
                         break;
-                    case CustomRPC.Track:
-                        var tracker = Utils.PlayerById(reader.ReadByte());
-                        var trackedPlayer = Utils.PlayerById(reader.ReadByte());
-                        Role.GetRole<Tracker>(tracker).Tracked.Add(trackedPlayer.PlayerId);
-                        break;
                     case CustomRPC.SetSeer:
                         new Seer(Utils.PlayerById(reader.ReadByte()));
                         break;

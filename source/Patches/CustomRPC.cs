@@ -95,7 +95,6 @@ namespace TownOfUs
         FlashGrenade,
         Alert,
         Remember,
-        Track,
         BaitReport,
 
         SetGlitch,
