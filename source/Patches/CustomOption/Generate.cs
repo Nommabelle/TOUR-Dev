@@ -310,7 +310,7 @@ namespace TownOfUs.CustomOption
 
 
             NeutralBenignRoles = new CustomHeaderOption(num++, "Neutral Benign Roles");
-            AmnesiacOn = new CustomNumberOption(true, num++, "<color=#40F2DAFF>Amnesiac</color>", 0f, 0f, 100f, 10f,
+            AmnesiacOn = new CustomNumberOption(true, num++, "<color=#80B2FFFF>Amnesiac</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
 
             NeutralEvilRoles = new CustomHeaderOption(num++, "Neutral Evil Roles");
