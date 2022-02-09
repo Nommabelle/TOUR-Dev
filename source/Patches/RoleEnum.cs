@@ -23,6 +23,7 @@ namespace TownOfUs
         Amnesiac,
         Juggernaut,
         Tracker,
+        Transporter,
 
         Miner,
         Swooper,

@@ -3,7 +3,7 @@ using HarmonyLib;
 using TownOfUs.Roles;
 using Object = UnityEngine.Object;
 
-namespace TownOfUs.CrewmateRoles.SeerMod
+namespace TownOfUs.CrewmateRoles.TransporterMod
 {
     [HarmonyPatch(typeof(Object), nameof(Object.Destroy), typeof(Object))]
     public static class HUDClose
@@ -11,11 +11,11 @@ namespace TownOfUs.CrewmateRoles.SeerMod
         public static void Postfix(Object obj)
         {
             if (ExileController.Instance == null || obj != ExileController.Instance.gameObject) return;
-            foreach (var role in Role.GetRoles(RoleEnum.Seer))
+            foreach (var role in Role.GetRoles(RoleEnum.Transporter))
             {
-                var seer = (Seer) role;
-                seer.LastInvestigated = DateTime.UtcNow;
-                seer.UsedThisRound = false;
+                var transporter = (Transporter) role;
+                transporter.LastTransported = DateTime.UtcNow;
+                transporter.UsedThisRound = false;
             }
         }
     }

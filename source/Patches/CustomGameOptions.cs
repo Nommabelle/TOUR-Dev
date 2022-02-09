@@ -38,6 +38,7 @@ namespace TownOfUs
         public static int GrenadierOn => (int)Generate.GrenadierOn.Get();
         public static int VeteranOn => (int)Generate.VeteranOn.Get();
         public static int TrackerOn => (int)Generate.TrackerOn.Get();
+        public static int TransporterOn => (int)Generate.TransporterOn.Get();
         public static int PoisonerOn => (int)Generate.PoisonerOn.Get();
         public static int TorchOn => (int)Generate.TorchOn.Get();
         public static int DiseasedOn => (int)Generate.DiseasedOn.Get();
@@ -57,6 +58,7 @@ namespace TownOfUs
         public static bool SheriffKillsExecutioner => Generate.SheriffKillsExecutioner.Get();
         public static bool SheriffKillsArsonist => Generate.SheriffKillsArsonist.Get();
         public static float SheriffKillCd => Generate.SheriffKillCd.Get();
+        public static float SheriffMaxUses => Generate.SheriffMaxUses.Get();
         public static int MayorVoteBank => (int)Generate.MayorVoteBank.Get();
         public static bool MayorAnonymous => Generate.MayorAnonymous.Get();
         public static bool MayorButton => Generate.MayorButton.Get();
@@ -67,9 +69,12 @@ namespace TownOfUs
         public static bool AnonymousFootPrint => Generate.AnonymousFootPrint.Get();
         public static bool VentFootprintVisible => Generate.VentFootprintVisible.Get();
         public static bool JesterButton => Generate.JesterButton.Get();
+        public static bool JesterVent => Generate.JesterVent.Get();
         public static bool RewindRevive => Generate.RewindRevive.Get();
         public static float RewindDuration => Generate.RewindDuration.Get();
         public static float RewindCooldown => Generate.RewindCooldown.Get();
+        public static float RewindMaxUses => Generate.RewindMaxUses.Get();
+        public static bool RewindPerRound => Generate.RewindPerRound.Get();
         public static bool TimeLordVitals => Generate.TimeLordVitals.Get();
         public static ShieldOptions ShowShielded => (ShieldOptions)Generate.ShowShielded.Get();
 
@@ -81,6 +86,8 @@ namespace TownOfUs
         public static float MedicReportColorDuration => Generate.MedicReportColorDuration.Get();
         public static bool ShowReports => Generate.MedicReportSwitch.Get();
         public static float SeerCd => Generate.SeerCooldown.Get();
+        public static float SeeMaxUses => Generate.SeeMaxUses.Get();
+        public static bool SeePerRound => Generate.SeePerRound.Get();
         public static bool CrewKillingRed => Generate.CrewKillingRed.Get();
         public static bool NeutBenignRed => Generate.NeutBenignRed.Get();
         public static bool NeutEvilRed => Generate.NeutEvilRed.Get();
@@ -111,7 +118,6 @@ namespace TownOfUs
         public static bool SwooperVent => Generate.SwooperVent.Get();
         public static bool ImpostorSeeRoles => Generate.ImpostorSeeRoles.Get();
         public static bool DeadSeeRoles => Generate.DeadSeeRoles.Get();
-        public static bool DeadSeeVotes => Generate.DeadSeeVotes.Get();
         public static bool WhiteNameplates => Generate.WhiteNameplates.Get();
         public static bool SeeTasksDuringRound => Generate.SeeTasksDuringRound.Get();
         public static bool SeeTasksDuringMeeting => Generate.SeeTasksDuringMeeting.Get();
@@ -121,7 +127,8 @@ namespace TownOfUs
         public static bool ArsonistButton => Generate.ArsonistButton.Get();
         public static int MaxNeutralRoles => (int)Generate.MaxNeutralRoles.Get();
         public static bool ParallelMedScans => Generate.ParallelMedScans.Get();
-        public static EngineerFixPer EngineerFixPer => (EngineerFixPer)Generate.EngineerPer.Get();
+        public static float FixMaxUses => Generate.FixMaxUses.Get();
+        public static bool FixPerRound => Generate.FixPerRound.Get();
         public static float ReviveDuration => Generate.ReviveDuration.Get();
         public static bool AltruistTargetBody => Generate.AltruistTargetBody.Get();
         public static bool SheriffBodyReport => Generate.SheriffBodyReport.Get();
@@ -161,5 +168,9 @@ namespace TownOfUs
         public static float PoisonCd => Generate.PoisonCooldown.Get();
         public static float PoisonDuration => Generate.PoisonDuration.Get();
         public static bool PoisonerVent => Generate.PoisonerVent.Get();
+        public static float TransportCooldown => Generate.TransportCooldown.Get();
+        public static float TransportMaxUses => Generate.TransportMaxUses.Get();
+        public static bool TransportPerRound => Generate.TransportPerRound.Get();
+        public static bool TransporterVitals => Generate.TransporterVitals.Get();
     }
 }

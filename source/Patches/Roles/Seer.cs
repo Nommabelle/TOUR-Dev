@@ -1,11 +1,18 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 
 namespace TownOfUs.Roles
 {
     public class Seer : Role
     {
         public List<byte> Investigated = new List<byte>();
+
+        public int UsesLeft;
+        public TextMeshPro UsesText;
+        public bool UsedThisRound;
+
+        public bool ButtonUsable => UsesLeft != 0 && (!UsedThisRound || !CustomGameOptions.RewindPerRound);
 
         public Seer(PlayerControl player) : base(player)
         {
@@ -15,6 +22,9 @@ namespace TownOfUs.Roles
             Color = Patches.Colors.Seer;
             RoleType = RoleEnum.Seer;
             AddToRoleHistory(RoleType);
+            UsesLeft = (int) CustomGameOptions.SeeMaxUses;
+            if (UsesLeft == 0) UsesLeft = -1;
+            UsedThisRound = false;
         }
 
         public PlayerControl ClosestPlayer;

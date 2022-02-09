@@ -50,6 +50,7 @@ namespace TownOfUs
         public static Sprite DragSprite;
         public static Sprite DropSprite;
         public static Sprite FlashSprite;
+        public static Sprite TransportSprite;
         public static Sprite SettingsButtonSprite;
 
         public static Vector3 ButtonPosition { get; private set; } = new Vector3(2.6f, 0.7f, -9f);
@@ -109,6 +110,7 @@ namespace TownOfUs
             TrackSprite = CreateSprite("TownOfUs.Resources.Track.png");
             PoisonSprite = CreateSprite("TownOfUs.Resources.Poison.png");
             PoisonedSprite = CreateSprite("TownOfUs.Resources.Poisoned.png");
+            TransportSprite = CreateSprite("TownOfUs.Resources.Transport.png");
 
             ToUBanner = CreateSprite("TownOfUs.Resources.TownOfUsBanner.png");
 

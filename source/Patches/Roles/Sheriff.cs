@@ -1,10 +1,17 @@
 using System;
 using UnityEngine;
+using TMPro;
 
 namespace TownOfUs.Roles
 {
     public class Sheriff : Role
     {
+        public int UsesLeft;
+        public TextMeshPro UsesText;
+        public bool UsedThisRound;
+
+        public bool ButtonUsable => UsesLeft != 0;
+
         public Sheriff(PlayerControl player) : base(player)
         {
             Name = "Sheriff";
@@ -13,6 +20,9 @@ namespace TownOfUs.Roles
             Color = Patches.Colors.Sheriff;
             RoleType = RoleEnum.Sheriff;
             AddToRoleHistory(RoleType);
+            UsesLeft = (int) CustomGameOptions.SheriffMaxUses;
+            if (UsesLeft == 0) UsesLeft = -1;
+            UsedThisRound = false;
         }
 
         public PlayerControl ClosestPlayer;

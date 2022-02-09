@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using HarmonyLib;
 using TownOfUs.Roles;
+using UnityEngine;
 
 namespace TownOfUs.CrewmateRoles.SeerMod
 {
@@ -34,7 +35,8 @@ namespace TownOfUs.CrewmateRoles.SeerMod
             {
                 investigateButton.gameObject.SetActive(!MeetingHud.Instance);
                // investigateButton.isActive = !MeetingHud.Instance;
-                investigateButton.SetCoolDown(role.SeerTimer(), CustomGameOptions.SeerCd);
+                if (role.ButtonUsable)
+                    investigateButton.SetCoolDown(role.SeerTimer(), CustomGameOptions.SeerCd);
 
                 var notInvestigated = PlayerControl.AllPlayerControls
                     .ToArray()
@@ -42,6 +44,35 @@ namespace TownOfUs.CrewmateRoles.SeerMod
                     .ToList();
 
                 Utils.SetTarget(ref role.ClosestPlayer, investigateButton, float.NaN, notInvestigated);
+            }
+
+            if (role.UsesText == null && role.UsesLeft > 0)
+            {
+                role.UsesText = Object.Instantiate(investigateButton.cooldownTimerText, investigateButton.transform);
+                role.UsesText.gameObject.SetActive(true);
+                role.UsesText.transform.localPosition = new Vector3(
+                    role.UsesText.transform.localPosition.x + 0.26f,
+                    role.UsesText.transform.localPosition.y + 0.29f,
+                    role.UsesText.transform.localPosition.z);
+                role.UsesText.transform.localScale = role.UsesText.transform.localScale * 0.6f;
+                role.UsesText.alignment = TMPro.TextAlignmentOptions.Right;
+                role.UsesText.fontStyle = TMPro.FontStyles.Bold;
+            }
+            if (role.UsesText != null)
+            {
+                role.UsesText.text = role.UsesLeft + "";
+            }
+
+            if (role.ButtonUsable && investigateButton.isActiveAndEnabled && !investigateButton.isCoolingDown)
+            {
+                role.UsesText.color = Palette.EnabledColor;
+                role.UsesText.material.SetFloat("_Desat", 0f);
+            }
+            else
+            {
+                investigateButton.SetDisabled();
+                role.UsesText.color = Palette.DisabledClear;
+                role.UsesText.material.SetFloat("_Desat", 1f);
             }
         }
     }

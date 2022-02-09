@@ -19,6 +19,11 @@ namespace TownOfUs.CrewmateRoles.TimeLordMod
             var flag2 = (role.TimeLordRewindTimer() == 0f) & !RecordRewind.rewinding;
             if (!flag2) return false;
             if (!__instance.enabled) return false;
+            if (!role.ButtonUsable) return false;
+            
+            role.UsesLeft--;
+            role.UsedThisRound = true;
+
             StartStop.StartRewind(role);
             var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                 (byte) CustomRPC.Rewind, SendOption.Reliable, -1);

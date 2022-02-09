@@ -70,6 +70,7 @@ namespace TownOfUs.Patches {
                     else if (role.Value == RoleEnum.Juggernaut) { playerRole += "<color=#"+Patches.Colors.Juggernaut.ToHtmlStringRGBA()+">Juggernaut</color> > "; }
                     else if (role.Value == RoleEnum.Tracker) { playerRole += "<color=#"+Patches.Colors.Tracker.ToHtmlStringRGBA()+">Tracker</color> > "; }
                     else if (role.Value == RoleEnum.Poisoner) { playerRole += "<color=#"+Patches.Colors.Impostor.ToHtmlStringRGBA()+">Poisoner</color> > "; }
+                    else if (role.Value == RoleEnum.Transporter) { playerRole += "<color=#"+Patches.Colors.Transporter.ToHtmlStringRGBA()+">Transporter</color> > "; }
                 }
                 playerRole = playerRole.Remove(playerRole.Length - 3);
 

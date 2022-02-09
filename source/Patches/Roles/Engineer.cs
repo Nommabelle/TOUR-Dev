@@ -1,9 +1,16 @@
 using UnityEngine;
+using TMPro;
 
 namespace TownOfUs.Roles
 {
     public class Engineer : Role
     {
+        public int UsesLeft;
+        public TextMeshPro UsesText;
+        public bool UsedThisRound;
+
+        public bool ButtonUsable => UsesLeft != 0 && (!UsedThisRound || !CustomGameOptions.FixPerRound);
+
         public Engineer(PlayerControl player) : base(player)
         {
             Name = "Engineer";
@@ -12,8 +19,9 @@ namespace TownOfUs.Roles
             Color = Patches.Colors.Engineer;
             RoleType = RoleEnum.Engineer;
             AddToRoleHistory(RoleType);
+            UsedThisRound = false;
+            UsesLeft = (int) CustomGameOptions.FixMaxUses;
+            if (UsesLeft == 0) UsesLeft = -1;
         }
-
-        public bool UsedThisRound { get; set; } = false;
     }
 }

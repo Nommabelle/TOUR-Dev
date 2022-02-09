@@ -32,6 +32,7 @@ namespace TownOfUs
         SetJuggernaut,
         SetTracker,
         SetPoisoner,
+        SetTransporter,
 
         SetTorch,
         SetDiseased,
@@ -96,6 +97,7 @@ namespace TownOfUs
         Alert,
         Remember,
         BaitReport,
+        Transport,
 
         SetGlitch,
         BypassKill,

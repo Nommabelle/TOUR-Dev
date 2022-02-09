@@ -37,9 +37,27 @@ namespace TownOfUs.CrewmateRoles.SheriffMod
                 {
                     KillButton.gameObject.SetActive(!MeetingHud.Instance);
                  //   KillButton.isActive = !MeetingHud.Instance;
-                    KillButton.SetCoolDown(role.SheriffKillTimer(), PlayerControl.GameOptions.KillCooldown + 15f);
+                    if (role.ButtonUsable)
+                        KillButton.SetCoolDown(role.SheriffKillTimer(), PlayerControl.GameOptions.KillCooldown + 15f);
 
                     Utils.SetTarget(ref role.ClosestPlayer, KillButton);
+                }
+
+                if (role.UsesText == null && role.UsesLeft > 0)
+                {
+                    role.UsesText = Object.Instantiate(KillButton.cooldownTimerText, KillButton.transform);
+                    role.UsesText.gameObject.SetActive(true);
+                    role.UsesText.transform.localPosition = new Vector3(
+                        role.UsesText.transform.localPosition.x + 0.26f,
+                        role.UsesText.transform.localPosition.y + 0.29f,
+                        role.UsesText.transform.localPosition.z);
+                    role.UsesText.transform.localScale = role.UsesText.transform.localScale * 0.6f;
+                    role.UsesText.alignment = TMPro.TextAlignmentOptions.Right;
+                    role.UsesText.fontStyle = TMPro.FontStyles.Bold;
+                }
+                if (role.UsesText != null)
+                {
+                    role.UsesText.text = role.UsesLeft + "";
                 }
             }
             else

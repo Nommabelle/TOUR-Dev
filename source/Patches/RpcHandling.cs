@@ -656,6 +656,68 @@ namespace TownOfUs
                         veteranRole.TimeRemaining = CustomGameOptions.AlertDuration;
                         veteranRole.Alert();
                         break;
+                    case CustomRPC.Transport:
+                        var TransportPlayer1 = Utils.PlayerById(reader.ReadByte());
+                        var TransportPlayer2 = Utils.PlayerById(reader.ReadByte());
+                        var allDeadBodies = UnityEngine.Object.FindObjectsOfType<DeadBody>();
+                        DeadBody Player1Body = null;
+                        DeadBody Player2Body = null;
+                        if (TransportPlayer1.Data.IsDead)
+                            foreach (var body in allDeadBodies)
+                                if (body.ParentId == TransportPlayer1.PlayerId)
+                                    Player1Body = body;
+                        if (TransportPlayer2.Data.IsDead)
+                            foreach (var body in allDeadBodies)
+                                if (body.ParentId == TransportPlayer2.PlayerId)
+                                    Player2Body = body;
+
+                        if (TransportPlayer1.inVent && PlayerControl.LocalPlayer.PlayerId == TransportPlayer1.PlayerId)
+                        {
+                            TransportPlayer1.MyPhysics.RpcExitVent(Vent.currentVent.Id);
+                            TransportPlayer1.MyPhysics.ExitAllVents();
+                        }
+                        if (TransportPlayer2.inVent && PlayerControl.LocalPlayer.PlayerId == TransportPlayer2.PlayerId)
+                        {
+                            TransportPlayer2.MyPhysics.RpcExitVent(Vent.currentVent.Id);
+                            TransportPlayer2.MyPhysics.ExitAllVents();
+                        }
+
+                        if (Player1Body == null && Player2Body == null)
+                        {
+                            TransportPlayer1.MyPhysics.ResetMoveState();
+                            TransportPlayer2.MyPhysics.ResetMoveState();
+                            var TempPosition = TransportPlayer1.GetTruePosition();
+                            var TempFacing = TransportPlayer1.myRend.flipX;
+                            TransportPlayer1.NetTransform.SnapTo(new Vector2(TransportPlayer2.GetTruePosition().x, TransportPlayer2.GetTruePosition().y + 0.3636f));
+                            TransportPlayer1.myRend.flipX = TransportPlayer2.myRend.flipX;
+                            TransportPlayer2.NetTransform.SnapTo(new Vector2(TempPosition.x, TempPosition.y + 0.3636f));
+                            TransportPlayer2.myRend.flipX = TempFacing;
+                        }
+                        else if (Player1Body != null && Player2Body == null)
+                        {
+                            TransportPlayer2.MyPhysics.ResetMoveState();
+                            var TempPosition = Player1Body.TruePosition;
+                            Player1Body.transform.position = TransportPlayer2.GetTruePosition();
+                            TransportPlayer2.NetTransform.SnapTo(new Vector2(TempPosition.x, TempPosition.y + 0.3636f));
+                        }
+                        else if (Player1Body == null && Player2Body != null)
+                        {
+                            TransportPlayer1.MyPhysics.ResetMoveState();
+                            var TempPosition = TransportPlayer1.GetTruePosition();
+                            TransportPlayer1.NetTransform.SnapTo(new Vector2(Player2Body.TruePosition.x, Player2Body.TruePosition.y + 0.3636f));
+                            Player2Body.transform.position = TempPosition;
+                        }
+                        else if (Player1Body != null && Player2Body != null)
+                        {
+                            var TempPosition = Player1Body.transform.position;
+                            Player1Body.transform.position = Player2Body.transform.position;
+                            Player2Body.transform.position = TempPosition;
+                        }
+
+                        if (PlayerControl.LocalPlayer.PlayerId == TransportPlayer1.PlayerId ||
+                            PlayerControl.LocalPlayer.PlayerId == TransportPlayer2.PlayerId)
+                            Coroutines.Start(Utils.FlashCoroutine(new Color(0f, 0.93f, 1f, 1f)));
+                        break;
                     case CustomRPC.SetGrenadier:
                         new Grenadier(Utils.PlayerById(reader.ReadByte()));
                         break;
@@ -808,6 +870,9 @@ namespace TownOfUs
                     case CustomRPC.SetVeteran:
                         new Veteran(Utils.PlayerById(reader.ReadByte()));
                         break;
+                    case CustomRPC.SetTransporter:
+                        new Transporter(Utils.PlayerById(reader.ReadByte()));
+                        break;
                     case CustomRPC.SetUnderdog:
                         new Underdog(Utils.PlayerById(reader.ReadByte()));
                         break;
@@ -940,6 +1005,9 @@ namespace TownOfUs
 
                 if (Check(CustomGameOptions.TrackerOn))
                     CrewmateRoles.Add((typeof(Tracker), CustomRPC.SetTracker, CustomGameOptions.TrackerOn));
+
+                if (Check(CustomGameOptions.TransporterOn))
+                    CrewmateRoles.Add((typeof(Transporter), CustomRPC.SetTransporter, CustomGameOptions.TransporterOn));
                 #endregion
                 #region Neutral Roles
                 if (Check(CustomGameOptions.JesterOn))

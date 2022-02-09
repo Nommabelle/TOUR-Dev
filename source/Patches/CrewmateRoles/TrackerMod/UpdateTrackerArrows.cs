@@ -41,6 +41,10 @@ namespace TownOfUs.CrewmateRoles.TrackerMod
                 if (!CamouflageUnCamouflage.IsCamoed)
                     if (RainbowUtils.IsRainbow(player.GetDefaultOutfit().ColorId))
                         arrow.Value.image.color = RainbowUtils.Rainbow;
+                else
+                {
+                    arrow.Value.image.color = new Color(0.2f, 0.2f, 0.2f, 1f);
+                }
 
                 if (_time <= DateTime.UtcNow.AddSeconds(-Interval))
                     arrow.Value.target = player.transform.position;

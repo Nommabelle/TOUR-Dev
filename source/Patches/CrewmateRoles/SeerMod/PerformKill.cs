@@ -25,6 +25,8 @@ namespace TownOfUs.CrewmateRoles.SeerMod
                 PlayerControl.LocalPlayer.GetTruePosition()) > maxDistance) return false;
             if (role.ClosestPlayer == null) return false;
             var playerId = role.ClosestPlayer.PlayerId;
+            if (!role.ButtonUsable) return false;
+
             if (role.ClosestPlayer.IsOnAlert())
             {
                 if (role.Player.IsShielded())
@@ -47,6 +49,9 @@ namespace TownOfUs.CrewmateRoles.SeerMod
 
                 return false;
             }
+            
+            role.UsedThisRound = true;
+            role.UsesLeft--;
 
             var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                 (byte) CustomRPC.Investigate, SendOption.Reliable, -1);
