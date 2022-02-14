@@ -13,6 +13,7 @@ using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 using TownOfUs.Extensions;
 using Reactor;
+using TownOfUs.ImpostorRoles.TraitorMod;
 
 namespace TownOfUs.Roles
 {
@@ -473,9 +474,16 @@ namespace TownOfUs.Roles
                     var roleIsEnd = role.EABBNOODFGL(__instance);
                     var modifier = Modifier.GetModifier(role.Player);
                     bool modifierIsEnd = true;
+                    var alives = PlayerControl.AllPlayerControls.ToArray().Where(x => !x.Data.IsDead && !x.Data.Disconnected).ToList();
+                    var impsAlive = PlayerControl.AllPlayerControls.ToArray().Where(x => !x.Data.IsDead && !x.Data.Disconnected && x.Data.IsImpostor()).ToList();
+                    var traitorIsEnd = true;
+                    if (SetTraitor.WillBeTraitor != null)
+                    {
+                        traitorIsEnd = SetTraitor.WillBeTraitor.Data.IsDead || SetTraitor.WillBeTraitor.Data.Disconnected || alives.Count < CustomGameOptions.LatestSpawn || impsAlive.Count * 2 >= alives.Count;
+                    }
                     if (modifier != null)
                         modifierIsEnd = modifier.EABBNOODFGL(__instance);
-                    if (!roleIsEnd || !modifierIsEnd) result = false;
+                    if (!roleIsEnd || !modifierIsEnd || !traitorIsEnd) result = false;
                 }
 
                 if (!NobodyEndCriteria(__instance)) result = false;
