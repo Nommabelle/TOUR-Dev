@@ -143,7 +143,7 @@ namespace TownOfUs.Roles
 
         internal virtual bool RoleCriteria()
         {
-            return false;
+            return PlayerControl.LocalPlayer.Is(ModifierEnum.Sleuth) && Modifier.GetModifier<Sleuth>(PlayerControl.LocalPlayer).Reported.Contains(Player.PlayerId);
         }
 
         protected virtual void IntroPrefix(IntroCutscene._CoBegin_d__18 __instance)

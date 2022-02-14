@@ -42,6 +42,7 @@ namespace TownOfUs
         SetBigBoi,
         SetButtonBarry,
         SetBait,
+        SetSleuth,
         SetAssassin,
 
         SetPhantom,

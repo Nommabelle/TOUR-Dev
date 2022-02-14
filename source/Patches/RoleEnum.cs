@@ -54,7 +54,8 @@ namespace TownOfUs
         Drunk,
         BigBoi,
         ButtonBarry,
-        Bait
+        Bait,
+        Sleuth
     }
 
     public enum AbilityEnum

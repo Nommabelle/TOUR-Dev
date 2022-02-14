@@ -36,7 +36,7 @@ namespace TownOfUs.CrewmateRoles.SnitchMod
                 if (player.Data.IsImpostor()) player.nameText.color = Palette.ImpostorRed;
                 var playerRole = Role.GetRole(player);
                 if (playerRole.Faction == Faction.Neutral && CustomGameOptions.SnitchSeesNeutrals)
-                    player.nameText.color = role.Color;
+                    player.nameText.color = playerRole.Color;
             }
         }
     }

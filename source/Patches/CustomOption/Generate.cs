@@ -67,6 +67,7 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption BigBoiOn;
         public static CustomNumberOption FlashOn;
         public static CustomNumberOption LoversOn;
+        public static CustomNumberOption SleuthOn;
         public static CustomNumberOption TiebreakerOn;
 
         public static CustomHeaderOption CustomGameSettings;
@@ -369,6 +370,8 @@ namespace TownOfUs.CustomOption
             BigBoiOn = new CustomNumberOption(true, num++, "<color=#FF8080FF>Giant</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             LoversOn = new CustomNumberOption(true, num++, "<color=#FF66CCFF>Lovers</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
+            SleuthOn = new CustomNumberOption(true, num++, "<color=#803333FF>Sleuth</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             TiebreakerOn = new CustomNumberOption(true, num++, "<color=#99E699FF>Tiebreaker</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);

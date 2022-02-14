@@ -93,6 +93,8 @@ namespace TownOfUs.Patches {
                     playerRole += " (<color=#FFFF99FF>Torch</color>)";
                 } else if (playerControl.Is(ModifierEnum.Lover)) {
                     playerRole += " (<color=#FF66CCFF>Lover</color>)";
+                } else if (playerControl.Is(ModifierEnum.Sleuth)) {
+                    playerRole += " (<color=#803333FF>Sleuth</color>)";
                 }  
                 AdditionalTempData.playerRoles.Add(new AdditionalTempData.PlayerRoleInfo() { PlayerName = playerControl.Data.PlayerName, Role = playerRole });
             }

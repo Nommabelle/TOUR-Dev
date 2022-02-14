@@ -754,6 +754,9 @@ namespace TownOfUs
                     case CustomRPC.SetDrunk:
                         new Drunk(Utils.PlayerById(reader.ReadByte()));
                         break;
+                    case CustomRPC.SetSleuth:
+                        new Sleuth(Utils.PlayerById(reader.ReadByte()));
+                        break;
                     case CustomRPC.SetArsonist:
                         new Arsonist(Utils.PlayerById(reader.ReadByte()));
                         break;
@@ -1117,6 +1120,9 @@ namespace TownOfUs
 
                 if (Check(CustomGameOptions.LoversOn))
                     GlobalModifiers.Add((typeof(Lover), CustomRPC.SetCouple, CustomGameOptions.LoversOn));
+                    
+                if (Check(CustomGameOptions.SleuthOn))
+                    GlobalModifiers.Add((typeof(Sleuth), CustomRPC.SetSleuth, CustomGameOptions.SleuthOn));
                 #endregion
                 #region Assassin Modifier
                 AssassinModifier.Add((typeof(Assassin), CustomRPC.SetAssassin, 100));

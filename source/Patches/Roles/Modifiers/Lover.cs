@@ -5,7 +5,7 @@ using TownOfUs.Patches;
 using TownOfUs.Roles.Modifiers;
 using UnityEngine;
 
-namespace TownOfUs.Roles
+namespace TownOfUs.Roles.Modifiers
 {
     public class Lover : Modifier
     {
