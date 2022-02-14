@@ -33,6 +33,7 @@ namespace TownOfUs.Roles
             TaskText = () => "Choose two players to swap locations";
             Color = Patches.Colors.Transporter;
             RoleType = RoleEnum.Transporter;
+            AddToRoleHistory(RoleType);
             Scale = 1.4f;
             PressedButton = false;
             MenuClick = false;
