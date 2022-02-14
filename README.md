@@ -56,6 +56,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 - [Flash](#flash)
 - [Giant](#giant)
 - [Lovers](#lovers)
+- [Sleuth](#sleuth)
 - [Tiebreaker](#tiebreaker)
 
 
@@ -106,9 +107,13 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <ul> <li>Settings for task tracking</li> </ul>
   <ul> <li>Added a flash radius setting for Grenadier</li> </ul>
   <ul> <li>New Role: Traitor</li> </ul>
-  <ul> <li>New Role: Transporter </li> </ul>
+  <ul> <li>New Role: Transporter</li> </ul>
+  <ul> <li>New Modifier: Sleuth</li> </ul>
   <ul> <li>Fixed Snitch/Haunter meetings when someone disconnects</li> </ul>
   <ul> <li>Fixed Amnesiac/Snitch and Amnesiac/Mayor interactions</li> </ul>
+  <ul> <li>Jester can vent Setting</li> </ul>
+  <ul> <li>Made Modifiers disable upon death</li> </ul>
+  <ul> <li>Made anything that affects the colour of names disable upon death</li> </ul>
   </details>
   <details>
   <summary> v2.5.1 </summary>
@@ -1059,6 +1064,16 @@ However, they can also win with their respective team, hence why the Lovers do n
 | Neutral Roles Can Be Lovers | Whether a Lover can be a Neutral Role | Toggle | True |
 
 -----------------------
+## Sleuth
+### **Applied to: All**
+The Sleuth is a crewmate who gains knowledge from reporting dead bodies.\
+During meetings the Sleuth can see the roles of all players in which they've reported.
+### Game Options
+| Name | Description | Type | Default |
+|----------|:-------------:|:------:|:------:|
+| Sleuth | The percentage probability of the Sleuth appearing | Percentage | 0% |
+
+-----------------------
 ## Tiebreaker
 ### **Applied to: All**
 If any vote is a draw, the Tiebreaker's vote will go through.\
@@ -1081,6 +1096,7 @@ If the Tiebreaker is the Mayor, it applies to the Mayor's __first__ vote.
 | Probability of a completely vanilla game | The percentage probability of a vanilla Among Us game happening | Percentage | 0% |
 | Game Start Cooldowns | The cooldown for all roles at the start of the game (excluding Impostor's Kill Cooldown) | Time | 10s |
 | Parallel Medbay Scans | Whether players have to wait for others to scan | Toggle | False |
+| Classic Nameplates | Whether all decorative nameplates are disabled | Toggle | False |
 
 -----------------------
 # Task Tracking Settings
