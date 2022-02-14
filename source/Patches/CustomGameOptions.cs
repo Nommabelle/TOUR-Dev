@@ -73,7 +73,7 @@ namespace TownOfUs
         public static bool RewindRevive => Generate.RewindRevive.Get();
         public static float RewindDuration => Generate.RewindDuration.Get();
         public static float RewindCooldown => Generate.RewindCooldown.Get();
-        public static float RewindMaxUses => Generate.RewindMaxUses.Get();
+        public static int RewindMaxUses => (int) Generate.RewindMaxUses.Get();
         public static bool TimeLordVitals => Generate.TimeLordVitals.Get();
         public static ShieldOptions ShowShielded => (ShieldOptions)Generate.ShowShielded.Get();
 
@@ -167,7 +167,7 @@ namespace TownOfUs
         public static bool PoisonerVent => Generate.PoisonerVent.Get();
         public static int LatestSpawn => (int)Generate.LatestSpawn.Get();
         public static float TransportCooldown => Generate.TransportCooldown.Get();
-        public static float TransportMaxUses => Generate.TransportMaxUses.Get();
+        public static int TransportMaxUses => (int) Generate.TransportMaxUses.Get();
         public static bool TransporterVitals => Generate.TransporterVitals.Get();
     }
 }

@@ -67,7 +67,7 @@ namespace TownOfUs.CrewmateRoles.TimeLordMod
 
             renderer.color = Palette.DisabledClear;
             renderer.material.SetFloat("_Desat", 1f);
-            role.UsesText.color = Palette.EnabledColor;
+            role.UsesText.color = Palette.DisabledClear;
             role.UsesText.material.SetFloat("_Desat", 0f);
         }
     }

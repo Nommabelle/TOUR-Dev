@@ -20,8 +20,7 @@ namespace TownOfUs.Roles
             RoleType = RoleEnum.TimeLord;
             AddToRoleHistory(RoleType);
             Scale = 1.4f;
-            UsesLeft = (int)CustomGameOptions.RewindMaxUses;
-            if (UsesLeft == 0) UsesLeft = -1;
+            UsesLeft = CustomGameOptions.RewindMaxUses;
         }
 
         public DateTime StartRewind { get; set; }
