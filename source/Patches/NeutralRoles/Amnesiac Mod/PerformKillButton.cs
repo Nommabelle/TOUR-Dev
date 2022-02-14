@@ -233,6 +233,21 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 tlRole.FinishRewind = DateTime.UtcNow;
                 tlRole.StartRewind = DateTime.UtcNow;
                 tlRole.StartRewind = tlRole.StartRewind.AddSeconds(-10.0f);
+                tlRole.UsesLeft = CustomGameOptions.RewindMaxUses;
+            }
+
+            else if (role == RoleEnum.Transporter)
+            {
+                var tpRole = Role.GetRole<Transporter>(amnesiac);
+                tpRole.PressedButton = false;
+                tpRole.MenuClick = false;
+                tpRole.LastMouse = false;
+                tpRole.TransportList1 = null;
+                tpRole.TransportList2 = null;
+                tpRole.TransportPlayer1 = null;
+                tpRole.TransportPlayer2 = null;
+                tpRole.UsesLeft = CustomGameOptions.TransportMaxUses;
+                
             }
 
             else if (role == RoleEnum.Seer)

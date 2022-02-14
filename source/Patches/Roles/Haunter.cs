@@ -61,7 +61,7 @@ namespace TownOfUs.Roles
                 });
             }
             Player.MyRend.color = color;
-            Player.nameText.color = color;
+            Player.nameText.color = Color.clear;
 
         }
     }

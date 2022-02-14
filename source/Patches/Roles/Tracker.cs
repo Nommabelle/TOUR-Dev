@@ -27,8 +27,8 @@ namespace TownOfUs.Roles
             AddToRoleHistory(RoleType);
 
             UsesLeft = CustomGameOptions.MaxTracks;
-            if (UsesLeft == 0) UsesLeft = -1;
         }
+
         public float TrackerTimer()
         {
             var utcNow = DateTime.UtcNow;

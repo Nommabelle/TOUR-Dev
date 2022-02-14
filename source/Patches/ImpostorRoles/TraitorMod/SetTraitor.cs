@@ -5,6 +5,7 @@ using System.Linq;
 using TownOfUs.CrewmateRoles.InvestigatorMod;
 using TownOfUs.CrewmateRoles.SnitchMod;
 using TownOfUs.Extensions;
+using UnityEngine;
 
 namespace TownOfUs.ImpostorRoles.TraitorMod
 {
@@ -48,10 +49,29 @@ namespace TownOfUs.ImpostorRoles.TraitorMod
 
                 if (PlayerControl.LocalPlayer.Is(RoleEnum.Investigator)) Footprint.DestroyAll(Role.GetRole<Investigator>(PlayerControl.LocalPlayer));
 
+                if (PlayerControl.LocalPlayer.Is(RoleEnum.TimeLord))
+                {
+                    var timeLordRole = Role.GetRole<TimeLord>(PlayerControl.LocalPlayer);
+                    Object.Destroy(timeLordRole.UsesText);
+                }
+
                 if (PlayerControl.LocalPlayer.Is(RoleEnum.Tracker))
                 {
                     var trackerRole = Role.GetRole<Tracker>(PlayerControl.LocalPlayer);
                     trackerRole.DestroyAllArrows();
+                    Object.Destroy(trackerRole.UsesText);
+                }
+
+                if (PlayerControl.LocalPlayer.Is(RoleEnum.Transporter))
+                {
+                    var transporterRole = Role.GetRole<Transporter>(PlayerControl.LocalPlayer);
+                    Object.Destroy(transporterRole.UsesText);
+                }
+
+                if (PlayerControl.LocalPlayer.Is(RoleEnum.Veteran))
+                {
+                    var veteranRole = Role.GetRole<Veteran>(PlayerControl.LocalPlayer);
+                    Object.Destroy(veteranRole.UsesText);
                 }
 
                 Role.RoleDictionary.Remove(PlayerControl.LocalPlayer.PlayerId);

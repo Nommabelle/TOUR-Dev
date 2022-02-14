@@ -42,8 +42,7 @@ namespace TownOfUs.Roles
             TransportList2 = null;
             TransportPlayer1 = null;
             TransportPlayer2 = null;
-            UsesLeft = (int) CustomGameOptions.TransportMaxUses;
-            if (UsesLeft == 0) UsesLeft = -1;
+            UsesLeft = CustomGameOptions.TransportMaxUses;
         }
 
         public float TransportTimer()
@@ -309,70 +308,13 @@ namespace TownOfUs.Roles
 
                                                 TransportPlayer2 = player;
 
-                                                var deadBodies = UnityEngine.Object.FindObjectsOfType<DeadBody>();
-                                                DeadBody Player1Body = null;
-                                                DeadBody Player2Body = null;
-                                                if (TransportPlayer1.Data.IsDead)
-                                                    foreach (var body in deadBodies)
-                                                        if (body.ParentId == TransportPlayer1.PlayerId)
-                                                            Player1Body = body;
-                                                if (TransportPlayer2.Data.IsDead)
-                                                    foreach (var body in deadBodies)
-                                                        if (body.ParentId == TransportPlayer2.PlayerId)
-                                                            Player2Body = body;
-                                                
-                                                // if (TransportPlayer1.inVent)
-                                                // {
-                                                //     TransportPlayer1.MyPhysics.RpcExitVent(Vent.currentVent.Id);
-                                                //     TransportPlayer1.MyPhysics.ExitAllVents();
-                                                // }
-                                                // if (TransportPlayer2.inVent)
-                                                // {
-                                                //     TransportPlayer2.MyPhysics.RpcExitVent(Vent.currentVent.Id);
-                                                //     TransportPlayer2.MyPhysics.ExitAllVents();
-                                                // }
-
-                                                if (Player1Body == null && Player2Body == null)
-                                                {
-                                                    TransportPlayer1.MyPhysics.ResetMoveState();
-                                                    TransportPlayer2.MyPhysics.ResetMoveState();
-                                                    var TempPosition = TransportPlayer1.GetTruePosition();
-                                                    var TempFacing = TransportPlayer1.myRend.flipX;
-                                                    TransportPlayer1.NetTransform.SnapTo(new Vector2(TransportPlayer2.GetTruePosition().x, TransportPlayer2.GetTruePosition().y + 0.3636f));
-                                                    TransportPlayer1.myRend.flipX = TransportPlayer2.myRend.flipX;
-                                                    TransportPlayer2.NetTransform.SnapTo(new Vector2(TempPosition.x, TempPosition.y + 0.3636f));
-                                                    TransportPlayer2.myRend.flipX = TempFacing;
-                                                }
-                                                else if (Player1Body != null && Player2Body == null)
-                                                {
-                                                    TransportPlayer2.MyPhysics.ResetMoveState();
-                                                    var TempPosition = Player1Body.TruePosition;
-                                                    Player1Body.transform.position = TransportPlayer2.GetTruePosition();
-                                                    TransportPlayer2.NetTransform.SnapTo(new Vector2(TempPosition.x, TempPosition.y + 0.3636f));
-                                                }
-                                                else if (Player1Body == null && Player2Body != null)
-                                                {
-                                                    TransportPlayer1.MyPhysics.ResetMoveState();
-                                                    var TempPosition = TransportPlayer1.GetTruePosition();
-                                                    TransportPlayer1.NetTransform.SnapTo(new Vector2(Player2Body.TruePosition.x, Player2Body.TruePosition.y + 0.3636f));
-                                                    Player2Body.transform.position = TempPosition;
-                                                }
-                                                else if (Player1Body != null && Player2Body != null)
-                                                {
-                                                    var TempPosition =  Player1Body.TruePosition;
-                                                    Player1Body.transform.position = Player2Body.TruePosition;
-                                                    Player2Body.transform.position = TempPosition;
-                                                }
+                                                TransportPlayers(TransportPlayer1.PlayerId, TransportPlayer2.PlayerId);
                                                 
                                                 var write = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                                                     (byte) CustomRPC.Transport, SendOption.Reliable, -1);
                                                 write.Write(TransportPlayer1.PlayerId);
                                                 write.Write(TransportPlayer2.PlayerId);
                                                 AmongUsClient.Instance.FinishRpcImmediately(write);
-
-                                                if (PlayerControl.LocalPlayer.PlayerId == TransportPlayer1.PlayerId ||
-                                                PlayerControl.LocalPlayer.PlayerId == TransportPlayer2.PlayerId)
-                                                Coroutines.Start(Utils.FlashCoroutine(Color));
 
                                                 TransportPlayer1 = null;
                                                 TransportPlayer2 = null;
@@ -394,6 +336,69 @@ namespace TownOfUs.Roles
                     LastMouse = Input.GetMouseButtonDown(0);
                 }
             }
+        }
+        public static void TransportPlayers(byte player1, byte player2)
+        {
+            var TP1 = Utils.PlayerById(player1);
+            var TP2 = Utils.PlayerById(player2);
+            var deadBodies = UnityEngine.Object.FindObjectsOfType<DeadBody>();
+            DeadBody Player1Body = null;
+            DeadBody Player2Body = null;
+            if (TP1.Data.IsDead)
+                foreach (var body in deadBodies)
+                    if (body.ParentId == TP1.PlayerId)
+                        Player1Body = body;
+            if (TP2.Data.IsDead)
+                foreach (var body in deadBodies)
+                    if (body.ParentId == TP2.PlayerId)
+                        Player2Body = body;
+
+            if (TP1.inVent && PlayerControl.LocalPlayer.PlayerId == TP1.PlayerId)
+            {
+                TP1.MyPhysics.RpcExitVent(Vent.currentVent.Id);
+                TP1.MyPhysics.ExitAllVents();
+            }
+            if (TP2.inVent && PlayerControl.LocalPlayer.PlayerId == TP2.PlayerId)
+            {
+                TP2.MyPhysics.RpcExitVent(Vent.currentVent.Id);
+                TP2.MyPhysics.ExitAllVents();
+            }
+
+            if (Player1Body == null && Player2Body == null)
+            {
+                TP1.MyPhysics.ResetMoveState();
+                TP2.MyPhysics.ResetMoveState();
+                var TempPosition = TP1.GetTruePosition();
+                var TempFacing = TP1.myRend.flipX;
+                TP1.NetTransform.SnapTo(new Vector2(TP2.GetTruePosition().x, TP2.GetTruePosition().y + 0.3636f));
+                TP1.myRend.flipX = TP2.myRend.flipX;
+                TP2.NetTransform.SnapTo(new Vector2(TempPosition.x, TempPosition.y + 0.3636f));
+                TP2.myRend.flipX = TempFacing;
+            }
+            else if (Player1Body != null && Player2Body == null)
+            {
+                TP2.MyPhysics.ResetMoveState();
+                var TempPosition = Player1Body.TruePosition;
+                Player1Body.transform.position = TP2.GetTruePosition();
+                TP2.NetTransform.SnapTo(new Vector2(TempPosition.x, TempPosition.y + 0.3636f));
+            }
+            else if (Player1Body == null && Player2Body != null)
+            {
+                TP1.MyPhysics.ResetMoveState();
+                var TempPosition = TP1.GetTruePosition();
+                TP1.NetTransform.SnapTo(new Vector2(Player2Body.TruePosition.x, Player2Body.TruePosition.y + 0.3636f));
+                Player2Body.transform.position = TempPosition;
+            }
+            else if (Player1Body != null && Player2Body != null)
+            {
+                var TempPosition =  Player1Body.TruePosition;
+                Player1Body.transform.position = Player2Body.TruePosition;
+                Player2Body.transform.position = TempPosition;
+            }
+
+            if (PlayerControl.LocalPlayer.PlayerId == TP1.PlayerId ||
+                PlayerControl.LocalPlayer.PlayerId == TP2.PlayerId)
+                Coroutines.Start(Utils.FlashCoroutine(Patches.Colors.Transporter));
         }
     }
 }
