@@ -25,11 +25,10 @@ namespace TownOfUs.Roles
             Color = Patches.Colors.Tracker;
             RoleType = RoleEnum.Tracker;
             AddToRoleHistory(RoleType);
-            
+
             UsesLeft = CustomGameOptions.MaxTracks;
             if (UsesLeft == 0) UsesLeft = -1;
         }
-
         public float TrackerTimer()
         {
             var utcNow = DateTime.UtcNow;

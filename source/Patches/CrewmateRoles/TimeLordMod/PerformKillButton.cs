@@ -20,9 +20,8 @@ namespace TownOfUs.CrewmateRoles.TimeLordMod
             if (!flag2) return false;
             if (!__instance.enabled) return false;
             if (!role.ButtonUsable) return false;
-            
+
             role.UsesLeft--;
-            role.UsedThisRound = true;
 
             StartStop.StartRewind(role);
             var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,

@@ -41,7 +41,6 @@ namespace TownOfUs.CrewmateRoles.TrackerMod
             {
                 role.UsesText.text = role.UsesLeft + "";
             }
-
             if (isDead)
             {
                 trackButton.gameObject.SetActive(false);
@@ -61,7 +60,7 @@ namespace TownOfUs.CrewmateRoles.TrackerMod
 
                 Utils.SetTarget(ref role.ClosestPlayer, trackButton, float.NaN, notTracked);
             }
-            
+
             var renderer = trackButton.graphic;
             if (role.ClosestPlayer != null && role.ButtonUsable)
             {

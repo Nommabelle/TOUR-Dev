@@ -23,9 +23,8 @@ namespace TownOfUs.Roles
 
         public int UsesLeft;
         public TextMeshPro UsesText;
-        public bool UsedThisRound;
 
-        public bool ButtonUsable => UsesLeft != 0 && (!UsedThisRound || !CustomGameOptions.TransportPerRound);
+        public bool ButtonUsable => UsesLeft != 0;
         
         public Transporter(PlayerControl player) : base(player)
         {
@@ -44,7 +43,6 @@ namespace TownOfUs.Roles
             TransportPlayer2 = null;
             UsesLeft = (int) CustomGameOptions.TransportMaxUses;
             if (UsesLeft == 0) UsesLeft = -1;
-            UsedThisRound = false;
         }
 
         public float TransportTimer()
@@ -307,7 +305,6 @@ namespace TownOfUs.Roles
                                             {
                                                 LastTransported = DateTime.UtcNow;
                                                 UsesLeft--;
-                                                UsedThisRound = true;
 
                                                 TransportPlayer2 = player;
 

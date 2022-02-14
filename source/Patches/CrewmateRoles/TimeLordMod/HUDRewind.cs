@@ -33,7 +33,7 @@ namespace TownOfUs.CrewmateRoles.TimeLordMod
             else
             {
                 rewindButton.gameObject.SetActive(!MeetingHud.Instance);
-              //  rewindButton.isActive = !MeetingHud.Instance;
+                //  rewindButton.isActive = !MeetingHud.Instance;
                 if (role.ButtonUsable)
                     rewindButton.SetCoolDown(role.TimeLordRewindTimer(), role.GetCooldown());
             }

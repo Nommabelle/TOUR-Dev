@@ -4,6 +4,12 @@ using UnityEngine;
 
 namespace TownOfUs.CrewmateRoles.EngineerMod
 {
+    public enum EngineerFixPer
+    {
+        Round,
+        Game
+    }
+
     [HarmonyPatch(typeof(Object), nameof(Object.Destroy), typeof(Object))]
     public static class HUDClose
     {
@@ -13,7 +19,7 @@ namespace TownOfUs.CrewmateRoles.EngineerMod
             foreach (var role in Role.GetRoles(RoleEnum.Engineer))
             {
                 var engineer = (Engineer) role;
-                engineer.UsedThisRound = false;
+                if (CustomGameOptions.EngineerFixPer == EngineerFixPer.Round) engineer.UsedThisRound = false;
             }
         }
     }

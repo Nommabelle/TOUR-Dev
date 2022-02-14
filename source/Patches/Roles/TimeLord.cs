@@ -9,10 +9,8 @@ namespace TownOfUs.Roles
     {
         public int UsesLeft;
         public TextMeshPro UsesText;
-        public bool UsedThisRound;
 
-        public bool ButtonUsable => UsesLeft != 0 && (!UsedThisRound || !CustomGameOptions.RewindPerRound);
-
+        public bool ButtonUsable => UsesLeft != 0;
         public TimeLord(PlayerControl player) : base(player)
         {
             Name = "Time Lord";
@@ -22,9 +20,8 @@ namespace TownOfUs.Roles
             RoleType = RoleEnum.TimeLord;
             AddToRoleHistory(RoleType);
             Scale = 1.4f;
-            UsesLeft = (int) CustomGameOptions.RewindMaxUses;
+            UsesLeft = (int)CustomGameOptions.RewindMaxUses;
             if (UsesLeft == 0) UsesLeft = -1;
-            UsedThisRound = false;
         }
 
         public DateTime StartRewind { get; set; }

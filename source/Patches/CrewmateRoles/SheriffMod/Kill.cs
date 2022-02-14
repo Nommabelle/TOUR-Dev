@@ -26,11 +26,6 @@ namespace TownOfUs.CrewmateRoles.SheriffMod
             var distBetweenPlayers = Utils.GetDistBetweenPlayers(PlayerControl.LocalPlayer, role.ClosestPlayer);
             var flag3 = distBetweenPlayers < GameOptionsData.KillDistances[PlayerControl.GameOptions.KillDistance];
             if (!flag3) return false;
-
-            if (!role.ButtonUsable) return false;
-            role.UsedThisRound = true;
-            role.UsesLeft--;
-
             if (role.ClosestPlayer.IsOnAlert())
             {
                 if (role.ClosestPlayer.IsShielded())
@@ -43,11 +38,6 @@ namespace TownOfUs.CrewmateRoles.SheriffMod
                     AmongUsClient.Instance.FinishRpcImmediately(writer1);
 
                     if (CustomGameOptions.ShieldBreaks) role.LastKilled = DateTime.UtcNow;
-                    else
-                    {
-                        role.UsedThisRound = false;
-                        role.UsesLeft++;
-                    }
 
                     StopKill.BreakShield(medic, role.ClosestPlayer.PlayerId, CustomGameOptions.ShieldBreaks);
 
@@ -88,11 +78,6 @@ namespace TownOfUs.CrewmateRoles.SheriffMod
                 AmongUsClient.Instance.FinishRpcImmediately(writer1);
 
                 if (CustomGameOptions.ShieldBreaks) role.LastKilled = DateTime.UtcNow;
-                else
-                {
-                    role.UsedThisRound = false;
-                    role.UsesLeft++;
-                }
 
                 StopKill.BreakShield(medic, role.ClosestPlayer.PlayerId, CustomGameOptions.ShieldBreaks);
 

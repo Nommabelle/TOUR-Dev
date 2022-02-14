@@ -210,9 +210,9 @@ namespace TownOfUs.Roles
                     PlayerName += $" {modifier.GetColoredSymbol()}";
             }
 
-            if(revealTasks && (Faction == Faction.Crewmates || RoleType == RoleEnum.Phantom))
+            if (revealTasks && (Faction == Faction.Crewmates || RoleType == RoleEnum.Phantom))
             {
-                if ((Player.Data.IsDead && CustomGameOptions.SeeTasksWhenDead) || (MeetingHud.Instance && CustomGameOptions.SeeTasksDuringMeeting) || (!Player.Data.IsDead && !MeetingHud.Instance && CustomGameOptions.SeeTasksDuringRound))
+                if ((PlayerControl.LocalPlayer.Data.IsDead && CustomGameOptions.SeeTasksWhenDead) || (MeetingHud.Instance && CustomGameOptions.SeeTasksDuringMeeting) || (!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance && CustomGameOptions.SeeTasksDuringRound))
                 {
                     PlayerName += $" ({TotalTasks - TasksLeft}/{TotalTasks})";
                 }

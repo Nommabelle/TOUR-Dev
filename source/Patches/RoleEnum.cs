@@ -34,6 +34,7 @@ namespace TownOfUs
         Underdog,
         Grenadier,
         Poisoner,
+        Traitor,
 
 
         Glitch,

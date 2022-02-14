@@ -7,7 +7,7 @@
 
 	<PropertyGroup>
 		<GameProvider>Static</GameProvider>
-		<GameVersion>v2021.12.15s</GameVersion>
+		<GameVersion>C:\Program Files (x86)\Steam\steamapps\common\Among Us Modded Test</GameVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

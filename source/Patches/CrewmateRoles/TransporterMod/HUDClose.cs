@@ -15,7 +15,6 @@ namespace TownOfUs.CrewmateRoles.TransporterMod
             {
                 var transporter = (Transporter) role;
                 transporter.LastTransported = DateTime.UtcNow;
-                transporter.UsedThisRound = false;
             }
         }
     }

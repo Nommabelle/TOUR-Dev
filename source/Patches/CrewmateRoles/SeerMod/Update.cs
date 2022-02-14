@@ -39,11 +39,11 @@ namespace TownOfUs.CrewmateRoles.SeerMod
                             ((player.Is(RoleEnum.Executioner) || player.Is(RoleEnum.Jester) || player.Is(RoleEnum.Phantom)) && !CustomGameOptions.NeutEvilRed) ||
                             ((player.Is(RoleEnum.Arsonist) || player.Is(RoleEnum.Glitch)) && !CustomGameOptions.NeutKillingRed))
                             {
-                                player.nameText.color = Color.green;
+                                state.NameText.color = Color.green;
                             }
                             else
                             {
-                                player.nameText.color = Color.red;
+                                state.NameText.color = Color.red;
                             }
                             break;
                     }

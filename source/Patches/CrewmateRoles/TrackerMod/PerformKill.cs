@@ -13,7 +13,6 @@ namespace TownOfUs.CrewmateRoles.TrackerMod
     public class PerformKill
     {
         public static Sprite Sprite => TownOfUs.Arrow;
-
         public static bool Prefix(KillButton __instance)
         {
             if (__instance != DestroyableSingleton<HudManager>.Instance.KillButton) return true;

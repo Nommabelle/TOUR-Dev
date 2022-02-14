@@ -48,6 +48,7 @@ namespace TownOfUs.CustomOption
 
         public static CustomHeaderOption ImpostorKillingRoles;
         public static CustomNumberOption PoisonerOn;
+        public static CustomNumberOption TraitorOn;
         public static CustomNumberOption UnderdogOn;
 
         public static CustomHeaderOption ImpostorSupportRoles;
@@ -77,7 +78,6 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption VanillaGame;
         public static CustomNumberOption InitialCooldowns;
         public static CustomToggleOption ParallelMedScans;
-        public static CustomToggleOption WhiteNameplates;
 
         public static CustomHeaderOption TaskTrackingSettings;
         public static CustomToggleOption SeeTasksDuringRound;
@@ -96,13 +96,11 @@ namespace TownOfUs.CustomOption
         public static CustomToggleOption SheriffKillsExecutioner;
         public static CustomToggleOption SheriffKillsArsonist;
         public static CustomNumberOption SheriffKillCd;
-        public static CustomNumberOption SheriffMaxUses;
         public static CustomToggleOption SheriffBodyReport;
 
 
         public static CustomHeaderOption Engineer;
-        public static CustomNumberOption FixMaxUses;
-        public static CustomToggleOption FixPerRound;
+        public static CustomStringOption EngineerPer;
 
         public static CustomHeaderOption Investigator;
         public static CustomNumberOption FootprintSize;
@@ -116,7 +114,6 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption RewindDuration;
         public static CustomNumberOption RewindCooldown;
         public static CustomNumberOption RewindMaxUses;
-        public static CustomToggleOption RewindPerRound;
         public static CustomToggleOption TimeLordVitals;
 
         public static CustomHeaderOption Medic;
@@ -129,8 +126,6 @@ namespace TownOfUs.CustomOption
 
         public static CustomHeaderOption Seer;
         public static CustomNumberOption SeerCooldown;
-        public static CustomNumberOption SeeMaxUses;
-        public static CustomToggleOption SeePerRound;
         public static CustomToggleOption CrewKillingRed;
         public static CustomToggleOption NeutBenignRed;
         public static CustomToggleOption NeutEvilRed;
@@ -142,7 +137,6 @@ namespace TownOfUs.CustomOption
         public static CustomHeaderOption Transporter;
         public static CustomNumberOption TransportCooldown;
         public static CustomNumberOption TransportMaxUses;
-        public static CustomToggleOption TransportPerRound;
         public static CustomToggleOption TransporterVitals;
 
         public static CustomHeaderOption Jester;
@@ -205,6 +199,7 @@ namespace TownOfUs.CustomOption
         public static CustomHeaderOption Assassin;
         public static CustomNumberOption NumberOfAssassins;
         public static CustomToggleOption AmneTurnAssassin;
+        public static CustomToggleOption TraitorCanAssassin;
         public static CustomNumberOption AssassinKills;
         public static CustomToggleOption AssassinGuessNeutrals;
         public static CustomToggleOption AssassinCrewmateGuess;
@@ -249,6 +244,9 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption PoisonDuration;
         public static CustomToggleOption PoisonerVent;
 
+        public static CustomHeaderOption Traitor;
+        public static CustomNumberOption LatestSpawn;
+
         public static CustomHeaderOption Lovers;
         public static CustomToggleOption BothLoversDie;
         public static CustomNumberOption LovingImpPercent;
@@ -257,7 +255,6 @@ namespace TownOfUs.CustomOption
         public static Func<object, string> PercentFormat { get; } = value => $"{value:0}%";
         private static Func<object, string> CooldownFormat { get; } = value => $"{value:0.0#}s";
         private static Func<object, string> MultiplierFormat { get; } = value => $"{value:0.0#}x";
-        private static Func<object, string> UsesFormat { get; } = value => (value != null && value.ToString().Equals("0")) ? $"Unlimited" : $"{value}";
 
 
         public static void GenerateAll()
@@ -340,6 +337,8 @@ namespace TownOfUs.CustomOption
             ImpostorKillingRoles = new CustomHeaderOption(num++, "Impostor Killing Roles");
             PoisonerOn = new CustomNumberOption(true, num++, "<color=#FF0000FF>Poisoner</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
+            TraitorOn = new CustomNumberOption(true, num++, "<color=#FF0000FF>Traitor</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
             UnderdogOn = new CustomNumberOption(true, num++, "<color=#FF0000FF>Underdog</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
 
@@ -387,7 +386,6 @@ namespace TownOfUs.CustomOption
             InitialCooldowns =
                 new CustomNumberOption(num++, "Game Start Cooldowns", 10, 10, 30, 2.5f, CooldownFormat);
             ParallelMedScans = new CustomToggleOption(num++, "Parallel Medbay Scans", false);
-            WhiteNameplates = new CustomToggleOption(num++, "Classic Meeting Nameplates", false);
 
             TaskTrackingSettings =
                 new CustomHeaderOption(num++, "Task Tracking Settings");
@@ -398,6 +396,7 @@ namespace TownOfUs.CustomOption
             Assassin = new CustomHeaderOption(num++, "<color=#FF0000FF>Assassin Ability</color>");
             NumberOfAssassins = new CustomNumberOption(num++, "Number Of Assassins", 1, 0, 3, 1);
             AmneTurnAssassin = new CustomToggleOption(num++, "Amnesiac Turned Impostor Gets Ability", false);
+            TraitorCanAssassin = new CustomToggleOption(num++, "Traitor Gets Ability", false);
             AssassinKills = new CustomNumberOption(num++, "Number Of Assassin Kills", 1, 1, 15, 1);
             AssassinCrewmateGuess = new CustomToggleOption(num++, "Assassin Can Guess \"Crewmate\"", false);
             AssassinGuessNeutrals = new CustomToggleOption(num++, "Assassin Can Guess Neutral Roles", false);
@@ -426,11 +425,7 @@ namespace TownOfUs.CustomOption
             Seer =
                 new CustomHeaderOption(num++, "<color=#FFCC80FF>Seer</color>");
             SeerCooldown =
-                new CustomNumberOption(num++, "Seer Cooldown", 25f, 10f, 100f, 2.5f, CooldownFormat);
-            SeeMaxUses =
-                 new CustomNumberOption(num++, "Maximum Number Of Reveals", 0, 0, 30, 1, UsesFormat);
-            SeePerRound =
-                 new CustomToggleOption(num++, "Only One Reveal Per Round", false);
+                new CustomNumberOption(num++, "Seer Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
             CrewKillingRed =
                 new CustomToggleOption(num++, "Crewmate Killing Roles Show Evil", false);
             NeutBenignRed =
@@ -455,7 +450,7 @@ namespace TownOfUs.CustomOption
             TrackCooldown =
                 new CustomNumberOption(num++, "Track Cooldown", 25f, 10f, 40f, 2.5f, CooldownFormat);
             ResetOnNewRound = new CustomToggleOption(num++, "Tracker Arrows Reset After Each Round", false);
-            MaxTracks = new CustomNumberOption(num++, "Maximum Number Of Tracks Per Round", 3, 1, 15, 1);
+            MaxTracks = new CustomNumberOption(num++, "Maximum Number Of Tracks Per Round", 5, 1, 15, 1);
 
             Sheriff =
                 new CustomHeaderOption(num++, "<color=#FFFF00FF>Sheriff</color>");
@@ -471,8 +466,6 @@ namespace TownOfUs.CustomOption
                 new CustomToggleOption(num++, "Sheriff Kills Arsonist", false);
             SheriffKillCd =
                 new CustomNumberOption(num++, "Sheriff Kill Cooldown", 25f, 10f, 40f, 2.5f, CooldownFormat);
-            SheriffMaxUses =
-                 new CustomNumberOption(num++, "Maximum Number Of Kills", 0, 0, 30, 1, UsesFormat);
             SheriffBodyReport = new CustomToggleOption(num++, "Sheriff Can Report Who They've Killed");
 
             Veteran =
@@ -483,7 +476,7 @@ namespace TownOfUs.CustomOption
                 new CustomNumberOption(num++, "Alert Cooldown", 25, 10, 60, 2.5f, CooldownFormat);
             AlertDuration =
                 new CustomNumberOption(num++, "Alert Duration", 10, 5, 15, 1f, CooldownFormat);
-            MaxAlerts = new CustomNumberOption(num++, "Maximum Number Of Alerts", 5, 0, 15, 1, UsesFormat);
+            MaxAlerts = new CustomNumberOption(num++, "Maximum Number Of Alerts", 5, 1, 15, 1);
 
             Vigilante = new CustomHeaderOption(num++, "<color=#FFFF99FF>Vigilante</color>");
             VigilanteKills = new CustomNumberOption(num++, "Number Of Vigilante Kills", 1, 1, 15, 1);
@@ -515,10 +508,8 @@ namespace TownOfUs.CustomOption
 
             Engineer =
                 new CustomHeaderOption(num++, "<color=#FFA60AFF>Engineer</color>");
-            FixMaxUses =
-                 new CustomNumberOption(num++, "Maximum Number Of Sabotage Fixes", 0, 0, 30, 1, UsesFormat);
-            FixPerRound =
-                 new CustomToggleOption(num++, "Only One Sabotage Fix Per Round", true);
+            EngineerPer =
+                new CustomStringOption(num++, "Engineer Fix Per", new[] { "Round", "Game" });
 
             Mayor =
                 new CustomHeaderOption(num++, "<color=#704FA8FF>Mayor</color>");
@@ -540,20 +531,16 @@ namespace TownOfUs.CustomOption
             RewindDuration = new CustomNumberOption(num++, "Rewind Duration", 2f, 2f, 5f, 0.5f, CooldownFormat);
             RewindCooldown = new CustomNumberOption(num++, "Rewind Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
             RewindMaxUses =
-                 new CustomNumberOption(num++, "Maximum Number Of Rewinds", 0, 0, 30, 1, UsesFormat);
-            RewindPerRound =
-                 new CustomToggleOption(num++, "Only One Rewind Per Round", false);
+                 new CustomNumberOption(num++, "Maximum Number Of Rewinds", 5, 1, 15, 1);
             TimeLordVitals =
                 new CustomToggleOption(num++, "Time Lord Can Use Vitals", false);
 
             Transporter =
                 new CustomHeaderOption(num++, "<color=#00EEFFFF>Transporter</color>");
             TransportCooldown =
-                new CustomNumberOption(num++, "Transport Cooldown", 20f, 10f, 60f, 2.5f, CooldownFormat);
+                new CustomNumberOption(num++, "Transport Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
             TransportMaxUses =
-                new CustomNumberOption(num++, "Maximum Number Of Transports", 0, 0, 30, 1, UsesFormat);
-            TransportPerRound =
-                new CustomToggleOption(num++, "Only One Transport Per Round", false);
+                new CustomNumberOption(num++, "Maximum Number Of Transports", 5, 1, 15, 1);
             TransporterVitals =
                 new CustomToggleOption(num++, "Transporter Can Use Vitals", false);
 
@@ -640,6 +627,9 @@ namespace TownOfUs.CustomOption
                 new CustomNumberOption(num++, "Poison Kill Delay", 5, 1, 15, 1f, CooldownFormat);
             PoisonerVent =
                 new CustomToggleOption(num++, "Poisoner Can Vent", false);
+
+            Traitor = new CustomHeaderOption(num++, "<color=#FF0000FF>Traitor</color>");
+            LatestSpawn = new CustomNumberOption(num++, "Minimum People Alive When Traitor Can Spawn", 5, 2, 15, 1);
 
             Underdog = new CustomHeaderOption(num++, "<color=#FF0000FF>Underdog</color>");
             UnderdogKillBonus = new CustomNumberOption(num++, "Kill Cooldown Bonus", 5, 2.5f, 30, 2.5f, CooldownFormat);

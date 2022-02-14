@@ -23,10 +23,7 @@ namespace TownOfUs.CrewmateRoles.EngineerMod
             var dummyActive = system.dummy.IsActive;
             var sabActive = specials.Any(s => s.IsActive);
             if (!sabActive | dummyActive) return false;
-            if (!role.ButtonUsable) return false;
-
             role.UsedThisRound = true;
-            role.UsesLeft--;
 
             switch (PlayerControl.GameOptions.MapId)
             {

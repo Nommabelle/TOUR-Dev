@@ -52,6 +52,9 @@ namespace TownOfUs
         HaunterDied,
         CatchHaunter,
 
+        SetTraitor,
+        TraitorSpawn,
+
         SetCrewmate,
         SetImpostor,
 
