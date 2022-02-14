@@ -186,7 +186,7 @@ namespace TownOfUs.Roles
                 {
                     Vector2 vector2 = new Vector2(playerInfo.Object.GetTruePosition().x - truePosition.x, playerInfo.Object.GetTruePosition().y - truePosition.y);
                     float magnitude = ((Vector2) vector2).magnitude;
-                    if (magnitude <= flashRadius * 5)
+                    if (magnitude <= flashRadius)
                     {
                         PlayerControl playerControl = playerInfo.Object;
                         playerControlList.Add(playerControl);
