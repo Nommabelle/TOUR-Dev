@@ -74,6 +74,7 @@ namespace TownOfUs.CustomOption
         public static CustomToggleOption MeetingColourblind;
         public static CustomToggleOption ImpostorSeeRoles;
         public static CustomToggleOption DeadSeeRoles;
+        public static CustomToggleOption WhiteNameplates;
         public static CustomNumberOption MaxNeutralRoles;
         public static CustomNumberOption VanillaGame;
         public static CustomNumberOption InitialCooldowns;
@@ -386,6 +387,7 @@ namespace TownOfUs.CustomOption
             InitialCooldowns =
                 new CustomNumberOption(num++, "Game Start Cooldowns", 10, 10, 30, 2.5f, CooldownFormat);
             ParallelMedScans = new CustomToggleOption(num++, "Parallel Medbay Scans", false);
+            WhiteNameplates = new CustomToggleOption(num++, "Classic Meeting Nameplates", false);
 
             TaskTrackingSettings =
                 new CustomHeaderOption(num++, "Task Tracking Settings");
