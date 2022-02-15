@@ -246,6 +246,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 tpRole.TransportList2 = null;
                 tpRole.TransportPlayer1 = null;
                 tpRole.TransportPlayer2 = null;
+                tpRole.LastTransported = DateTime.UtcNow;
                 tpRole.UsesLeft = CustomGameOptions.TransportMaxUses;
                 
             }
