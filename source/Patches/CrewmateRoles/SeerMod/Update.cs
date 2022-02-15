@@ -37,7 +37,7 @@ namespace TownOfUs.CrewmateRoles.SeerMod
                             ((player.Is(RoleEnum.Sheriff) || player.Is(RoleEnum.Veteran) || player.Is(RoleEnum.Vigilante)) && !CustomGameOptions.CrewKillingRed) ||
                             (player.Is(RoleEnum.Amnesiac) && !CustomGameOptions.NeutBenignRed) ||
                             ((player.Is(RoleEnum.Executioner) || player.Is(RoleEnum.Jester) || player.Is(RoleEnum.Phantom)) && !CustomGameOptions.NeutEvilRed) ||
-                            ((player.Is(RoleEnum.Arsonist) || player.Is(RoleEnum.Glitch)) && !CustomGameOptions.NeutKillingRed))
+                            ((player.Is(RoleEnum.Arsonist) || player.Is(RoleEnum.Glitch) || player.Is(RoleEnum.Juggernaut)) && !CustomGameOptions.NeutKillingRed))
                             {
                                 state.NameText.color = Color.green;
                             }
@@ -77,7 +77,7 @@ namespace TownOfUs.CrewmateRoles.SeerMod
                             ((player.Is(RoleEnum.Sheriff) || player.Is(RoleEnum.Veteran) || player.Is(RoleEnum.Vigilante)) && !CustomGameOptions.CrewKillingRed) ||
                             (player.Is(RoleEnum.Amnesiac) && !CustomGameOptions.NeutBenignRed) ||
                             ((player.Is(RoleEnum.Executioner) || player.Is(RoleEnum.Jester) || player.Is(RoleEnum.Phantom)) && !CustomGameOptions.NeutEvilRed) ||
-                            ((player.Is(RoleEnum.Arsonist) || player.Is(RoleEnum.Glitch)) && !CustomGameOptions.NeutKillingRed))
+                            ((player.Is(RoleEnum.Arsonist) || player.Is(RoleEnum.Glitch) || player.Is(RoleEnum.Juggernaut)) && !CustomGameOptions.NeutKillingRed))
                         {
                             player.nameText.color = Color.green;
                         }
