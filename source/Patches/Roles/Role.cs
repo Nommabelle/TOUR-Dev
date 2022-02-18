@@ -476,11 +476,10 @@ namespace TownOfUs.Roles
                     bool modifierIsEnd = true;
                     var alives = PlayerControl.AllPlayerControls.ToArray().Where(x => !x.Data.IsDead && !x.Data.Disconnected).ToList();
                     var impsAlive = PlayerControl.AllPlayerControls.ToArray().Where(x => !x.Data.IsDead && !x.Data.Disconnected && x.Data.IsImpostor()).ToList();
-                    var traitorIsEnd = true;
-                    if (SetTraitor.WillBeTraitor != null)
-                    {
-                        traitorIsEnd = SetTraitor.WillBeTraitor.Data.IsDead || SetTraitor.WillBeTraitor.Data.Disconnected || alives.Count < CustomGameOptions.LatestSpawn || impsAlive.Count * 2 >= alives.Count;
-                    }
+                    var possibleTraitors = PlayerControl.AllPlayerControls.ToArray()
+                            .Where(x => !x.Data.IsDead && !x.Data.Disconnected && !x.Is(ModifierEnum.Lover) && !x.Is(Faction.Neutral) && !x.Is(Faction.Impostors) &&
+                            x != ((Executioner)Role.AllRoles.FirstOrDefault(x => x.RoleType == RoleEnum.Executioner)).target).ToList();
+                    var traitorIsEnd = !RpcHandling.TraitorOn || alives.Count < CustomGameOptions.LatestSpawn || impsAlive.Count * 2 >= alives.Count || possibleTraitors.Count == 0 || SetTraitor.TraitorSpawned;
                     if (modifier != null)
                         modifierIsEnd = modifier.EABBNOODFGL(__instance);
                     if (!roleIsEnd || !modifierIsEnd || !traitorIsEnd) result = false;

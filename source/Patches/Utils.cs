@@ -366,14 +366,17 @@ namespace TownOfUs
 
             if (AmongUsClient.Instance.AmHost)
             {
-                MeetingRoomManager.Instance.reporter = killer;
-                MeetingRoomManager.Instance.target = target;
-                AmongUsClient.Instance.DisconnectHandlers.AddUnique(MeetingRoomManager.Instance
-                    .Cast<IDisconnectHandler>());
-                if (!ShipStatus.Instance.CheckTaskCompletion())
+                while (!MeetingHud.Instance)
                 {
-                    DestroyableSingleton<HudManager>.Instance.OpenMeetingRoom(killer);
-                    killer.RpcStartMeeting(target);
+                    MeetingRoomManager.Instance.reporter = killer;
+                    MeetingRoomManager.Instance.target = target;
+                    AmongUsClient.Instance.DisconnectHandlers.AddUnique(MeetingRoomManager.Instance
+                        .Cast<IDisconnectHandler>());
+                    if (!ShipStatus.Instance.CheckTaskCompletion())
+                    {
+                        DestroyableSingleton<HudManager>.Instance.OpenMeetingRoom(killer);
+                        killer.RpcStartMeeting(target);
+                    }
                 }
             }
             else

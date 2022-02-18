@@ -19,40 +19,48 @@ namespace TownOfUs.NeutralRoles.PhantomMod
     [HarmonyPatch(typeof(ExileController), nameof(ExileController.WrapUp))]
     public class SetPhantom
     {
+        public static bool PhantomSpawned = false;
         public static PlayerControl WillBePhantom;
         public static Vector2 StartPosition;
 
         public static void ExileControllerPostfix(ExileController __instance)
         {
+            FindVent();
             var exiled = __instance.exiled?.Object;
-            if (!PlayerControl.LocalPlayer.Data.IsDead && exiled != PlayerControl.LocalPlayer) return;
-            if (exiled == PlayerControl.LocalPlayer && PlayerControl.LocalPlayer.Is(RoleEnum.Jester)) return;
-            if (PlayerControl.LocalPlayer != WillBePhantom) return;
+            var possiblePhantoms = PlayerControl.AllPlayerControls.ToArray()
+                    .Where(x => (x == exiled || x.Data.IsDead && !exiled.Is(RoleEnum.Jester)) && !x.Data.Disconnected &&
+                    !x.Is(ModifierEnum.Lover) && !x.Is(Faction.Crewmates) && !x.Is(RoleEnum.Glitch) &&
+                    !x.Is(RoleEnum.Juggernaut) && !x.Is(Faction.Impostors)).ToList();
+            if (possiblePhantoms.Count == 0) return;
+            if (!RpcHandling.PhantomOn) return;
+            if (PhantomSpawned == true) return;
 
-            if (!PlayerControl.LocalPlayer.Is(RoleEnum.Phantom))
+            if (AmongUsClient.Instance.AmHost)
             {
-                Role.RoleDictionary.Remove(PlayerControl.LocalPlayer.PlayerId);
-                var role = new Phantom(PlayerControl.LocalPlayer);
+                var rand = Random.RandomRangeInt(0, possiblePhantoms.Count);
+                WillBePhantom = possiblePhantoms[rand];
+                PhantomSpawned = true;
+
+                Role.RoleDictionary.Remove(WillBePhantom.PlayerId);
+                var role = new Phantom(WillBePhantom);
                 role.RegenTask();
                 Lights.SetLights();
 
-                RemoveTasks(PlayerControl.LocalPlayer);
-                PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
+                RemoveTasks(WillBePhantom);
+                if (!PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
+                {
+                    WillBePhantom.MyPhysics.ResetMoveState();
+                }
 
                 System.Console.WriteLine("Become Phantom - Phantom");
 
-                PlayerControl.LocalPlayer.gameObject.layer = LayerMask.NameToLayer("Players");
+                WillBePhantom.gameObject.layer = LayerMask.NameToLayer("Players");
 
                 var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte) CustomRPC.PhantomDied, SendOption.Reliable, -1);
+                    (byte)CustomRPC.PhantomDied, SendOption.Reliable, -1);
+                writer.Write(WillBePhantom.PlayerId);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
             }
-
-            if (Role.GetRole<Phantom>(PlayerControl.LocalPlayer).Caught) return;
-            var startingVent =
-                ShipStatus.Instance.AllVents[Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
-            PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
-            PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
         }
 
         public static void Postfix(ExileController __instance) => ExileControllerPostfix(__instance);
@@ -134,6 +142,17 @@ namespace TownOfUs.NeutralRoles.PhantomMod
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                 }
             }));
+        }
+        public static void FindVent()
+        {
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Phantom))
+            {
+                if (Role.GetRole<Phantom>(PlayerControl.LocalPlayer).Caught) return;
+                var startingVent =
+                    ShipStatus.Instance.AllVents[Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
+                PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
+                PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
+            }
         }
     }
 }

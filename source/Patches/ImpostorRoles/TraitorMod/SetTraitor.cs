@@ -18,25 +18,47 @@ namespace TownOfUs.ImpostorRoles.TraitorMod
     [HarmonyPatch(typeof(ExileController), nameof(ExileController.WrapUp))]
     public class SetTraitor
     {
+        public static bool TraitorSpawned = false;
         public static PlayerControl WillBeTraitor;
 
         public static void ExileControllerPostfix(ExileController __instance)
         {
             var exiled = __instance.exiled?.Object;
             var alives = PlayerControl.AllPlayerControls.ToArray()
-                    .Where(x => !x.Data.IsDead && !x.Data.Disconnected).ToList();
+                    .Where(x => !x.Data.IsDead && !x.Data.Disconnected && x != exiled).ToList();
+            var possibleTraitors = PlayerControl.AllPlayerControls.ToArray()
+                    .Where(x => !x.Data.IsDead && !x.Data.Disconnected && !x.Is(ModifierEnum.Lover) && !x.Is(Faction.Neutral) &&
+                    x != ((Executioner)Role.AllRoles.FirstOrDefault(x => x.RoleType == RoleEnum.Executioner)).target).ToList();
             foreach (var player in alives)
             {
-                if (player.Data.IsImpostor())
+                if (player.Data.IsImpostor() || ((player.Is(RoleEnum.Glitch) || player.Is(RoleEnum.Juggernaut)) && CustomGameOptions.GlitchStopsTraitor))
                 {
                     return;
                 }
             }
-            if (PlayerControl.LocalPlayer.Data.IsDead || exiled == PlayerControl.LocalPlayer) return;
             if (alives.Count < CustomGameOptions.LatestSpawn) return;
-            if (PlayerControl.LocalPlayer != WillBeTraitor) return;
+            if (possibleTraitors.Count == 0) return;
+            if (!RpcHandling.TraitorOn) return;
+            if (TraitorSpawned == true) return;
 
-            if (!PlayerControl.LocalPlayer.Is(RoleEnum.Traitor))
+            if (AmongUsClient.Instance.AmHost)
+            {
+                var rand = Random.RandomRangeInt(0, possibleTraitors.Count);
+                WillBeTraitor = possibleTraitors[rand];
+                TraitorSpawned = true;
+
+                TurnImp(WillBeTraitor);
+
+                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                    (byte)CustomRPC.TraitorSpawn, SendOption.Reliable, -1);
+                writer.Write(WillBeTraitor.PlayerId);
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
+            }
+        }
+
+        public static void TurnImp(PlayerControl player)
+        {
+            if (!PlayerControl.LocalPlayer.Is(RoleEnum.Traitor) && PlayerControl.LocalPlayer == player)
             {
                 if (PlayerControl.LocalPlayer.Is(RoleEnum.Snitch))
                 {
@@ -73,21 +95,13 @@ namespace TownOfUs.ImpostorRoles.TraitorMod
                     var veteranRole = Role.GetRole<Veteran>(PlayerControl.LocalPlayer);
                     Object.Destroy(veteranRole.UsesText);
                 }
-
-                Role.RoleDictionary.Remove(PlayerControl.LocalPlayer.PlayerId);
-                var role = new Traitor(PlayerControl.LocalPlayer);
-                role.RegenTask();
-
-                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte) CustomRPC.TraitorSpawn, SendOption.Reliable, -1);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
-
-                TurnImp(PlayerControl.LocalPlayer);
             }
-        }
 
-        public static void TurnImp(PlayerControl player)
-        {
+            Role.RoleDictionary.Remove(player.PlayerId);
+            var role = new Traitor(player);
+            role.RegenTask();
+            TraitorSpawned = true;
+
             player.Data.Role.TeamType = RoleTeamTypes.Impostor;
             RoleManager.Instance.SetRole(player, RoleTypes.Impostor);
             player.SetKillTimer(PlayerControl.GameOptions.KillCooldown);
@@ -106,6 +120,11 @@ namespace TownOfUs.ImpostorRoles.TraitorMod
                     (byte)CustomRPC.SetAssassin, SendOption.Reliable, -1);
                 writer2.Write(player.PlayerId);
                 AmongUsClient.Instance.FinishRpcImmediately(writer2);
+            }
+
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Traitor))
+            {
+                DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(true);
             }
 
             Lights.SetLights();

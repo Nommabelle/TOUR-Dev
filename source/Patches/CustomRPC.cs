@@ -45,20 +45,16 @@ namespace TownOfUs
         SetSleuth,
         SetAssassin,
 
-        SetPhantom,
         PhantomDied,
         CatchPhantom,
 
-        SetHaunter,
         HaunterDied,
         CatchHaunter,
 
-        SetTraitor,
         TraitorSpawn,
 
         SetCrewmate,
         SetImpostor,
-
 
         LoveWin,
         GlitchWin,
@@ -110,7 +106,6 @@ namespace TownOfUs
         SetHacked,
 
         ExecutionerToJester,
-
 
         Start,
         SyncCustomSettings,
