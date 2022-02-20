@@ -38,9 +38,9 @@ namespace TownOfUs
         private static readonly List<(Type, CustomRPC, int)> GlobalModifiers = new List<(Type, CustomRPC, int)>();
         private static readonly List<(Type, CustomRPC, int)> ButtonModifiers = new List<(Type, CustomRPC, int)>();
         private static readonly List<(Type, CustomRPC, int)> AssassinModifier = new List<(Type, CustomRPC, int)>();
-        public static bool PhantomOn;
-        public static bool HaunterOn;
-        public static bool TraitorOn;
+        private static bool PhantomOn;
+        private static bool HaunterOn;
+        private static bool TraitorOn;
 
         internal static bool Check(int probability)
         {
@@ -213,9 +213,142 @@ namespace TownOfUs
                 assassins = assassins - 1;
             }
 
+            var becomeRoles = 0;
+            var toChooseFrom = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(Faction.Crewmates) && !x.Is(ModifierEnum.Lover)).ToList();
+            toChooseFrom.Shuffle();
+            var phantomSpawn = false;
+            var haunterSpawn = false;
+            var traitorSpawn = false;
+            if (PhantomOn) becomeRoles = becomeRoles + 1;
+            if (HaunterOn) becomeRoles = becomeRoles + 1;
+            if (TraitorOn) becomeRoles = becomeRoles + 1;
+            while (becomeRoles > toChooseFrom.Count)
+            {
+                var subtractRole = Random.RandomRangeInt(0, 3);
+                if (subtractRole == 0)
+                {
+                    if (PhantomOn == true)
+                    {
+                        PhantomOn = false;
+                        becomeRoles--;
+                    }
+                }
+                else if (subtractRole == 1)
+                {
+                    if (HaunterOn == true)
+                    {
+                        HaunterOn = false;
+                        becomeRoles--;
+                    }
+                }
+                else
+                {
+                    if (TraitorOn == true)
+                    {
+                        TraitorOn = false;
+                        becomeRoles--;
+                    }
+                }
+            }
+            var rand = Random.RandomRangeInt(0, toChooseFrom.Count);
+            var rand2 = Random.RandomRangeInt(0, toChooseFrom.Count);
+            var rand3 = Random.RandomRangeInt(0, toChooseFrom.Count);
+            if (becomeRoles == 3)
+            {
+                phantomSpawn = true;
+                haunterSpawn = true;
+                traitorSpawn = true;
+                while (rand == rand2)
+                {
+                    rand2 = Random.RandomRangeInt(0, toChooseFrom.Count);
+                }
+                while (rand == rand3 || rand2 == rand3)
+                {
+                    rand3 = Random.RandomRangeInt(0, toChooseFrom.Count);
+                }
+            }
+            else if (becomeRoles == 2)
+            {
+                if (PhantomOn) phantomSpawn = true;
+                if (HaunterOn) haunterSpawn = true;
+                if (TraitorOn) traitorSpawn = true;
+                if (phantomSpawn == true)
+                {
+                    while (rand == rand2)
+                    {
+                        rand2 = Random.RandomRangeInt(0, toChooseFrom.Count);
+                    }
+                    while (rand == rand3)
+                    {
+                        rand3 = Random.RandomRangeInt(0, toChooseFrom.Count);
+                    }
+                }
+                else
+                {
+                    while (rand2 == rand3)
+                    {
+                        rand3 = Random.RandomRangeInt(0, toChooseFrom.Count);
+                    }
+                }
+            }
+            else if (becomeRoles == 1)
+            {
+                if (PhantomOn) phantomSpawn = true;
+                if (HaunterOn) haunterSpawn = true;
+                if (TraitorOn) traitorSpawn = true;
+            }
+            var pc = toChooseFrom[rand];
+            var pc2 = toChooseFrom[rand2];
+            var pc3 = toChooseFrom[rand3];
+            if (phantomSpawn == true)
+            {
+                SetPhantom.WillBePhantom = pc;
+                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                        (byte)CustomRPC.SetPhantom, SendOption.Reliable, -1);
+                writer.Write(pc.PlayerId);
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
+            }
+            else
+            {
+                var writer2 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                    (byte)CustomRPC.SetPhantom, SendOption.Reliable, -1);
+                writer2.Write(byte.MaxValue);
+                AmongUsClient.Instance.FinishRpcImmediately(writer2);
+            }
+            if (haunterSpawn == true)
+            {
+                SetHaunter.WillBeHaunter = pc2;
+                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                        (byte)CustomRPC.SetHaunter, SendOption.Reliable, -1);
+                writer.Write(pc2.PlayerId);
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
+            }
+            else
+            {
+                var writer2 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                    (byte)CustomRPC.SetHaunter, SendOption.Reliable, -1);
+                writer2.Write(byte.MaxValue);
+                AmongUsClient.Instance.FinishRpcImmediately(writer2);
+            }
+            if (traitorSpawn == true)
+            {
+                SetTraitor.WillBeTraitor = pc3;
+                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                        (byte)CustomRPC.SetTraitor, SendOption.Reliable, -1);
+                writer.Write(pc3.PlayerId);
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
+            }
+            else
+            {
+                var writer2 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                    (byte)CustomRPC.SetTraitor, SendOption.Reliable, -1);
+                writer2.Write(byte.MaxValue);
+                AmongUsClient.Instance.FinishRpcImmediately(writer2);
+            }
+
             if (executionerList.Count > 0)
             {
-                var targets = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(Faction.Crewmates) && !x.Is(ModifierEnum.Lover) && !x.Is(RoleEnum.Mayor) && !x.Is(RoleEnum.Swapper) && !x.Is(RoleEnum.Vigilante)).ToList();
+                var targets = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(Faction.Crewmates) && !x.Is(ModifierEnum.Lover) && !x.Is(RoleEnum.Mayor) && !x.Is(RoleEnum.Swapper) && !x.Is(RoleEnum.Vigilante) && x != SetTraitor.WillBeTraitor).ToList();
                 foreach (var executioner in executionerList)
                 {
                     if (targets.Count > 0)
@@ -780,10 +913,12 @@ namespace TownOfUs
                     case CustomRPC.SetUnderdog:
                         new Underdog(Utils.PlayerById(reader.ReadByte()));
                         break;
+                    case CustomRPC.SetPhantom:
+                        readByte = reader.ReadByte();
+                        SetPhantom.WillBePhantom = readByte == byte.MaxValue ? null : Utils.PlayerById(readByte);
+                        break;
                     case CustomRPC.PhantomDied:
-                        var phantom = Utils.PlayerById(reader.ReadByte());
-                        SetPhantom.WillBePhantom = phantom;
-                        SetPhantom.PhantomSpawned = true;
+                        var phantom = SetPhantom.WillBePhantom;
                         Role.RoleDictionary.Remove(phantom.PlayerId);
                         var phantomRole = new Phantom(phantom);
                         phantomRole.RegenTask();
@@ -794,7 +929,6 @@ namespace TownOfUs
                         {
                             PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
                         }
-                        SetPhantom.FindVent();
                         System.Console.WriteLine("Become Phantom - Users");
                         break;
                     case CustomRPC.CatchPhantom:
@@ -804,10 +938,12 @@ namespace TownOfUs
                     case CustomRPC.PhantomWin:
                         Role.GetRole<Phantom>(Utils.PlayerById(reader.ReadByte())).CompletedTasks = true;
                         break;
+                    case CustomRPC.SetHaunter:
+                        readByte = reader.ReadByte();
+                        SetHaunter.WillBeHaunter = readByte == byte.MaxValue ? null : Utils.PlayerById(readByte);
+                        break;
                     case CustomRPC.HaunterDied:
-                        var haunter = Utils.PlayerById(reader.ReadByte());
-                        SetHaunter.WillBeHaunter = haunter;
-                        SetHaunter.HaunterSpawned = true;
+                        var haunter = SetHaunter.WillBeHaunter;
                         Role.RoleDictionary.Remove(haunter.PlayerId);
                         var haunterRole = new Haunter(haunter);
                         haunterRole.RegenTask();
@@ -818,7 +954,6 @@ namespace TownOfUs
                         {
                             PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
                         }
-                        SetHaunter.FindVent();
                         System.Console.WriteLine("Become Haunter - Users");
                         break;
                     case CustomRPC.CatchHaunter:
@@ -828,11 +963,18 @@ namespace TownOfUs
                     case CustomRPC.HaunterFinished:
                         HighlightImpostors.UpdateMeeting(MeetingHud.Instance);
                         break;
+                    case CustomRPC.SetTraitor:
+                        readByte = reader.ReadByte();
+                        SetTraitor.WillBeTraitor = readByte == byte.MaxValue ? null : Utils.PlayerById(readByte);
+                        break;
                     case CustomRPC.TraitorSpawn:
-                        var traitor = Utils.PlayerById(reader.ReadByte());
-                        SetTraitor.WillBeTraitor = traitor;
+                        var traitor = SetTraitor.WillBeTraitor;
+                        Role.RoleDictionary.Remove(traitor.PlayerId);
+                        var traitorRole = new Traitor(traitor);
+                        traitorRole.RegenTask();
                         SetTraitor.TurnImp(traitor);
                         break;
+
                     case CustomRPC.AddMayorVoteBank:
                         Role.GetRole<Mayor>(Utils.PlayerById(reader.ReadByte())).VoteBank += reader.ReadInt32();
                         break;

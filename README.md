@@ -107,7 +107,8 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <ul> <li>Fixed Bait sometimes not making the killer self-report</li> </ul>
   <ul> <li>Fixed Poisoner killing Bait after another report resulting in a duplicated meeting</li> </ul>
   <ul> <li>Fixed the issue where the Snitch spawning as Crewmate would see their name gold</li> </ul>
-  <ul> <li>Reworked how Traitor, Phantom and Haunter are set</li> </ul>
+  <ul> <li>Fixed Amnesiac remembering Transporter becoming an Impostor</li> </ul>
+  <ul> <li>Fixed Tracker Arrows</li> </ul>
   </details>
   <details>
   <summary> v2.6.0 </summary>
