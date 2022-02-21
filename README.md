@@ -734,14 +734,14 @@ If enabled, the Time Lord can't use Vitals to make things more balanced.
 -----------------------
 ## Transporter
 ### **Team: Crewmates**
-The Transporter is a Crewmate that can change the locations of two random players at will.\
+The Transporter is a Crewmate that can change the locations of two players at will.\
 Players who have been transported are alerted with a blue flash on their screen.
 
 ### Game Options
 | Name | Description | Type | Default |
 |----------|:-------------:|:------:|:------:|
 | Transporter | The percentage probability of the Transporter appearing | Percentage | 0% |
-| Rewind Cooldown | The cooldown of the Transporter's transport ability | Time | 25s |
+| Transport Cooldown | The cooldown of the Transporter's transport ability | Time | 25s |
 | Max Uses | The amount of times the Transport ability can be used | Number | 5 |
 | Transporter can use Vitals | Whether the Transporter has the ability to use Vitals | Toggle | False |
 
