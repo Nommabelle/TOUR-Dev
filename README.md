@@ -109,6 +109,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <ul> <li>Fixed the issue where the Snitch spawning as Crewmate would see their name gold</li> </ul>
   <ul> <li>Fixed Amnesiac remembering Transporter becoming an Impostor</li> </ul>
   <ul> <li>Fixed Tracker Arrows</li> </ul>
+  <ul> <li>Dead bodies are now removed after meetings</li> </ul>
   </details>
   <details>
   <summary> v2.6.0 </summary>
@@ -745,7 +746,7 @@ If enabled, the Time Lord can't use Vitals to make things more balanced.
 -----------------------
 ## Transporter
 ### **Team: Crewmates**
-The Transporter is a Crewmate that can change the locations of two players at will.\
+The Transporter is a Crewmate that can change the locations of two random players at will.\
 Players who have been transported are alerted with a blue flash on their screen.
 
 ### Game Options

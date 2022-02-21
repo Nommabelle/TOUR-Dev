@@ -363,26 +363,24 @@ namespace TownOfUs
 
         public static IEnumerator BaitReport(PlayerControl killer, GameData.PlayerInfo target)
         {
-            while (!MeetingHud.Instance)
+            if (!MeetingHud.Instance)
             {
-<<<<<<< HEAD
                 yield return new WaitForSeconds(Time.deltaTime);
 
                 if (AmongUsClient.Instance.AmHost)
-=======
-                while (!MeetingHud.Instance)
->>>>>>> a8c32005137d07841c8368a5cc8e18bdae7b9676
                 {
-                    MeetingRoomManager.Instance.reporter = killer;
-                    MeetingRoomManager.Instance.target = target;
-                    AmongUsClient.Instance.DisconnectHandlers.AddUnique(MeetingRoomManager.Instance
-                        .Cast<IDisconnectHandler>());
-                    if (!ShipStatus.Instance.CheckTaskCompletion())
+                    while (!MeetingHud.Instance)
                     {
-                        DestroyableSingleton<HudManager>.Instance.OpenMeetingRoom(killer);
-                        killer.RpcStartMeeting(target);
+                        MeetingRoomManager.Instance.reporter = killer;
+                        MeetingRoomManager.Instance.target = target;
+                        AmongUsClient.Instance.DisconnectHandlers.AddUnique(MeetingRoomManager.Instance
+                            .Cast<IDisconnectHandler>());
+                        if (!ShipStatus.Instance.CheckTaskCompletion())
+                        {
+                            DestroyableSingleton<HudManager>.Instance.OpenMeetingRoom(killer);
+                            killer.RpcStartMeeting(target);
+                        }
                     }
-<<<<<<< HEAD
                 }
                 else
                 {
@@ -391,8 +389,6 @@ namespace TownOfUs
                     writer.Write(killer.PlayerId);
                     writer.Write(target.PlayerId);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
-=======
->>>>>>> a8c32005137d07841c8368a5cc8e18bdae7b9676
                 }
             }
         }
