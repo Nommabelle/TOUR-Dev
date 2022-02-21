@@ -28,7 +28,7 @@ namespace TownOfUs.ImpostorRoles.TraitorMod
                     .Where(x => !x.Data.IsDead && !x.Data.Disconnected).ToList();
             foreach (var player in alives)
             {
-                if (player.Data.IsImpostor())
+                if (player.Data.IsImpostor() || ((player.Is(RoleEnum.Glitch) || player.Is(RoleEnum.Juggernaut)) && CustomGameOptions.GlitchStopsTraitor))
                 {
                     return;
                 }
@@ -49,12 +49,6 @@ namespace TownOfUs.ImpostorRoles.TraitorMod
                 }
 
                 if (PlayerControl.LocalPlayer.Is(RoleEnum.Investigator)) Footprint.DestroyAll(Role.GetRole<Investigator>(PlayerControl.LocalPlayer));
-
-                if (PlayerControl.LocalPlayer.Is(RoleEnum.Medium))
-                {
-                    var mediumRole = Role.GetRole<Medium>(PlayerControl.LocalPlayer);
-                    Object.Destroy(mediumRole.UsesText);
-                }
 
                 if (PlayerControl.LocalPlayer.Is(RoleEnum.TimeLord))
                 {
@@ -119,6 +113,11 @@ namespace TownOfUs.ImpostorRoles.TraitorMod
             {
                 DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(true);
                 Coroutines.Start(Utils.FlashCoroutine(Color.red));
+            }
+
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Traitor))
+            {
+                DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(true);
             }
 
             Lights.SetLights();
