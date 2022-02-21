@@ -115,11 +115,6 @@ namespace TownOfUs.ImpostorRoles.TraitorMod
                 Coroutines.Start(Utils.FlashCoroutine(Color.red));
             }
 
-            if (PlayerControl.LocalPlayer.Is(RoleEnum.Traitor))
-            {
-                DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(true);
-            }
-
             Lights.SetLights();
         }
 
