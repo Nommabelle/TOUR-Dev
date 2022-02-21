@@ -856,16 +856,22 @@ namespace TownOfUs
                     case CustomRPC.BaitReport:
                         var baitKiller = Utils.PlayerById(reader.ReadByte());
                         var bait = GameData.Instance.GetPlayerById(reader.ReadByte());
-                        if (AmongUsClient.Instance.AmHost)
+                        if (!MeetingHud.Instance)
                         {
-                            MeetingRoomManager.Instance.reporter = baitKiller;
-                            MeetingRoomManager.Instance.target = bait;
-                            AmongUsClient.Instance.DisconnectHandlers.AddUnique(MeetingRoomManager.Instance
-                                .Cast<IDisconnectHandler>());
-                            if (ShipStatus.Instance.CheckTaskCompletion()) return;
+                            if (AmongUsClient.Instance.AmHost)
+                            {
+                                while (!MeetingHud.Instance)
+                                {
+                                    MeetingRoomManager.Instance.reporter = baitKiller;
+                                    MeetingRoomManager.Instance.target = bait;
+                                    AmongUsClient.Instance.DisconnectHandlers.AddUnique(MeetingRoomManager.Instance
+                                        .Cast<IDisconnectHandler>());
+                                    if (ShipStatus.Instance.CheckTaskCompletion()) return;
 
-                            DestroyableSingleton<HudManager>.Instance.OpenMeetingRoom(baitKiller);
-                            baitKiller.RpcStartMeeting(bait);
+                                    DestroyableSingleton<HudManager>.Instance.OpenMeetingRoom(baitKiller);
+                                    baitKiller.RpcStartMeeting(bait);
+                                }
+                            }
                         }
                         break;
                     case CustomRPC.SetUndertaker:
