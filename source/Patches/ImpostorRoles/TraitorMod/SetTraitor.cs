@@ -59,7 +59,8 @@ namespace TownOfUs.ImpostorRoles.TraitorMod
                 if (PlayerControl.LocalPlayer.Is(RoleEnum.Tracker))
                 {
                     var trackerRole = Role.GetRole<Tracker>(PlayerControl.LocalPlayer);
-                    trackerRole.DestroyAllArrows();
+                    trackerRole.TrackerArrows.Values.DestroyAll();
+                    trackerRole.TrackerArrows.Clear();
                     Object.Destroy(trackerRole.UsesText);
                 }
 
