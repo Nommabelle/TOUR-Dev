@@ -43,7 +43,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 closestDistance = distance;
             }
 
-            if (CustomGameOptions.RememberArrows)
+            if (CustomGameOptions.RememberArrows && !PlayerControl.LocalPlayer.Data.IsDead)
             {
                 var validBodies = Object.FindObjectsOfType<DeadBody>().Where(x =>
                     Murder.KilledPlayers.Any(y => y.PlayerId == x.ParentId && y.KillTime.AddSeconds(CustomGameOptions.RememberArrowDelay) < System.DateTime.UtcNow));
@@ -70,6 +70,16 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                         role.BodyArrows.Add(body.ParentId, arrow);
                     }
                     role.BodyArrows.GetValueSafe(body.ParentId).target = body.TruePosition;
+                }
+            }
+            else
+            {
+                if (role.BodyArrows.Count != 0)
+                {
+                    foreach (var bodyArrow in role.BodyArrows.Keys)
+                    {
+                        role.DestroyArrow(bodyArrow);
+                    }
                 }
             }
 
