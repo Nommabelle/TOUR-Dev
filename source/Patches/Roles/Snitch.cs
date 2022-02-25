@@ -9,9 +9,7 @@ namespace TownOfUs.Roles
     {
         public List<ArrowBehaviour> ImpArrows = new List<ArrowBehaviour>();
 
-        public List<ArrowBehaviour> SnitchArrows = new List<ArrowBehaviour>();
-
-        public List<PlayerControl> SnitchTargets = new List<PlayerControl>();
+        public Dictionary<byte, ArrowBehaviour> SnitchArrows = new Dictionary<byte, ArrowBehaviour>();
 
         public Snitch(PlayerControl player) : base(player)
         {

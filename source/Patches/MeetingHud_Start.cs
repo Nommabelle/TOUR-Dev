@@ -1,5 +1,7 @@
 using HarmonyLib;
 using Object = UnityEngine.Object;
+using Hazel;
+using Reactor.Extensions;
 
 namespace TownOfUs
 {
@@ -17,10 +19,13 @@ namespace TownOfUs
     {
         public static void Postfix(MeetingHud __instance)
         {
-            var deadBodies = Object.FindObjectsOfType<DeadBody>();
-            foreach (var body in deadBodies)
+            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                (byte)CustomRPC.RemoveAllBodies, SendOption.Reliable, -1);
+            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            var buggedBodies = Object.FindObjectsOfType<DeadBody>();
+            foreach (var body in buggedBodies)
             {
-                Object.Destroy(body.gameObject);
+                body.gameObject.Destroy();
             }
         }
     }

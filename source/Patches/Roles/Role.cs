@@ -500,7 +500,7 @@ namespace TownOfUs.Roles
                 foreach (var role in AllRoles.Where(x => x.RoleType == RoleEnum.Snitch))
                 {
                     ((Snitch)role).ImpArrows.DestroyAll();
-                    ((Snitch)role).SnitchArrows.DestroyAll();
+                    ((Snitch)role).SnitchArrows.Values.DestroyAll();
                 }
                 foreach (var role in AllRoles.Where(x => x.RoleType == RoleEnum.Tracker))
                 {
