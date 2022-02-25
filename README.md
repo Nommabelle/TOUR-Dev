@@ -778,8 +778,8 @@ Once they remember their role, they go on to try win with their new win conditio
 | Name | Description | Type | Default |
 |----------|:-------------:|:------:|:------:|
 | Amnesiac | The percentage probability of the Amnesiac appearing | Percentage | 0% |
-| Amnesiac Gets Arrows | Whether the Amnesiac has arrows pointing to dead bodies | Toggle | True |
-| Arrow Appear Delay | The delay of the arrows appearing after the person died | Time | 25s |
+| Amnesiac Gets Arrows | Whether the Amnesiac has arrows pointing to dead bodies | Toggle | False |
+| Arrow Appear Delay | The delay of the arrows appearing after the person died | Time | 5s |
 
 -----------------------
 ## Jester
