@@ -76,10 +76,8 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
             {
                 if (role.BodyArrows.Count != 0)
                 {
-                    foreach (var bodyArrow in role.BodyArrows.Keys)
-                    {
-                        role.DestroyArrow(bodyArrow);
-                    }
+                    role.BodyArrows.Values.DestroyAll();
+                    role.BodyArrows.Clear();
                 }
             }
 
