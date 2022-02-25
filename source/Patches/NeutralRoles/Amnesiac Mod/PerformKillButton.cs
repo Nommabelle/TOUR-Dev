@@ -61,6 +61,13 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
 
             Role newRole;
 
+            if (PlayerControl.LocalPlayer == amnesiac)
+            {
+                var amnesiacRole = Role.GetRole<Amnesiac>(amnesiac);
+                amnesiacRole.BodyArrows.Values.DestroyAll();
+                amnesiacRole.BodyArrows.Clear();
+            }
+
             switch (role)
             {
                 case RoleEnum.Sheriff:

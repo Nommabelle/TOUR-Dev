@@ -1,7 +1,6 @@
 using System.Linq;
 using HarmonyLib;
 using TownOfUs.Roles;
-using Object = UnityEngine.Object;
 
 namespace TownOfUs.CrewmateRoles.SnitchMod
 {
@@ -28,12 +27,7 @@ namespace TownOfUs.CrewmateRoles.SnitchMod
                     var player = Utils.PlayerById(arrow.Key);
                     if (player == null || player.Data == null || player.Data.IsDead || player.Data.Disconnected)
                     {
-                        var arrow2 = snitch.SnitchArrows.FirstOrDefault(x => x.Key == arrow.Key);
-                        if (arrow.Value != null)
-                            Object.Destroy(arrow.Value);
-                        if (arrow.Value.gameObject != null)
-                            Object.Destroy(arrow.Value.gameObject);
-                        snitch.SnitchArrows.Remove(arrow.Key);
+                        snitch.DestroyArrow(arrow.Key);
                         continue;
                     }
                     arrow.Value.target = player.transform.position;
