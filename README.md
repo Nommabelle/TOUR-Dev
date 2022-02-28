@@ -1129,7 +1129,8 @@ If the Tiebreaker is the Mayor, it applies to the Mayor's __first__ vote.
 | Probability of a completely vanilla game | The percentage probability of a vanilla Among Us game happening | Percentage | 0% |
 | Game Start Cooldowns | The cooldown for all roles at the start of the game (excluding Impostor's Kill Cooldown) | Time | 10s |
 | Parallel Medbay Scans | Whether players have to wait for others to scan | Toggle | False |
-| Classic Nameplates | Whether all decorative nameplates are disabled | Toggle | False |
+| Disable Level Icons | Whether all level icons are removed in meetings | Toggle | False |
+| Disable Player Nameplates | Whether all decorative nameplates are disabled in meetings | Toggle | False |
 
 -----------------------
 # Task Tracking Settings

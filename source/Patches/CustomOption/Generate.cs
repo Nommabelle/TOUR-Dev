@@ -396,8 +396,8 @@ namespace TownOfUs.CustomOption
             InitialCooldowns =
                 new CustomNumberOption(num++, "Game Start Cooldowns", 10, 10, 30, 2.5f, CooldownFormat);
             ParallelMedScans = new CustomToggleOption(num++, "Parallel Medbay Scans", false);
-            DisableLevels = new CustomToggleOption(num++, "Hide Level Icon In Meetings", true);
-            WhiteNameplates = new CustomToggleOption(num++, "Force White Meeting Nameplates", false);
+            DisableLevels = new CustomToggleOption(num++, "Disable Level Icons", false);
+            WhiteNameplates = new CustomToggleOption(num++, "Disable Player Nameplates", false);
 
             TaskTrackingSettings =
                 new CustomHeaderOption(num++, "Task Tracking Settings");
