@@ -5,7 +5,7 @@ namespace TownOfUs.Roles.Modifiers
 {
     public class Giant : Modifier, IVisualAlteration
     {
-        public static float SpeedFactor = 0.5f;
+        public static float SpeedFactor = 0.7f;
         
         public Giant(PlayerControl player) : base(player)
         {
