@@ -104,6 +104,16 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 <details>
   <summary> Changelog </summary>
   <details>
+  <summary> v2.6.3 </summary>
+  <ul> <li>Fixed the bug where games don't end (Sorry about that)</li> </ul>
+  <ul> <li>Fixed Amnesiac turned Impostor not being able to kill</li> </ul>
+  <ul> <li>Fixed Traitor not being able to kill</li> </ul>
+  <ul> <li>Fixed Impostors not being able to kill a player revived by an Altruist</li> </ul>
+  <ul> <li>Fixed Flash and Giant not appearing to move at the correct speed for other players</li> </ul>
+  <ul> <li>Changed Giant and Flash colors</li> </ul>
+  <ul> <li>Split Classic Nameplates setting into Disable Level Icon and Disable Background Cosmetics</li> </ul>
+  </details>
+  <details>
   <summary> v2.6.2 </summary>
   <ul> <li>Fixed End Game Tracker Bug</li> </ul>
   <ul> <li>Fixed Snitch Arrows</li> </ul>
