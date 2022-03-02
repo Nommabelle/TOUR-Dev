@@ -113,6 +113,8 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <ul> <li>Reduced Tracker arrow lag</li> </ul>
   <ul> <li>Fixed bug with Swapper where you wouldn't appear as dead after being assassinated with your swap targets already selected</li> </ul>
   <ul> <li>Fixed Medic shield not protecting the target from impostors if the Shield Breaks option is off</li> </ul>
+  <ul> <li>Fixed Medic reports saying the wrong color if the body's killer was morphed</li> </ul>
+  <ul> <li>Fixed Investigator showing a morphed player's footprints as the color of the player they were morphed into</li> </ul>
   <ul> <li>Ghosts no longer briefly appear after a player dies</li> </ul>
   </details>
   <details>
