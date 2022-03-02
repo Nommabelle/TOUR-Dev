@@ -42,7 +42,7 @@ namespace TownOfUs.CrewmateRoles.SwapperMod
                 if (!((Swap1 != null) & (Swap2 != null))) return;
                 foreach (var player in PlayerControl.AllPlayerControls)
                 {
-                    if (player.Data.IsDead && player.Is(RoleEnum.Swapper))
+                    if ((player.Data.IsDead || player.Data.Disconnected) && player.Is(RoleEnum.Swapper))
                     {
                         return;
                     }
