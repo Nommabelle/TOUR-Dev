@@ -108,6 +108,15 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 <details>
   <summary> Changelog </summary>
   <details>
+  <summary> v2.6.5 </summary>
+  <ul> <li>Player no longer show as hopping out of the vent they were in after being transported</li> </ul>
+  <ul> <li>Roles are now revealed to players after a meeting they died in</li> </ul>
+  <ul> <li>Fixed Transporter being able to transport players climbing ladders or riding the gap platform on Airship, placing them out of bounds</li> </ul>
+  <ul> <li>Fixed a bug that made it so Transporter and The Glitch couldn't be lovers</li> </ul>
+  <ul> <li>Fixed the bug where players that were in a vent when a meeting was called could be seen hopping out of that vent as the meeting started</li> </ul>
+  <ul> <li>Changed the Transporter menu so that it doesn't pop out a seperate menu after the first selection and instead highlights the first selected player</li> </ul>
+  </details>
+  <details>
   <summary> v2.6.4 </summary>
   <ul> <li>Fixed Transporter bugging out after transporting a dead body</li> </ul>
   <ul> <li>Reduced Tracker arrow lag</li> </ul>

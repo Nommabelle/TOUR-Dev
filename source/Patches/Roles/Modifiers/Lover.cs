@@ -42,7 +42,7 @@ namespace TownOfUs.Roles.Modifiers
             {
                 if (player.Is(Faction.Impostors))
                     impostors.Add(player);
-                else if((player.Is(Faction.Crewmates) && !player.Is(RoleEnum.Transporter)) || (player.Is(Faction.Neutral) && !player.Is(RoleEnum.Glitch) && !player.Is(RoleEnum.Juggernaut) && CustomGameOptions.NeutralLovers))
+                else if (player.Is(Faction.Crewmates) || (player.Is(Faction.Neutral) && CustomGameOptions.NeutralLovers))
                     crewmates.Add(player);
             }
 
