@@ -116,7 +116,7 @@ namespace TownOfUs.Modifiers.AssassinMod
             {
                 if (
                     MeetingHud.Instance.state == MeetingHud.VoteStates.Discussion ||
-                    IsExempt(voteArea)
+                    IsExempt(voteArea) || PlayerControl.LocalPlayer.Data.IsDead
                 ) return;
                 var targetId = voteArea.TargetPlayerId;
                 var currentGuess = role.Guesses[targetId];

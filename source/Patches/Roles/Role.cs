@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Reactor.Extensions;
 using TMPro;
-using TownOfUs.ImpostorRoles.CamouflageMod;
 using TownOfUs.Roles.Modifiers;
 using UnhollowerBaseLib;
 using UnityEngine;
@@ -58,6 +57,7 @@ namespace TownOfUs.Roles
         protected internal Color Color { get; set; }
         protected internal RoleEnum RoleType { get; set; }
         public bool LostByRPC { get; protected set; }
+        public bool WinByRPC { get; protected set; }
         protected internal int TasksLeft => Player.Data.Tasks.ToArray().Count(x => !x.Complete);
         protected internal int TotalTasks => Player.Data.Tasks.Count;
 
@@ -512,6 +512,16 @@ namespace TownOfUs.Roles
                 {
                     ((Amnesiac)role).BodyArrows.Values.DestroyAll();
                     ((Amnesiac)role).BodyArrows.Clear();
+                }
+                foreach (var role in AllRoles.Where(x => x.RoleType == RoleEnum.Medium))
+                {
+                    ((Medium)role).MediatedPlayers.Values.DestroyAll();
+                    ((Medium)role).MediatedPlayers.Clear();
+                }
+                foreach (var role in AllRoles.Where(x => x.RoleType == RoleEnum.Mystic))
+                {
+                    ((Mystic)role).BodyArrows.Values.DestroyAll();
+                    ((Mystic)role).BodyArrows.Clear();
                 }
 
                 RoleDictionary.Clear();

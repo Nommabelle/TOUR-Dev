@@ -24,6 +24,9 @@ namespace TownOfUs
         private static Sprite Remember => TownOfUs.RememberSprite;
         private static Sprite Track => TownOfUs.TrackSprite;
         private static Sprite Transport => TownOfUs.TransportSprite;
+        private static Sprite Mediate => TownOfUs.MediateSprite;
+        private static Sprite Vest => TownOfUs.VestSprite;
+        private static Sprite Protect => TownOfUs.ProtectSprite;
         private static Sprite Button => TownOfUs.ButtonSprite;
 
 
@@ -75,6 +78,21 @@ namespace TownOfUs
             else if (PlayerControl.LocalPlayer.Is(RoleEnum.Transporter))
             {
                 __instance.KillButton.graphic.sprite = Transport;
+                flag = true;
+            }
+            else if (PlayerControl.LocalPlayer.Is(RoleEnum.Medium))
+            {
+                __instance.KillButton.graphic.sprite = Mediate;
+                flag = true;
+            }
+            else if (PlayerControl.LocalPlayer.Is(RoleEnum.Survivor))
+            {
+                __instance.KillButton.graphic.sprite = Vest;
+                flag = true;
+            }
+            else if (PlayerControl.LocalPlayer.Is(RoleEnum.GuardianAngel))
+            {
+                __instance.KillButton.graphic.sprite = Protect;
                 flag = true;
             }
             else

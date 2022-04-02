@@ -81,6 +81,22 @@ namespace TownOfUs
                 }
                 return false;
             }
+            else if (target.IsVesting())
+            {
+                if (__instance.isActiveAndEnabled && !__instance.isCoolingDown)
+                {
+                    PlayerControl.LocalPlayer.SetKillTimer(CustomGameOptions.VestKCReset);
+                }
+                return false;
+            }
+            else if (target.IsProtected())
+            {
+                if (__instance.isActiveAndEnabled && !__instance.isCoolingDown)
+                {
+                    PlayerControl.LocalPlayer.SetKillTimer(CustomGameOptions.ProtectKCReset);
+                }
+                return false;
+            }
             return true;
         }
     }

@@ -796,21 +796,156 @@
       "artist": "Sugawara"
     },
     {
+      "id": "hats0159",
+      "name": "Disconnected hat",
+      "artist": "Sugawara"
+    },
+    {
+      "id": "hats0160",
+      "name": "Lunch hat",
+      "artist": "Sugawara"
+    },
+    {
+      "id": "hats0161",
+      "name": "Peace Never! hat",
+      "artist": "Sugawara"
+    },
+    {
+      "id": "hats0162",
+      "name": "Amcam hat",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0163",
+      "name": "Book Of Sus hat",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0164",
+      "name": "Caramilk hat",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0165",
+      "name": "DJSmiles hat",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0166",
+      "name": "DrunkyPoo hat",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0167",
+      "name": "HoliGhost hat",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0168",
+      "name": "ImpTongue hat",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0169",
+      "name": "Jessie hat",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0170",
+      "name": "L hat",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0171",
+      "name": "Paws hat",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0172",
+      "name": "Potterhead hat",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0173",
+      "name": "Lil Swift hat",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0174",
+      "name": "Sabeleye hat",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0175",
+      "name": "Sheriff hat",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0176",
+      "name": "Steampunk hat",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0177",
+      "name": "Steampunk Look hat",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0178",
+      "name": "Sushub hat",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0179",
+      "name": "Susotion hat",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0180",
+      "name": "Bee hat",
+      "artist": "Pigoletto"
+    },
+    {
+      "id": "hats0181",
+      "name": "T-Rex hat",
+      "artist": "Pigoletto"
+    },
+    {
+      "id": "hats0182",
+      "name": "Maid hat",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0183",
+      "name": "Koji hat",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0184",
+      "name": "Ellum hat",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0185",
+      "name": "Koji Maid hat",
+      "artist": "Ophidian"
+    },
+    {
       "id": "misc0000",
       "name": "ZeroXFusionz hat",
       "artist": "TheLastShaymin"
     },
-    /*{
+    {
       "id": "misc0001",
       "name": "Zemo hat",
       "artist": ""
-    },*/
+    },
     {
       "id": "misc0002",
       "name": "wrench_f hat",
       "artist": "TheLastShaymin"
     },
-    /*{
+    {
       "id": "misc0003",
       "name": "vince_foot_front hat",
       "artist": ""
@@ -829,7 +964,7 @@
       "id": "misc0006",
       "name": "syntrocity hat",
       "artist": ""
-    },*/
+    },
     {
       "id": "misc0007",
       "name": "stitch hat",
@@ -855,7 +990,7 @@
       "name": "rayc hat",
       "artist": "tori#1277"
     },
-    /*{
+    {
       "id": "misc0012",
       "name": "rae hat",
       "artist": ""
@@ -894,7 +1029,7 @@
       "id": "misc0019",
       "name": "lily hat",
       "artist": ""
-    },*/
+    },
     {
       "id": "misc0020",
       "name": "groot hat",
@@ -910,7 +1045,7 @@
       "name": "gh00stie_f hat",
       "artist": "TheLastShaymin"
     },
-    /*{
+    {
       "id": "misc0023",
       "name": "dream hat",
       "artist": ""
@@ -1019,13 +1154,13 @@
       "id": "myhats0015",
       "name": "baby hat",
       "artist": "acron"
-    },*/
+    },
     {
       "id": "myhats0016",
       "name": "raflp hat",
       "artist": "Ressnie"
     },
-    /*{
+    {
       "id": "standard0000",
       "name": "wendy hat",
       "artist": ""
@@ -1039,13 +1174,13 @@
       "id": "standard0002",
       "name": "Voteme hat",
       "artist": ""
-    },*/
+    },
     {
       "id": "standard0003",
       "name": "squirrel hat",
       "artist": "TheLastShaymin"
     },
-    /*{
+    {
       "id": "standard0004",
       "name": "shiki hat",
       "artist": ""
@@ -1054,13 +1189,13 @@
       "id": "standard0005",
       "name": "rollups hat",
       "artist": ""
-    },*/
+    },
     {
       "id": "standard0006",
       "name": "rocky hat",
       "artist": "TheLastShaymin"
     },
-    /*{
+    {
       "id": "standard0007",
       "name": "pepe hat",
       "artist": ""
@@ -1079,7 +1214,7 @@
       "id": "standard0010",
       "name": "masayoshi hat",
       "artist": ""
-    },*/
+    },
     {
       "id": "standard0011",
       "name": "leah hat",
@@ -1090,11 +1225,11 @@
       "name": "kris hat",
       "artist": "tori#1277"
     },
-    /*{
+    {
       "id": "standard0013",
       "name": "jodi hat",
       "artist": ""
-    },*/
+    },
     {
       "id": "standard0014",
       "name": "jerm hat",
@@ -1105,11 +1240,11 @@
       "name": "janet hat",
       "artist": "tori#1277"
     },
-    /*{
+    {
       "id": "standard0016",
       "name": " hat",
       "artist": ""
-    },*/
+    },
     {
       "id": "standard0017",
       "name": "hafu hat",
@@ -1120,7 +1255,7 @@
       "name": "giacomo hat",
       "artist": "TheLastShaymin"
     },
-    /*{
+    {
       "id": "standard0019",
       "name": "frog hat",
       "artist": ""
@@ -1134,23 +1269,23 @@
       "id": "standard0021",
       "name": "fire hat",
       "artist": ""
-    },*/
+    },
     {
       "id": "standard0022",
       "name": "crunchy hat",
       "artist": "TheLastShaymin"
     },
-    /*{
+    {
       "id": "standard0023",
       "name": "couve hat",
       "artist": ""
-    },*/
+    },
     {
       "id": "standard0024",
       "name": "charizard hat",
       "artist": "TheLastShaymin"
     },
-    /*{
+    {
       "id": "standard0025",
       "name": "buffyhelmet hat",
       "artist": ""
@@ -1169,7 +1304,7 @@
       "id": "standard0028",
       "name": "brizzyears hat",
       "artist": ""
-    },*/
+    },
     {
       "id": "standard0029",
       "name": "br00d hat",
@@ -1180,7 +1315,7 @@
       "name": "blaustoise hat",
       "artist": "tori#1277"
     },
-    /*{
+    {
       "id": "standard0031",
       "name": "bird hat",
       "artist": ""
@@ -1194,7 +1329,7 @@
       "id": "standard0033",
       "name": "bestcrewmate hat",
       "artist": ""
-    },*/
+    },
     {
       "id": "standard0034",
       "name": "basetrade_3 hat",
@@ -1210,11 +1345,11 @@
       "name": "basetrade_1 hat",
       "artist": "Ressnie"
     },
-    /*{
+    {
       "id": "standard0037",
       "name": "ash hat",
       "artist": ""
-    },*/
+    },
     {
       "id": "standard0038",
       "name": "_hat",

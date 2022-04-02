@@ -29,7 +29,14 @@ namespace TownOfUs
             {
                 TempData.winners.Remove(toRemoveWinners[i]);
             }
-            
+
+            var toAddColorIds = Role.AllRoles.Where(o => o.WinByRPC).Select(o => o.Player.Data.DefaultOutfit.ColorId).ToArray();
+            var toAddWinners = TempData.winners.ToArray().Where(o => toAddColorIds.Contains(o.ColorId)).ToArray();
+            for (int i = 0; i < toRemoveWinners.Count(); i++)
+            {
+                TempData.winners.Add(toAddWinners[i]);
+            }
+
             if (Role.NobodyWins)
             {
                 TempData.winners = new List<WinningPlayerData>();

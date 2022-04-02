@@ -19,7 +19,7 @@ using UnityEngine.SceneManagement;
 
 namespace TownOfUs
 {
-    [BepInPlugin(Id, "Town Of Us", "2.6.5")]
+    [BepInPlugin(Id, "Town Of Us", "3.0.0")]
     [BepInDependency(ReactorPlugin.Id)]
     public class TownOfUs : BasePlugin
     {
@@ -56,6 +56,12 @@ namespace TownOfUs
         public static Sprite PoisonSprite;
         public static Sprite PoisonedSprite;
         public static Sprite TransportSprite;
+        public static Sprite MediateSprite;
+        public static Sprite VestSprite;
+        public static Sprite ProtectSprite;
+        public static Sprite BlackmailSprite;
+        public static Sprite BlackmailLetterSprite;
+        public static Sprite BlackmailOverlaySprite;
 
         public static Sprite SettingsButtonSprite;
         public static Sprite ToUBanner;
@@ -110,6 +116,12 @@ namespace TownOfUs
             PoisonSprite = CreateSprite("TownOfUs.Resources.Poison.png");
             PoisonedSprite = CreateSprite("TownOfUs.Resources.Poisoned.png");
             TransportSprite = CreateSprite("TownOfUs.Resources.Transport.png");
+            MediateSprite = CreateSprite("TownOfUs.Resources.Mediate.png");
+            VestSprite = CreateSprite("TownOfUs.Resources.Vest.png");
+            ProtectSprite = CreateSprite("TownOfUs.Resources.Protect.png");
+            BlackmailSprite = CreateSprite("TownOfUs.Resources.Blackmail.png");
+            BlackmailLetterSprite = CreateSprite("TownOfUs.Resources.BlackmailLetter.png");
+            BlackmailOverlaySprite = CreateSprite("TownOfUs.Resources.BlackmailOverlay.png");
 
             SettingsButtonSprite = CreateSprite("TownOfUs.Resources.SettingsButton.png");
             ToUBanner = CreateSprite("TownOfUs.Resources.TownOfUsBanner.png");

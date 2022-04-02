@@ -103,6 +103,18 @@ namespace TownOfUs.ImpostorRoles.PoisonerMod
 
                 return false;
             }
+            else if (role.ClosestPlayer.IsVesting())
+            {
+                role.LastPoisoned.AddSeconds(CustomGameOptions.VestKCReset + 0.01f);
+
+                return false;
+            }
+            else if (role.ClosestPlayer.IsProtected())
+            {
+                role.LastPoisoned.AddSeconds(CustomGameOptions.ProtectKCReset + 0.01f);
+
+                return false;
+            }
             role.PoisonedPlayer = target;
             role.PoisonButton.SetTarget(null);
             DestroyableSingleton<HudManager>.Instance.KillButton.SetTarget(null);
