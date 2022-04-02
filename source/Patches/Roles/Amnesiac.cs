@@ -26,7 +26,7 @@ namespace TownOfUs.Roles
             LostByRPC = true;
         }
 
-        protected override void IntroPrefix(IntroCutscene._CoBegin_d__18 __instance)
+        protected override void IntroPrefix(IntroCutscene._CoBegin_d__19 __instance)
         {
             var amnesiacTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
             amnesiacTeam.Add(PlayerControl.LocalPlayer);

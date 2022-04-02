@@ -18,13 +18,13 @@ namespace TownOfUs.Patches.CustomHats
         {
             __instance.currentHat = DestroyableSingleton<HatManager>.Instance.GetHatById(SaveManager.LastHat);
             var allHats = DestroyableSingleton<HatManager>.Instance.GetUnlockedHats();
-            var hatGroups = new SortedList<string, List<HatBehaviour>>(
+            var hatGroups = new SortedList<string, List<HatData>>(
                 new PaddedComparer<string>("Vanilla", "")
             );
             foreach (var hat in allHats)
             {
                 if (!hatGroups.ContainsKey(hat.StoreName))
-                    hatGroups[hat.StoreName] = new List<HatBehaviour>();
+                    hatGroups[hat.StoreName] = new List<HatData>();
                 hatGroups[hat.StoreName].Add(hat);
             }
 
@@ -33,7 +33,7 @@ namespace TownOfUs.Patches.CustomHats
             __instance.ColorChips.Clear();
             var groupNameText = __instance.GetComponentInChildren<TextMeshPro>(false);
             int hatIdx = 0;
-            foreach ((string groupName, List<HatBehaviour> hats) in hatGroups)
+            foreach ((string groupName, List<HatData> hats) in hatGroups)
             {
                 var text = Object.Instantiate(groupNameText, __instance.scroller.Inner);
                 text.gameObject.transform.localScale = Vector3.one;

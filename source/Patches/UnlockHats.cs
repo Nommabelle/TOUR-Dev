@@ -7,7 +7,7 @@ namespace TownOfUs
     [HarmonyPatch(typeof(HatManager), nameof(HatManager.GetUnlockedHats))]
     public class UnlockHats
     {
-        public static bool Prefix(HatManager __instance, ref Il2CppReferenceArray<HatBehaviour> __result)
+        public static bool Prefix(HatManager __instance, ref Il2CppReferenceArray<HatData> __result)
         {
             var array = (
                 from h in __instance.AllHats.ToArray()

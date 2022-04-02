@@ -123,7 +123,7 @@ namespace TownOfUs.Roles
                 }
 
                 if (__gInstance.KillTarget != null)
-                    __gInstance.KillTarget.myRend.material.SetColor("_OutlineColor", __gInstance.Color);
+                    __gInstance.KillTarget.MyRend.material.SetColor("_OutlineColor", __gInstance.Color);
             }
 
             public static void KillButtonPress(Juggernaut __gInstance, KillButton __instance)
@@ -201,7 +201,7 @@ namespace TownOfUs.Roles
             }
         }
 
-        protected override void IntroPrefix(IntroCutscene._CoBegin_d__18 __instance)
+        protected override void IntroPrefix(IntroCutscene._CoBegin_d__19 __instance)
         {
             var juggTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
             juggTeam.Add(PlayerControl.LocalPlayer);
