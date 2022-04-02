@@ -85,6 +85,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 case RoleEnum.Crewmate:
                 case RoleEnum.Tracker:
                 case RoleEnum.Transporter:
+                case RoleEnum.Medium:
                 case RoleEnum.Haunter:
                 case RoleEnum.Phantom:
 
@@ -256,7 +257,17 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 tpRole.TransportPlayer2 = null;
                 tpRole.LastTransported = DateTime.UtcNow;
                 tpRole.UsesLeft = CustomGameOptions.TransportMaxUses;
-                
+
+            }
+
+            else if (role == RoleEnum.Medium)
+            {
+                var medRole = Role.GetRole<Medium>(amnesiac);
+                medRole.MediatedPlayers.Values.DestroyAll();
+                medRole.MediatedPlayers.Clear();
+                medRole.LastMediated = DateTime.UtcNow;
+                medRole.UsesLeft = CustomGameOptions.MediateMaxUses;
+
             }
 
             else if (role == RoleEnum.Seer)
