@@ -50,7 +50,7 @@ namespace TownOfUs.Patches.CustomHats
                 float yLerp = __instance.YStart - (hatIdx / __instance.NumPerRow) * __instance.YOffset;
                 text.transform.localPosition = new Vector3(xLerp, yLerp, -1f);
                 hatIdx += 5;
-                foreach (var hat in hats.OrderBy(HatManager.Instance.AllHats.IndexOf))
+                foreach (var hat in hats.OrderBy(HatManager.Instance.allHats.IndexOf))
                 {
                     float num = __instance.XRange.Lerp(hatIdx % __instance.NumPerRow / (__instance.NumPerRow - 1f));
                     float num2 = __instance.YStart - hatIdx / __instance.NumPerRow * __instance.YOffset;

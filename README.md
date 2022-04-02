@@ -12,6 +12,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 **Crewmate Roles**
 - [Haunter](#haunter)
 - [Investigator](#investigator)
+- [Mystic](#mystic)
 - [Seer](#seer)
 - [Snitch](#snitch)
 - [Spy](#spy)
@@ -23,12 +24,15 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 - [Medic](#medic)
 - [Engineer](#engineer)
 - [Mayor](#mayor)
+- [Medium](#medium)
 - [Swapper](#swapper)
 - [Time Lord](#time-lord)
 - [Transporter](#transporter)
 
 **Neutral Roles**
 - [Amnesiac](#amnesiac)
+- [Guardian Angel](#guardian-angel)
+- [Survivor](#survivor)
 - [Executioner](#executioner)
 - [Jester](#jester)
 - [Phantom](#phantom)
@@ -36,13 +40,13 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 - [The Glitch](#the-glitch)
 
 **Impostor Roles**
-- [Camouflager](#camouflager)
 - [Grenadier](#grenadier)
 - [Morphling](#morphling)
 - [Swooper](#swooper)
 - [Poisoner](#poisoner)
 - [Traitor](#traitor)
 - [Underdog](#underdog)
+- [Blackmailer](#blackmailer)
 - [Janitor](#janitor)
 - [Miner](#miner)
 - [Undertaker](#undertaker)
@@ -65,6 +69,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 # Releases
 | Among Us - Version| Mod Version | Link |
 |----------|-------------|-----------------|
+| 2022.3.29s & 2022.3.29e | v3.0.0 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.0.0/ToU.v3.0.0.zip) |
 | 2021.12.15s & 2021.12.15e Until 2022.2.24s & 2022.2.24e | v2.6.5 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v2.6.5/ToU.v2.6.5.zip) |
 | 2021.12.15s & 2021.12.15e Until 2022.2.24s & 2022.2.24e | v2.6.4 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v2.6.4/ToU.v2.6.4.zip) |
 | 2021.6.30s & 2021.6.30e & 2021.7.20e | v2.6.4 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v2.6.4/ToU.v2.6.4-2021.6.30.zip) |
@@ -108,6 +113,21 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 
 <details>
   <summary> Changelog </summary>
+  <details>
+  <summary> v3.0.0 </summary>
+  <ul> <li>New Role: Medium</li> </ul>
+  <ul> <li>New Role: Survivor</li> </ul>
+  <ul> <li>New Role: Guardian Angel</li> </ul>
+  <ul> <li>New Role: Blackmailer</li> </ul>
+  <ul> <li>New Role: Mystic</li> </ul>
+  <ul> <li>Camouflager removed</li> </ul>
+  <ul> <li>New Settings for Vigilante to kill each type of Neutral role</li> </ul>
+  <ul> <li>New Settings for Assassins to kill each type of Neutral role</li> </ul>
+  <ul> <li>Bug Fix: Executioner will always get a target unless there is no feasible target</li> </ul>
+  <ul> <li>Bug Fix: Executioner will always win when their target is voted out</li> </ul>
+  <ul> <li>The future Phantom, Haunter and Traitor will change depending on the current circumstances</li> </ul>
+  <ul> <li>Abilities can no longer be used while loading into a game</li> </ul>
+  </details>
   <details>
   <summary> v2.6.5 </summary>
   <ul> <li>Fixed Amnesiac remembering Poisoner interaction</li> </ul>
