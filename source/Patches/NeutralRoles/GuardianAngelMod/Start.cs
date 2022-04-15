@@ -15,14 +15,14 @@ namespace TownOfUs.NeutralRoles.GuardianAngelMod
                 var ga = (GuardianAngel)role;
                 ga.LastProtected = DateTime.UtcNow;
                 ga.LastProtected = ga.LastProtected.AddSeconds(CustomGameOptions.InitialCooldowns - CustomGameOptions.ProtectCd);
-                if (ga.target == null)
+                if (ga.target == null && PlayerControl.LocalPlayer == ga.Player)
                 {
                     var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                         (byte)CustomRPC.GAToSurv, SendOption.Reliable, -1);
-                    writer.Write(PlayerControl.LocalPlayer.PlayerId);
+                    writer.Write(ga.Player.PlayerId);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
 
-                    GATargetColor.GAToSurv(PlayerControl.LocalPlayer);
+                    GATargetColor.GAToSurv(ga.Player);
                 }
             }
         }

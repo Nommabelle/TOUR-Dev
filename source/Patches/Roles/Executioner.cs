@@ -25,11 +25,11 @@ namespace TownOfUs.Roles
             Scale = 1.4f;
         }
 
-        protected override void IntroPrefix(IntroCutscene._CoBegin_d__19 __instance)
+        protected override void IntroPrefix(IntroCutscene._CoBegin_d__19 __instance, ref List<PlayerControl> yourTeam)
         {
-            var executionerteam = new List<PlayerControl>();
-            executionerteam.Add(PlayerControl.LocalPlayer);
-            __instance.yourTeam = executionerteam;
+            var exeTeam = new List<PlayerControl>();
+            exeTeam.Add(PlayerControl.LocalPlayer);
+            yourTeam = exeTeam;
         }
 
         internal override bool EABBNOODFGL(ShipStatus __instance)

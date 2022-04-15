@@ -20,11 +20,11 @@ namespace TownOfUs.Roles
             Faction = Faction.Neutral;
         }
 
-        protected override void IntroPrefix(IntroCutscene._CoBegin_d__19 __instance)
+        protected override void IntroPrefix(IntroCutscene._CoBegin_d__19 __instance, ref List<PlayerControl> yourTeam)
         {
-            var jesterTeam = new List<PlayerControl>();
-            jesterTeam.Add(PlayerControl.LocalPlayer);
-            __instance.yourTeam = jesterTeam;
+            var jestTeam = new List<PlayerControl>();
+            jestTeam.Add(PlayerControl.LocalPlayer);
+            yourTeam = jestTeam;
         }
 
         internal override bool EABBNOODFGL(ShipStatus __instance)

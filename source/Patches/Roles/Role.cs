@@ -146,7 +146,7 @@ namespace TownOfUs.Roles
             return PlayerControl.LocalPlayer.Is(ModifierEnum.Sleuth) && Modifier.GetModifier<Sleuth>(PlayerControl.LocalPlayer).Reported.Contains(Player.PlayerId);
         }
 
-        protected virtual void IntroPrefix(IntroCutscene._CoBegin_d__19 __instance)
+        protected virtual void IntroPrefix(IntroCutscene._CoBegin_d__19 __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)
         {
         }
 
@@ -363,11 +363,11 @@ namespace TownOfUs.Roles
             {
                 public static float TestScale;
 
-                public static void Prefix(IntroCutscene._CoBegin_d__19 __instance)
+                public static void Prefix(IntroCutscene._CoBegin_d__19 __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)
                 {
                     var role = GetRole(PlayerControl.LocalPlayer);
 
-                    if (role != null) role.IntroPrefix(__instance);
+                    if (role != null) role.IntroPrefix(__instance, ref yourTeam);
                 }
 
                 public static void Postfix(IntroCutscene._CoBegin_d__19 __instance)

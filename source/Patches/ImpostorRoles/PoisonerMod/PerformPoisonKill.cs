@@ -42,7 +42,11 @@ namespace TownOfUs.ImpostorRoles.PoisonerMod
 
                     StopKill.BreakShield(medic, role.ClosestPlayer.PlayerId,
                         CustomGameOptions.ShieldBreaks);
-                    Utils.RpcMurderPlayer(role.ClosestPlayer, role.Player);
+
+                    if (!PlayerControl.LocalPlayer.IsProtected())
+                    {
+                        Utils.RpcMurderPlayer(role.ClosestPlayer, role.Player);
+                    }
                 }
                 else if (role.Player.IsShielded())
                 {
@@ -58,7 +62,7 @@ namespace TownOfUs.ImpostorRoles.PoisonerMod
 
                     StopKill.BreakShield(medic, role.Player.PlayerId,
                         CustomGameOptions.ShieldBreaks);
-                    if (CustomGameOptions.KilledOnAlert)
+                    if (CustomGameOptions.KilledOnAlert && !target.IsProtected())
                     {
                         role.PoisonedPlayer = target;
                         role.PoisonButton.SetTarget(null);
@@ -71,8 +75,11 @@ namespace TownOfUs.ImpostorRoles.PoisonerMod
                 }
                 else
                 {
-                    Utils.RpcMurderPlayer(role.ClosestPlayer, role.Player);
-                    if (CustomGameOptions.KilledOnAlert)
+                    if (!PlayerControl.LocalPlayer.IsProtected())
+                    {
+                        Utils.RpcMurderPlayer(role.ClosestPlayer, role.Player);
+                    }
+                    if (CustomGameOptions.KilledOnAlert && !target.IsProtected())
                     {
                         role.PoisonedPlayer = target;
                         role.PoisonButton.SetTarget(null);

@@ -100,11 +100,11 @@ namespace TownOfUs.Roles
             LostByRPC = true;
         }
 
-        protected override void IntroPrefix(IntroCutscene._CoBegin_d__19 __instance)
+        protected override void IntroPrefix(IntroCutscene._CoBegin_d__19 __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)
         {
             var glitchTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
             glitchTeam.Add(PlayerControl.LocalPlayer);
-            __instance.yourTeam = glitchTeam;
+            yourTeam = glitchTeam;
         }
 
         public void Update(HudManager __instance)

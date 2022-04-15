@@ -201,11 +201,11 @@ namespace TownOfUs.Roles
             }
         }
 
-        protected override void IntroPrefix(IntroCutscene._CoBegin_d__19 __instance)
+        protected override void IntroPrefix(IntroCutscene._CoBegin_d__19 __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)
         {
             var juggTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
             juggTeam.Add(PlayerControl.LocalPlayer);
-            __instance.yourTeam = juggTeam;
+            yourTeam = juggTeam;
         }
     }
 }

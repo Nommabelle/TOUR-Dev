@@ -12,14 +12,14 @@ namespace TownOfUs.NeutralRoles.ExecutionerMod
             foreach (var role in Role.GetRoles(RoleEnum.Executioner))
             {
                 var exe = (Executioner) role;
-                if (exe.target == null)
+                if (exe.target == null && PlayerControl.LocalPlayer == exe.Player)
                 {
                     var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                         (byte)CustomRPC.ExecutionerToJester, SendOption.Reliable, -1);
-                    writer.Write(PlayerControl.LocalPlayer.PlayerId);
+                    writer.Write(exe.Player.PlayerId);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
 
-                    TargetColor.ExeToJes(PlayerControl.LocalPlayer);
+                    TargetColor.ExeToJes(exe.Player);
                 }
             }
         }

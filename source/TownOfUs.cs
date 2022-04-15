@@ -36,16 +36,15 @@ namespace TownOfUs
         public static Sprite SeerSprite;
         public static Sprite SampleSprite;
         public static Sprite MorphSprite;
-        public static Sprite Camouflage;
         public static Sprite Arrow;
-        public static Sprite Abstain;
         public static Sprite MineSprite;
         public static Sprite SwoopSprite;
         public static Sprite DouseSprite;
         public static Sprite IgniteSprite;
         public static Sprite ReviveSprite;
         public static Sprite ButtonSprite;
-        public static Sprite CycleSprite;
+        public static Sprite CycleBackSprite;
+        public static Sprite CycleForwardSprite;
         public static Sprite GuessSprite;
         public static Sprite DragSprite;
         public static Sprite DropSprite;
@@ -96,9 +95,7 @@ namespace TownOfUs
             SeerSprite = CreateSprite("TownOfUs.Resources.Seer.png");
             SampleSprite = CreateSprite("TownOfUs.Resources.Sample.png");
             MorphSprite = CreateSprite("TownOfUs.Resources.Morph.png");
-            Camouflage = CreateSprite("TownOfUs.Resources.Camouflage.png");
             Arrow = CreateSprite("TownOfUs.Resources.Arrow.png");
-            Abstain = CreateSprite("TownOfUs.Resources.Abstain.png");
             MineSprite = CreateSprite("TownOfUs.Resources.Mine.png");
             SwoopSprite = CreateSprite("TownOfUs.Resources.Swoop.png");
             DouseSprite = CreateSprite("TownOfUs.Resources.Douse.png");
@@ -107,7 +104,8 @@ namespace TownOfUs
             ButtonSprite = CreateSprite("TownOfUs.Resources.Button.png");
             DragSprite = CreateSprite("TownOfUs.Resources.Drag.png");
             DropSprite = CreateSprite("TownOfUs.Resources.Drop.png");
-            CycleSprite = CreateSprite("TownOfUs.Resources.Cycle.png");
+            CycleBackSprite = CreateSprite("TownOfUs.Resources.CycleBack.png");
+            CycleForwardSprite = CreateSprite("TownOfUs.Resources.CycleForward.png");
             GuessSprite = CreateSprite("TownOfUs.Resources.Guess.png");
             FlashSprite = CreateSprite("TownOfUs.Resources.Flash.png");
             AlertSprite = CreateSprite("TownOfUs.Resources.Alert.png");

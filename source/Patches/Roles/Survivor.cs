@@ -55,11 +55,11 @@ namespace TownOfUs.Roles
             LastVested = DateTime.UtcNow;
         }
 
-        protected override void IntroPrefix(IntroCutscene._CoBegin_d__19 __instance)
+        protected override void IntroPrefix(IntroCutscene._CoBegin_d__19 __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)
         {
             var survTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
             survTeam.Add(PlayerControl.LocalPlayer);
-            __instance.yourTeam = survTeam;
+            yourTeam = survTeam;
         }
 
         public void AliveImpWin()

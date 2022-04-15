@@ -427,14 +427,14 @@ namespace TownOfUs.CustomOption
             InitialCooldowns =
                 new CustomNumberOption(num++, "Game Start Cooldowns", 10, 10, 30, 2.5f, CooldownFormat);
             ParallelMedScans = new CustomToggleOption(num++, "Parallel Medbay Scans", false);
+            DisableLevels = new CustomToggleOption(num++, "Disable Level Icons", false);
+            WhiteNameplates = new CustomToggleOption(num++, "Disable Player Nameplates", false);
 
             TaskTrackingSettings =
                 new CustomHeaderOption(num++, "Task Tracking Settings");
             SeeTasksDuringRound = new CustomToggleOption(num++, "See Tasks During Round", false);
             SeeTasksDuringMeeting = new CustomToggleOption(num++, "See Tasks During Meetings", false);
             SeeTasksWhenDead = new CustomToggleOption(num++, "See Tasks When Dead", true);
-            DisableLevels = new CustomToggleOption(num++, "Disable Level Icons", false);
-            WhiteNameplates = new CustomToggleOption(num++, "Disable Player Nameplates", false);
 
             Assassin = new CustomHeaderOption(num++, "<color=#FF0000FF>Assassin Ability</color>");
             NumberOfAssassins = new CustomNumberOption(num++, "Number Of Assassins", 1, 0, 3, 1);
