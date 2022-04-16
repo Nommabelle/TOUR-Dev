@@ -97,7 +97,7 @@ namespace TownOfUs
             }
             else
             {
-                __instance.KillButton.graphic.sprite = TranslationController.Instance.GetImage(ImageNames.KillButton);
+                // __instance.KillButton.graphic.sprite = TranslationController.Instance.GetImage(ImageNames.KillButton);
                 flag = PlayerControl.LocalPlayer.Is(RoleEnum.Sheriff);
             }
 

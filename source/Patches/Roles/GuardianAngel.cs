@@ -72,12 +72,12 @@ namespace TownOfUs.Roles
             LostByRPC = true;
         }
 
-        protected override void IntroPrefix(IntroCutscene._CoBegin_d__19 __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)
+        protected override void IntroPrefix(IntroCutscene._ShowTeam_d__21 __instance)
         {
             var gaTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
             gaTeam.Add(PlayerControl.LocalPlayer);
             gaTeam.Add(target);
-            yourTeam = gaTeam;
+            __instance.teamToShow = gaTeam;
         }
     }
 }
