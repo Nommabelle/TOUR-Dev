@@ -24,7 +24,7 @@ namespace TownOfUs.Patches.CustomHats
 
         internal static void LoadHatsRoutine()
         {
-            if (LoadedHats || !DestroyableSingleton<HatManager>.InstanceExists || DestroyableSingleton<HatManager>.Instance.AllHats.Count == 0)
+            if (LoadedHats || !DestroyableSingleton<HatManager>.InstanceExists || DestroyableSingleton<HatManager>.Instance.allHats.Count == 0)
                 return;
             LoadedHats = true;
             Coroutines.Start(LoadHats());
@@ -38,14 +38,14 @@ namespace TownOfUs.Patches.CustomHats
                 var hatJson = LoadJson();
                 var hatBehaviours = DiscoverHatBehaviours(hatJson);
 
-                DestroyableSingleton<HatManager>.Instance.AllHats.ForEach(
-                    (Action<HatBehaviour>)(x => x.StoreName = "Vanilla")
+                DestroyableSingleton<HatManager>.Instance.allHats.ForEach(
+                    (Action<HatData>)(x => x.StoreName = "Vanilla")
                 );
-                var originalCount = DestroyableSingleton<HatManager>.Instance.AllHats.Count;
+                var originalCount = DestroyableSingleton<HatManager>.Instance.allHats.Count;
                 for (var i = 0; i < hatBehaviours.Count; i++)
                 {
-                    hatBehaviours[i].Order = originalCount + i;
-                    HatManager.Instance.AllHats.Add(hatBehaviours[i]);
+                    hatBehaviours[i].displayOrder = originalCount + i;
+                    HatManager.Instance.allHats.Add(hatBehaviours[i]);
                 }
 
             }
@@ -62,9 +62,9 @@ namespace TownOfUs.Patches.CustomHats
             return JsonConvert.DeserializeObject<HatMetadataJson>(Encoding.UTF8.GetString(stream.ReadFully()));
         }
 
-        private static List<HatBehaviour> DiscoverHatBehaviours(HatMetadataJson metadata)
+        private static List<HatData> DiscoverHatBehaviours(HatMetadataJson metadata)
         {
-            var hatBehaviours = new List<HatBehaviour>();
+            var hatBehaviours = new List<HatData>();
 
             foreach (var hatCredit in metadata.Credits)
             {
@@ -92,17 +92,21 @@ namespace TownOfUs.Patches.CustomHats
             return hatBehaviours;
         }
 
-        private static HatBehaviour GenerateHatBehaviour(byte[] mainImg)
+        private static HatData GenerateHatBehaviour(byte[] mainImg)
         {
             
             //TODO: Move to Graphics Utils class
             var tex2D = new Texture2D(1, 1, TextureFormat.ARGB32, false);
             TownOfUs.LoadImage(tex2D, mainImg, false);
             var sprite = Sprite.Create(tex2D, new Rect(0.0f, 0.0f, tex2D.width, tex2D.height), new Vector2(0.5f, 0.5f), 100);
-            
-            
-            var hat = ScriptableObject.CreateInstance<HatBehaviour>();
-            hat.MainImage = sprite;
+
+
+            var hat = ScriptableObject.CreateInstance<HatData>();
+            var a = new HatViewData();
+            var b = new AddressableLoadWrapper<HatViewData>();
+            b.viewData = a;
+            a.MainImage = sprite;
+            hat.hatViewData = b;
             hat.ChipOffset = new Vector2(-0.1f, 0.35f);
 
             hat.InFront = true;

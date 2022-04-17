@@ -100,11 +100,11 @@ namespace TownOfUs.Roles
             LostByRPC = true;
         }
 
-        protected override void IntroPrefix(IntroCutscene._CoBegin_d__18 __instance)
+        protected override void IntroPrefix(IntroCutscene._ShowTeam_d__21 __instance)
         {
             var glitchTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
             glitchTeam.Add(PlayerControl.LocalPlayer);
-            __instance.yourTeam = glitchTeam;
+            __instance.teamToShow = glitchTeam;
         }
 
         public void Update(HudManager __instance)
@@ -467,7 +467,7 @@ namespace TownOfUs.Roles
                 }
 
                 if (__gInstance.KillTarget != null)
-                    __gInstance.KillTarget.myRend.material.SetColor("_OutlineColor", __gInstance.Color);
+                    __gInstance.KillTarget.MyRend.material.SetColor("_OutlineColor", __gInstance.Color);
             }
 
             public static void KillButtonPress(Glitch __gInstance, KillButton __instance)
@@ -579,7 +579,7 @@ namespace TownOfUs.Roles
                 }
 
                 if (__gInstance.HackTarget != null)
-                    __gInstance.HackTarget.myRend.material.SetColor("_OutlineColor", __gInstance.Color);
+                    __gInstance.HackTarget.MyRend.material.SetColor("_OutlineColor", __gInstance.Color);
             }
 
             public static void HackButtonPress(Glitch __gInstance, KillButton __instance)
