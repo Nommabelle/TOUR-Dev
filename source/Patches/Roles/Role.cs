@@ -57,7 +57,6 @@ namespace TownOfUs.Roles
         protected internal Color Color { get; set; }
         protected internal RoleEnum RoleType { get; set; }
         public bool LostByRPC { get; protected set; }
-        public bool WinByRPC { get; protected set; }
         protected internal int TasksLeft => Player.Data.Tasks.ToArray().Count(x => !x.Complete);
         protected internal int TotalTasks => Player.Data.Tasks.Count;
 

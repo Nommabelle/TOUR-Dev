@@ -37,7 +37,6 @@ namespace TownOfUs.NeutralRoles.SurvivorMod
                         return true;
                     }
             }
-
             return true;
         }
     }

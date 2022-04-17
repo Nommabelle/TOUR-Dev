@@ -118,7 +118,6 @@ namespace TownOfUs.CrewmateRoles.VigilanteMod
             {
                 if (role.Blackmailed != null && voteArea.TargetPlayerId == role.Blackmailed.PlayerId)
                 {
-                    BlackmailMeetingUpdate.UnsetBlackmailed();
                     if (BlackmailMeetingUpdate.PrevXMark != null && BlackmailMeetingUpdate.PrevOverlay != null)
                     {
                         voteArea.XMark.sprite = BlackmailMeetingUpdate.PrevXMark;

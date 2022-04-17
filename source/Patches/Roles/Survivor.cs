@@ -64,7 +64,8 @@ namespace TownOfUs.Roles
 
         public void AliveImpWin()
         {
-            WinByRPC = true;
+            Player.Data.Role.TeamType = RoleTeamTypes.Impostor;
+            RoleManager.Instance.SetRole(Player, RoleTypes.Impostor);
         }
 
         public void DeadCrewWin()

@@ -32,7 +32,6 @@ namespace TownOfUs.NeutralRoles.GuardianAngelMod
                     }
                     return true;
                 }
-
             return true;
         }
     }

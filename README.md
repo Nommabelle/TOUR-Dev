@@ -1,9 +1,7 @@
 ## *Note: This repository is an unofficial continuation of Town of Us due to the original repository being discontinued.*
 
 ![LOGO](./Images/TOU-logo.png)
-![CrewRoles](./Images/CrewRoles.png)
-![NeutralRoles](./Images/NeutralRoles.png)
-![ImpRoles](./Images/ImpRoles.png)
+![Roles](./Images/Roles.png)
 
 An Among Us mod that adds a bunch of roles, modifiers and game settings
 

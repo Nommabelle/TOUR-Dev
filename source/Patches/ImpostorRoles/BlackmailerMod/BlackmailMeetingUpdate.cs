@@ -48,7 +48,7 @@ namespace TownOfUs.ImpostorRoles.BlackmailerMod
                     }
                 }
             }
-            
+
             public static IEnumerator BlackmailShhh()
             {
                 yield return HudManager.Instance.CoFadeFullScreen(Color.clear, new Color(0f, 0f, 0f, 0.98f));
@@ -89,61 +89,25 @@ namespace TownOfUs.ImpostorRoles.BlackmailerMod
                             shookAlready = true;
                             (__instance as MonoBehaviour).StartCoroutine(Effects.SwayX(playerState.transform));
                         }
-
-                        if (role.Blackmailed.PlayerId == PlayerControl.LocalPlayer.PlayerId)
-                        {
-                            HudManager.Instance.Chat.TextArea.gameObject.SetActive(false);
-
-                            HudManager.Instance.Chat.CharCount.gameObject.SetActive(false);
-
-                            HudManager.Instance.Chat.OpenKeyboardButton.gameObject.SetActive(false);
-
-                            foreach (var rend in HudManager.Instance.Chat.Content
-                                .GetComponentsInChildren<SpriteRenderer>())
-                            {
-                                if (rend.name == "SendButton" || rend.name == "QuickChatButton")
-                                {
-                                    rend.gameObject.SetActive(false);
-                                }
-                            }
-                        }
                     }
                 }
             }
         }
 
-        [HarmonyPatch(typeof(ExileController), nameof(ExileController.WrapUp))]
-        public class ExileAnimStart
+        [HarmonyPatch(typeof(TextBoxTMP), nameof(TextBoxTMP.SetText))]
+        public class StopChatting
         {
-            public static void Postfix(ExileController __instance)
+            public static bool Prefix(TextBoxTMP __instance)
             {
-                UnsetBlackmailed();
-            }
-        }
-
-        public static void UnsetBlackmailed()
-        {
-            var blackmailers = Role.AllRoles.Where(x => x.RoleType == RoleEnum.Blackmailer && x.Player != null).Cast<Blackmailer>();
-
-            foreach (var role in blackmailers)
-            {
-                if (role.Blackmailed?.PlayerId == PlayerControl.LocalPlayer.PlayerId)
+                var blackmailers = Role.AllRoles.Where(x => x.RoleType == RoleEnum.Blackmailer && x.Player != null).Cast<Blackmailer>();
+                foreach (var role in blackmailers)
                 {
-                    HudManager.Instance.Chat.TextArea.gameObject.SetActive(true);
-
-                    HudManager.Instance.Chat.CharCount.gameObject.SetActive(true);
-
-                    HudManager.Instance.Chat.OpenKeyboardButton.gameObject.SetActive(true);
-
-                    foreach (var rend in HudManager.Instance.Chat.Content
-                        .GetComponentsInChildren<SpriteRenderer>())
+                    if (MeetingHud.Instance && role.Blackmailed != null && !role.Blackmailed.Data.IsDead && role.Blackmailed.PlayerId == PlayerControl.LocalPlayer.PlayerId)
                     {
-                        if (rend.name == "SendButton" || rend.name == "QuickChatButton")
-                        {
-                            rend.gameObject.SetActive(true);
-                        }
+                        return false;
                     }
                 }
+                return true;
             }
         }
     }
