@@ -1,7 +1,7 @@
 using HarmonyLib;
 using Hazel;
 using TownOfUs.Roles;
-using UnityEngine;
+using System;
 using TownOfUs.CrewmateRoles.MedicMod;
 
 namespace TownOfUs.ImpostorRoles.BlackmailerMod
@@ -40,6 +40,9 @@ namespace TownOfUs.ImpostorRoles.BlackmailerMod
 
                     return false;
                 }
+                if (__instance.isCoolingDown) return false;
+                if (!__instance.isActiveAndEnabled) return false;
+                if (role.BlackmailTimer() != 0) return false;
                 role.Blackmailed?.MyRend.material.SetFloat("_Outline", 0f);
                 role.Blackmailed = target;
                 role.BlackmailButton.SetCoolDown(1f, 1f);
@@ -48,6 +51,7 @@ namespace TownOfUs.ImpostorRoles.BlackmailerMod
                 writer.Write(PlayerControl.LocalPlayer.PlayerId);
                 writer.Write(target.PlayerId);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
+                role.LastBlackmailed = DateTime.UtcNow;
                 return false;
             }
             return true;

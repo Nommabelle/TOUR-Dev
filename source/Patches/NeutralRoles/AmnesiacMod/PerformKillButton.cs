@@ -346,6 +346,13 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 swooperRole.LastSwooped = DateTime.UtcNow;
             }
 
+            else if (role == RoleEnum.Blackmailer)
+            {
+                var blackmailerRole = Role.GetRole<Blackmailer>(amnesiac);
+                blackmailerRole.LastBlackmailed = DateTime.UtcNow;
+                blackmailerRole.Blackmailed = null;
+            }
+
             else if (role == RoleEnum.Miner)
             {
                 var minerRole = Role.GetRole<Miner>(amnesiac);
