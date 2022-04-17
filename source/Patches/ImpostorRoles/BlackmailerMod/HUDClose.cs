@@ -13,12 +13,13 @@ namespace TownOfUs.ImpostorRoles.BlackmailerMod
             if (ExileController.Instance == null || obj != ExileController.Instance.gameObject) return;
             foreach (var role in Role.GetRoles(RoleEnum.Blackmailer))
             {
-                var blackmailer = (Blackmailer) role;
+                var blackmailer = (Blackmailer)role;
                 if (blackmailer.Player.PlayerId == PlayerControl.LocalPlayer.PlayerId)
                 {
                     blackmailer.Blackmailed?.MyRend.material.SetFloat("_Outline", 0f);
                 }
                 blackmailer.Blackmailed = null;
+                blackmailer.LastBlackmailed = DateTime.UtcNow;
             }
         }
     }

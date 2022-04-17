@@ -1088,6 +1088,7 @@ This prevents the blackmailed person from speaking during the next meeting.
 | Name | Description | Type | Default |
 |----------|:-------------:|:------:|:------:|
 | Blackmailer | The percentage probability of the Blackmailer appearing | Percentage | 0% |
+| Blackmail Cooldown | The cooldown of the Blackmailer's Blackmail button | Time | 25s |
 
 -----------------------
 ## Janitor

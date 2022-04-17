@@ -279,6 +279,9 @@ namespace TownOfUs.CustomOption
         public static CustomHeaderOption Mystic;
         public static CustomNumberOption MysticArrowDuration;
 
+        public static CustomHeaderOption Blackmailer;
+        public static CustomNumberOption BlackmailCooldown;
+
         public static CustomHeaderOption Lovers;
         public static CustomToggleOption BothLoversDie;
         public static CustomNumberOption LovingImpPercent;
@@ -720,6 +723,10 @@ namespace TownOfUs.CustomOption
             Underdog = new CustomHeaderOption(num++, "<color=#FF0000FF>Underdog</color>");
             UnderdogKillBonus = new CustomNumberOption(num++, "Kill Cooldown Bonus", 5, 2.5f, 30, 2.5f, CooldownFormat);
             UnderdogIncreasedKC = new CustomToggleOption(num++, "Increased Kill Cooldown When 2+ Imps", true);
+
+            Blackmailer = new CustomHeaderOption(num++, "<color=#FF0000FF>Blackmailer</color>");
+            BlackmailCooldown =
+                new CustomNumberOption(num++, "Blackmail Cooldown", 10, 1, 15, 1f, CooldownFormat);
 
             Miner = new CustomHeaderOption(num++, "<color=#FF0000FF>Miner</color>");
             MineCooldown =

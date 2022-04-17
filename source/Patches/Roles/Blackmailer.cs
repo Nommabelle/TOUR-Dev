@@ -8,6 +8,7 @@ namespace TownOfUs.Roles
         
         public PlayerControl ClosestPlayer;
         public PlayerControl Blackmailed;
+        public DateTime LastBlackmailed { get; set; }
 
         public Blackmailer(PlayerControl player) : base(player)
         {
@@ -29,6 +30,15 @@ namespace TownOfUs.Roles
                 ExtraButtons.Clear();
                 ExtraButtons.Add(value);
             }
+        }
+        public float BlackmailTimer()
+        {
+            var utcNow = DateTime.UtcNow;
+            var timeSpan = utcNow - LastBlackmailed;
+            var num = CustomGameOptions.BlackmailCd * 1000f;
+            var flag2 = num - (float)timeSpan.TotalMilliseconds < 0f;
+            if (flag2) return 0;
+            return (num - (float)timeSpan.TotalMilliseconds) / 1000f;
         }
     }
 }
