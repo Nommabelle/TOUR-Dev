@@ -17,6 +17,7 @@ namespace TownOfUs.CrewmateRoles.TimeLordMod
             oldColor = HudManager.Instance.FullScreen.color;
             HudManager.Instance.FullScreen.color = new Color(0f, 0.5f, 0.8f, 0.3f);
             HudManager.Instance.FullScreen.enabled = true;
+            HudManager.Instance.FullScreen.gameObject.active = true;
             role.StartRewind = DateTime.UtcNow;
         }
 
@@ -27,6 +28,7 @@ namespace TownOfUs.CrewmateRoles.TimeLordMod
             RecordRewind.rewinding = false;
             PlayerControl.LocalPlayer.moveable = true;
             HudManager.Instance.FullScreen.enabled = false;
+            HudManager.Instance.FullScreen.gameObject.active = false;
             HudManager.Instance.FullScreen.color = oldColor;
         }
     }
