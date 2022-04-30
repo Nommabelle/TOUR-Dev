@@ -145,7 +145,7 @@ namespace TownOfUs.Modifiers.AssassinMod
                 }
             }
 
-            if (PlayerControl.LocalPlayer.Is(RoleEnum.Swapper) && !player.AmOwner)
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Swapper) && !player.AmOwner && !PlayerControl.LocalPlayer.Data.IsDead)
             {
                 
                 SwapVotes.Swap1 = voteArea == SwapVotes.Swap1 ? null : SwapVotes.Swap1;
