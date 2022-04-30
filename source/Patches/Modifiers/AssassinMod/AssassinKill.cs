@@ -158,16 +158,16 @@ namespace TownOfUs.Modifiers.AssassinMod
                     writer2.Write(sbyte.MaxValue);
                     AmongUsClient.Instance.FinishRpcImmediately(writer2);
 
-                    var swapperrole = Role.GetRole<Swapper>(PlayerControl.LocalPlayer);
-
-                    int index;
-                    for (index = 0; index < MeetingHud.Instance.playerStates.Length; index++) if (MeetingHud.Instance.playerStates[index].TargetPlayerId == voteArea.TargetPlayerId) break;
-
-                    swapperrole.Buttons[index].GetComponent<SpriteRenderer>().sprite = CrewmateRoles.SwapperMod.AddButton.DisabledSprite;
-                    swapperrole.ListOfActives[index] = false;
-                    swapperrole.Buttons[index].SetActive(false);
-                    swapperrole.Buttons[index].GetComponent<PassiveButton>().OnClick = new Button.ButtonClickedEvent();
                 }
+                var swapperrole = Role.GetRole<Swapper>(PlayerControl.LocalPlayer);
+
+                int index;
+                for (index = 0; index < MeetingHud.Instance.playerStates.Length; index++) if (MeetingHud.Instance.playerStates[index].TargetPlayerId == voteArea.TargetPlayerId) break;
+
+                swapperrole.Buttons[index].GetComponent<SpriteRenderer>().sprite = CrewmateRoles.SwapperMod.AddButton.DisabledSprite;
+                swapperrole.ListOfActives[index] = false;
+                swapperrole.Buttons[index].SetActive(false);
+                swapperrole.Buttons[index].GetComponent<PassiveButton>().OnClick = new Button.ButtonClickedEvent();
 
             }
 
