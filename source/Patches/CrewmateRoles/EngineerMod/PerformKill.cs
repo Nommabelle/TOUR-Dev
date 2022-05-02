@@ -70,8 +70,13 @@ namespace TownOfUs.CrewmateRoles.EngineerMod
                     var reactor3 = ShipStatus.Instance.Systems[SystemTypes.Reactor].Cast<ReactorSystemType>();
                     if (reactor3.IsActive) return FixReactor(SystemTypes.Reactor);
                     var oxygen = false;
-                    foreach (PlayerTask i in role.Player.myTasks) if (i.TaskType == Patches.SubmergedCompatibility.RetrieveOxygenMask) oxygen = true; break;
-                    if (oxygen) return FixSubOxygen();
+                    foreach (PlayerTask i in PlayerControl.LocalPlayer.myTasks)
+                    {
+                        if (i.TaskType == Patches.SubmergedCompatibility.RetrieveOxygenMask)
+                        {
+                            return FixSubOxygen();
+                        }
+                    }
                     break;
             }
 
