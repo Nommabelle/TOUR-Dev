@@ -69,6 +69,8 @@ namespace TownOfUs.CrewmateRoles.EngineerMod
                 case 5:
                     var reactor3 = ShipStatus.Instance.Systems[SystemTypes.Reactor].Cast<ReactorSystemType>();
                     if (reactor3.IsActive) return FixReactor(SystemTypes.Reactor);
+                    var lights5 = ShipStatus.Instance.Systems[SystemTypes.Electrical].Cast<SwitchSystem>();
+                    if (lights5.IsActive) return FixLights(lights5);
                     var oxygen = false;
                     foreach (PlayerTask i in PlayerControl.LocalPlayer.myTasks)
                     {
