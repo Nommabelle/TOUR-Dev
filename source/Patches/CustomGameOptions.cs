@@ -195,5 +195,6 @@ namespace TownOfUs
         public static BecomeOptions GaOnTargetDeath => (BecomeOptions)Generate.GaOnTargetDeath.Get();
         public static float MysticArrowDuration => Generate.MysticArrowDuration.Get();
         public static float BlackmailCd => Generate.BlackmailCooldown.Get();
+        public static bool GiantSlow => Generate.GiantSlow.Get();
     }
 }

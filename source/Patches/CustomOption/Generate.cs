@@ -282,6 +282,9 @@ namespace TownOfUs.CustomOption
         public static CustomHeaderOption Blackmailer;
         public static CustomNumberOption BlackmailCooldown;
 
+
+        public static CustomHeaderOption Giant;
+        public static CustomToggleOption GiantSlow;
         public static CustomHeaderOption Lovers;
         public static CustomToggleOption BothLoversDie;
         public static CustomNumberOption LovingImpPercent;
@@ -739,6 +742,8 @@ namespace TownOfUs.CustomOption
             UndertakerVentWithBody =
                 new CustomToggleOption(num++, "Undertaker Can Vent While Dragging", false);
 
+            Giant = new CustomHeaderOption(num++, "<color=#FF8080FF>Giant</color>");
+            GiantSlow = new CustomToggleOption(num++, "Giant Is Slow", false);
             Lovers =
                 new CustomHeaderOption(num++, "<color=#FF66CCFF>Lovers</color>");
             BothLoversDie = new CustomToggleOption(num++, "Both Lovers Die");
