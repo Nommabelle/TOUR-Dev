@@ -61,6 +61,8 @@ namespace TownOfUs
         public static Sprite BlackmailSprite;
         public static Sprite BlackmailLetterSprite;
         public static Sprite BlackmailOverlaySprite;
+        public static Sprite LighterSprite;
+        public static Sprite DarkerSprite;
 
         public static Sprite SettingsButtonSprite;
         public static Sprite ToUBanner;
@@ -120,6 +122,8 @@ namespace TownOfUs
             BlackmailSprite = CreateSprite("TownOfUs.Resources.Blackmail.png");
             BlackmailLetterSprite = CreateSprite("TownOfUs.Resources.BlackmailLetter.png");
             BlackmailOverlaySprite = CreateSprite("TownOfUs.Resources.BlackmailOverlay.png");
+            LighterSprite = CreateSprite("TownOfUs.Resources.Lighter.png");
+            DarkerSprite = CreateSprite("TownOfUs.Resources.Darker.png");
 
             SettingsButtonSprite = CreateSprite("TownOfUs.Resources.SettingsButton.png");
             ToUBanner = CreateSprite("TownOfUs.Resources.TownOfUsBanner.png");
