@@ -66,6 +66,7 @@ namespace TownOfUs
 
         public static Sprite SettingsButtonSprite;
         public static Sprite ToUBanner;
+        public static Sprite UpdateButton;
 
         public static Vector3 ButtonPosition { get; private set; } = new Vector3(2.6f, 0.7f, -9f);
 
@@ -125,6 +126,7 @@ namespace TownOfUs
 
             SettingsButtonSprite = CreateSprite("TownOfUs.Resources.SettingsButton.png");
             ToUBanner = CreateSprite("TownOfUs.Resources.TownOfUsBanner.png");
+            UpdateButton = CreateSprite("TownOfUs.Resources.Update Button.png");
 
             PalettePatch.Load();
             ClassInjector.RegisterTypeInIl2Cpp<RainbowBehaviour>();

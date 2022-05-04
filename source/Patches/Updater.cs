@@ -14,6 +14,7 @@ using Reactor;
 namespace TownOfUs {
     [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
     public class ModUpdaterButton {
+        private static Sprite Sprite => TownOfUs.UpdateButton;
         private static void Prefix(MainMenuManager __instance) {
             //Check if there's an update
             ModUpdater.LaunchUpdater();
@@ -30,6 +31,8 @@ namespace TownOfUs {
             SpriteRenderer buttonSprite = button.GetComponent<SpriteRenderer>();
             passiveButton.OnClick = new UnityEngine.UI.Button.ButtonClickedEvent();
 
+            buttonSprite.sprite = Sprite;
+
             //Add onClick event to run the update on button click
             passiveButton.OnClick.AddListener((Action) (() =>
             {
@@ -40,7 +43,7 @@ namespace TownOfUs {
             //Set button text
             var text = button.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
             __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) => {
-                text.SetText("<color=#FFFF00>Update\nTown Of Us</color>");
+                text.SetText("");
             })));
 
             //Set popup stuff
