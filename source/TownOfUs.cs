@@ -19,11 +19,13 @@ using UnityEngine.SceneManagement;
 
 namespace TownOfUs
 {
-    [BepInPlugin(Id, "Town Of Us", "3.0.1")]
+    [BepInPlugin(Id, "Town Of Us", VersionString)]
     [BepInDependency(ReactorPlugin.Id)]
     public class TownOfUs : BasePlugin
     {
         public const string Id = "com.slushiegoose.townofus";
+        public const string VersionString = "3.0.0";
+        public static System.Version Version = System.Version.Parse(VersionString);
         
         public static Sprite JanitorClean;
         public static Sprite EngineerFix;
