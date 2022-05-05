@@ -97,6 +97,9 @@ namespace TownOfUs
             {
                 __instance.KillButton.graphic.sprite = Protect;
                 flag = true;
+            } else if (PlayerControl.LocalPlayer.Is(RoleEnum.Engineer))
+            {
+                flag = true;
             }
             else
             {
