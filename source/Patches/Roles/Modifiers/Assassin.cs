@@ -70,6 +70,8 @@ namespace TownOfUs.Roles.Modifiers
 
             // Add vanilla crewmate if enabled
             if (CustomGameOptions.AssassinCrewmateGuess) ColorMapping.Add("Crewmate", Colors.Crewmate);
+            //Add bait if enabled
+            if (CustomGameOptions.BaitOn > 0) ColorMapping.Add("Bait", Color.white);
 
             // Sorts the list alphabetically. 
             SortedColorMapping = ColorMapping.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);

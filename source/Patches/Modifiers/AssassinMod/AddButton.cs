@@ -147,9 +147,9 @@ namespace TownOfUs.Modifiers.AssassinMod
                 var playerRole = Role.GetRole(voteArea);
                 var playerModifier = Modifier.GetModifier(voteArea);
 
-                var toDie = playerRole.Name == currentGuess ? playerRole.Player : role.Player;
+                var toDie = playerRole.Name == currentGuess || (playerModifier.Name == "Bait" && currentGuess == "Bait") ? playerRole.Player : role.Player;
                 if (CustomGameOptions.AssassinSnitchViaCrewmate)
-                    toDie = (playerRole.Name == currentGuess || (playerRole.Name == "Snitch" && currentGuess == "Crewmate")) ? playerRole.Player : role.Player;
+                    toDie = (playerRole.Name == currentGuess || (playerRole.Name == "Snitch" && currentGuess == "Crewmate") || (playerModifier.Name == "Bait" && currentGuess == "Bait")) ? playerRole.Player : role.Player;
 
                 AssassinKill.RpcMurderPlayer(toDie);
                 role.RemainingKills--;
