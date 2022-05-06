@@ -347,7 +347,7 @@ namespace TownOfUs
                 {
                     var glitch = Role.GetRole<Glitch>(killer);
                     glitch.LastKill = DateTime.UtcNow.AddSeconds(2 * CustomGameOptions.GlitchKillCooldown);
-                    glitch.Player.SetKillTimer(CustomGameOptions.GlitchKillCooldown * 3);
+                    glitch.Player.SetKillTimer(CustomGameOptions.GlitchKillCooldown * CustomGameOptions.DiseasedMultiplier);
                     return;
                 }
 
@@ -355,13 +355,13 @@ namespace TownOfUs
                 {
                     var juggernaut = Role.GetRole<Juggernaut>(killer);
                     juggernaut.LastKill = DateTime.UtcNow.AddSeconds(2 * (CustomGameOptions.GlitchKillCooldown + 5.0f - 5.0f * juggernaut.JuggKills));
-                    juggernaut.Player.SetKillTimer((CustomGameOptions.GlitchKillCooldown + 5.0f - 5.0f * juggernaut.JuggKills) * 3);
+                    juggernaut.Player.SetKillTimer((CustomGameOptions.GlitchKillCooldown + 5.0f - 5.0f * juggernaut.JuggKills) * CustomGameOptions.DiseasedMultiplier);
                     return;
                 }
 
                 if (target.Is(ModifierEnum.Diseased) && killer.Data.IsImpostor())
                 {
-                    killer.SetKillTimer(PlayerControl.GameOptions.KillCooldown * 3);
+                    killer.SetKillTimer(PlayerControl.GameOptions.KillCooldown * CustomGameOptions.DiseasedMultiplier);
                     return;
                 }
 
@@ -388,6 +388,13 @@ namespace TownOfUs
 
         public static void BaitReport(PlayerControl killer, PlayerControl target)
         {
+            Coroutines.Start(BaitReportDelay(killer, target));
+            
+        }
+
+        public static IEnumerator BaitReportDelay(PlayerControl killer, PlayerControl target)
+        {
+            yield return new WaitForSeconds(CustomGameOptions.BaitDelay);
             if (AmongUsClient.Instance.AmHost)
             {
                 killer.ReportDeadBody(target.Data);
@@ -400,6 +407,7 @@ namespace TownOfUs
                 writer.Write(target.PlayerId);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
             }
+            
         }
 
         public static IEnumerator FlashCoroutine(Color color, float waitfor = 1f, float alpha = 0.3f)

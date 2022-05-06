@@ -284,7 +284,16 @@ namespace TownOfUs.CustomOption
 
 
         public static CustomHeaderOption Giant;
-        public static CustomToggleOption GiantSlow;
+        public static CustomNumberOption GiantSlow;
+        public static CustomNumberOption GiantSize;
+        public static CustomHeaderOption Flash;
+        public static CustomNumberOption FlashSpeed;
+        public static CustomHeaderOption Diseased;
+        public static CustomNumberOption DiseasedKillMultiplier;
+        public static CustomHeaderOption Bait;
+        public static CustomNumberOption BaitDelay;
+        public static CustomHeaderOption Torch;
+        public static CustomNumberOption TorchRadius;
         public static CustomHeaderOption Lovers;
         public static CustomToggleOption BothLoversDie;
         public static CustomNumberOption LovingImpPercent;
@@ -742,8 +751,22 @@ namespace TownOfUs.CustomOption
             UndertakerVentWithBody =
                 new CustomToggleOption(num++, "Undertaker Can Vent While Dragging", false);
 
-            Giant = new CustomHeaderOption(num++, "<color=#FF8080FF>Giant</color>");
-            GiantSlow = new CustomToggleOption(num++, "Giant Is Slow", false);
+            Giant = new CustomHeaderOption(num++, "<color=#FFB34DFF>Giant</color>");
+            GiantSlow = new CustomNumberOption(num++, "Giant Speed", 0.7f, 0f, 1f, 0.05f, MultiplierFormat);
+            GiantSize = new CustomNumberOption(num++, "Giant Size", 1f, 0.75f, 1.75f, 0.05f, MultiplierFormat);
+
+            Flash = new CustomHeaderOption(num++, "<color=#FF8080FF>Flash</color>");
+            FlashSpeed = new CustomNumberOption(num++, "Flash Speed", 1.25f, 1f, 3f, 0.05f, MultiplierFormat);
+
+            Diseased = new CustomHeaderOption(num++, "<color=#808080FF>Diseased</color>");
+            DiseasedKillMultiplier = new CustomNumberOption(num++, "Diseased Kill Multiplier", 3f, 1f, 5f, 0.5f, MultiplierFormat);
+
+            Bait = new CustomHeaderOption(num++, "<color=#00B3B3FF>Bait</color>");
+            BaitDelay = new CustomNumberOption(num++, "Bait Report Delay", 0f, 0f, 30f, 1f, CooldownFormat);
+
+            Torch = new CustomHeaderOption(num++, "<color=#FFFF99FF>Torch</color>");
+            TorchRadius = new CustomNumberOption(num++, "Torch Radius", 1f, 0f, 1f, 0.1f, MultiplierFormat);
+
             Lovers =
                 new CustomHeaderOption(num++, "<color=#FF66CCFF>Lovers</color>");
             BothLoversDie = new CustomToggleOption(num++, "Both Lovers Die");

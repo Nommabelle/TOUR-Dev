@@ -7,7 +7,7 @@ namespace TownOfUs.Roles.Modifiers
     {
         public Giant(PlayerControl player) : base(player)
         {
-            var slowText = CustomGameOptions.GiantSlow ? " and slow!" : "!";
+            var slowText = CustomGameOptions.GiantSlow != 1? " and slow!" : "!";
             Name = "Giant";
             TaskText = () => "You are big" + slowText;
             Color = Patches.Colors.Giant;
@@ -17,10 +17,8 @@ namespace TownOfUs.Roles.Modifiers
         public bool TryGetModifiedAppearance(out VisualAppearance appearance)
         {
             appearance = Player.GetDefaultAppearance();
-            if (CustomGameOptions.GiantSlow) {
-                appearance.SpeedFactor = 0.7f;
-            }
-            appearance.SizeFactor = new Vector3(1.0f, 1.0f, 1.0f);
+            appearance.SpeedFactor = CustomGameOptions.GiantSlow;
+            appearance.SizeFactor = new Vector3(CustomGameOptions.GiantSize, CustomGameOptions.GiantSize, 1.0f);
             return true;
         }
     }
