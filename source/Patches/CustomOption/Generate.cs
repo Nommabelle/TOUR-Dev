@@ -228,6 +228,7 @@ namespace TownOfUs.CustomOption
         public static CustomHeaderOption Grenadier;
         public static CustomNumberOption GrenadeCooldown;
         public static CustomNumberOption GrenadeDuration;
+        public static CustomToggleOption GrenadierIndicators;
         public static CustomToggleOption GrenadierVent;
         public static CustomNumberOption FlashRadius;
 
@@ -685,6 +686,8 @@ namespace TownOfUs.CustomOption
                 new CustomNumberOption(num++, "Flash Grenade Duration", 10, 5, 15, 1f, CooldownFormat);
             FlashRadius =
                 new CustomNumberOption(num++, "Flash Radius", 1f, 0.25f, 5f, 0.25f, MultiplierFormat);
+            GrenadierIndicators =
+                new CustomToggleOption(num++, "Indicate Flashed Crewmates", false);
             GrenadierVent =
                 new CustomToggleOption(num++, "Grenadier Can Vent", false);
 
