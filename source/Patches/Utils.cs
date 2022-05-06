@@ -21,6 +21,7 @@ namespace TownOfUs
     public static class Utils
     {
         internal static bool ShowDeadBodies = false;
+        private static GameData.PlayerInfo voteTarget = null;
 
         public static Dictionary<PlayerControl, Color> oldColors = new Dictionary<PlayerControl, Color>();
 
@@ -457,6 +458,22 @@ namespace TownOfUs
                     //Allows multiple medbay scans at once
                     __instance.medscan.CurrentUser = PlayerControl.LocalPlayer.PlayerId;
                     __instance.medscan.UsersList.Clear();
+                }
+            }
+        }
+        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CoStartMeeting))]
+        class StartMeetingPatch {
+            public static void Prefix(PlayerControl __instance, [HarmonyArgument(0)]GameData.PlayerInfo meetingTarget) {
+                voteTarget = meetingTarget;
+            }
+        }
+
+        [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Update))]
+        class MeetingHudUpdatePatch {
+            static void Postfix(MeetingHud __instance) {
+                // Deactivate skip Button if skipping on emergency meetings is disabled 
+                if ((voteTarget == null && CustomGameOptions.SkipButtonDisable == DisableSkipButtonMeetings.Emergency) || (CustomGameOptions.SkipButtonDisable == DisableSkipButtonMeetings.Always)) {
+                    __instance.SkipVoteButton.gameObject.SetActive(false);
                 }
             }
         }

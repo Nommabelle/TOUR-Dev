@@ -8,6 +8,12 @@ using TownOfUs.NeutralRoles.GuardianAngelMod;
 
 namespace TownOfUs
 {
+    public enum DisableSkipButtonMeetings
+    {
+        No,
+        Emergency,
+        Always
+    }
     public static class CustomGameOptions
     {
         public static int MayorOn => (int)Generate.MayorOn.Get();
@@ -195,5 +201,7 @@ namespace TownOfUs
         public static BecomeOptions GaOnTargetDeath => (BecomeOptions)Generate.GaOnTargetDeath.Get();
         public static float MysticArrowDuration => Generate.MysticArrowDuration.Get();
         public static float BlackmailCd => Generate.BlackmailCooldown.Get();
+        public static DisableSkipButtonMeetings SkipButtonDisable =>
+            (DisableSkipButtonMeetings)Generate.SkipButtonDisable.Get();
     }
 }
