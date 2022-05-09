@@ -275,6 +275,8 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption MaxProtects;
         public static CustomStringOption ShowProtect;
         public static CustomStringOption GaOnTargetDeath;
+        public static CustomToggleOption GATargetKnows;
+        public static CustomToggleOption GAKnowsTargetRole;
 
         public static CustomHeaderOption Mystic;
         public static CustomNumberOption MysticArrowDuration;
@@ -628,6 +630,10 @@ namespace TownOfUs.CustomOption
                     new[] { "Self", "Guardian Angel", "Self+GA", "Everyone" });
             GaOnTargetDeath = new CustomStringOption(num++, "GA Becomes On Target Dead",
                 new[] { "Crew", "Amnesiac", "Survivor", "Jester" });
+            GATargetKnows =
+                new CustomToggleOption(num++, "Target knows GA exists", false);
+            GAKnowsTargetRole =
+                new CustomToggleOption(num++, "GA knows targets role", false);
 
             Survivor =
                 new CustomHeaderOption(num++, "<color=#FFE64DFF>Survivor</color>");

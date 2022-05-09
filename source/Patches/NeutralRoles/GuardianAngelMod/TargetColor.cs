@@ -18,6 +18,7 @@ namespace TownOfUs.NeutralRoles.GuardianAngelMod
     {
         private static void UpdateMeeting(MeetingHud __instance, GuardianAngel role)
         {
+            if (CustomGameOptions.GAKnowsTargetRole) return;
             foreach (var player in __instance.playerStates)
                 if (player.TargetPlayerId == role.target.PlayerId)
                     player.NameText.color = new Color(1f, 0.85f, 0f, 1f);
@@ -25,6 +26,7 @@ namespace TownOfUs.NeutralRoles.GuardianAngelMod
 
         private static void Postfix(HudManager __instance)
         {
+            if (CustomGameOptions.GAKnowsTargetRole) return;
             if (PlayerControl.AllPlayerControls.Count <= 1) return;
             if (PlayerControl.LocalPlayer == null) return;
             if (PlayerControl.LocalPlayer.Data == null) return;
