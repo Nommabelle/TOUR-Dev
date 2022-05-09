@@ -5,6 +5,7 @@ using System.Reflection;
 using BepInEx;
 using BepInEx.IL2CPP;
 using HarmonyLib;
+using Reactor;
 using UnhollowerRuntimeLib;
 using UnityEngine;
 
@@ -90,6 +91,8 @@ namespace TownOfUs.Patches
         private static FieldInfo SubmarineOxygenSystemInstanceField;
         private static MethodInfo RepairDamageMethod;
 
+        private static Type SubmergedExileController;
+        private static MethodInfo SubmergedExileWrapUpMethod;
 
         public static void Initialize()
         {
@@ -125,7 +128,23 @@ namespace TownOfUs.Patches
             SubmarineOxygenSystemType = Types.First(t => t.Name == "SubmarineOxygenSystem");
             SubmarineOxygenSystemInstanceField = AccessTools.Field(SubmarineOxygenSystemType, "Instance");
             RepairDamageMethod = AccessTools.Method(SubmarineOxygenSystemType, "RepairDamage");
+            SubmergedExileController = Types.First(t => t.Name == "SubmergedExileController");
+            SubmergedExileWrapUpMethod = AccessTools.Method(SubmergedExileController, "WrapUpAndSpawn");
+            
+            //I tried patching normally but it would never work
+            Harmony _harmony = new Harmony("tou.submerged.patch");
+            var mPostfix = SymbolExtensions.GetMethodInfo(() => ExileRoleChangePostfix());
+            _harmony.Patch(SubmergedExileWrapUpMethod, null, new HarmonyMethod(mPostfix));
         }
+
+
+        public static void ExileRoleChangePostfix()
+        {
+            NeutralRoles.PhantomMod.SetPhantom.ExileControllerPostfix(ExileController.Instance);
+            ImpostorRoles.TraitorMod.SetTraitor.ExileControllerPostfix(ExileController.Instance);
+            CrewmateRoles.HaunterMod.SetHaunter.ExileControllerPostfix(ExileController.Instance);
+        }
+
 
         public static MonoBehaviour AddSubmergedComponent(this GameObject obj, string typeName)
         {
@@ -152,6 +171,7 @@ namespace TownOfUs.Patches
             if (!Loaded) return false;
             return (bool)InTransitionField.GetValue(null);
         }
+
 
         public static void RepairOxygen()
         {
