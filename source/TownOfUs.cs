@@ -19,11 +19,13 @@ using UnityEngine.SceneManagement;
 
 namespace TownOfUs
 {
-    [BepInPlugin(Id, "Town Of Us", "3.0.1")]
+    [BepInPlugin(Id, "Town Of Us", VersionString)]
     [BepInDependency(ReactorPlugin.Id)]
     public class TownOfUs : BasePlugin
     {
         public const string Id = "com.slushiegoose.townofus";
+        public const string VersionString = "3.0.1";
+        public static System.Version Version = System.Version.Parse(VersionString);
         
         public static Sprite JanitorClean;
         public static Sprite EngineerFix;
@@ -61,9 +63,12 @@ namespace TownOfUs
         public static Sprite BlackmailSprite;
         public static Sprite BlackmailLetterSprite;
         public static Sprite BlackmailOverlaySprite;
+        public static Sprite LighterSprite;
+        public static Sprite DarkerSprite;
 
         public static Sprite SettingsButtonSprite;
         public static Sprite ToUBanner;
+        public static Sprite UpdateButton;
 
         public static Vector3 ButtonPosition { get; private set; } = new Vector3(2.6f, 0.7f, -9f);
 
@@ -120,9 +125,12 @@ namespace TownOfUs
             BlackmailSprite = CreateSprite("TownOfUs.Resources.Blackmail.png");
             BlackmailLetterSprite = CreateSprite("TownOfUs.Resources.BlackmailLetter.png");
             BlackmailOverlaySprite = CreateSprite("TownOfUs.Resources.BlackmailOverlay.png");
+            LighterSprite = CreateSprite("TownOfUs.Resources.Lighter.png");
+            DarkerSprite = CreateSprite("TownOfUs.Resources.Darker.png");
 
             SettingsButtonSprite = CreateSprite("TownOfUs.Resources.SettingsButton.png");
             ToUBanner = CreateSprite("TownOfUs.Resources.TownOfUsBanner.png");
+            UpdateButton = CreateSprite("TownOfUs.Resources.Update Button.png");
 
             PalettePatch.Load();
             ClassInjector.RegisterTypeInIl2Cpp<RainbowBehaviour>();
