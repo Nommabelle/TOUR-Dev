@@ -35,6 +35,41 @@ namespace TownOfUs.Patches
         }
     }
 
+    [HarmonyPatch(typeof(PlayerPhysics), nameof(PlayerPhysics.HandleAnimation))]
+    [HarmonyPriority(Priority.Low)] //make sure it occurs after other patches
+    public static class SubmergedPhysicsPatch
+    {
+        public static void Postfix(PlayerPhysics __instance)
+        {
+            if (SubmergedCompatibility.Loaded && __instance.myPlayer.Data.IsDead)
+            {
+                if (__instance.myPlayer.Is(RoleEnum.Phantom))
+                {
+                    if (!Roles.Role.GetRole<Roles.Phantom>(PlayerControl.LocalPlayer).Caught)
+                    {
+                        Transform transform = __instance.transform;
+                        Vector3 position = transform.position;
+                        position.z = 0f;
+                        transform.position = position;
+                        __instance.myPlayer.gameObject.layer = 8;
+                    }
+                }
+                if (__instance.myPlayer.Is(RoleEnum.Haunter))
+                {
+                    if (!Roles.Role.GetRole<Roles.Haunter>(PlayerControl.LocalPlayer).Caught)
+                    {
+                        Transform transform = __instance.transform;
+                        Vector3 position = transform.position;
+                        position.z = 0f;
+                        transform.position = position;
+                        __instance.myPlayer.gameObject.layer = 8;
+                    }
+                }
+            }
+            
+        }
+    }
+
 
 
     public static class SubmergedCompatibility
@@ -117,6 +152,7 @@ namespace TownOfUs.Patches
 
         private static Type SubmergedExileController;
         private static MethodInfo SubmergedExileWrapUpMethod;
+
         public static void Initialize()
         {
             Loaded = IL2CPPChainloader.Instance.Plugins.TryGetValue(SUBMERGED_GUID, out PluginInfo plugin);
