@@ -1,12 +1,9 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 using HarmonyLib;
 using Reactor.Extensions;
 using TownOfUs.CustomOption;
-using TownOfUs.Extensions;
-using UnityEngine;
 
 namespace TownOfUs
 {
@@ -14,7 +11,6 @@ namespace TownOfUs
     public static class GameSettings
     {
         public static bool AllOptions;
-        public static bool LastTab;
 
         [HarmonyPatch]
         private static class GameOptionsDataPatch
@@ -30,9 +26,9 @@ namespace TownOfUs
 
                 foreach (var option in CustomOption.CustomOption.AllOptions)
                 {
-                    if (option.Name == "Crewmate Investigative Roles") {
+                    if (option.Name == "Crewmate Investigative Roles")
+                    {
                         builder.Append("(Scroll for all settings)");
-                    } else if (option.Name == "Custom Game Settings") {
                         builder.AppendLine("");
                         builder.Append(new StringBuilder(__result));
                     }
