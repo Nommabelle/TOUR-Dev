@@ -13,6 +13,44 @@ using UnityEngine;
 namespace TownOfUs.Patches
 {
 
+    [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
+    public static class SubmergedHudPatch
+    {
+        public static void Postfix(HudManager __instance)
+        {
+            if (SubmergedCompatibility.isSubmerged())
+            {
+                if (PlayerControl.LocalPlayer.Data.IsDead && PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
+                {
+                    if (!Roles.Role.GetRole<Roles.Haunter>(PlayerControl.LocalPlayer).Caught)
+                    {
+                        __instance.MapButton.transform.parent.Find(__instance.MapButton.name + "(Clone)").gameObject.SetActive(false);
+                    }
+                    if (Roles.Role.GetRole<Roles.Haunter>(PlayerControl.LocalPlayer).Caught)
+                    {
+                        __instance.MapButton.transform.parent.Find(__instance.MapButton.name + "(Clone)").gameObject.SetActive(true);
+                    }
+                }
+                if (PlayerControl.LocalPlayer.Data.IsDead && PlayerControl.LocalPlayer.Is(RoleEnum.Phantom))
+                {
+                    if (!Roles.Role.GetRole<Roles.Phantom>(PlayerControl.LocalPlayer).Caught)
+                    {
+                        __instance.MapButton.transform.parent.Find(__instance.MapButton.name + "(Clone)").gameObject.SetActive(false);
+                    }
+                    if (Roles.Role.GetRole<Roles.Phantom>(PlayerControl.LocalPlayer).Caught)
+                    {
+                        __instance.MapButton.transform.parent.Find(__instance.MapButton.name + "(Clone)").gameObject.SetActive(true);
+
+                    }
+                }
+
+            }
+                
+        }
+    }
+
+
+
     public static class SubmergedCompatibility
     {
         public static class Classes
@@ -93,7 +131,6 @@ namespace TownOfUs.Patches
 
         private static Type SubmergedExileController;
         private static MethodInfo SubmergedExileWrapUpMethod;
-
         public static void Initialize()
         {
             Loaded = IL2CPPChainloader.Instance.Plugins.TryGetValue(SUBMERGED_GUID, out PluginInfo plugin);
@@ -130,7 +167,7 @@ namespace TownOfUs.Patches
             RepairDamageMethod = AccessTools.Method(SubmarineOxygenSystemType, "RepairDamage");
             SubmergedExileController = Types.First(t => t.Name == "SubmergedExileController");
             SubmergedExileWrapUpMethod = AccessTools.Method(SubmergedExileController, "WrapUpAndSpawn");
-            
+
             //I tried patching normally but it would never work
             Harmony _harmony = new Harmony("tou.submerged.patch");
             var mPostfix = SymbolExtensions.GetMethodInfo(() => ExileRoleChangePostfix());
