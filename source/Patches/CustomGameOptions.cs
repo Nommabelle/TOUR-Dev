@@ -143,6 +143,7 @@ namespace TownOfUs
         public static bool AssassinGuessNeutralBenign => Generate.AssassinGuessNeutralBenign.Get();
         public static bool AssassinGuessNeutralEvil => Generate.AssassinGuessNeutralEvil.Get();
         public static bool AssassinGuessNeutralKilling => Generate.AssassinGuessNeutralKilling.Get();
+        public static bool AssassinGuessModifiers => Generate.AssassinGuessModifiers.Get();
         public static bool AssassinCrewmateGuess => Generate.AssassinCrewmateGuess.Get();
         public static int AssassinKills => (int)Generate.AssassinKills.Get();
         public static int NumberOfAssassins => (int)Generate.NumberOfAssassins.Get();
@@ -202,6 +203,8 @@ namespace TownOfUs
         public static int MaxProtects => (int)Generate.MaxProtects.Get();
         public static ProtectOptions ShowProtect => (ProtectOptions)Generate.ShowProtect.Get();
         public static BecomeOptions GaOnTargetDeath => (BecomeOptions)Generate.GaOnTargetDeath.Get();
+        public static bool GATargetKnows => Generate.GATargetKnows.Get();
+        public static bool GAKnowsTargetRole => Generate.GAKnowsTargetRole.Get();
         public static float MysticArrowDuration => Generate.MysticArrowDuration.Get();
         public static float BlackmailCd => Generate.BlackmailCooldown.Get();
         public static float GiantSlow => Generate.GiantSlow.Get();
