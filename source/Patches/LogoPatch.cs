@@ -2,7 +2,6 @@ using HarmonyLib;
 using System;
 using UnityEngine;
 using static UnityEngine.UI.Button;
-using TMPro;
 
 namespace TownOfUs {
     [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
@@ -16,9 +15,9 @@ namespace TownOfUs {
                 amongUsLogo.transform.position += Vector3.up * 0.25f;
             }
 
-            var torLogo = new GameObject("bannerLogo_TownOfH");
-            torLogo.transform.position = Vector3.up;
-            var renderer = torLogo.AddComponent<SpriteRenderer>();
+            var touLogo = new GameObject("bannerLogo_TownOfUs");
+            touLogo.transform.position = Vector3.up;
+            var renderer = touLogo.AddComponent<SpriteRenderer>();
             renderer.sprite = Sprite;
 
 
