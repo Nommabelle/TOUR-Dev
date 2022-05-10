@@ -10,6 +10,7 @@ using HarmonyLib;
 using Reactor;
 using Reactor.Extensions;
 using TownOfUs.CustomOption;
+using TownOfUs.Patches;
 using TownOfUs.Patches.CustomHats;
 using TownOfUs.RainbowMod;
 using UnhollowerBaseLib;
@@ -21,6 +22,7 @@ namespace TownOfUs
 {
     [BepInPlugin(Id, "Town Of Us", VersionString)]
     [BepInDependency(ReactorPlugin.Id)]
+    [BepInDependency(SubmergedCompatibility.SUBMERGED_GUID, BepInDependency.DependencyFlags.SoftDependency)]
     public class TownOfUs : BasePlugin
     {
         public const string Id = "com.slushiegoose.townofus";
@@ -163,6 +165,7 @@ namespace TownOfUs
             }));
 
             _harmony.PatchAll();
+            SubmergedCompatibility.Initialize();
         }
 
         public static Sprite CreateSprite(string name)

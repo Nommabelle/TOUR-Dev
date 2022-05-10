@@ -8,6 +8,7 @@ using TMPro;
 using Reactor.Extensions;
 using System.Collections.Generic;
 using TownOfUs.CrewmateRoles.TransporterMod;
+using TownOfUs.Patches;
 
 namespace TownOfUs.Roles
 {
@@ -274,6 +275,19 @@ namespace TownOfUs.Roles
                 TP1.MyRend.flipX = TP2.MyRend.flipX;
                 TP2.NetTransform.SnapTo(new Vector2(TempPosition.x, TempPosition.y + 0.3636f));
                 TP2.MyRend.flipX = TempFacing;
+
+                if (SubmergedCompatibility.isSubmerged())
+                {
+                    if (PlayerControl.LocalPlayer.PlayerId == TP1.PlayerId)
+                    {
+                        SubmergedCompatibility.ChangeFloor(TP1.GetTruePosition().y > -7);
+                    }
+                    if (PlayerControl.LocalPlayer.PlayerId == TP2.PlayerId)
+                    {
+                        SubmergedCompatibility.ChangeFloor(TP2.GetTruePosition().y > -7);
+                    }
+                }
+                
             }
             else if (Player1Body != null && Player2Body == null)
             {
@@ -282,6 +296,14 @@ namespace TownOfUs.Roles
                 var TempPosition = Player1Body.TruePosition;
                 Player1Body.transform.position = TP2.GetTruePosition();
                 TP2.NetTransform.SnapTo(new Vector2(TempPosition.x, TempPosition.y + 0.3636f));
+
+                if (SubmergedCompatibility.isSubmerged())
+                {
+                    if (PlayerControl.LocalPlayer.PlayerId == TP2.PlayerId)
+                    {
+                        SubmergedCompatibility.ChangeFloor(TP2.GetTruePosition().y > -7);
+                    }
+                }
             }
             else if (Player1Body == null && Player2Body != null)
             {
@@ -290,6 +312,13 @@ namespace TownOfUs.Roles
                 var TempPosition = TP1.GetTruePosition();
                 TP1.NetTransform.SnapTo(new Vector2(Player2Body.TruePosition.x, Player2Body.TruePosition.y + 0.3636f));
                 Player2Body.transform.position = TempPosition;
+                if (SubmergedCompatibility.isSubmerged())
+                {
+                    if (PlayerControl.LocalPlayer.PlayerId == TP1.PlayerId)
+                    {
+                        SubmergedCompatibility.ChangeFloor(TP1.GetTruePosition().y > -7);
+                    }
+                }
             }
             else if (Player1Body != null && Player2Body != null)
             {

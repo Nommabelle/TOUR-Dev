@@ -944,6 +944,9 @@ namespace TownOfUs
                         foreach (var body in buggedBodies)
                             body.gameObject.Destroy();
                         break;
+                    case CustomRPC.SubmergedFixOxygen:
+                        Patches.SubmergedCompatibility.RepairOxygen();
+                        break;
                 }
             }
         }

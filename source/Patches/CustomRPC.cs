@@ -121,7 +121,7 @@ namespace TownOfUs
         SetGlitch,
         BypassKill,
         SetMimic,
-        RpcResetAnim,
+        RpcResetAnim = 220,
         SetHacked,
 
         ExecutionerToJester,
@@ -133,6 +133,8 @@ namespace TownOfUs
         
         AddMayorVoteBank,
         RemoveAllBodies,
-        CheckMurder
+        CheckMurder,
+
+        SubmergedFixOxygen
     }
 }

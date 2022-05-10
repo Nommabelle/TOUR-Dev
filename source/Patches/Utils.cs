@@ -469,6 +469,7 @@ namespace TownOfUs
                 }
             }
         }
+      
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CoStartMeeting))]
         class StartMeetingPatch {
             public static void Prefix(PlayerControl __instance, [HarmonyArgument(0)]GameData.PlayerInfo meetingTarget) {
@@ -484,6 +485,11 @@ namespace TownOfUs
                     __instance.SkipVoteButton.gameObject.SetActive(false);
                 }
             }
+        }
+      
+        public static object TryCast(this Il2CppObjectBase self, Type type)
+        {
+            return AccessTools.Method(self.GetType(), nameof(Il2CppObjectBase.TryCast)).MakeGenericMethod(type).Invoke(self, Array.Empty<object>());
         }
     }
 }
