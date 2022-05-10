@@ -22,28 +22,14 @@ namespace TownOfUs.Patches
             {
                 if (PlayerControl.LocalPlayer.Data.IsDead && PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
                 {
-                    if (!Roles.Role.GetRole<Roles.Haunter>(PlayerControl.LocalPlayer).Caught)
-                    {
-                        __instance.MapButton.transform.parent.Find(__instance.MapButton.name + "(Clone)").gameObject.SetActive(false);
-                    }
-                    if (Roles.Role.GetRole<Roles.Haunter>(PlayerControl.LocalPlayer).Caught)
-                    {
-                        __instance.MapButton.transform.parent.Find(__instance.MapButton.name + "(Clone)").gameObject.SetActive(true);
-                    }
+                    if (!Roles.Role.GetRole<Roles.Haunter>(PlayerControl.LocalPlayer).Caught) __instance.MapButton.transform.parent.Find(__instance.MapButton.name + "(Clone)").gameObject.SetActive(false);
+                    else __instance.MapButton.transform.parent.Find(__instance.MapButton.name + "(Clone)").gameObject.SetActive(true);
                 }
                 if (PlayerControl.LocalPlayer.Data.IsDead && PlayerControl.LocalPlayer.Is(RoleEnum.Phantom))
                 {
-                    if (!Roles.Role.GetRole<Roles.Phantom>(PlayerControl.LocalPlayer).Caught)
-                    {
-                        __instance.MapButton.transform.parent.Find(__instance.MapButton.name + "(Clone)").gameObject.SetActive(false);
-                    }
-                    if (Roles.Role.GetRole<Roles.Phantom>(PlayerControl.LocalPlayer).Caught)
-                    {
-                        __instance.MapButton.transform.parent.Find(__instance.MapButton.name + "(Clone)").gameObject.SetActive(true);
-
-                    }
+                    if (!Roles.Role.GetRole<Roles.Phantom>(PlayerControl.LocalPlayer).Caught) __instance.MapButton.transform.parent.Find(__instance.MapButton.name + "(Clone)").gameObject.SetActive(false);
+                    else  __instance.MapButton.transform.parent.Find(__instance.MapButton.name + "(Clone)").gameObject.SetActive(true);
                 }
-
             }
                 
         }
