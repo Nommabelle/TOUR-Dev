@@ -395,7 +395,7 @@ namespace TownOfUs
 
         public static IEnumerator BaitReportDelay(PlayerControl killer, PlayerControl target)
         {
-            yield return new WaitForSeconds(CustomGameOptions.BaitDelay);
+            yield return new WaitForSeconds(CustomGameOptions.BaitDelay + 0.01f);
             if (AmongUsClient.Instance.AmHost)
             {
                 killer.ReportDeadBody(target.Data);
