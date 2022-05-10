@@ -104,7 +104,15 @@ namespace TownOfUs {
             if (running) return;
             running = true;
             checkForUpdate("TOU").GetAwaiter().GetResult();
-            checkForUpdate("Submerged").GetAwaiter().GetResult();
+
+            //Only check of Submerged update if Submerged is already installed
+            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            System.UriBuilder uri = new System.UriBuilder(codeBase);
+            string submergedPath = System.Uri.UnescapeDataString(uri.Path.Replace("TownOfUs", "Submerged"));
+            if (File.Exists(submergedPath)) {
+                checkForUpdate("Submerged").GetAwaiter().GetResult();
+            }
+
             clearOldVersions();
         }
 
@@ -235,7 +243,7 @@ namespace TownOfUs {
                 System.UriBuilder uri = new System.UriBuilder(codeBase);
                 string fullname = System.Uri.UnescapeDataString(uri.Path);
                 if (updateType == "Submerged") {
-                    fullname.Replace("TownOfUs", "Submerged"); //TODO A better solution than this to correctly name the dll files
+                    fullname = fullname.Replace("TownOfUs", "Submerged"); //TODO A better solution than this to correctly name the dll files
                 }
                 if (File.Exists(fullname + ".old")) // Clear old file in case it wasnt;
                     File.Delete(fullname + ".old");
