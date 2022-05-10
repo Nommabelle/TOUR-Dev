@@ -203,12 +203,14 @@ namespace TownOfUs
         public static int MaxProtects => (int)Generate.MaxProtects.Get();
         public static ProtectOptions ShowProtect => (ProtectOptions)Generate.ShowProtect.Get();
         public static BecomeOptions GaOnTargetDeath => (BecomeOptions)Generate.GaOnTargetDeath.Get();
-        public static float MysticArrowDuration => Generate.MysticArrowDuration.Get();
-        public static float BlackmailCd => Generate.BlackmailCooldown.Get();
-
         public static bool GATargetKnows => Generate.GATargetKnows.Get();
         public static bool GAKnowsTargetRole => Generate.GAKnowsTargetRole.Get();
-        
+        public static float MysticArrowDuration => Generate.MysticArrowDuration.Get();
+        public static float BlackmailCd => Generate.BlackmailCooldown.Get();
+        public static float GiantSlow => Generate.GiantSlow.Get();
+        public static float FlashSpeed => Generate.FlashSpeed.Get();
+        public static float DiseasedMultiplier => Generate.DiseasedKillMultiplier.Get();
+        public static float BaitDelay => Generate.BaitDelay.Get();
         public static DisableSkipButtonMeetings SkipButtonDisable =>
             (DisableSkipButtonMeetings)Generate.SkipButtonDisable.Get();
     }

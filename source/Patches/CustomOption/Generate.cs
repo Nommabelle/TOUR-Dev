@@ -289,6 +289,18 @@ namespace TownOfUs.CustomOption
         public static CustomHeaderOption Blackmailer;
         public static CustomNumberOption BlackmailCooldown;
 
+        public static CustomHeaderOption Giant;
+        public static CustomNumberOption GiantSlow;
+
+        public static CustomHeaderOption Flash;
+        public static CustomNumberOption FlashSpeed;
+
+        public static CustomHeaderOption Diseased;
+        public static CustomNumberOption DiseasedKillMultiplier;
+
+        public static CustomHeaderOption Bait;
+        public static CustomNumberOption BaitDelay;
+
         public static CustomHeaderOption Lovers;
         public static CustomToggleOption BothLoversDie;
         public static CustomNumberOption LovingImpPercent;
@@ -755,6 +767,18 @@ namespace TownOfUs.CustomOption
                 new CustomToggleOption(num++, "Undertaker Can Vent", false);
             UndertakerVentWithBody =
                 new CustomToggleOption(num++, "Undertaker Can Vent While Dragging", false);
+
+            Bait = new CustomHeaderOption(num++, "<color=#00B3B3FF>Bait</color>");
+            BaitDelay = new CustomNumberOption(num++, "Bait Report Delay", 0f, 0f, 15f, 0.5f, CooldownFormat);
+
+            Diseased = new CustomHeaderOption(num++, "<color=#808080FF>Diseased</color>");
+            DiseasedKillMultiplier = new CustomNumberOption(num++, "Diseased Kill Multiplier", 3f, 1.5f, 5f, 0.5f, MultiplierFormat);
+
+            Giant = new CustomHeaderOption(num++, "<color=#FFB34DFF>Giant</color>");
+            GiantSlow = new CustomNumberOption(num++, "Giant Speed", 0.7f, 0.5f, 1f, 0.05f, MultiplierFormat);
+
+            Flash = new CustomHeaderOption(num++, "<color=#FF8080FF>Flash</color>");
+            FlashSpeed = new CustomNumberOption(num++, "Flash Speed", 1.25f, 1.05f, 2.5f, 0.05f, MultiplierFormat);
 
             Lovers =
                 new CustomHeaderOption(num++, "<color=#FF66CCFF>Lovers</color>");
