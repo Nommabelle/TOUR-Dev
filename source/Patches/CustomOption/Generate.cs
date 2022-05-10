@@ -208,6 +208,7 @@ namespace TownOfUs.CustomOption
         public static CustomToggleOption AssassinGuessNeutralBenign;
         public static CustomToggleOption AssassinGuessNeutralEvil;
         public static CustomToggleOption AssassinGuessNeutralKilling;
+        public static CustomToggleOption AssassinGuessModifiers;
         public static CustomToggleOption AssassinateAfterVoting;
 
         public static CustomHeaderOption Underdog;
@@ -455,6 +456,7 @@ namespace TownOfUs.CustomOption
             AssassinGuessNeutralBenign = new CustomToggleOption(num++, "Assassin Can Guess Neutral Benign Roles", false);
             AssassinGuessNeutralEvil = new CustomToggleOption(num++, "Assassin Can Guess Neutral Evil Roles", false);
             AssassinGuessNeutralKilling = new CustomToggleOption(num++, "Assassin Can Guess Neutral Killing Roles", false);
+            AssassinGuessModifiers = new CustomToggleOption(num++, "Assassin Can Guess Modifiers", false);
             AssassinateAfterVoting = new CustomToggleOption(num++, "Assassin Can Guess After Voting", false);
 
             Haunter =
