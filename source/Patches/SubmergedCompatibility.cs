@@ -47,6 +47,7 @@ namespace TownOfUs.Patches
                 {
                     if (!Roles.Role.GetRole<Roles.Phantom>(PlayerControl.LocalPlayer).Caught)
                     {
+                        SubmergedCompatibility.MoveDeadPlayerElevator(__instance.myPlayer);
                         Transform transform = __instance.transform;
                         Vector3 position = transform.position;
                         position.z = 0f;
@@ -58,6 +59,7 @@ namespace TownOfUs.Patches
                 {
                     if (!Roles.Role.GetRole<Roles.Haunter>(PlayerControl.LocalPlayer).Caught)
                     {
+                        SubmergedCompatibility.MoveDeadPlayerElevator(__instance.myPlayer);
                         Transform transform = __instance.transform;
                         Vector3 position = transform.position;
                         position.z = 0f;
@@ -153,6 +155,13 @@ namespace TownOfUs.Patches
         private static Type SubmergedExileController;
         private static MethodInfo SubmergedExileWrapUpMethod;
 
+        private static Type SubmarineElevator;
+        private static MethodInfo GetInElevator;
+        private static MethodInfo GetMovementStageFromTime;
+
+        private static FieldInfo SubmergedInstance;
+        private static FieldInfo SubmergedElevators;
+
         public static void Initialize()
         {
             Loaded = IL2CPPChainloader.Instance.Plugins.TryGetValue(SUBMERGED_GUID, out PluginInfo plugin);
@@ -168,6 +177,9 @@ namespace TownOfUs.Patches
                 .Invoke(null, Array.Empty<object>());
 
             SubmarineStatusType = Types.First(t => t.Name == "SubmarineStatus");
+            SubmergedInstance = AccessTools.Field(SubmarineStatusType, "Instance");
+            SubmergedElevators = AccessTools.Field(SubmarineStatusType, "Elevators");
+
             CalculateLightRadiusMethod = AccessTools.Method(SubmarineStatusType, "CalculateLightRadius");
 
             TaskIsEmergencyPatchType = Types.First(t => t.Name == "PlayerTask_TaskIsEmergency_Patch");
@@ -190,10 +202,39 @@ namespace TownOfUs.Patches
             SubmergedExileController = Types.First(t => t.Name == "SubmergedExileController");
             SubmergedExileWrapUpMethod = AccessTools.Method(SubmergedExileController, "WrapUpAndSpawn");
 
+            SubmarineElevator = Types.First(t => t.Name == "SubmarineElevator");
+            GetInElevator = AccessTools.Method(SubmarineElevator, "GetInElevator");
+            GetMovementStageFromTime = AccessTools.Method(SubmarineElevator, "GetMovementStageFromTime");
+
             //I tried patching normally but it would never work
             Harmony _harmony = new Harmony("tou.submerged.patch");
             var mPostfix = SymbolExtensions.GetMethodInfo(() => ExileRoleChangePostfix());
             _harmony.Patch(SubmergedExileWrapUpMethod, null, new HarmonyMethod(mPostfix));
+        }
+
+        public static void MoveDeadPlayerElevator(PlayerControl player)
+        {
+            if (!Loaded) return;
+            Tuple<bool, object> elevator = GetPlayerElevator(player);
+            if (!elevator.Item1) return;
+            int MovementStage = (int)GetMovementStageFromTime.Invoke(elevator.Item2, null);
+            if (MovementStage >= 5)
+            {
+                //Fade to clear
+                ChangeFloor(player.transform.position.y < -7f);
+            }
+        }
+
+        public static Tuple<bool, object> GetPlayerElevator(PlayerControl player)
+        {
+            if (!Loaded) return Tuple.Create(false, (object)null);
+            List<dynamic> Elevators = (List<dynamic>)SubmergedElevators.GetValue(SubmergedInstance.GetValue(null));
+            foreach (dynamic elevator in Elevators)
+            {
+                if ((bool)GetInElevator.Invoke(elevator, new object[] { player })) Tuple.Create(true, elevator);
+            }
+
+            return Tuple.Create(false, (object)null);
         }
 
 
