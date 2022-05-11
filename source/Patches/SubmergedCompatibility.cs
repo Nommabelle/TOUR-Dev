@@ -14,6 +14,7 @@ using Reactor;
 namespace TownOfUs.Patches
 {
 
+
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
     public static class SubmergedHudPatch
     {
@@ -167,6 +168,7 @@ namespace TownOfUs.Patches
         private static FieldInfo SubmergedInstance;
         private static FieldInfo SubmergedElevators;
 
+
         public static void Initialize()
         {
             Loaded = IL2CPPChainloader.Instance.Plugins.TryGetValue(SUBMERGED_GUID, out PluginInfo plugin);
@@ -215,10 +217,11 @@ namespace TownOfUs.Patches
             SubmarineElevatorSystem = Types.First(t => t.Name == "SubmarineElevatorSystem");
             UpperDeckIsTargetFloor = AccessTools.Field(SubmarineElevatorSystem, "UpperDeckIsTargetFloor");
 
+
             //I tried patching normally but it would never work
             Harmony _harmony = new Harmony("tou.submerged.patch");
-            var mPostfix = SymbolExtensions.GetMethodInfo(() => ExileRoleChangePostfix());
-            _harmony.Patch(SubmergedExileWrapUpMethod, null, new HarmonyMethod(mPostfix));
+            var exilerolechangePostfix = SymbolExtensions.GetMethodInfo(() => ExileRoleChangePostfix());
+            _harmony.Patch(SubmergedExileWrapUpMethod, null, new HarmonyMethod(exilerolechangePostfix));
         }
 
         public static void MoveDeadPlayerElevator(PlayerControl player)
@@ -258,6 +261,38 @@ namespace TownOfUs.Patches
             NeutralRoles.PhantomMod.SetPhantom.ExileControllerPostfix(ExileController.Instance);
             ImpostorRoles.TraitorMod.SetTraitor.ExileControllerPostfix(ExileController.Instance);
             CrewmateRoles.HaunterMod.SetHaunter.ExileControllerPostfix(ExileController.Instance);
+
+            Coroutines.Start(GhostRoleBegin());
+        }
+
+        public static IEnumerator GhostRoleBegin()
+        {
+
+            while (!PlayerControl.LocalPlayer.moveable)
+            {
+                yield return null;
+            }
+
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
+            {
+                if (!Roles.Role.GetRole<Roles.Haunter>(PlayerControl.LocalPlayer).Caught)
+                {
+                    var startingVent =
+                        ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
+                    PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
+                    PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
+                }
+            }
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Phantom))
+            {
+                if (!Roles.Role.GetRole<Roles.Phantom>(PlayerControl.LocalPlayer).Caught)
+                {
+                    var startingVent =
+                        ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
+                    PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
+                    PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
+                }
+            }
         }
 
 
