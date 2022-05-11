@@ -71,7 +71,8 @@ namespace TownOfUs.CrewmateRoles.EngineerMod
                     if (reactor3.IsActive) return FixReactor(SystemTypes.Reactor);
                     var lights5 = ShipStatus.Instance.Systems[SystemTypes.Electrical].Cast<SwitchSystem>();
                     if (lights5.IsActive) return FixLights(lights5);
-                    var oxygen = false;
+                    var comms5 = ShipStatus.Instance.Systems[SystemTypes.Comms].Cast<HudOverrideSystemType>();
+                    if (comms5.IsActive) return FixComms();
                     foreach (PlayerTask i in PlayerControl.LocalPlayer.myTasks)
                     {
                         if (i.TaskType == Patches.SubmergedCompatibility.RetrieveOxygenMask)
