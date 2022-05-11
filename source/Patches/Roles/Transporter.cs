@@ -286,6 +286,8 @@ namespace TownOfUs.Roles
                     {
                         SubmergedCompatibility.ChangeFloor(TP2.GetTruePosition().y > -7);
                     }
+
+                    SubmergedCompatibility.CheckOutOfBoundsElevator(PlayerControl.LocalPlayer);
                 }
                 
             }

@@ -70,6 +70,7 @@ namespace TownOfUs.Patches
                     }
                 }
             }
+
             
         }
     }
@@ -224,6 +225,22 @@ namespace TownOfUs.Patches
             _harmony.Patch(SubmergedExileWrapUpMethod, null, new HarmonyMethod(exilerolechangePostfix));
         }
 
+        public static void CheckOutOfBoundsElevator(PlayerControl player)
+        {
+            if (!Loaded) return;
+            if (!isSubmerged()) return;
+
+            Tuple<bool, object> elevator = GetPlayerElevator(player);
+            if (!elevator.Item1) return;
+            bool CurrentFloor = (bool)UpperDeckIsTargetFloor.GetValue(getSubElevatorSystem.GetValue(elevator.Item2)); //true is top, false is bottom
+            bool PlayerFloor = player.transform.position.y > -7f; //true is top, false is bottom
+            
+            if (CurrentFloor != PlayerFloor)
+            {
+                ChangeFloor(CurrentFloor);
+            }
+        }
+
         public static void MoveDeadPlayerElevator(PlayerControl player)
         {
             if (!Loaded) return;
@@ -267,6 +284,7 @@ namespace TownOfUs.Patches
 
         public static IEnumerator GhostRoleBegin()
         {
+            if (!PlayerControl.LocalPlayer.Data.IsDead) yield break;
 
             while (!PlayerControl.LocalPlayer.moveable)
             {
@@ -279,6 +297,7 @@ namespace TownOfUs.Patches
                 {
                     var startingVent =
                         ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
+                    ChangeFloor(startingVent.transform.position.y > -7f);
                     PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
                     PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
                 }
@@ -289,6 +308,7 @@ namespace TownOfUs.Patches
                 {
                     var startingVent =
                         ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
+                    ChangeFloor(startingVent.transform.position.y > -7f);
                     PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
                     PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
                 }
