@@ -3,7 +3,6 @@ using System.Linq;
 using HarmonyLib;
 using Hazel;
 using Reactor.Extensions;
-using TownOfUs.Extensions;
 using TownOfUs.Patches;
 using TownOfUs.Roles;
 using UnityEngine;
@@ -78,7 +77,7 @@ namespace TownOfUs.ImpostorRoles.MinerMod
             if (SubmergedCompatibility.isSubmerged())
             {
                 vent.gameObject.layer = 12;
-                vent.gameObject.AddSubmergedComponent(SubmergedCompatibility.Classes.ElevatorMover); // Should Just Block Elevator placing but havent figured that out just yet
+                vent.gameObject.AddSubmergedComponent(SubmergedCompatibility.Classes.ElevatorMover); // just in case elevator vent is not blocked
                 if (vent.gameObject.transform.position.y > -7) vent.gameObject.transform.position = new Vector3(vent.gameObject.transform.position.x, vent.gameObject.transform.position.y, 0.03f);
                 else
                 {
