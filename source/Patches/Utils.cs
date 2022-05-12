@@ -396,17 +396,42 @@ namespace TownOfUs
         public static IEnumerator BaitReportDelay(PlayerControl killer, PlayerControl target)
         {
             yield return new WaitForSeconds(CustomGameOptions.BaitDelay + 0.01f);
+            var bodies = UnityEngine.Object.FindObjectsOfType<DeadBody>();
             if (AmongUsClient.Instance.AmHost)
             {
-                killer.ReportDeadBody(target.Data);
+                foreach (var body in bodies)
+                {
+                    try
+                    {
+                        if (body.ParentId == target.PlayerId) { killer.ReportDeadBody(target.Data); break; }
+                    }
+                    catch
+                    {
+                    }
+                }
+                
             }
             else
             {
-                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.BaitReport, SendOption.Reliable, -1);
-                writer.Write(killer.PlayerId);
-                writer.Write(target.PlayerId);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                foreach (var body in bodies)
+                {
+                    try
+                    {
+                        if (body.ParentId == target.PlayerId)
+                        {
+                            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                                (byte)CustomRPC.BaitReport, SendOption.Reliable, -1);
+                            writer.Write(killer.PlayerId);
+                            writer.Write(target.PlayerId);
+                            AmongUsClient.Instance.FinishRpcImmediately(writer);
+                            break;
+                        }
+                    }
+                    catch
+                    {
+                    }
+                }
+                
             }
             
         }
