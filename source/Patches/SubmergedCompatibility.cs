@@ -10,6 +10,7 @@ using UnhollowerRuntimeLib;
 using UnityEngine;
 using Reactor;
 using UnhollowerBaseLib;
+using TownOfUs.Roles;
 
 namespace TownOfUs.Patches
 {
@@ -24,12 +25,12 @@ namespace TownOfUs.Patches
             {
                 if (PlayerControl.LocalPlayer.Data.IsDead && PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
                 {
-                    if (!Roles.Role.GetRole<Roles.Haunter>(PlayerControl.LocalPlayer).Caught) __instance.MapButton.transform.parent.Find(__instance.MapButton.name + "(Clone)").gameObject.SetActive(false);
+                    if (!Role.GetRole<Haunter>(PlayerControl.LocalPlayer).Caught) __instance.MapButton.transform.parent.Find(__instance.MapButton.name + "(Clone)").gameObject.SetActive(false);
                     else __instance.MapButton.transform.parent.Find(__instance.MapButton.name + "(Clone)").gameObject.SetActive(true);
                 }
                 if (PlayerControl.LocalPlayer.Data.IsDead && PlayerControl.LocalPlayer.Is(RoleEnum.Phantom))
                 {
-                    if (!Roles.Role.GetRole<Roles.Phantom>(PlayerControl.LocalPlayer).Caught) __instance.MapButton.transform.parent.Find(__instance.MapButton.name + "(Clone)").gameObject.SetActive(false);
+                    if (!Role.GetRole<Phantom>(PlayerControl.LocalPlayer).Caught) __instance.MapButton.transform.parent.Find(__instance.MapButton.name + "(Clone)").gameObject.SetActive(false);
                     else  __instance.MapButton.transform.parent.Find(__instance.MapButton.name + "(Clone)").gameObject.SetActive(true);
                 }
             }
@@ -47,7 +48,7 @@ namespace TownOfUs.Patches
             {
                 if (__instance.myPlayer.Is(RoleEnum.Phantom))
                 {
-                    if (!Roles.Role.GetRole<Roles.Phantom>(PlayerControl.LocalPlayer).Caught)
+                    if (!Role.GetRole<Phantom>(PlayerControl.LocalPlayer).Caught)
                     {
                         SubmergedCompatibility.MoveDeadPlayerElevator(__instance.myPlayer);
                         Transform transform = __instance.transform;
@@ -59,7 +60,7 @@ namespace TownOfUs.Patches
                 }
                 if (__instance.myPlayer.Is(RoleEnum.Haunter))
                 {
-                    if (!Roles.Role.GetRole<Roles.Haunter>(PlayerControl.LocalPlayer).Caught)
+                    if (!Role.GetRole<Haunter>(PlayerControl.LocalPlayer).Caught)
                     {
                         SubmergedCompatibility.MoveDeadPlayerElevator(__instance.myPlayer);
                         Transform transform = __instance.transform;
@@ -276,8 +277,26 @@ namespace TownOfUs.Patches
             ImpostorRoles.TraitorMod.SetTraitor.ExileControllerPostfix(ExileController.Instance);
             CrewmateRoles.HaunterMod.SetHaunter.ExileControllerPostfix(ExileController.Instance);
 
+            Coroutines.Start(resetTimers());
             Coroutines.Start(GhostRoleBegin());
+            
         }
+
+        public static IEnumerator resetTimers()
+        {
+            if (PlayerControl.LocalPlayer.Data.IsDead) yield break;
+            while (!PlayerControl.LocalPlayer.moveable)
+            {
+                yield return null;
+            }
+            yield return new WaitForSeconds(0.5f);
+            while (DestroyableSingleton<HudManager>.Instance.PlayerCam.transform.Find("SpawnInMinigame(Clone)") != null)
+            {
+                yield return null;
+            }
+            Utils.ResetCustomTimers();
+        }
+
 
         public static IEnumerator GhostRoleBegin()
         {
@@ -287,14 +306,14 @@ namespace TownOfUs.Patches
                 yield return null;
             }
             yield return new WaitForSeconds(0.5f);
-            while (DestroyableSingleton<HudManager>.Instance.PlayerCam.transform.Find("SpawnInMinigame(Clone)") != null)//!PlayerControl.LocalPlayer.moveable)
+            while (DestroyableSingleton<HudManager>.Instance.PlayerCam.transform.Find("SpawnInMinigame(Clone)") != null)
             {
                 yield return null;
             }
             
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
             {
-                if (!Roles.Role.GetRole<Roles.Haunter>(PlayerControl.LocalPlayer).Caught)
+                if (!Role.GetRole<Haunter>(PlayerControl.LocalPlayer).Caught)
                 {
                     var startingVent =
                         ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
@@ -305,7 +324,7 @@ namespace TownOfUs.Patches
             }
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Phantom))
             {
-                if (!Roles.Role.GetRole<Roles.Phantom>(PlayerControl.LocalPlayer).Caught)
+                if (!Role.GetRole<Phantom>(PlayerControl.LocalPlayer).Caught)
                 {
                     var startingVent =
                         ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
