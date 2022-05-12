@@ -9,7 +9,7 @@ using HarmonyLib;
 using UnhollowerRuntimeLib;
 using UnityEngine;
 using Reactor;
-
+using UnhollowerBaseLib;
 
 namespace TownOfUs.Patches
 {
@@ -169,7 +169,6 @@ namespace TownOfUs.Patches
         private static FieldInfo SubmergedInstance;
         private static FieldInfo SubmergedElevators;
 
-
         public static void Initialize()
         {
             Loaded = IL2CPPChainloader.Instance.Plugins.TryGetValue(SUBMERGED_GUID, out PluginInfo plugin);
@@ -217,8 +216,6 @@ namespace TownOfUs.Patches
 
             SubmarineElevatorSystem = Types.First(t => t.Name == "SubmarineElevatorSystem");
             UpperDeckIsTargetFloor = AccessTools.Field(SubmarineElevatorSystem, "UpperDeckIsTargetFloor");
-
-
             //I tried patching normally but it would never work
             Harmony _harmony = new Harmony("tou.submerged.patch");
             var exilerolechangePostfix = SymbolExtensions.GetMethodInfo(() => ExileRoleChangePostfix());
@@ -285,12 +282,12 @@ namespace TownOfUs.Patches
         public static IEnumerator GhostRoleBegin()
         {
             if (!PlayerControl.LocalPlayer.Data.IsDead) yield break;
-
-            while (!PlayerControl.LocalPlayer.moveable)
+            while (GameObject.Find("SpawnInMinigame(Clone)") != null)//!PlayerControl.LocalPlayer.moveable)
             {
                 yield return null;
             }
-
+            Coroutines.Start(Utils.FlashCoroutine(Color.magenta, 5));
+            
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
             {
                 if (!Roles.Role.GetRole<Roles.Haunter>(PlayerControl.LocalPlayer).Caught)
