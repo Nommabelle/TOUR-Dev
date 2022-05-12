@@ -282,11 +282,15 @@ namespace TownOfUs.Patches
         public static IEnumerator GhostRoleBegin()
         {
             if (!PlayerControl.LocalPlayer.Data.IsDead) yield break;
-            while (GameObject.Find("SpawnInMinigame(Clone)") != null)//!PlayerControl.LocalPlayer.moveable)
+            while (!PlayerControl.LocalPlayer.moveable)
             {
                 yield return null;
             }
-            Coroutines.Start(Utils.FlashCoroutine(Color.magenta, 5));
+            yield return new WaitForSeconds(0.5f);
+            while (DestroyableSingleton<HudManager>.Instance.PlayerCam.transform.Find("SpawnInMinigame(Clone)") != null)//!PlayerControl.LocalPlayer.moveable)
+            {
+                yield return null;
+            }
             
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
             {
