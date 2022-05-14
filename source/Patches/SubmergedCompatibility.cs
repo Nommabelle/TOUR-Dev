@@ -14,8 +14,17 @@ using TownOfUs.Roles;
 
 namespace TownOfUs.Patches
 {
-
-
+    [HarmonyPatch(typeof(IntroCutscene._ShowRole_d__24), nameof(IntroCutscene._ShowRole_d__24.MoveNext))]
+    public static class SubmergedStartPatch
+    {
+        public static void Postfix(IntroCutscene._ShowRole_d__24 __instance)
+        {
+            if (SubmergedCompatibility.isSubmerged())
+            {
+                Coroutines.Start(SubmergedCompatibility.waitStart(SubmergedCompatibility.resetTimers));
+            }
+        }
+    }
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
     public static class SubmergedHudPatch
     {
@@ -277,14 +286,26 @@ namespace TownOfUs.Patches
             ImpostorRoles.TraitorMod.SetTraitor.ExileControllerPostfix(ExileController.Instance);
             CrewmateRoles.HaunterMod.SetHaunter.ExileControllerPostfix(ExileController.Instance);
 
-            Coroutines.Start(resetTimers());
-            Coroutines.Start(GhostRoleBegin());
+            Coroutines.Start(waitMeeting(resetTimers));
+            Coroutines.Start(waitMeeting(GhostRoleBegin));
             
         }
 
-        public static IEnumerator resetTimers()
+        public static IEnumerator waitStart(Action next)
         {
-            if (PlayerControl.LocalPlayer.Data.IsDead) yield break;
+            while (DestroyableSingleton<HudManager>.Instance.UICamera.transform.Find("SpawnInMinigame(Clone)") == null)
+            {
+                yield return null;
+            }
+            yield return new WaitForSeconds(0.5f);
+            while (DestroyableSingleton<HudManager>.Instance.UICamera.transform.Find("SpawnInMinigame(Clone)") != null)
+            {
+                yield return null;
+            }
+            next();
+        }
+        public static IEnumerator waitMeeting(Action next)
+        {
             while (!PlayerControl.LocalPlayer.moveable)
             {
                 yield return null;
@@ -294,23 +315,19 @@ namespace TownOfUs.Patches
             {
                 yield return null;
             }
+            next();
+        }
+
+        public static void resetTimers()
+        {
+            if (PlayerControl.LocalPlayer.Data.IsDead) return;
             Utils.ResetCustomTimers();
         }
 
 
-        public static IEnumerator GhostRoleBegin()
+        public static void GhostRoleBegin()
         {
-            if (!PlayerControl.LocalPlayer.Data.IsDead) yield break;
-            while (!PlayerControl.LocalPlayer.moveable)
-            {
-                yield return null;
-            }
-            yield return new WaitForSeconds(0.5f);
-            while (DestroyableSingleton<HudManager>.Instance.PlayerCam.transform.Find("SpawnInMinigame(Clone)") != null)
-            {
-                yield return null;
-            }
-            
+            if (!PlayerControl.LocalPlayer.Data.IsDead) return;
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
             {
                 if (!Role.GetRole<Haunter>(PlayerControl.LocalPlayer).Caught)
