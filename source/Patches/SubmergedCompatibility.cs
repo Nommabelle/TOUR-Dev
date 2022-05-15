@@ -250,7 +250,7 @@ namespace TownOfUs.Patches
 
         public static void MoveDeadPlayerElevator(PlayerControl player)
         {
-            if (!Loaded) return;
+            if (!isSubmerged()) return;
             Tuple<bool, object> elevator = GetPlayerElevator(player);
             if (!elevator.Item1) return;
 
@@ -269,7 +269,7 @@ namespace TownOfUs.Patches
 
         public static Tuple<bool, object> GetPlayerElevator(PlayerControl player)
         {
-            if (!Loaded) return Tuple.Create(false, (object)null);
+            if (!isSubmerged()) return Tuple.Create(false, (object)null);
             IList elevatorlist = Utils.createList(SubmarineElevator);
             elevatorlist = (IList)SubmergedElevators.GetValue(SubmergedInstance.GetValue(null));
             foreach (object elevator in elevatorlist)
