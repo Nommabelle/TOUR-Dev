@@ -67,8 +67,8 @@ namespace TownOfUs.CrewmateRoles.EngineerMod
                     if (lights4.IsActive) return FixLights(lights4);
                     break;
                 case 5:
-                    var reactor3 = ShipStatus.Instance.Systems[SystemTypes.Reactor].Cast<ReactorSystemType>();
-                    if (reactor3.IsActive) return FixReactor(SystemTypes.Reactor);
+                    var reactor5 = ShipStatus.Instance.Systems[SystemTypes.Reactor].Cast<ReactorSystemType>();
+                    if (reactor5.IsActive) return FixReactor(SystemTypes.Reactor);
                     var lights5 = ShipStatus.Instance.Systems[SystemTypes.Electrical].Cast<SwitchSystem>();
                     if (lights5.IsActive) return FixLights(lights5);
                     var comms5 = ShipStatus.Instance.Systems[SystemTypes.Comms].Cast<HudOverrideSystemType>();

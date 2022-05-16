@@ -1,17 +1,91 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using BepInEx;
 using BepInEx.IL2CPP;
 using HarmonyLib;
-using Reactor;
 using UnhollowerRuntimeLib;
 using UnityEngine;
-
+using Reactor;
+using UnhollowerBaseLib;
+using TownOfUs.Roles;
 
 namespace TownOfUs.Patches
 {
+    [HarmonyPatch(typeof(IntroCutscene._ShowRole_d__24), nameof(IntroCutscene._ShowRole_d__24.MoveNext))]
+    public static class SubmergedStartPatch
+    {
+        public static void Postfix(IntroCutscene._ShowRole_d__24 __instance)
+        {
+            if (SubmergedCompatibility.isSubmerged())
+            {
+                Coroutines.Start(SubmergedCompatibility.waitStart(SubmergedCompatibility.resetTimers));
+            }
+        }
+    }
+    [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
+    public static class SubmergedHudPatch
+    {
+        public static void Postfix(HudManager __instance)
+        {
+            if (SubmergedCompatibility.isSubmerged())
+            {
+                if (PlayerControl.LocalPlayer.Data.IsDead && PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
+                {
+                    if (!Role.GetRole<Haunter>(PlayerControl.LocalPlayer).Caught) __instance.MapButton.transform.parent.Find(__instance.MapButton.name + "(Clone)").gameObject.SetActive(false);
+                    else __instance.MapButton.transform.parent.Find(__instance.MapButton.name + "(Clone)").gameObject.SetActive(true);
+                }
+                if (PlayerControl.LocalPlayer.Data.IsDead && PlayerControl.LocalPlayer.Is(RoleEnum.Phantom))
+                {
+                    if (!Role.GetRole<Phantom>(PlayerControl.LocalPlayer).Caught) __instance.MapButton.transform.parent.Find(__instance.MapButton.name + "(Clone)").gameObject.SetActive(false);
+                    else  __instance.MapButton.transform.parent.Find(__instance.MapButton.name + "(Clone)").gameObject.SetActive(true);
+                }
+            }
+                
+        }
+    }
+
+    [HarmonyPatch(typeof(PlayerPhysics), nameof(PlayerPhysics.HandleAnimation))]
+    [HarmonyPriority(Priority.Low)] //make sure it occurs after other patches
+    public static class SubmergedPhysicsPatch
+    {
+        public static void Postfix(PlayerPhysics __instance)
+        {
+            if (SubmergedCompatibility.Loaded && __instance.myPlayer.Data.IsDead)
+            {
+                if (__instance.myPlayer.Is(RoleEnum.Phantom))
+                {
+                    if (!Role.GetRole<Phantom>(PlayerControl.LocalPlayer).Caught)
+                    {
+                        SubmergedCompatibility.MoveDeadPlayerElevator(__instance.myPlayer);
+                        Transform transform = __instance.transform;
+                        Vector3 position = transform.position;
+                        position.z = 0f;
+                        transform.position = position;
+                        __instance.myPlayer.gameObject.layer = 8;
+                    }
+                }
+                if (__instance.myPlayer.Is(RoleEnum.Haunter))
+                {
+                    if (!Role.GetRole<Haunter>(PlayerControl.LocalPlayer).Caught)
+                    {
+                        SubmergedCompatibility.MoveDeadPlayerElevator(__instance.myPlayer);
+                        Transform transform = __instance.transform;
+                        Vector3 position = transform.position;
+                        position.z = 0f;
+                        transform.position = position;
+                        __instance.myPlayer.gameObject.layer = 8;
+                    }
+                }
+            }
+
+            
+        }
+    }
+
+
 
     public static class SubmergedCompatibility
     {
@@ -94,6 +168,17 @@ namespace TownOfUs.Patches
         private static Type SubmergedExileController;
         private static MethodInfo SubmergedExileWrapUpMethod;
 
+        private static Type SubmarineElevator;
+        private static MethodInfo GetInElevator;
+        private static MethodInfo GetMovementStageFromTime;
+        private static FieldInfo getSubElevatorSystem;
+
+        private static Type SubmarineElevatorSystem;
+        private static FieldInfo UpperDeckIsTargetFloor; 
+
+        private static FieldInfo SubmergedInstance;
+        private static FieldInfo SubmergedElevators;
+
         public static void Initialize()
         {
             Loaded = IL2CPPChainloader.Instance.Plugins.TryGetValue(SUBMERGED_GUID, out PluginInfo plugin);
@@ -109,6 +194,9 @@ namespace TownOfUs.Patches
                 .Invoke(null, Array.Empty<object>());
 
             SubmarineStatusType = Types.First(t => t.Name == "SubmarineStatus");
+            SubmergedInstance = AccessTools.Field(SubmarineStatusType, "Instance");
+            SubmergedElevators = AccessTools.Field(SubmarineStatusType, "Elevators");
+
             CalculateLightRadiusMethod = AccessTools.Method(SubmarineStatusType, "CalculateLightRadius");
 
             TaskIsEmergencyPatchType = Types.First(t => t.Name == "PlayerTask_TaskIsEmergency_Patch");
@@ -130,19 +218,138 @@ namespace TownOfUs.Patches
             RepairDamageMethod = AccessTools.Method(SubmarineOxygenSystemType, "RepairDamage");
             SubmergedExileController = Types.First(t => t.Name == "SubmergedExileController");
             SubmergedExileWrapUpMethod = AccessTools.Method(SubmergedExileController, "WrapUpAndSpawn");
-            
+
+            SubmarineElevator = Types.First(t => t.Name == "SubmarineElevator");
+            GetInElevator = AccessTools.Method(SubmarineElevator, "GetInElevator");
+            GetMovementStageFromTime = AccessTools.Method(SubmarineElevator, "GetMovementStageFromTime");
+            getSubElevatorSystem = AccessTools.Field(SubmarineElevator, "System");
+
+            SubmarineElevatorSystem = Types.First(t => t.Name == "SubmarineElevatorSystem");
+            UpperDeckIsTargetFloor = AccessTools.Field(SubmarineElevatorSystem, "UpperDeckIsTargetFloor");
             //I tried patching normally but it would never work
             Harmony _harmony = new Harmony("tou.submerged.patch");
-            var mPostfix = SymbolExtensions.GetMethodInfo(() => ExileRoleChangePostfix());
-            _harmony.Patch(SubmergedExileWrapUpMethod, null, new HarmonyMethod(mPostfix));
+            var exilerolechangePostfix = SymbolExtensions.GetMethodInfo(() => ExileRoleChangePostfix());
+            _harmony.Patch(SubmergedExileWrapUpMethod, null, new HarmonyMethod(exilerolechangePostfix));
         }
 
+        public static void CheckOutOfBoundsElevator(PlayerControl player)
+        {
+            if (!Loaded) return;
+            if (!isSubmerged()) return;
+
+            Tuple<bool, object> elevator = GetPlayerElevator(player);
+            if (!elevator.Item1) return;
+            bool CurrentFloor = (bool)UpperDeckIsTargetFloor.GetValue(getSubElevatorSystem.GetValue(elevator.Item2)); //true is top, false is bottom
+            bool PlayerFloor = player.transform.position.y > -7f; //true is top, false is bottom
+            
+            if (CurrentFloor != PlayerFloor)
+            {
+                ChangeFloor(CurrentFloor);
+            }
+        }
+
+        public static void MoveDeadPlayerElevator(PlayerControl player)
+        {
+            if (!isSubmerged()) return;
+            Tuple<bool, object> elevator = GetPlayerElevator(player);
+            if (!elevator.Item1) return;
+
+            int MovementStage = (int)GetMovementStageFromTime.Invoke(elevator.Item2, null);
+            if (MovementStage >= 5)
+            {
+                //Fade to clear
+                bool topfloortarget = (bool)UpperDeckIsTargetFloor.GetValue(getSubElevatorSystem.GetValue(elevator.Item2)); //true is top, false is bottom
+                bool topintendedtarget = player.transform.position.y > -7f; //true is top, false is bottom
+                if (topfloortarget != topintendedtarget)
+                {
+                    ChangeFloor(!topintendedtarget);
+                }
+            }
+        }
+
+        public static Tuple<bool, object> GetPlayerElevator(PlayerControl player)
+        {
+            if (!isSubmerged()) return Tuple.Create(false, (object)null);
+            IList elevatorlist = Utils.createList(SubmarineElevator);
+            elevatorlist = (IList)SubmergedElevators.GetValue(SubmergedInstance.GetValue(null));
+            foreach (object elevator in elevatorlist)
+            {
+                if ((bool)GetInElevator.Invoke(elevator, new object[] { player })) return Tuple.Create(true, elevator);
+            }
+
+            return Tuple.Create(false, (object)null);
+        }
 
         public static void ExileRoleChangePostfix()
         {
             NeutralRoles.PhantomMod.SetPhantom.ExileControllerPostfix(ExileController.Instance);
             ImpostorRoles.TraitorMod.SetTraitor.ExileControllerPostfix(ExileController.Instance);
             CrewmateRoles.HaunterMod.SetHaunter.ExileControllerPostfix(ExileController.Instance);
+
+            Coroutines.Start(waitMeeting(resetTimers));
+            Coroutines.Start(waitMeeting(GhostRoleBegin));
+            
+        }
+
+        public static IEnumerator waitStart(Action next)
+        {
+            while (DestroyableSingleton<HudManager>.Instance.UICamera.transform.Find("SpawnInMinigame(Clone)") == null)
+            {
+                yield return null;
+            }
+            yield return new WaitForSeconds(0.5f);
+            while (DestroyableSingleton<HudManager>.Instance.UICamera.transform.Find("SpawnInMinigame(Clone)") != null)
+            {
+                yield return null;
+            }
+            next();
+        }
+        public static IEnumerator waitMeeting(Action next)
+        {
+            while (!PlayerControl.LocalPlayer.moveable)
+            {
+                yield return null;
+            }
+            yield return new WaitForSeconds(0.5f);
+            while (DestroyableSingleton<HudManager>.Instance.PlayerCam.transform.Find("SpawnInMinigame(Clone)") != null)
+            {
+                yield return null;
+            }
+            next();
+        }
+
+        public static void resetTimers()
+        {
+            if (PlayerControl.LocalPlayer.Data.IsDead) return;
+            Utils.ResetCustomTimers();
+        }
+
+
+        public static void GhostRoleBegin()
+        {
+            if (!PlayerControl.LocalPlayer.Data.IsDead) return;
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
+            {
+                if (!Role.GetRole<Haunter>(PlayerControl.LocalPlayer).Caught)
+                {
+                    var startingVent =
+                        ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
+                    ChangeFloor(startingVent.transform.position.y > -7f);
+                    PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
+                    PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
+                }
+            }
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Phantom))
+            {
+                if (!Role.GetRole<Phantom>(PlayerControl.LocalPlayer).Caught)
+                {
+                    var startingVent =
+                        ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
+                    ChangeFloor(startingVent.transform.position.y > -7f);
+                    PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
+                    PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
+                }
+            }
         }
 
 
