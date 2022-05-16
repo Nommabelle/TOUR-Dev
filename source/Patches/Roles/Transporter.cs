@@ -281,11 +281,15 @@ namespace TownOfUs.Roles
                     if (PlayerControl.LocalPlayer.PlayerId == TP1.PlayerId)
                     {
                         SubmergedCompatibility.ChangeFloor(TP1.GetTruePosition().y > -7);
+                        SubmergedCompatibility.CheckOutOfBoundsElevator(PlayerControl.LocalPlayer);
                     }
                     if (PlayerControl.LocalPlayer.PlayerId == TP2.PlayerId)
                     {
                         SubmergedCompatibility.ChangeFloor(TP2.GetTruePosition().y > -7);
+                        SubmergedCompatibility.CheckOutOfBoundsElevator(PlayerControl.LocalPlayer);
                     }
+
+                    
                 }
                 
             }
@@ -302,7 +306,9 @@ namespace TownOfUs.Roles
                     if (PlayerControl.LocalPlayer.PlayerId == TP2.PlayerId)
                     {
                         SubmergedCompatibility.ChangeFloor(TP2.GetTruePosition().y > -7);
+                        SubmergedCompatibility.CheckOutOfBoundsElevator(PlayerControl.LocalPlayer);
                     }
+
                 }
             }
             else if (Player1Body == null && Player2Body != null)
@@ -317,6 +323,7 @@ namespace TownOfUs.Roles
                     if (PlayerControl.LocalPlayer.PlayerId == TP1.PlayerId)
                     {
                         SubmergedCompatibility.ChangeFloor(TP1.GetTruePosition().y > -7);
+                        SubmergedCompatibility.CheckOutOfBoundsElevator(PlayerControl.LocalPlayer);
                     }
                 }
             }

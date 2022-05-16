@@ -511,10 +511,97 @@ namespace TownOfUs
                 }
             }
         }
-      
+
+        //Submerged utils
         public static object TryCast(this Il2CppObjectBase self, Type type)
         {
             return AccessTools.Method(self.GetType(), nameof(Il2CppObjectBase.TryCast)).MakeGenericMethod(type).Invoke(self, Array.Empty<object>());
+        }
+        public static IList createList(Type myType)
+        {
+            Type genericListType = typeof(List<>).MakeGenericType(myType);
+            return (IList)Activator.CreateInstance(genericListType);
+        }
+
+        public static void ResetCustomTimers()
+        {
+            #region CrewmateRoles
+            foreach (Medium role in Role.GetRoles(RoleEnum.Medium))
+            {
+                role.LastMediated = DateTime.UtcNow;
+            }
+            foreach (Seer role in Role.GetRoles(RoleEnum.Seer))
+            {
+                role.LastInvestigated = DateTime.UtcNow;
+            }
+            foreach (Sheriff role in Role.GetRoles(RoleEnum.Sheriff))
+            {
+                role.LastKilled = DateTime.UtcNow;
+            }
+            foreach (TimeLord role in Role.GetRoles(RoleEnum.TimeLord))
+            {
+                role.StartRewind = DateTime.UtcNow.AddSeconds(-10.0f);
+                role.FinishRewind = DateTime.UtcNow;
+            }
+            foreach (Tracker role in Role.GetRoles(RoleEnum.Tracker))
+            {
+                role.LastTracked = DateTime.UtcNow;
+            }
+            foreach (Transporter role in Role.GetRoles(RoleEnum.Transporter))
+            {
+                role.LastTransported = DateTime.UtcNow;
+            }
+            foreach (Veteran role in Role.GetRoles(RoleEnum.Veteran))
+            {
+                role.LastAlerted = DateTime.UtcNow;
+            }
+            #endregion
+            #region NeutralRoles
+            foreach (Arsonist role in Role.GetRoles(RoleEnum.Arsonist))
+            {
+                role.LastDoused = DateTime.UtcNow;
+            }
+            foreach (Glitch role in Role.GetRoles(RoleEnum.Glitch))
+            {
+                role.LastHack = DateTime.UtcNow;
+                role.LastKill = DateTime.UtcNow;
+                role.LastMimic = DateTime.UtcNow;
+            }
+            foreach (Juggernaut role in Role.GetRoles(RoleEnum.Juggernaut))
+            {
+                role.LastKill = DateTime.UtcNow;
+            }
+            #endregion
+            #region ImposterRoles
+            foreach (Blackmailer role in Role.GetRoles(RoleEnum.Blackmailer))
+            {
+                role.LastBlackmailed = DateTime.UtcNow;
+            }
+            foreach (Grenadier role in Role.GetRoles(RoleEnum.Grenadier))
+            {
+                role.LastFlashed = DateTime.UtcNow;
+            }
+            foreach (Miner role in Role.GetRoles(RoleEnum.Miner))
+            {
+                role.LastMined = DateTime.UtcNow;
+            }
+            foreach (Morphling role in Role.GetRoles(RoleEnum.Morphling))
+            {
+                role.LastMorphed = DateTime.UtcNow;
+            }
+            foreach (Poisoner role in Role.GetRoles(RoleEnum.Poisoner))
+            {
+                role.LastPoisoned = DateTime.UtcNow;
+            }
+            foreach (Swooper role in Role.GetRoles(RoleEnum.Swooper))
+            {
+                role.LastSwooped = DateTime.UtcNow;
+            }
+            foreach (Undertaker role in Role.GetRoles(RoleEnum.Undertaker))
+            {
+                role.LastDragged = DateTime.UtcNow;
+            }
+            #endregion
         }
     }
 }

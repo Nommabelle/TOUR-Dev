@@ -3,7 +3,6 @@ using System.Linq;
 using HarmonyLib;
 using Hazel;
 using Reactor.Extensions;
-using TownOfUs.Extensions;
 using TownOfUs.Patches;
 using TownOfUs.Roles;
 using UnityEngine;
@@ -27,7 +26,7 @@ namespace TownOfUs.ImpostorRoles.MinerMod
                 if (!__instance.isActiveAndEnabled) return false;
                 if (!role.CanPlace) return false;
                 if (role.MineTimer() != 0) return false;
-
+                if (SubmergedCompatibility.GetPlayerElevator(PlayerControl.LocalPlayer).Item1) return false;
                 var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                     (byte) CustomRPC.Mine, SendOption.Reliable, -1);
                 var position = PlayerControl.LocalPlayer.transform.position;
@@ -47,6 +46,7 @@ namespace TownOfUs.ImpostorRoles.MinerMod
 
         public static void SpawnVent(int ventId, Miner role, Vector2 position, float zAxis)
         {
+            
             var ventPrefab = Object.FindObjectOfType<Vent>();
             var vent = Object.Instantiate(ventPrefab, ventPrefab.transform.parent);
             
@@ -77,7 +77,7 @@ namespace TownOfUs.ImpostorRoles.MinerMod
             if (SubmergedCompatibility.isSubmerged())
             {
                 vent.gameObject.layer = 12;
-                vent.gameObject.AddSubmergedComponent(SubmergedCompatibility.Classes.ElevatorMover); // Should Just Block Elevator placing but havent figured that out just yet
+                vent.gameObject.AddSubmergedComponent(SubmergedCompatibility.Classes.ElevatorMover); // just in case elevator vent is not blocked
                 if (vent.gameObject.transform.position.y > -7) vent.gameObject.transform.position = new Vector3(vent.gameObject.transform.position.x, vent.gameObject.transform.position.y, 0.03f);
                 else
                 {
