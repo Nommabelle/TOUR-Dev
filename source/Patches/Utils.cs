@@ -21,6 +21,7 @@ namespace TownOfUs
     public static class Utils
     {
         internal static bool ShowDeadBodies = false;
+        private static GameData.PlayerInfo voteTarget = null;
 
         public static Dictionary<PlayerControl, Color> oldColors = new Dictionary<PlayerControl, Color>();
 
@@ -347,7 +348,7 @@ namespace TownOfUs
                 {
                     var glitch = Role.GetRole<Glitch>(killer);
                     glitch.LastKill = DateTime.UtcNow.AddSeconds(2 * CustomGameOptions.GlitchKillCooldown);
-                    glitch.Player.SetKillTimer(CustomGameOptions.GlitchKillCooldown * 3);
+                    glitch.Player.SetKillTimer(CustomGameOptions.GlitchKillCooldown * CustomGameOptions.DiseasedMultiplier);
                     return;
                 }
 
@@ -355,13 +356,13 @@ namespace TownOfUs
                 {
                     var juggernaut = Role.GetRole<Juggernaut>(killer);
                     juggernaut.LastKill = DateTime.UtcNow.AddSeconds(2 * (CustomGameOptions.GlitchKillCooldown + 5.0f - 5.0f * juggernaut.JuggKills));
-                    juggernaut.Player.SetKillTimer((CustomGameOptions.GlitchKillCooldown + 5.0f - 5.0f * juggernaut.JuggKills) * 3);
+                    juggernaut.Player.SetKillTimer((CustomGameOptions.GlitchKillCooldown + 5.0f - 5.0f * juggernaut.JuggKills) * CustomGameOptions.DiseasedMultiplier);
                     return;
                 }
 
                 if (target.Is(ModifierEnum.Diseased) && killer.Data.IsImpostor())
                 {
-                    killer.SetKillTimer(PlayerControl.GameOptions.KillCooldown * 3);
+                    killer.SetKillTimer(PlayerControl.GameOptions.KillCooldown * CustomGameOptions.DiseasedMultiplier);
                     return;
                 }
 
@@ -388,18 +389,51 @@ namespace TownOfUs
 
         public static void BaitReport(PlayerControl killer, PlayerControl target)
         {
+            Coroutines.Start(BaitReportDelay(killer, target));
+            
+        }
+
+        public static IEnumerator BaitReportDelay(PlayerControl killer, PlayerControl target)
+        {
+            yield return new WaitForSeconds(CustomGameOptions.BaitDelay + 0.01f);
+            var bodies = UnityEngine.Object.FindObjectsOfType<DeadBody>();
             if (AmongUsClient.Instance.AmHost)
             {
-                killer.ReportDeadBody(target.Data);
+                foreach (var body in bodies)
+                {
+                    try
+                    {
+                        if (body.ParentId == target.PlayerId) { killer.ReportDeadBody(target.Data); break; }
+                    }
+                    catch
+                    {
+                    }
+                }
+                
             }
             else
             {
-                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.BaitReport, SendOption.Reliable, -1);
-                writer.Write(killer.PlayerId);
-                writer.Write(target.PlayerId);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                foreach (var body in bodies)
+                {
+                    try
+                    {
+                        if (body.ParentId == target.PlayerId)
+                        {
+                            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                                (byte)CustomRPC.BaitReport, SendOption.Reliable, -1);
+                            writer.Write(killer.PlayerId);
+                            writer.Write(target.PlayerId);
+                            AmongUsClient.Instance.FinishRpcImmediately(writer);
+                            break;
+                        }
+                    }
+                    catch
+                    {
+                    }
+                }
+                
             }
+            
         }
 
         public static IEnumerator FlashCoroutine(Color color, float waitfor = 1f, float alpha = 0.3f)
@@ -457,6 +491,23 @@ namespace TownOfUs
                     //Allows multiple medbay scans at once
                     __instance.medscan.CurrentUser = PlayerControl.LocalPlayer.PlayerId;
                     __instance.medscan.UsersList.Clear();
+                }
+            }
+        }
+      
+        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CoStartMeeting))]
+        class StartMeetingPatch {
+            public static void Prefix(PlayerControl __instance, [HarmonyArgument(0)]GameData.PlayerInfo meetingTarget) {
+                voteTarget = meetingTarget;
+            }
+        }
+
+        [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Update))]
+        class MeetingHudUpdatePatch {
+            static void Postfix(MeetingHud __instance) {
+                // Deactivate skip Button if skipping on emergency meetings is disabled 
+                if ((voteTarget == null && CustomGameOptions.SkipButtonDisable == DisableSkipButtonMeetings.Emergency) || (CustomGameOptions.SkipButtonDisable == DisableSkipButtonMeetings.Always)) {
+                    __instance.SkipVoteButton.gameObject.SetActive(false);
                 }
             }
         }
