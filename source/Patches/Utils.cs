@@ -557,6 +557,14 @@ namespace TownOfUs
             }
             #endregion
             #region NeutralRoles
+            foreach (Survivor role in Role.GetRoles(RoleEnum.Survivor))
+            {
+                role.LastVested = DateTime.UtcNow;
+            }
+            foreach (GuardianAngel role in Role.GetRoles(RoleEnum.GuardianAngel))
+            {
+                role.LastProtected = DateTime.UtcNow;
+            }
             foreach (Arsonist role in Role.GetRoles(RoleEnum.Arsonist))
             {
                 role.LastDoused = DateTime.UtcNow;
