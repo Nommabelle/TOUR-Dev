@@ -25,6 +25,9 @@ namespace TownOfUs.Patches
             }
         }
     }
+
+
+
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
     public static class SubmergedHudPatch
     {
@@ -55,11 +58,12 @@ namespace TownOfUs.Patches
         {
             if (SubmergedCompatibility.Loaded && __instance.myPlayer.Data.IsDead)
             {
-                if (__instance.myPlayer.Is(RoleEnum.Phantom))
+                PlayerControl player = __instance.myPlayer;
+                if (player.Is(RoleEnum.Phantom))
                 {
-                    if (!Role.GetRole<Phantom>(PlayerControl.LocalPlayer).Caught)
+                    if (!Role.GetRole<Phantom>(player).Caught)
                     {
-                        SubmergedCompatibility.MoveDeadPlayerElevator(__instance.myPlayer);
+                        if (player.AmOwner) SubmergedCompatibility.MoveDeadPlayerElevator(player);
                         Transform transform = __instance.transform;
                         Vector3 position = transform.position;
                         position.z = 0f;
@@ -67,11 +71,11 @@ namespace TownOfUs.Patches
                         __instance.myPlayer.gameObject.layer = 8;
                     }
                 }
-                if (__instance.myPlayer.Is(RoleEnum.Haunter))
+                if (player.Is(RoleEnum.Haunter))
                 {
-                    if (!Role.GetRole<Haunter>(PlayerControl.LocalPlayer).Caught)
+                    if (!Role.GetRole<Haunter>(player).Caught)
                     {
-                        SubmergedCompatibility.MoveDeadPlayerElevator(__instance.myPlayer);
+                        if (player.AmOwner) SubmergedCompatibility.MoveDeadPlayerElevator(player);
                         Transform transform = __instance.transform;
                         Vector3 position = transform.position;
                         position.z = 0f;
@@ -80,11 +84,44 @@ namespace TownOfUs.Patches
                     }
                 }
             }
-
-            
         }
     }
-
+    [HarmonyPatch(typeof(PlayerPhysics), nameof(PlayerPhysics.LateUpdate))]
+    [HarmonyPriority(Priority.Low)] //make sure it occurs after other patches
+    public static class SubmergedLateUpdatePhysicsPatch
+    {
+        public static void Postfix(PlayerPhysics __instance)
+        {
+            if (SubmergedCompatibility.Loaded && __instance.myPlayer.Data.IsDead)
+            {
+                PlayerControl player = __instance.myPlayer;
+                if (player.Is(RoleEnum.Phantom))
+                {
+                    if (!Role.GetRole<Phantom>(player).Caught)
+                    {
+                        if (player.AmOwner) SubmergedCompatibility.MoveDeadPlayerElevator(player);
+                        Transform transform = __instance.transform;
+                        Vector3 position = transform.position;
+                        position.z = 0;
+                        transform.position = position;
+                        __instance.myPlayer.gameObject.layer = 8;
+                    }
+                }
+                if (player.Is(RoleEnum.Haunter))
+                {
+                    if (!Role.GetRole<Haunter>(player).Caught)
+                    {
+                        if (player.AmOwner) SubmergedCompatibility.MoveDeadPlayerElevator(player);
+                        Transform transform = __instance.transform;
+                        Vector3 position = transform.position;
+                        position.z = 0;
+                        transform.position = position;
+                        __instance.myPlayer.gameObject.layer = 8;
+                    }
+                }
+            }
+        }
+    }
 
 
     public static class SubmergedCompatibility
@@ -314,7 +351,7 @@ namespace TownOfUs.Patches
             while (DestroyableSingleton<HudManager>.Instance.PlayerCam.transform.Find("SpawnInMinigame(Clone)") != null)
             {
                 yield return null;
-            }
+            }       
             next();
         }
 
