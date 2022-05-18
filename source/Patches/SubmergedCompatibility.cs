@@ -334,6 +334,11 @@ namespace TownOfUs.Patches
                 {
                     var startingVent =
                         ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
+                    while (startingVent == ShipStatus.Instance.AllVents[0] || startingVent == ShipStatus.Instance.AllVents[14])
+                    {
+                        startingVent =
+                            ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
+                    }
                     ChangeFloor(startingVent.transform.position.y > -7f);
                     PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
                     PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
@@ -345,6 +350,11 @@ namespace TownOfUs.Patches
                 {
                     var startingVent =
                         ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
+                    while (startingVent == ShipStatus.Instance.AllVents[0] || startingVent == ShipStatus.Instance.AllVents[14])
+                    {
+                        startingVent =
+                            ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
+                    }
                     ChangeFloor(startingVent.transform.position.y > -7f);
                     PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
                     PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
