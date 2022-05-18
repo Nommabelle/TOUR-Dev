@@ -66,7 +66,19 @@ namespace TownOfUs.Patches
                         if (player.AmOwner) SubmergedCompatibility.MoveDeadPlayerElevator(player);
                         Transform transform = __instance.transform;
                         Vector3 position = transform.position;
-                        position.z = 0f;
+                        if (SubmergedCompatibility.isSubmerged())
+                        {
+                            if (position.y > -7f)
+                            {
+                                position.z = 0.0208f;
+                            }
+                            else
+                            {
+                                position.z = -0.0208f;
+                            }
+                        }
+                        else position.z = 0f;
+                        
                         transform.position = position;
                         __instance.myPlayer.gameObject.layer = 8;
                     }
@@ -78,7 +90,18 @@ namespace TownOfUs.Patches
                         if (player.AmOwner) SubmergedCompatibility.MoveDeadPlayerElevator(player);
                         Transform transform = __instance.transform;
                         Vector3 position = transform.position;
-                        position.z = 0f;
+                        if (SubmergedCompatibility.isSubmerged())
+                        {
+                            if (position.y > -7f)
+                            {
+                                position.z = 0.0208f;
+                            }
+                            else
+                            {
+                                position.z = -0.0208f;
+                            }
+                        }
+                        else position.z = 0f;
                         transform.position = position;
                         __instance.myPlayer.gameObject.layer = 8;
                     }
@@ -102,7 +125,19 @@ namespace TownOfUs.Patches
                         if (player.AmOwner) SubmergedCompatibility.MoveDeadPlayerElevator(player);
                         Transform transform = __instance.transform;
                         Vector3 position = transform.position;
-                        position.z = 0;
+                        if (SubmergedCompatibility.isSubmerged())
+                        {
+                            if (position.y > -7f)
+                            {
+                                position.z = 0.0208f;
+                            }
+                            else
+                            {
+                                position.z = -0.0208f;
+                            }
+                        }
+                        else position.z = 0f;
+
                         transform.position = position;
                         __instance.myPlayer.gameObject.layer = 8;
                     }
@@ -114,7 +149,19 @@ namespace TownOfUs.Patches
                         if (player.AmOwner) SubmergedCompatibility.MoveDeadPlayerElevator(player);
                         Transform transform = __instance.transform;
                         Vector3 position = transform.position;
-                        position.z = 0;
+                        if (SubmergedCompatibility.isSubmerged())
+                        {
+                            if (position.y > -7f)
+                            {
+                                position.z = 0.0208f;
+                            }
+                            else
+                            {
+                                position.z = -0.0208f;
+                            }
+                        }
+                        else position.z = 0f;
+
                         transform.position = position;
                         __instance.myPlayer.gameObject.layer = 8;
                     }
