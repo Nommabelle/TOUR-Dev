@@ -947,6 +947,10 @@ namespace TownOfUs
                     case CustomRPC.SubmergedFixOxygen:
                         Patches.SubmergedCompatibility.RepairOxygen();
                         break;
+                    case CustomRPC.SetPos:
+                        var setplayer = Utils.PlayerById(reader.ReadByte());
+                        setplayer.transform.position = new Vector3(reader.ReadSingle(), reader.ReadSingle(), setplayer.transform.position.z);
+                        break;
                 }
             }
         }
