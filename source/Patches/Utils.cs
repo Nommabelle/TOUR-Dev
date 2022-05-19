@@ -14,6 +14,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using PerformKill = TownOfUs.ImpostorRoles.UnderdogMod.PerformKill;
 using Reactor;
+using Random = UnityEngine.Random;
 
 namespace TownOfUs
 {
@@ -390,13 +391,16 @@ namespace TownOfUs
         public static void BaitReport(PlayerControl killer, PlayerControl target)
         {
             Coroutines.Start(BaitReportDelay(killer, target));
-            
         }
 
         public static IEnumerator BaitReportDelay(PlayerControl killer, PlayerControl target)
         {
-            yield return new WaitForSeconds(CustomGameOptions.BaitDelay + 0.01f);
-            var bodies = UnityEngine.Object.FindObjectsOfType<DeadBody>();
+            var extraDelay = Random.RandomRangeInt(0, (int) (100 * (CustomGameOptions.BaitMaxDelay - CustomGameOptions.BaitMinDelay) + 1));
+            if (CustomGameOptions.BaitMaxDelay <= CustomGameOptions.BaitMinDelay)
+                yield return new WaitForSeconds(CustomGameOptions.BaitMaxDelay + 0.01f);
+            else
+                yield return new WaitForSeconds(CustomGameOptions.BaitMinDelay + 0.01f + extraDelay/100f);
+            var bodies = Object.FindObjectsOfType<DeadBody>();
             if (AmongUsClient.Instance.AmHost)
             {
                 foreach (var body in bodies)
