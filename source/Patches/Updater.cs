@@ -191,8 +191,7 @@ namespace TownOfUs {
                         hasTOUUpdate = true;
                     }
                 } else if (updateType == "Submerged") {
-                    //diff = SubmergedCompatibility.Version.CompareTo(ver);
-                    diff = 1; //TODO GET SUBMERGED VERSION CORRECTLY - UNCOMMENT LINE ABOVE WHEN SUBMERGED COMPATIBILITY IS COMPLETED (Obviously, untested!!)
+                    diff = Patches.SubmergedCompatibility.Version.CompareTo(SemanticVersioning.Version.Parse(tagname.Replace("v", "")));;
                     if (diff < 0) { // Submerged update required
                         hasSubmergedUpdate = true;
                     }
