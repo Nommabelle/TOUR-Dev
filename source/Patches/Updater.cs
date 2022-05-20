@@ -14,72 +14,135 @@ using Reactor;
 namespace TownOfUs {
     [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
     public class ModUpdaterButton {
-        private static Sprite Sprite => TownOfUs.UpdateButton;
+        private static Sprite TOUUpdateSprite => TownOfUs.UpdateTOUButton;
+        private static Sprite SubmergedUpdateSprite => TownOfUs.UpdateSubmergedButton;
         private static void Prefix(MainMenuManager __instance) {
-            //Check if there's an update
+            //Check if there's a ToU update
             ModUpdater.LaunchUpdater();
-            if (!ModUpdater.hasUpdate) return;
+            if (ModUpdater.hasTOUUpdate) {
+                //If there's an update, create and show the update button
+                var template = GameObject.Find("ExitGameButton");
+                if (template != null) {
 
-            //If there's an update, create and show the update button
-            var template = GameObject.Find("ExitGameButton");
-            if (template == null) return;
+                    var touButton = UnityEngine.Object.Instantiate(template, null);
+                    touButton.transform.localPosition = new Vector3(touButton.transform.localPosition.x, touButton.transform.localPosition.y + 0.6f, touButton.transform.localPosition.z);
 
-            var button = UnityEngine.Object.Instantiate(template, null);
-            button.transform.localPosition = new Vector3(button.transform.localPosition.x, button.transform.localPosition.y + 0.6f, button.transform.localPosition.z);
+                    PassiveButton passiveTOUButton = touButton.GetComponent<PassiveButton>();
+                    SpriteRenderer touButtonSprite = touButton.GetComponent<SpriteRenderer>();
+                    passiveTOUButton.OnClick = new UnityEngine.UI.Button.ButtonClickedEvent();
 
-            PassiveButton passiveButton = button.GetComponent<PassiveButton>();
-            SpriteRenderer buttonSprite = button.GetComponent<SpriteRenderer>();
-            passiveButton.OnClick = new UnityEngine.UI.Button.ButtonClickedEvent();
+                    touButtonSprite.sprite = TOUUpdateSprite;
 
-            buttonSprite.sprite = Sprite;
+                    //Add onClick event to run the update on button click
+                    passiveTOUButton.OnClick.AddListener((Action) (() =>
+                    {
+                        ModUpdater.ExecuteUpdate("TOU");
+                        touButton.SetActive(false);
+                    }));
+                    
+                    //Set button text
+                    var text = touButton.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
+                    __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) => {
+                        text.SetText("");
+                    })));
 
-            //Add onClick event to run the update on button click
-            passiveButton.OnClick.AddListener((Action) (() =>
-            {
-                ModUpdater.ExecuteUpdate();
-                button.SetActive(false);
-            }));
-            
-            //Set button text
-            var text = button.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
-            __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) => {
-                text.SetText("");
-            })));
+                    //Set popup stuff
+                    TwitchManager man = DestroyableSingleton<TwitchManager>.Instance;
+                    ModUpdater.InfoPopup = UnityEngine.Object.Instantiate<GenericPopup>(man.TwitchPopup);
+                    ModUpdater.InfoPopup.TextAreaTMP.fontSize *= 0.7f;
+                    ModUpdater.InfoPopup.TextAreaTMP.enableAutoSizing = false;
+                }
+            }
+            if (ModUpdater.hasSubmergedUpdate) {
+                //If there's an update, create and show the update button
+                var template = GameObject.Find("ExitGameButton");
+                if (template != null) {
 
-            //Set popup stuff
-            TwitchManager man = DestroyableSingleton<TwitchManager>.Instance;
-            ModUpdater.InfoPopup = UnityEngine.Object.Instantiate<GenericPopup>(man.TwitchPopup);
-            ModUpdater.InfoPopup.TextAreaTMP.fontSize *= 0.7f;
-            ModUpdater.InfoPopup.TextAreaTMP.enableAutoSizing = false;
+                    var submergedButton = UnityEngine.Object.Instantiate(template, null);
+                    submergedButton.transform.localPosition = new Vector3(submergedButton.transform.localPosition.x, submergedButton.transform.localPosition.y + 1.2f, submergedButton.transform.localPosition.z);
 
+                    PassiveButton passiveSubmergedButton = submergedButton.GetComponent<PassiveButton>();
+                    SpriteRenderer submergedButtonSprite = submergedButton.GetComponent<SpriteRenderer>();
+                    passiveSubmergedButton.OnClick = new UnityEngine.UI.Button.ButtonClickedEvent();
+
+                    submergedButtonSprite.sprite = SubmergedUpdateSprite;
+
+                    //Add onClick event to run the update on button click
+                    passiveSubmergedButton.OnClick.AddListener((Action) (() =>
+                    {
+                        ModUpdater.ExecuteUpdate("Submerged");
+                        submergedButton.SetActive(false);
+                    }));
+                    
+                    //Set button text
+                    var text = submergedButton.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
+                    __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) => {
+                        text.SetText("");
+                    })));
+
+                    //Set popup stuff
+                    TwitchManager man = DestroyableSingleton<TwitchManager>.Instance;
+                    ModUpdater.InfoPopup = UnityEngine.Object.Instantiate<GenericPopup>(man.TwitchPopup);
+                    ModUpdater.InfoPopup.TextAreaTMP.fontSize *= 0.7f;
+                    ModUpdater.InfoPopup.TextAreaTMP.enableAutoSizing = false;
+                }
+            }
         }
     }
 
     public class ModUpdater { 
         public static bool running = false;
-        public static bool hasUpdate = false;
-        public static string updateURI = null;
-        private static Task updateTask = null;
+        public static bool hasTOUUpdate = false;
+        public static bool hasSubmergedUpdate = false;
+        public static string updateTOUURI = null;
+        public static string updateSubmergedURI = null;
+        private static Task updateTOUTask = null;
+        private static Task updateSubmergedTask = null;
         public static GenericPopup InfoPopup;
 
         public static void LaunchUpdater() {
             if (running) return;
             running = true;
-            checkForUpdate().GetAwaiter().GetResult();
+            checkForUpdate("TOU").GetAwaiter().GetResult();
+
+            //Only check of Submerged update if Submerged is already installed
+            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            System.UriBuilder uri = new System.UriBuilder(codeBase);
+            string submergedPath = System.Uri.UnescapeDataString(uri.Path.Replace("TownOfUs", "Submerged"));
+            if (File.Exists(submergedPath)) {
+                checkForUpdate("Submerged").GetAwaiter().GetResult();
+            }
+
             clearOldVersions();
         }
 
-        public static void ExecuteUpdate() {
-            string info = "Updating Town Of Us\nPlease wait...";
-            ModUpdater.InfoPopup.Show(info);
-            if (updateTask == null) {
-                if (updateURI != null) {
-                    updateTask = downloadUpdate();
+        public static void ExecuteUpdate(string updateType = "TOU") {
+            string info = "";
+            if (updateType == "TOU") {
+                info = "Updating Town Of Us\nPlease wait...";
+                ModUpdater.InfoPopup.Show(info);
+                if (updateTOUTask == null) {
+                    if (updateTOUURI != null) {
+                        updateTOUTask = downloadUpdate("TOU");
+                    } else {
+                        info = "Unable to auto-update\nPlease update manually";
+                    }
                 } else {
-                    info = "Unable to auto-update\nPlease update manually";
+                    info = "Update might already\nbe in progress";
                 }
-            } else {
-                info = "Update might already\nbe in progress";
+            }
+            else if (updateType == "Submerged") {
+                info = "Updating Submerged\nPlease wait...";
+                ModUpdater.InfoPopup.Show(info);
+                if (updateSubmergedTask == null) {
+                    if (updateSubmergedURI != null) {
+                        updateSubmergedTask = downloadUpdate("Submerged");
+                    } else {
+                        info = "Unable to auto-update\nPlease update manually";
+                    }
+                } else {
+                    info = "Update might already\nbe in progress";
+                }
             }
             ModUpdater.InfoPopup.StartCoroutine(Effects.Lerp(0.01f, new System.Action<float>((p) => { ModUpdater.setPopupText(info); })));
         }
@@ -95,13 +158,19 @@ namespace TownOfUs {
                 PluginSingleton<TownOfUs>.Instance.Log.LogMessage("Exception occured when clearing old versions:\n" + e);
             }
         }
-        public static async Task<bool> checkForUpdate() {
+        public static async Task<bool> checkForUpdate(string updateType = "TOU") {
             //Checks the github api for Town Of Us tags. Compares current version (from VersionString in TownOfUs.cs) to the latest tag version(on GitHub)
             try {
+                string githubURI = "";
+                if (updateType == "TOU") {
+                    githubURI = "https://api.github.com/repos/eDonnes124/Town-Of-Us-R/releases/latest";
+                } else if (updateType == "Submerged") {
+                    githubURI = "https://api.github.com/repos/SubmergedAmongUs/Submerged/releases/latest";
+                }
                 HttpClient http = new HttpClient();
                 http.DefaultRequestHeaders.Add("User-Agent", "TownOfUs Updater");
+                var response = await http.GetAsync(new System.Uri(githubURI), HttpCompletionOption.ResponseContentRead);
                 //var response = await http.GetAsync(new System.Uri("https://api.github.com/repos/ItsTheNumberH/Town-Of-H/releases/latest"), HttpCompletionOption.ResponseContentRead);
-                var response = await http.GetAsync(new System.Uri("https://api.github.com/repos/eDonnes124/Town-Of-Us-R/releases/latest"), HttpCompletionOption.ResponseContentRead);
                 if (response.StatusCode != HttpStatusCode.OK || response.Content == null) {
                     PluginSingleton<TownOfUs>.Instance.Log.LogMessage("Server returned no data: " + response.StatusCode.ToString());
                     return false;
@@ -113,37 +182,59 @@ namespace TownOfUs {
                 if (tagname == null) {
                     return false; // Something went wrong
                 }
-                // Check version
-                System.Version ver = System.Version.Parse(tagname.Replace("v", ""));
-                int diff = TownOfUs.Version.CompareTo(ver);
-                if (diff < 0) { // Update required
-                    hasUpdate = true;
-                    JToken assets = data["assets"];
-                    if (!assets.HasValues)
-                        return false;
 
-                    for (JToken current = assets.First; current != null; current = current.Next) {
-                        string browser_download_url = current["browser_download_url"]?.ToString();
-                        if (browser_download_url != null && current["content_type"] != null) {
-                            if (browser_download_url.EndsWith(".dll")) {
-                                updateURI = browser_download_url;
-                                return true;
+                int diff = 0;
+                System.Version ver = System.Version.Parse(tagname.Replace("v", ""));
+                if (updateType == "TOU") { //Check TOU version
+                    diff = TownOfUs.Version.CompareTo(ver);
+                    if (diff < 0) { // TOU update required
+                        hasTOUUpdate = true;
+                    }
+                } else if (updateType == "Submerged") {
+                    //diff = SubmergedCompatibility.Version.CompareTo(ver);
+                    diff = 1; //TODO GET SUBMERGED VERSION CORRECTLY - UNCOMMENT LINE ABOVE WHEN SUBMERGED COMPATIBILITY IS COMPLETED (Obviously, untested!!)
+                    if (diff < 0) { // Submerged update required
+                        hasSubmergedUpdate = true;
+                    }
+                }
+                JToken assets = data["assets"];
+                if (!assets.HasValues)
+                    return false;
+
+                for (JToken current = assets.First; current != null; current = current.Next) {
+                    string browser_download_url = current["browser_download_url"]?.ToString();
+                    if (browser_download_url != null && current["content_type"] != null) {
+                        if (browser_download_url.EndsWith(".dll")) {
+                            if (updateType == "TOU") {
+                                updateTOUURI = browser_download_url;
+                            } else if (updateType == "Submerged") {
+                                updateSubmergedURI = browser_download_url;
                             }
+                            return true;
                         }
                     }
-                }  
+                }
             } catch (System.Exception ex) {
                 PluginSingleton<TownOfUs>.Instance.Log.LogMessage(ex);
             }
             return false;
         }
 
-        public static async Task<bool> downloadUpdate() {
-            //Downloads the new TownOfUs dll from GitHub into the plugins folder
+        public static async Task<bool> downloadUpdate(string updateType = "TOU") {
+            //Downloads the new TownOfUs/Submerged dll from GitHub into the plugins folder
+            string downloadDLL= "";
+            string info = "";
+            if (updateType == "TOU") {
+                downloadDLL = updateTOUURI;
+                info = "Town Of Us\nupdated successfully.\nPlease RESTART the game.";
+            } else if (updateType == "Submerged") {
+                downloadDLL = updateSubmergedURI;
+                info = "Submerged\nupdated successfully.\nPlease RESTART the game.";
+            }
             try {
                 HttpClient http = new HttpClient();
                 http.DefaultRequestHeaders.Add("User-Agent", "TownOfUs Updater");
-                var response = await http.GetAsync(new System.Uri(updateURI), HttpCompletionOption.ResponseContentRead);
+                var response = await http.GetAsync(new System.Uri(downloadDLL), HttpCompletionOption.ResponseContentRead);
                 if (response.StatusCode != HttpStatusCode.OK || response.Content == null) {
                     PluginSingleton<TownOfUs>.Instance.Log.LogMessage("Server returned no data: " + response.StatusCode.ToString());
                     return false;
@@ -151,6 +242,9 @@ namespace TownOfUs {
                 string codeBase = Assembly.GetExecutingAssembly().CodeBase;
                 System.UriBuilder uri = new System.UriBuilder(codeBase);
                 string fullname = System.Uri.UnescapeDataString(uri.Path);
+                if (updateType == "Submerged") {
+                    fullname = fullname.Replace("TownOfUs", "Submerged"); //TODO A better solution than this to correctly name the dll files
+                }
                 if (File.Exists(fullname + ".old")) // Clear old file in case it wasnt;
                     File.Delete(fullname + ".old");
 
@@ -161,7 +255,7 @@ namespace TownOfUs {
                         responseStream.CopyTo(fileStream);
                     }
                 }
-                showPopup("Town Of Us\nupdated successfully.\nPlease RESTART the game.");
+                showPopup(info);
                 return true;
             } catch (System.Exception ex) {
                 PluginSingleton<TownOfUs>.Instance.Log.LogMessage(ex);
