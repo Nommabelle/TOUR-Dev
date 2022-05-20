@@ -70,7 +70,8 @@ namespace TownOfUs
 
         public static Sprite SettingsButtonSprite;
         public static Sprite ToUBanner;
-        public static Sprite UpdateButton;
+        public static Sprite UpdateTOUButton;
+        public static Sprite UpdateSubmergedButton;
 
         public static Sprite HorseEnabledImage;
         public static Sprite HorseDisabledImage;
@@ -134,7 +135,8 @@ namespace TownOfUs
 
             SettingsButtonSprite = CreateSprite("TownOfUs.Resources.SettingsButton.png");
             ToUBanner = CreateSprite("TownOfUs.Resources.TownOfUsBanner.png");
-            UpdateButton = CreateSprite("TownOfUs.Resources.Update Button.png");
+            UpdateTOUButton = CreateSprite("TownOfUs.Resources.UpdateToUButton.png");
+            UpdateSubmergedButton = CreateSprite("TownOfUs.Resources.UpdateSubmergedButton.png");
 
             HorseEnabledImage = CreateSprite("TownOfUs.Resources.HorseOn.png");
             HorseDisabledImage = CreateSprite("TownOfUs.Resources.HorseOff.png");
