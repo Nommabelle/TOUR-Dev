@@ -48,8 +48,14 @@ namespace TownOfUs.CrewmateRoles.MedicMod
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Medic)) return;
             if (PlayerControl.LocalPlayer.Data.IsDead) return;
             var medicrole = Role.GetRole<Medic>(PlayerControl.LocalPlayer);
-            for (var i = 0; i < __instance.playerStates.Length; i++)
-                GenButton(medicrole, i);
+            for (var i = 0; i < __instance.playerStates.Length; i++) {
+                try {
+                    if (!__instance.playerStates[i].AmDead) {
+                        GenButton(medicrole, i);
+                    }
+                } catch {
+                }
+            }
         }
     }
 }
