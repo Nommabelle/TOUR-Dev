@@ -305,7 +305,7 @@ namespace TownOfUs.Patches
             SubmergedExileWrapUpMethod = AccessTools.Method(SubmergedExileController, "WrapUpAndSpawn");
 
             SubmarineElevator = Types.First(t => t.Name == "SubmarineElevator");
-            GetInElevator = AccessTools.Method(SubmarineElevator, "GetInElevator");
+            GetInElevator = AccessTools.Method(SubmarineElevator, "GetInElevator", new Type[] { typeof(PlayerControl) });
             GetMovementStageFromTime = AccessTools.Method(SubmarineElevator, "GetMovementStageFromTime");
             getSubElevatorSystem = AccessTools.Field(SubmarineElevator, "System");
 
