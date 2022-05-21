@@ -671,7 +671,7 @@ namespace TownOfUs
                         ga2Role.Protect();
                         break;
                     case CustomRPC.Transport:
-                        Transporter.TransportPlayers(reader.ReadByte(), reader.ReadByte());
+                        Coroutines.Start(Transporter.TransportPlayers(reader.ReadByte(), reader.ReadByte()));
                         break;
                     case CustomRPC.SetUntransportable:
                         if (PlayerControl.LocalPlayer.Is(RoleEnum.Transporter))

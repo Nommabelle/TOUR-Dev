@@ -9,6 +9,7 @@ using Reactor.Extensions;
 using System.Collections.Generic;
 using TownOfUs.CrewmateRoles.TransporterMod;
 using TownOfUs.Patches;
+using System.Collections;
 
 namespace TownOfUs.Roles
 {
@@ -200,7 +201,7 @@ namespace TownOfUs.Roles
                                                     {
                                                         LastTransported = DateTime.UtcNow;
                                                         UsesLeft--;
-                                                        TransportPlayers(TransportPlayer1.PlayerId, TransportPlayer2.PlayerId);
+                                                        Coroutines.Start(TransportPlayers(TransportPlayer1.PlayerId, TransportPlayer2.PlayerId));
                                                         
                                                         var write = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                                                             (byte) CustomRPC.Transport, SendOption.Reliable, -1);
@@ -240,7 +241,7 @@ namespace TownOfUs.Roles
             }
         }
 
-        public static void TransportPlayers(byte player1, byte player2)
+        public static IEnumerator TransportPlayers(byte player1, byte player2)
         {
             var TP1 = Utils.PlayerById(player1);
             var TP2 = Utils.PlayerById(player2);
@@ -258,10 +259,18 @@ namespace TownOfUs.Roles
 
             if (TP1.inVent && PlayerControl.LocalPlayer.PlayerId == TP1.PlayerId)
             {
+                while (SubmergedCompatibility.getInTransition())
+                {
+                    yield return null;
+                }
                 TP1.MyPhysics.ExitAllVents();
             }
             if (TP2.inVent && PlayerControl.LocalPlayer.PlayerId == TP2.PlayerId)
             {
+                while (SubmergedCompatibility.getInTransition())
+                {
+                    yield return null;
+                }
                 TP2.MyPhysics.ExitAllVents();
             }
 
