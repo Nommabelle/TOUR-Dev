@@ -19,16 +19,14 @@ namespace TownOfUs.CrewmateRoles.MedicMod
 
         private static bool IsExempt(PlayerVoteArea voteArea)
         {
-            if (voteArea.AmDead) return true;
             var player = Utils.PlayerById(voteArea.TargetPlayerId);
-            if (
-                player == null ||
-                player.Data.IsDead ||
-                player.Data.Disconnected
-            ) return true;
-            var role = Role.GetRole(player);
-            return role != null && role.Criteria();
+            if (player == null || player.Data.Disconnected) {
+                return true;
+            } else {
+                return false;
+            }
         }
+
         public static void GenButton(Medic role, PlayerVoteArea voteArea)
         {
             
