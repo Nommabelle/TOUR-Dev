@@ -115,7 +115,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <summary> Changelog </summary>
   <details>
   <summary> v3.1.0 </summary>
-  <ul> <li>Submerged Compatibility mostly thanks to [MyDragonBreath](https://github.com/MyDragonBreath)</li> </ul>
+  <ul> <li>Submerged Compatibility mostly thanks to MyDragonBreath</li> </ul>
   <ul> <li>New Setting: Assassins can guess Crewmate Modifiers</li> </ul>
   <ul> <li>New Setting: Assassins and Vigilante can guess after voting</li> </ul>
   <ul> <li>New Settings: Guardian Angel knows their target's role and Guardian Angel's target knows they have a Guardian Angel</li> </ul>
