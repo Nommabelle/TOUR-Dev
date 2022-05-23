@@ -776,11 +776,11 @@ namespace TownOfUs.CustomOption
             Diseased = new CustomHeaderOption(num++, "<color=#808080FF>Diseased</color>");
             DiseasedKillMultiplier = new CustomNumberOption(num++, "Diseased Kill Multiplier", 3f, 1.5f, 5f, 0.5f, MultiplierFormat);
 
-            Giant = new CustomHeaderOption(num++, "<color=#FFB34DFF>Giant</color>");
-            GiantSlow = new CustomNumberOption(num++, "Giant Speed", 0.75f, 0.5f, 1f, 0.05f, MultiplierFormat);
-
             Flash = new CustomHeaderOption(num++, "<color=#FF8080FF>Flash</color>");
             FlashSpeed = new CustomNumberOption(num++, "Flash Speed", 1.25f, 1.05f, 2.5f, 0.05f, MultiplierFormat);
+
+            Giant = new CustomHeaderOption(num++, "<color=#FFB34DFF>Giant</color>");
+            GiantSlow = new CustomNumberOption(num++, "Giant Speed", 0.75f, 0.5f, 1f, 0.05f, MultiplierFormat);
 
             Lovers =
                 new CustomHeaderOption(num++, "<color=#FF66CCFF>Lovers</color>");

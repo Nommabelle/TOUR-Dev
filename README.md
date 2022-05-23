@@ -67,8 +67,9 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 # Releases
 | Among Us - Version| Mod Version | Link |
 |----------|-------------|-----------------|
-| 2022.3.29s & 2022.3.29e | v3.0.1 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.0.1/ToU.v3.0.1.zip) |
-| 2022.3.29s & 2022.3.29e | v3.0.0 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.0.0/ToU.v3.0.0.zip) |
+| 2022.3.29s & 2022.3.29e & 2022.4.19e | v3.1.0 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.1.0/ToU.v3.1.0.zip) |
+| 2022.3.29s & 2022.3.29e & 2022.4.19e | v3.0.1 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.0.1/ToU.v3.0.1.zip) |
+| 2022.3.29s & 2022.3.29e & 2022.4.19e | v3.0.0 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.0.0/ToU.v3.0.0.zip) |
 | 2021.12.15s & 2021.12.15e Until 2022.2.24s & 2022.2.24e | v2.6.5 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v2.6.5/ToU.v2.6.5.zip) |
 | 2021.12.15s & 2021.12.15e Until 2022.2.24s & 2022.2.24e | v2.6.4 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v2.6.4/ToU.v2.6.4.zip) |
 | 2021.6.30s & 2021.6.30e & 2021.7.20e | v2.6.4 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v2.6.4/ToU.v2.6.4-2021.6.30.zip) |
@@ -112,6 +113,20 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 
 <details>
   <summary> Changelog </summary>
+  <details>
+  <summary> v3.1.0 </summary>
+  <ul> <li>Submerged Compatibility mostly thanks to [MyDragonBreath](https://github.com/MyDragonBreath)</li> </ul>
+  <ul> <li>New Setting: Assassins can guess Crewmate Modifiers</li> </ul>
+  <ul> <li>New Setting: Assassins and Vigilante can guess after voting</li> </ul>
+  <ul> <li>New Settings: Guardian Angel knows their target's role and Guardian Angel's target knows they have a Guardian Angel</li> </ul>
+  <ul> <li>New Settings: Bait minimum and maximum delay</li> </ul>
+  <ul> <li>New Setting: Diseased Kill Multiplier</li> </ul>
+  <ul> <li>New Setting: Flash Speed</li> </ul>
+  <ul> <li>New Setting: Giant Speed</li> </ul>
+  <ul> <li>New Setting: Disable meeting skip button</li> </ul>
+  <ul> <li>Bug Fix: Kill buttons should have the correct text and sprite now</li> </ul>
+  <ul> <li>Glitch kills no longer bypass Survivor Vests and GA Protects</li> </ul>
+  </details>
   <details>
   <summary> v3.0.1 </summary>
   <ul> <li>Bug Fix: All the flashes on screen now work again</li> </ul>
@@ -706,6 +721,7 @@ During meetings, the Vigilante can choose to kill someone by guessing their role
 | Vigilante Guess Neutral Benign  | Whether the Vigilante can Guess Neutral Benign roles | Toggle | False |
 | Vigilante Guess Neutral Evil  | Whether the Vigilante can Guess Neutral Evil roles | Toggle | False |
 | Vigilante Guess Neutral Killing  | Whether the Vigilante can Guess Neutral Killing roles | Toggle | False |
+| Vigilante Guess After Voting  | Whether the Vigilante can Guess after they have voted | Toggle | False |
 
 -----------------------
 ## Altruist
@@ -891,6 +907,8 @@ If their target loses, they lose.
 | Max Uses | The amount of times the Protect ability can be used | Number | 5 |
 | Show Protected Player | Who should be able to see who is Protected | Self / GA / Self + GA / Everyone | Self |
 | Guardian Angel becomes on Target Dead | Which role the Guardian Angel becomes when their target dies | Crewmate / Amnesiac / Survivor / Jester | Crewmate |
+| Target Knows GA Exists | Whether the GA's Target knows they have a GA | Toggle | False |
+| GA Knows Targets Role | Whether the GA knows their target's role | Toggle | False |
 
 -----------------------
 ## Survivor
@@ -986,20 +1004,6 @@ The Glitch can Mimic someone, which results in them looking exactly like the oth
 
 -----------------------
 # Impostor Roles
-## Camouflager
-### **Team: Impostors**
-
-The Camouflager is an Impostor that can turn everyone into colorless characters.\
-Everyone then goes grey for a certain period of time, along with their names disappearing, making them become unrecognizable.
-
-### Game Options
-| Name | Description | Type | Default |
-|----------|:-------------:|:------:|:------:|
-| Camouflager | The percentage probability of the Camouflager appearing | Percentage | 0% |
-| Camouflage Cooldown | The cooldown of the Camouflager's Camouflage button | Time | 25s |
-| Camouflage Duration | How long the Camouflage lasts for | Time | 10s |
-
------------------------
 ## Grenadier
 ### **Team: Impostors**
 
@@ -1013,6 +1017,8 @@ However, a sabotage and a smoke grenade can not be active at the same time.
 | Grenadier | The percentage probability of the Grenadier appearing | Percentage | 0% |
 | Flash Grenade Cooldown | The cooldown of the Grenadier's Flash button | Time | 25s |
 | Flash Grenade Duration | How long the Flash Grenade lasts for | Time | 10s |
+| Flash Radius | How wide the flash radius is | Time | 1x |
+| Indicate Flashed Crewmates | Whether the Grenadier can see who has been flashed | Toggle | False |
 | Grenadier can Vent | Whether the Grenadier can Vent | Toggle | False |
 -----------------------
 ## Morphling
@@ -1149,6 +1155,8 @@ Killing the Bait makes the killer auto self-report.
 | Name | Description | Type | Default |
 |----------|:-------------:|:------:|:------:|
 | Bait | The percentage probability of the Bait appearing | Percentage | 0% |
+| Bait Minimum Delay | The minimum time the killer of the Bait reports the body | Time | 0s |
+| Bait Maximum Delay | The maximum time the killer of the Bait reports the body | Time | 1s |
 
 -----------------------
 ## Diseased
@@ -1158,6 +1166,7 @@ Killing the Diseased triples the killer's Kill cooldown.
 | Name | Description | Type | Default |
 |----------|:-------------:|:------:|:------:|
 | Diseased | The percentage probability of the Diseased appearing | Percentage | 0% |
+| Kill Multiplier | How much the Kill Cooldown of the Impostor is increased by | Time | 3x |
 
 -----------------------
 ## Torch
@@ -1195,6 +1204,7 @@ The Flash travels at twice the speed of a normal player.
 | Name | Description | Type | Default |
 |----------|:-------------:|:------:|:------:|
 | Flash | The percentage probability of the Flash appearing | Percentage | 0% |
+| Speed | How fast the Flash moves in comparison to normal | Time | 1.25x |
 
 -----------------------
 ## Giant
@@ -1204,6 +1214,7 @@ The Giant is a gigantic Crewmate, that has a decreased walk speed.
 | Name | Description | Type | Default |
 |----------|:-------------:|:------:|:------:|
 | Giant | The percentage probability of the Giant appearing | Percentage | 0% |
+| Speed | How fast the Giant moves in comparison to normal | Time | 0.75x |
 
 -----------------------
 ## Lovers
@@ -1315,6 +1326,7 @@ If you have any bugs or any need to contact me, join the [Discord Server](https:
 [TheOtherRoles](https://github.com/Eisbison/TheOtherRoles) - For the inspiration of the Vigilante, Tracker and Spy roles, as well as the Bait modifier.\
 [5up](https://www.twitch.tv/5uppp) and the Submarine Team - For the inspiration of the Grenadier role.\
 [Guus](https://github.com/OhMyGuus) - For support for the new Among Us versions (v2021.11.9.5 and v2021.12.15).\
+[MyDragonBreath](https://github.com/MyDragonBreath) - For Submerged Compatibility.\
 [ItsTheNumberH](https://github.com/itsTheNumberH/Town-Of-H) - For the code used for Bait, Poisoner and partially for Tracker.\
 [Ruiner](https://github.com/ruiner189/Town-Of-Us-Redux) - For lovers changed into a modifier and Task Tracking.\
 [Term](https://www.twitch.tv/termboii) - For creating Transporter, Sleuth, and porting v2.5.0 to the new Among Us version (v2021.12.15).
