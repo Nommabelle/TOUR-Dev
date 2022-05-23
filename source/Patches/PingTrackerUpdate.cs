@@ -16,7 +16,7 @@ namespace TownOfUs
             position.AdjustPosition();
 
             __instance.text.text =
-                "<color=#00FF00FF>TownOfUs " + TownOfUs.VersionString + "s dev 4</color>\n" +
+                "<color=#00FF00FF>TownOfUs v" + TownOfUs.VersionString + "</color>\n" +
                 $"Ping: {AmongUsClient.Instance.Ping}ms\n" +
                 (!MeetingHud.Instance
                     ? "<color=#00FF00FF>Modded By: Donners, Term,</color>\n" +
