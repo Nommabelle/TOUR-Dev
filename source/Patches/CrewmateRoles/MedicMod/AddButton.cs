@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 using System.Collections.Generic;
+using TownOfUs.Extensions;
 
 namespace TownOfUs.CrewmateRoles.MedicMod
 {
@@ -41,7 +42,7 @@ namespace TownOfUs.CrewmateRoles.MedicMod
 
             PlayerControl playerControl = PlayerControl.AllPlayerControls.ToArray().FirstOrDefault(p => p.PlayerId == voteArea.TargetPlayerId);
 
-            if (role.LightDarkColors[playerControl.CurrentOutfit.ColorId] == "lighter") {
+            if (role.LightDarkColors[playerControl.GetDefaultOutfit().ColorId] == "lighter") {
                 renderer.sprite = LighterSprite;
             } else {
                 renderer.sprite = DarkerSprite;

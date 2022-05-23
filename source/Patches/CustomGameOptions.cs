@@ -210,7 +210,8 @@ namespace TownOfUs
         public static float GiantSlow => Generate.GiantSlow.Get();
         public static float FlashSpeed => Generate.FlashSpeed.Get();
         public static float DiseasedMultiplier => Generate.DiseasedKillMultiplier.Get();
-        public static float BaitDelay => Generate.BaitDelay.Get();
+        public static float BaitMinDelay => Generate.BaitMinDelay.Get();
+        public static float BaitMaxDelay => Generate.BaitMaxDelay.Get();
         public static DisableSkipButtonMeetings SkipButtonDisable =>
             (DisableSkipButtonMeetings)Generate.SkipButtonDisable.Get();
     }

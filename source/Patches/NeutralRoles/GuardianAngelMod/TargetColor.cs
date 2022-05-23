@@ -45,14 +45,14 @@ namespace TownOfUs.NeutralRoles.GuardianAngelMod
             writer.Write(PlayerControl.LocalPlayer.PlayerId);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
 
+            GAToSurv(PlayerControl.LocalPlayer);
+
             if (PlayerControl.LocalPlayer.Is(RoleEnum.GuardianAngel))
             {
                 var gaRole = Role.GetRole<GuardianAngel>(PlayerControl.LocalPlayer);
                 Object.Destroy(gaRole.UsesText);
                 DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(false);
             }
-
-            GAToSurv(PlayerControl.LocalPlayer);
         }
 
         public static void GAToSurv(PlayerControl player)

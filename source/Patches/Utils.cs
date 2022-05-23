@@ -14,6 +14,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using PerformKill = TownOfUs.ImpostorRoles.UnderdogMod.PerformKill;
 using Reactor;
+using Random = UnityEngine.Random;
 
 namespace TownOfUs
 {
@@ -390,23 +391,51 @@ namespace TownOfUs
         public static void BaitReport(PlayerControl killer, PlayerControl target)
         {
             Coroutines.Start(BaitReportDelay(killer, target));
-            
         }
 
         public static IEnumerator BaitReportDelay(PlayerControl killer, PlayerControl target)
         {
-            yield return new WaitForSeconds(CustomGameOptions.BaitDelay + 0.01f);
+            var extraDelay = Random.RandomRangeInt(0, (int) (100 * (CustomGameOptions.BaitMaxDelay - CustomGameOptions.BaitMinDelay) + 1));
+            if (CustomGameOptions.BaitMaxDelay <= CustomGameOptions.BaitMinDelay)
+                yield return new WaitForSeconds(CustomGameOptions.BaitMaxDelay + 0.01f);
+            else
+                yield return new WaitForSeconds(CustomGameOptions.BaitMinDelay + 0.01f + extraDelay/100f);
+            var bodies = Object.FindObjectsOfType<DeadBody>();
             if (AmongUsClient.Instance.AmHost)
             {
-                killer.ReportDeadBody(target.Data);
+                foreach (var body in bodies)
+                {
+                    try
+                    {
+                        if (body.ParentId == target.PlayerId) { killer.ReportDeadBody(target.Data); break; }
+                    }
+                    catch
+                    {
+                    }
+                }
+                
             }
             else
             {
-                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.BaitReport, SendOption.Reliable, -1);
-                writer.Write(killer.PlayerId);
-                writer.Write(target.PlayerId);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                foreach (var body in bodies)
+                {
+                    try
+                    {
+                        if (body.ParentId == target.PlayerId)
+                        {
+                            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                                (byte)CustomRPC.BaitReport, SendOption.Reliable, -1);
+                            writer.Write(killer.PlayerId);
+                            writer.Write(target.PlayerId);
+                            AmongUsClient.Instance.FinishRpcImmediately(writer);
+                            break;
+                        }
+                    }
+                    catch
+                    {
+                    }
+                }
+                
             }
             
         }
@@ -469,6 +498,7 @@ namespace TownOfUs
                 }
             }
         }
+      
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CoStartMeeting))]
         class StartMeetingPatch {
             public static void Prefix(PlayerControl __instance, [HarmonyArgument(0)]GameData.PlayerInfo meetingTarget) {
@@ -484,6 +514,106 @@ namespace TownOfUs
                     __instance.SkipVoteButton.gameObject.SetActive(false);
                 }
             }
+        }
+
+        //Submerged utils
+        public static object TryCast(this Il2CppObjectBase self, Type type)
+        {
+            return AccessTools.Method(self.GetType(), nameof(Il2CppObjectBase.TryCast)).MakeGenericMethod(type).Invoke(self, Array.Empty<object>());
+        }
+        public static IList createList(Type myType)
+        {
+            Type genericListType = typeof(List<>).MakeGenericType(myType);
+            return (IList)Activator.CreateInstance(genericListType);
+        }
+
+        public static void ResetCustomTimers()
+        {
+            #region CrewmateRoles
+            foreach (Medium role in Role.GetRoles(RoleEnum.Medium))
+            {
+                role.LastMediated = DateTime.UtcNow;
+            }
+            foreach (Seer role in Role.GetRoles(RoleEnum.Seer))
+            {
+                role.LastInvestigated = DateTime.UtcNow;
+            }
+            foreach (Sheriff role in Role.GetRoles(RoleEnum.Sheriff))
+            {
+                role.LastKilled = DateTime.UtcNow;
+            }
+            foreach (TimeLord role in Role.GetRoles(RoleEnum.TimeLord))
+            {
+                role.StartRewind = DateTime.UtcNow.AddSeconds(-10.0f);
+                role.FinishRewind = DateTime.UtcNow;
+            }
+            foreach (Tracker role in Role.GetRoles(RoleEnum.Tracker))
+            {
+                role.LastTracked = DateTime.UtcNow;
+            }
+            foreach (Transporter role in Role.GetRoles(RoleEnum.Transporter))
+            {
+                role.LastTransported = DateTime.UtcNow;
+            }
+            foreach (Veteran role in Role.GetRoles(RoleEnum.Veteran))
+            {
+                role.LastAlerted = DateTime.UtcNow;
+            }
+            #endregion
+            #region NeutralRoles
+            foreach (Survivor role in Role.GetRoles(RoleEnum.Survivor))
+            {
+                role.LastVested = DateTime.UtcNow;
+            }
+            foreach (GuardianAngel role in Role.GetRoles(RoleEnum.GuardianAngel))
+            {
+                role.LastProtected = DateTime.UtcNow;
+            }
+            foreach (Arsonist role in Role.GetRoles(RoleEnum.Arsonist))
+            {
+                role.LastDoused = DateTime.UtcNow;
+            }
+            foreach (Glitch role in Role.GetRoles(RoleEnum.Glitch))
+            {
+                role.LastHack = DateTime.UtcNow;
+                role.LastKill = DateTime.UtcNow;
+                role.LastMimic = DateTime.UtcNow;
+            }
+            foreach (Juggernaut role in Role.GetRoles(RoleEnum.Juggernaut))
+            {
+                role.LastKill = DateTime.UtcNow;
+            }
+            #endregion
+            #region ImposterRoles
+            foreach (Blackmailer role in Role.GetRoles(RoleEnum.Blackmailer))
+            {
+                role.LastBlackmailed = DateTime.UtcNow;
+            }
+            foreach (Grenadier role in Role.GetRoles(RoleEnum.Grenadier))
+            {
+                role.LastFlashed = DateTime.UtcNow;
+            }
+            foreach (Miner role in Role.GetRoles(RoleEnum.Miner))
+            {
+                role.LastMined = DateTime.UtcNow;
+            }
+            foreach (Morphling role in Role.GetRoles(RoleEnum.Morphling))
+            {
+                role.LastMorphed = DateTime.UtcNow;
+            }
+            foreach (Poisoner role in Role.GetRoles(RoleEnum.Poisoner))
+            {
+                role.LastPoisoned = DateTime.UtcNow;
+            }
+            foreach (Swooper role in Role.GetRoles(RoleEnum.Swooper))
+            {
+                role.LastSwooped = DateTime.UtcNow;
+            }
+            foreach (Undertaker role in Role.GetRoles(RoleEnum.Undertaker))
+            {
+                role.LastDragged = DateTime.UtcNow;
+            }
+            #endregion
         }
     }
 }
