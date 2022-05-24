@@ -79,7 +79,14 @@ namespace TownOfUs.Patches
                             }
                         }
                         else position.z = 0f;
-                        
+
+                        if (ShipStatus.Instance.Type == (ShipStatus.MapType)2)
+                        {
+                            var skinpos = __instance.transform.Find("Sprite").localPosition;
+                            skinpos.z = -0.05f;
+                            __instance.transform.Find("Sprite").localPosition = skinpos;
+                        }
+
                         transform.position = position;
                         __instance.myPlayer.gameObject.layer = 8;
                     }
@@ -103,6 +110,14 @@ namespace TownOfUs.Patches
                             }
                         }
                         else position.z = 0f;
+
+                        if (ShipStatus.Instance.Type == (ShipStatus.MapType)2)
+                        {
+                            var skinpos = __instance.transform.Find("Sprite").localPosition;
+                            skinpos.z = -0.05f;
+                            __instance.transform.Find("Sprite").localPosition = skinpos;
+                        }
+
                         transform.position = position;
                         __instance.myPlayer.gameObject.layer = 8;
                     }
