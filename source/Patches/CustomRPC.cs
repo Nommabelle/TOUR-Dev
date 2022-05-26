@@ -117,6 +117,7 @@ namespace TownOfUs
         Vest,
         GAProtect,
         Blackmail,
+        Poison,
 
         SetGlitch,
         BypassKill,
