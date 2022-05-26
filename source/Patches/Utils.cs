@@ -262,6 +262,31 @@ namespace TownOfUs
 
         public static void MurderPlayer(PlayerControl killer, PlayerControl target)
         {
+            foreach (var player in Murder.KilledPlayers)
+            {
+                if (player.KillerId == killer.PlayerId)
+                {
+                    if (killer.Is(RoleEnum.Underdog))
+                    {
+                        if (PerformKill.LastImp())
+                        {
+                            if ((float)(DateTime.UtcNow - player.KillTime).TotalSeconds < PlayerControl.GameOptions.KillCooldown - CustomGameOptions.UnderdogKillBonus) return;
+                        }
+                        else if (!PerformKill.LastImp() && PerformKill.IncreasedKC())
+                        {
+                            if ((float)(DateTime.UtcNow - player.KillTime).TotalSeconds < PlayerControl.GameOptions.KillCooldown) return;
+                        }
+                        else
+                        {
+                            if ((float)(DateTime.UtcNow - player.KillTime).TotalSeconds < PlayerControl.GameOptions.KillCooldown + CustomGameOptions.UnderdogKillBonus) return;
+                        }
+                    }
+                    else if (killer.Data.IsImpostor() && (float)(DateTime.UtcNow - player.KillTime).TotalSeconds < PlayerControl.GameOptions.KillCooldown)
+                    {
+                        return;
+                    }
+                }
+            }
             var data = target.Data;
             if (data != null && !data.IsDead)
             {
@@ -348,7 +373,7 @@ namespace TownOfUs
                 if (target.Is(ModifierEnum.Diseased) && killer.Is(RoleEnum.Glitch))
                 {
                     var glitch = Role.GetRole<Glitch>(killer);
-                    glitch.LastKill = DateTime.UtcNow.AddSeconds(2 * CustomGameOptions.GlitchKillCooldown);
+                    glitch.LastKill = DateTime.UtcNow.AddSeconds((CustomGameOptions.DiseasedMultiplier - 1f) * CustomGameOptions.GlitchKillCooldown);
                     glitch.Player.SetKillTimer(CustomGameOptions.GlitchKillCooldown * CustomGameOptions.DiseasedMultiplier);
                     return;
                 }
@@ -356,8 +381,17 @@ namespace TownOfUs
                 if (target.Is(ModifierEnum.Diseased) && killer.Is(RoleEnum.Juggernaut))
                 {
                     var juggernaut = Role.GetRole<Juggernaut>(killer);
-                    juggernaut.LastKill = DateTime.UtcNow.AddSeconds(2 * (CustomGameOptions.GlitchKillCooldown + 5.0f - 5.0f * juggernaut.JuggKills));
+                    juggernaut.LastKill = DateTime.UtcNow.AddSeconds((CustomGameOptions.DiseasedMultiplier - 1f) * (CustomGameOptions.GlitchKillCooldown + 5.0f - 5.0f * juggernaut.JuggKills));
                     juggernaut.Player.SetKillTimer((CustomGameOptions.GlitchKillCooldown + 5.0f - 5.0f * juggernaut.JuggKills) * CustomGameOptions.DiseasedMultiplier);
+                    return;
+                }
+
+                if (target.Is(ModifierEnum.Diseased) && killer.Is(RoleEnum.Underdog))
+                {
+                    var lowerKC = (PlayerControl.GameOptions.KillCooldown - CustomGameOptions.UnderdogKillBonus) * CustomGameOptions.DiseasedMultiplier;
+                    var normalKC = PlayerControl.GameOptions.KillCooldown * CustomGameOptions.DiseasedMultiplier;
+                    var upperKC = (PlayerControl.GameOptions.KillCooldown + CustomGameOptions.UnderdogKillBonus) * CustomGameOptions.DiseasedMultiplier;
+                    killer.SetKillTimer(PerformKill.LastImp() ? lowerKC : (PerformKill.IncreasedKC() ? normalKC : upperKC));
                     return;
                 }
 
@@ -370,6 +404,7 @@ namespace TownOfUs
                 if (target.Is(ModifierEnum.Bait))
                 {
                     BaitReport(killer, target);
+                    return;
                 }
 
                 if (killer.Is(RoleEnum.Underdog))
@@ -384,6 +419,7 @@ namespace TownOfUs
                 if (killer.Data.IsImpostor())
                 {
                     killer.SetKillTimer(PlayerControl.GameOptions.KillCooldown);
+                    return;
                 }
             }
         }
