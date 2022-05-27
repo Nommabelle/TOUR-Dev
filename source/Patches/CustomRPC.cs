@@ -121,8 +121,8 @@ namespace TownOfUs
 
         SetGlitch,
         BypassKill,
-        SetMimic,
-        RpcResetAnim = 220,
+        SetMimic = 220,
+        RpcResetAnim,
         SetHacked,
 
         ExecutionerToJester,
