@@ -19,9 +19,9 @@ namespace TownOfUs.ImpostorRoles.PoisonerMod
             foreach (var poisoner in poisoners)
             {
                 var role = Role.GetRole<Poisoner>(poisoner);
-                if (poisoner != role.PoisonedPlayer && role.PoisonedPlayer != null && !role.PoisonedPlayer.Data.IsDead)
+                if (poisoner != role.PoisonedPlayer && role.PoisonedPlayer != null)
                 {
-                    Utils.MurderPlayer(poisoner, role.PoisonedPlayer);
+                    if (!role.PoisonedPlayer.Data.IsDead) Utils.MurderPlayer(poisoner, role.PoisonedPlayer);
                 }
                 return;
             }
