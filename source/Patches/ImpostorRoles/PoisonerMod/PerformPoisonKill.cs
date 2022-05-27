@@ -76,7 +76,6 @@ namespace TownOfUs.ImpostorRoles.PoisonerMod
                         writer4.Write(PlayerControl.LocalPlayer.PlayerId);
                         writer4.Write(role.PoisonedPlayer.PlayerId);
                         AmongUsClient.Instance.FinishRpcImmediately(writer4);
-                        // role.Player.SetKillTimer(0);
                     }
                 }
                 else
@@ -125,13 +124,13 @@ namespace TownOfUs.ImpostorRoles.PoisonerMod
             else if (role.ClosestPlayer.IsVesting())
             {
                 role.LastPoisoned.AddSeconds(CustomGameOptions.VestKCReset + 0.01f);
-
+                role.PoisonButton.SetCoolDown(0.01f, 1f);
                 return false;
             }
             else if (role.ClosestPlayer.IsProtected())
             {
                 role.LastPoisoned.AddSeconds(CustomGameOptions.ProtectKCReset + 0.01f);
-
+                role.PoisonButton.SetCoolDown(0.01f, 1f);
                 return false;
             }
             role.PoisonedPlayer = target;
