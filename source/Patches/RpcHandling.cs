@@ -589,6 +589,12 @@ namespace TownOfUs
                         morphRole.TimeRemaining = CustomGameOptions.MorphlingDuration;
                         morphRole.MorphedPlayer = morphTarget;
                         break;
+                    case CustomRPC.Poison:
+                        var poisoner = Utils.PlayerById(reader.ReadByte());
+                        var poisoned = Utils.PlayerById(reader.ReadByte());
+                        var poisonerRole = Role.GetRole<Poisoner>(poisoner);
+                        poisonerRole.PoisonedPlayer = poisoned;
+                        break;
                     case CustomRPC.SetExecutioner:
                         new Executioner(Utils.PlayerById(reader.ReadByte()));
                         break;

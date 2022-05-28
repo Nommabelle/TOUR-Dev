@@ -117,11 +117,12 @@ namespace TownOfUs
         Vest,
         GAProtect,
         Blackmail,
+        Poison,
 
         SetGlitch,
         BypassKill,
-        SetMimic,
-        RpcResetAnim = 220,
+        SetMimic = 220,
+        RpcResetAnim,
         SetHacked,
 
         ExecutionerToJester,
