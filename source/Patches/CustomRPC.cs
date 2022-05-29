@@ -44,11 +44,11 @@ namespace TownOfUs
         SetDiseased,
         SetFlash,
         SetTiebreaker,
-        SetDrunk,
         SetGiant,
         SetButtonBarry,
         SetBait,
         SetSleuth,
+        SetBlind,
         SetAssassin,
 
         SetPhantom,

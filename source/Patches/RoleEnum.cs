@@ -55,11 +55,11 @@ namespace TownOfUs
         Diseased,
         Flash,
         Tiebreaker,
-        Drunk,
         Giant,
         ButtonBarry,
         Bait,
-        Sleuth
+        Sleuth,
+        Blind
     }
 
     public enum AbilityEnum

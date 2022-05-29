@@ -703,8 +703,8 @@ namespace TownOfUs
                     case CustomRPC.SetTiebreaker:
                         new Tiebreaker(Utils.PlayerById(reader.ReadByte()));
                         break;
-                    case CustomRPC.SetDrunk:
-                        new Drunk(Utils.PlayerById(reader.ReadByte()));
+                    case CustomRPC.SetBlind:
+                        new Blind(Utils.PlayerById(reader.ReadByte()));
                         break;
                     case CustomRPC.SetSleuth:
                         new Sleuth(Utils.PlayerById(reader.ReadByte()));
@@ -1114,8 +1114,8 @@ namespace TownOfUs
                 if (Check(CustomGameOptions.FlashOn))
                     GlobalModifiers.Add((typeof(Flash), CustomRPC.SetFlash, CustomGameOptions.FlashOn));
 
-                if (Check(CustomGameOptions.DrunkOn))
-                    GlobalModifiers.Add((typeof(Drunk), CustomRPC.SetDrunk, CustomGameOptions.DrunkOn));
+                if (Check(CustomGameOptions.BlindOn))
+                    GlobalModifiers.Add((typeof(Blind), CustomRPC.SetBlind, CustomGameOptions.BlindOn));
 
                 if (Check(CustomGameOptions.GiantOn))
                     GlobalModifiers.Add((typeof(Giant), CustomRPC.SetGiant, CustomGameOptions.GiantOn));

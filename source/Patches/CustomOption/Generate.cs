@@ -66,8 +66,8 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption TorchOn;
 
         public static CustomHeaderOption GlobalModifiers;
+        public static CustomNumberOption BlindOn;
         public static CustomNumberOption ButtonBarryOn;
-        public static CustomNumberOption DrunkOn;
         public static CustomNumberOption FlashOn;
         public static CustomNumberOption GiantOn;
         public static CustomNumberOption LoversOn;
@@ -422,9 +422,9 @@ namespace TownOfUs.CustomOption
                 PercentFormat);
 
             GlobalModifiers = new CustomHeaderOption(num++, "Global Modifiers");
-            ButtonBarryOn = new CustomNumberOption(true, num++, "<color=#E600FFFF>Button Barry</color>", 0f, 0f, 100f, 10f,
+            BlindOn = new CustomNumberOption(true, num++, "<color=#AAAAAAFF>Blind</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
-            DrunkOn = new CustomNumberOption(true, num++, "<color=#758000FF>Drunk</color>", 0f, 0f, 100f, 10f,
+            ButtonBarryOn = new CustomNumberOption(true, num++, "<color=#E600FFFF>Button Barry</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             FlashOn = new CustomNumberOption(true, num++, "<color=#FF8080FF>Flash</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);

@@ -84,12 +84,12 @@ namespace TownOfUs.Patches {
                     playerRole += " (<color=#" + Patches.Colors.Giant.ToHtmlStringRGBA() + ">Giant</color>)";
                 } else if (playerControl.Is(ModifierEnum.ButtonBarry)) {
                     playerRole += " (<color=#" + Patches.Colors.ButtonBarry.ToHtmlStringRGBA() + ">Button Barry</color>)";
+                } else if (playerControl.Is(ModifierEnum.Blind)) {
+                    playerRole += " (<color=#" + Patches.Colors.Blind.ToHtmlStringRGBA() + ">Blind</color>)";
                 } else if (playerControl.Is(ModifierEnum.Bait)) {
                     playerRole += " (<color=#" + Patches.Colors.Bait.ToHtmlStringRGBA() + ">Bait</color>)";
                 } else if (playerControl.Is(ModifierEnum.Diseased)) {
                     playerRole += " (<color=#" + Patches.Colors.Diseased.ToHtmlStringRGBA() + ">Diseased</color>)";
-                } else if (playerControl.Is(ModifierEnum.Drunk)) {
-                    playerRole += " (<color=#" + Patches.Colors.Drunk.ToHtmlStringRGBA() + ">Drunk</color>)";
                 } else if (playerControl.Is(ModifierEnum.Flash)) {
                     playerRole += " (<color=#" + Patches.Colors.Flash.ToHtmlStringRGBA() + ">Flash</color>)";
                 } else if (playerControl.Is(ModifierEnum.Tiebreaker)) {

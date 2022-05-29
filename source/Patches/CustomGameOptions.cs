@@ -57,11 +57,11 @@ namespace TownOfUs
         public static int DiseasedOn => (int)Generate.DiseasedOn.Get();
         public static int FlashOn => (int)Generate.FlashOn.Get();
         public static int TiebreakerOn => (int)Generate.TiebreakerOn.Get();
-        public static int DrunkOn => (int)Generate.DrunkOn.Get();
         public static int GiantOn => (int)Generate.GiantOn.Get();
         public static int ButtonBarryOn => (int)Generate.ButtonBarryOn.Get();
         public static int BaitOn => (int)Generate.BaitOn.Get();
         public static int SleuthOn => (int)Generate.SleuthOn.Get();
+        public static int BlindOn => (int)Generate.BlindOn.Get();
         public static int VanillaGame => (int)Generate.VanillaGame.Get();
         public static float InitialCooldowns => Generate.InitialCooldowns.Get();
         public static bool BothLoversDie => Generate.BothLoversDie.Get();
