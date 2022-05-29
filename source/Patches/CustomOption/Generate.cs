@@ -41,8 +41,9 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption PhantomOn;
 
         public static CustomHeaderOption NeutralKillingRoles;
-        public static CustomNumberOption GlitchOn;
         public static CustomNumberOption ArsonistOn;
+        public static CustomNumberOption PlaguebearerOn;
+        public static CustomNumberOption GlitchOn;
 
         public static CustomHeaderOption ImpostorConcealingRoles;
         public static CustomNumberOption MorphlingOn;
@@ -101,6 +102,7 @@ namespace TownOfUs.CustomOption
         public static CustomToggleOption SheriffKillsGlitch;
         public static CustomToggleOption SheriffKillsExecutioner;
         public static CustomToggleOption SheriffKillsArsonist;
+        public static CustomToggleOption SheriffKillsPlaguebearer;
         public static CustomNumberOption SheriffKillCd;
         public static CustomToggleOption SheriffBodyReport;
 
@@ -289,6 +291,10 @@ namespace TownOfUs.CustomOption
         public static CustomHeaderOption Blackmailer;
         public static CustomNumberOption BlackmailCooldown;
 
+        public static CustomHeaderOption Plaguebearer;
+        public static CustomNumberOption InfectCooldown;
+        public static CustomNumberOption PestKillCooldown;
+
         public static CustomHeaderOption Giant;
         public static CustomNumberOption GiantSlow;
 
@@ -383,6 +389,8 @@ namespace TownOfUs.CustomOption
 
             NeutralKillingRoles = new CustomHeaderOption(num++, "Neutral Killing Roles");
             ArsonistOn = new CustomNumberOption(true, num++, "<color=#FF4D00FF>Arsonist</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
+            PlaguebearerOn = new CustomNumberOption(true, num++, "<color=#E6FFB3FF>Plaguebearer</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             GlitchOn = new CustomNumberOption(true, num++, "<color=#00FF00FF>The Glitch</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
@@ -539,6 +547,8 @@ namespace TownOfUs.CustomOption
                 new CustomToggleOption(num++, "Sheriff Kills Executioner", false);
             SheriffKillsArsonist =
                 new CustomToggleOption(num++, "Sheriff Kills Arsonist", false);
+            SheriffKillsPlaguebearer =
+                new CustomToggleOption(num++, "Sheriff Kills Plaguebearer", false);
             SheriffKillCd =
                 new CustomNumberOption(num++, "Sheriff Kill Cooldown", 25f, 10f, 40f, 2.5f, CooldownFormat);
             SheriffBodyReport = new CustomToggleOption(num++, "Sheriff Can Report Who They've Killed");
@@ -691,6 +701,12 @@ namespace TownOfUs.CustomOption
             DouseCooldown =
                 new CustomNumberOption(num++, "Douse Cooldown", 25f, 10f, 40f, 2.5f, CooldownFormat);
             ArsonistGameEnd = new CustomToggleOption(num++, "Game Continues As Long As Arsonist Is Alive", false);
+
+            Plaguebearer = new CustomHeaderOption(num++, "<color=#E6FFB3>Plaguebearer</color>");
+            InfectCooldown =
+                new CustomNumberOption(num++, "Infect Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
+            PestKillCooldown =
+                new CustomNumberOption(num++, "Pestilence Kill Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
 
             TheGlitch =
                 new CustomHeaderOption(num++, "<color=#00FF00FF>The Glitch</color>");

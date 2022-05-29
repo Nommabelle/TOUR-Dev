@@ -18,7 +18,7 @@ namespace TownOfUs
             }
 
             var switchSystem = __instance.Systems[SystemTypes.Electrical].Cast<SwitchSystem>();
-            if (player.IsImpostor() || player._object.Is(RoleEnum.Glitch) || player._object.Is(RoleEnum.Juggernaut))
+            if (player.IsImpostor() || player._object.Is(RoleEnum.Glitch) || player._object.Is(RoleEnum.Juggernaut) || player._object.Is(RoleEnum.Plaguebearer))
             {
                 __result = __instance.MaxLightRadius * PlayerControl.GameOptions.ImpostorLightMod;
                 return false;

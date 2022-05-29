@@ -170,7 +170,7 @@ namespace TownOfUs.Roles
                 {
                     var role = GetRole(x);
                     if (role == null) return false;
-                    var flag2 = role.Faction == Faction.Neutral && !x.Is(RoleEnum.Juggernaut) && !x.Is(RoleEnum.Glitch) && !x.Is(RoleEnum.Arsonist);
+                    var flag2 = role.Faction == Faction.Neutral && !x.Is(RoleEnum.Juggernaut) && !x.Is(RoleEnum.Glitch) && !x.Is(RoleEnum.Arsonist) && !x.Is(RoleEnum.Plaguebearer) && !x.Is(RoleEnum.Pestilence);
                     var flag3 = x.Is(RoleEnum.Arsonist) && ((Arsonist)role).IgniteUsed && alives.Count > 1;
 
                     return flag2 || flag3;

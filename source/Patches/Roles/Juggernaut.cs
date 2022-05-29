@@ -130,6 +130,15 @@ namespace TownOfUs.Roles
             {
                 if (__gInstance.KillTarget != null)
                 {
+                    if (__gInstance.KillTarget.Is(RoleEnum.Pestilence))
+                    {
+                        Utils.RpcMurderPlayer(__gInstance.KillTarget, __gInstance.Player);
+                        return;
+                    }
+                    if (__gInstance.KillTarget.IsInfected() || __gInstance.Player.IsInfected())
+                    {
+                        foreach (var pb in Role.GetRoles(RoleEnum.Plaguebearer)) ((Plaguebearer)pb).RpcSpreadInfection(__gInstance.KillTarget, __gInstance.Player);
+                    }
                     if (__gInstance.KillTarget.IsOnAlert())
                     {
                         if (__gInstance.KillTarget.IsShielded())

@@ -98,6 +98,17 @@ namespace TownOfUs
                         return;
                     }
                 }
+                else if (type == RoleEnum.Pestilence)
+                {
+                    var pestilence = (Pestilence)role;
+                    if (pestilence.PestilenceWins)
+                    {
+                        var winners = Utils.potentialWinners.Where(x => x._playerName == pestilence.PlayerName).ToList();
+                        TempData.winners = new List<WinningPlayerData>();
+                        foreach (var win in winners) TempData.winners.Add(win);
+                        return;
+                    }
+                }
                 else if (type == RoleEnum.Phantom)
                 {
                     var phantom = (Phantom)role;

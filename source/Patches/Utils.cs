@@ -184,6 +184,15 @@ namespace TownOfUs
             });
         }
 
+        public static bool IsInfected(this PlayerControl player)
+        {
+            return Role.GetRoles(RoleEnum.Plaguebearer).Any(role =>
+            {
+                var plaguebearer = (Plaguebearer)role;
+                return plaguebearer != null && (plaguebearer.InfectedPlayers.Contains(player.PlayerId) || player.PlayerId == plaguebearer.Player.PlayerId);
+            });
+        }
+
         public static PlayerControl GetClosestPlayer(PlayerControl refPlayer, List<PlayerControl> AllPlayers)
         {
             var num = double.MaxValue;

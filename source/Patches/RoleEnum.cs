@@ -28,6 +28,8 @@ namespace TownOfUs
         Survivor,
         GuardianAngel,
         Mystic,
+        Plaguebearer,
+        Pestilence,
 
         Miner,
         Swooper,

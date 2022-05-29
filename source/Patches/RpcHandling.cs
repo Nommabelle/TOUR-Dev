@@ -764,6 +764,26 @@ namespace TownOfUs
                                 ((GuardianAngel)role).ImpTargetLose();
                             }
                         break;
+                    case CustomRPC.PlaguebearerLose:
+                        foreach (var role in Role.AllRoles)
+                            if (role.RoleType == RoleEnum.Plaguebearer)
+                                ((Plaguebearer)role).Loses();
+                        break;
+                    case CustomRPC.Infect:
+                        Role.GetRole<Plaguebearer>(Utils.PlayerById(reader.ReadByte())).InfectedPlayers.Add(reader.ReadByte());
+                        break;
+                    case CustomRPC.TurnPestilence:
+                        Role.GetRole<Plaguebearer>(Utils.PlayerById(reader.ReadByte())).TurnPestilence();
+                        break;
+                    case CustomRPC.PestilenceWin:
+                        var thePestilenceTheRole = Role.AllRoles.FirstOrDefault(x => x.RoleType == RoleEnum.Pestilence);
+                        ((Pestilence)thePestilenceTheRole)?.Wins();
+                        break;
+                    case CustomRPC.PestilenceLose:
+                        foreach (var role in Role.AllRoles)
+                            if (role.RoleType == RoleEnum.Pestilence)
+                                ((Pestilence)role).Loses();
+                        break;
                     case CustomRPC.SetImpostor:
                         new Impostor(Utils.PlayerById(reader.ReadByte()));
                         break;
@@ -942,6 +962,9 @@ namespace TownOfUs
                         traitorRole.RegenTask();
                         SetTraitor.TurnImp(traitor);
                         break;
+                    case CustomRPC.SetPlaguebearer:
+                        new Plaguebearer(Utils.PlayerById(reader.ReadByte()));
+                        break;
                     case CustomRPC.AddMayorVoteBank:
                         Role.GetRole<Mayor>(Utils.PlayerById(reader.ReadByte())).VoteBank += reader.ReadInt32();
                         break;
@@ -1059,6 +1082,9 @@ namespace TownOfUs
 
                 if (Check(CustomGameOptions.ArsonistOn))
                     NeutralRoles.Add((typeof(Arsonist), CustomRPC.SetArsonist, CustomGameOptions.ArsonistOn));
+
+                if (Check(CustomGameOptions.PlaguebearerOn))
+                    NeutralRoles.Add((typeof(Plaguebearer), CustomRPC.SetPlaguebearer, CustomGameOptions.PlaguebearerOn));
 
                 if (Check(CustomGameOptions.ExecutionerOn))
                     NeutralRoles.Add((typeof(Executioner), CustomRPC.SetExecutioner, CustomGameOptions.ExecutionerOn));

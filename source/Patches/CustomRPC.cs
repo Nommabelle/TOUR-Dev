@@ -39,6 +39,7 @@ namespace TownOfUs
         SetGATarget,
         SetMystic,
         SetBlackmailer,
+        SetPlaguebearer,
 
         SetTorch,
         SetDiseased,
@@ -83,6 +84,9 @@ namespace TownOfUs
         SurvivorCrewWin,
         GAImpWin,
         GAImpLose,
+        PlaguebearerLose,
+        PestilenceWin,
+        PestilenceLose,
 
         JanitorClean,
         FixLights,
@@ -116,12 +120,14 @@ namespace TownOfUs
         Mediate,
         Vest,
         GAProtect,
-        Blackmail,
+        Blackmail = 220,
         Poison,
+        Infect,
+        TurnPestilence,
 
         SetGlitch,
         BypassKill,
-        SetMimic = 220,
+        SetMimic,
         RpcResetAnim,
         SetHacked,
 

@@ -38,6 +38,15 @@ namespace TownOfUs.NeutralRoles.ArsonistMod
             var flag3 = distBetweenPlayers <
                         GameOptionsData.KillDistances[PlayerControl.GameOptions.KillDistance];
             if (!flag3) return false;
+            if (role.ClosestPlayer.Is(RoleEnum.Pestilence))
+            {
+                Utils.RpcMurderPlayer(role.ClosestPlayer, PlayerControl.LocalPlayer);
+                return false;
+            }
+            if (role.ClosestPlayer.IsInfected() || role.Player.IsInfected())
+            {
+                foreach (var pb in Role.GetRoles(RoleEnum.Plaguebearer)) ((Plaguebearer)pb).RpcSpreadInfection(role.ClosestPlayer, role.Player);
+            }
             if (role.ClosestPlayer.IsOnAlert())
             {
                 if (role.Player.IsShielded())

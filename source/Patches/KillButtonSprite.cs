@@ -27,6 +27,7 @@ namespace TownOfUs
         private static Sprite Mediate => TownOfUs.MediateSprite;
         private static Sprite Vest => TownOfUs.VestSprite;
         private static Sprite Protect => TownOfUs.ProtectSprite;
+        private static Sprite Infect => TownOfUs.InfectSprite;
         private static Sprite Button => TownOfUs.ButtonSprite;
         private static Sprite Kill;
 
@@ -97,7 +98,13 @@ namespace TownOfUs
             {
                 __instance.KillButton.graphic.sprite = Protect;
                 flag = true;
-            } else if (PlayerControl.LocalPlayer.Is(RoleEnum.Engineer))
+            }
+            else if (PlayerControl.LocalPlayer.Is(RoleEnum.Plaguebearer))
+            {
+                __instance.KillButton.graphic.sprite = Infect;
+                flag = true;
+            }
+            else if (PlayerControl.LocalPlayer.Is(RoleEnum.Engineer))
             {
                 flag = true;
             }
