@@ -271,6 +271,7 @@ namespace TownOfUs
 
         public static void MurderPlayer(PlayerControl killer, PlayerControl target)
         {
+            if (target.Is(RoleEnum.Pestilence)) return;
             foreach (var player in Murder.KilledPlayers)
             {
                 if (player.KillerId == killer.PlayerId)

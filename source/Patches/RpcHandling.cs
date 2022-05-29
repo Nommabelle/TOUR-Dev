@@ -764,6 +764,10 @@ namespace TownOfUs
                                 ((GuardianAngel)role).ImpTargetLose();
                             }
                         break;
+                    case CustomRPC.PlaguebearerWin:
+                        var thePlaguebearerTheRole = Role.AllRoles.FirstOrDefault(x => x.RoleType == RoleEnum.Plaguebearer);
+                        ((Plaguebearer)thePlaguebearerTheRole)?.Wins();
+                        break;
                     case CustomRPC.PlaguebearerLose:
                         foreach (var role in Role.AllRoles)
                             if (role.RoleType == RoleEnum.Plaguebearer)

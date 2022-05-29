@@ -9,8 +9,6 @@ namespace TownOfUs.NeutralRoles.PlaguebearerMod
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
     public static class HudManagerUpdate
     {
-        public static Sprite IgniteSprite => TownOfUs.IgniteSprite;
-
         public static void Postfix(HudManager __instance)
         {
             if (PlayerControl.AllPlayerControls.Count <= 1) return;
@@ -40,7 +38,7 @@ namespace TownOfUs.NeutralRoles.PlaguebearerMod
 
             Utils.SetTarget(ref role.ClosestPlayer, __instance.KillButton, float.NaN, notInfected);
 
-            if (role.CanTransform)
+            if (role.CanTransform && PlayerControl.AllPlayerControls.ToArray().Where(x => !x.Data.IsDead && !x.Data.Disconnected).ToList().Count > 1)
             {
                 role.TurnPestilence();
                 var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,

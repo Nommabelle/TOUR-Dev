@@ -12,9 +12,10 @@ namespace TownOfUs.Roles
         public PlayerControl ClosestPlayer;
         public List<byte> InfectedPlayers = new List<byte>();
         public DateTime LastInfected;
+        public bool PlaguebearerWins { get; set; }
 
         public int InfectedAlive => InfectedPlayers.Count(x => Utils.PlayerById(x) != null && Utils.PlayerById(x).Data != null && !Utils.PlayerById(x).Data.IsDead);
-        public bool CanTransform => PlayerControl.AllPlayerControls.ToArray().Count(x => x != null && x != null && !x.Data.IsDead) <= InfectedAlive;
+        public bool CanTransform => PlayerControl.AllPlayerControls.ToArray().Count(x => x != null && !x.Data.IsDead) <= InfectedAlive;
 
         public Plaguebearer(PlayerControl player) : base(player)
         {
@@ -26,6 +27,33 @@ namespace TownOfUs.Roles
             AddToRoleHistory(RoleType);
             Faction = Faction.Neutral;
             InfectedPlayers.Add(player.PlayerId);
+        }
+
+        internal override bool EABBNOODFGL(ShipStatus __instance)
+        {
+            if (Player.Data.IsDead || Player.Data.Disconnected) return true;
+
+            if (PlayerControl.AllPlayerControls.ToArray().Count(x => !x.Data.IsDead && !x.Data.Disconnected) == 1)
+            {
+                var writer = AmongUsClient.Instance.StartRpcImmediately(
+                    PlayerControl.LocalPlayer.NetId,
+                    (byte)CustomRPC.PlaguebearerWin,
+                    SendOption.Reliable,
+                    -1
+                );
+                writer.Write(Player.PlayerId);
+                Wins();
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                Utils.EndGame();
+                return false;
+            }
+
+            return false;
+        }
+
+        public void Wins()
+        {
+            PlaguebearerWins = true;
         }
 
         public void Loses()
