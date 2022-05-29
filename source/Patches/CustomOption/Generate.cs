@@ -192,7 +192,7 @@ namespace TownOfUs.CustomOption
 
         public static CustomHeaderOption Arsonist;
         public static CustomNumberOption DouseCooldown;
-        public static CustomToggleOption ArsonistGameEnd;
+        public static CustomNumberOption MaxDoused;
 
         public static CustomHeaderOption Undertaker;
         public static CustomNumberOption DragCooldown;
@@ -699,8 +699,9 @@ namespace TownOfUs.CustomOption
 
             Arsonist = new CustomHeaderOption(num++, "<color=#FF4D00FF>Arsonist</color>");
             DouseCooldown =
-                new CustomNumberOption(num++, "Douse Cooldown", 25f, 10f, 40f, 2.5f, CooldownFormat);
-            ArsonistGameEnd = new CustomToggleOption(num++, "Game Continues As Long As Arsonist Is Alive", false);
+                new CustomNumberOption(num++, "Douse Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
+            MaxDoused =
+                new CustomNumberOption(num++, "Maximum Alive Players Doused", 5, 1, 15, 1);
 
             Plaguebearer = new CustomHeaderOption(num++, "<color=#E6FFB3>Plaguebearer</color>");
             InfectCooldown =

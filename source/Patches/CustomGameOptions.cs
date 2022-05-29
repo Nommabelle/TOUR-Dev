@@ -132,7 +132,7 @@ namespace TownOfUs
         public static bool SeeTasksDuringMeeting => Generate.SeeTasksDuringMeeting.Get();
         public static bool SeeTasksWhenDead => Generate.SeeTasksWhenDead.Get();
         public static float DouseCd => Generate.DouseCooldown.Get();
-        public static bool ArsonistGameEnd => Generate.ArsonistGameEnd.Get();
+        public static int MaxDoused => (int)Generate.MaxDoused.Get();
         public static int MaxNeutralRoles => (int)Generate.MaxNeutralRoles.Get();
         public static bool ParallelMedScans => Generate.ParallelMedScans.Get();
         public static EngineerFixPer EngineerFixPer => (EngineerFixPer)Generate.EngineerPer.Get();

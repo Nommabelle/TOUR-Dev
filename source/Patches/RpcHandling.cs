@@ -723,7 +723,7 @@ namespace TownOfUs
                     case CustomRPC.Ignite:
                         var theArsonist = Utils.PlayerById(reader.ReadByte());
                         var theArsonistRole = Role.GetRole<Arsonist>(theArsonist);
-                        global::TownOfUs.NeutralRoles.ArsonistMod.PerformKill.Ignite(theArsonistRole);
+                        theArsonistRole.Ignite();
                         break;
 
                     case CustomRPC.ArsonistWin:

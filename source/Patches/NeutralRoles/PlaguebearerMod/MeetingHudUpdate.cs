@@ -24,7 +24,7 @@ namespace TownOfUs.NeutralRoles.PlaguebearerMod
                     role.InfectedPlayers.Remove(targetId);
                     continue;
                 }
-                if (role.InfectedPlayers.Contains(targetId)) state.NameText.color = Color.black;
+                if (role.InfectedPlayers.Contains(targetId) && role.Player.PlayerId != targetId) state.NameText.color = Color.black;
             }
         }
     }

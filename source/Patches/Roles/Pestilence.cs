@@ -1,9 +1,6 @@
 using Hazel;
 using System;
 using System.Linq;
-using TownOfUs.CrewmateRoles.MedicMod;
-using UnityEngine;
-using TownOfUs.Extensions;
 
 namespace TownOfUs.Roles
 {

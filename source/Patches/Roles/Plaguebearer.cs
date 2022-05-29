@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using Hazel;
-using TownOfUs.Extensions;
-using UnityEngine;
 using Reactor;
 
 namespace TownOfUs.Roles
@@ -59,7 +57,7 @@ namespace TownOfUs.Roles
                 InfectedPlayers.Add(target.PlayerId);
                 var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                     (byte)CustomRPC.Infect, SendOption.Reliable, -1);
-                writer.Write(this.Player.PlayerId);
+                writer.Write(Player.PlayerId);
                 writer.Write(target.PlayerId);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
             }
@@ -68,7 +66,7 @@ namespace TownOfUs.Roles
                 InfectedPlayers.Add(source.PlayerId);
                 var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                     (byte)CustomRPC.Infect, SendOption.Reliable, -1);
-                writer.Write(this.Player.PlayerId);
+                writer.Write(Player.PlayerId);
                 writer.Write(source.PlayerId);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
             }
@@ -76,9 +74,13 @@ namespace TownOfUs.Roles
 
         public void TurnPestilence()
         {
-            Role.RoleDictionary.Remove(this.Player.PlayerId);
-            new Pestilence(this.Player);
-            Coroutines.Start(Utils.FlashCoroutine(Patches.Colors.Pestilence));
+            RoleDictionary.Remove(Player.PlayerId);
+            var role = new Pestilence(Player);
+            if (Player == PlayerControl.LocalPlayer)
+            {
+                Coroutines.Start(Utils.FlashCoroutine(Patches.Colors.Pestilence));
+                role.RegenTask();
+            }
         }
     }
 }
