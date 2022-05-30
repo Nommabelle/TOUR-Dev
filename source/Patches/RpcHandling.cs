@@ -712,6 +712,9 @@ namespace TownOfUs
                     case CustomRPC.SetArsonist:
                         new Arsonist(Utils.PlayerById(reader.ReadByte()));
                         break;
+                    case CustomRPC.SetWerewolf:
+                        new Werewolf(Utils.PlayerById(reader.ReadByte()));
+                        break;
                     case CustomRPC.Douse:
                         var arsonist = Utils.PlayerById(reader.ReadByte());
                         var douseTarget = Utils.PlayerById(reader.ReadByte());
@@ -734,7 +737,15 @@ namespace TownOfUs
                         foreach (var role in Role.AllRoles)
                             if (role.RoleType == RoleEnum.Arsonist)
                                 ((Arsonist) role).Loses();
-
+                        break;
+                    case CustomRPC.WerewolfWin:
+                        var theWerewolfTheRole = Role.AllRoles.FirstOrDefault(x => x.RoleType == RoleEnum.Werewolf);
+                        ((Werewolf)theWerewolfTheRole)?.Wins();
+                        break;
+                    case CustomRPC.WerewolfLose:
+                        foreach (var role in Role.AllRoles)
+                            if (role.RoleType == RoleEnum.Werewolf)
+                                ((Werewolf)role).Loses();
                         break;
                     case CustomRPC.SurvivorImpWin:
                         foreach (var role in Role.AllRoles)
@@ -1089,6 +1100,9 @@ namespace TownOfUs
 
                 if (Check(CustomGameOptions.PlaguebearerOn))
                     NeutralRoles.Add((typeof(Plaguebearer), CustomRPC.SetPlaguebearer, CustomGameOptions.PlaguebearerOn));
+
+                if (Check(CustomGameOptions.WerewolfOn))
+                    NeutralRoles.Add((typeof(Werewolf), CustomRPC.SetWerewolf, CustomGameOptions.WerewolfOn));
 
                 if (Check(CustomGameOptions.ExecutionerOn))
                     NeutralRoles.Add((typeof(Executioner), CustomRPC.SetExecutioner, CustomGameOptions.ExecutionerOn));

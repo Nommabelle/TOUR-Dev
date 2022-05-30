@@ -24,6 +24,7 @@ namespace TownOfUs
                             playerInfo._object.Is(RoleEnum.Glitch) || playerInfo._object.Is(RoleEnum.Executioner) ||
                             playerInfo._object.Is(RoleEnum.Arsonist) || playerInfo._object.Is(RoleEnum.Juggernaut) ||
                             playerInfo._object.Is(RoleEnum.Plaguebearer) || playerInfo._object.Is(RoleEnum.Pestilence) ||
+                            playerInfo._object.Is(RoleEnum.Werewolf) ||
                             playerInfo._object.Is(RoleEnum.Phantom) || playerInfo._object.Is(RoleEnum.Haunter)
                         ))
                         for (var j = 0; j < playerInfo.Tasks.Count; j++)
@@ -50,7 +51,8 @@ namespace TownOfUs
                            || playerControl.Is(RoleEnum.Juggernaut)
                            || playerControl.Is(RoleEnum.Arsonist)
                            || playerControl.Is(RoleEnum.Plaguebearer)
-                           || playerControl.Is(RoleEnum.Pestilence);
+                           || playerControl.Is(RoleEnum.Pestilence)
+                           || playerControl.Is(RoleEnum.Werewolf);
 
                 // If the console is not a sabotage repair console
                 if (flag && !__instance.AllowImpostor)

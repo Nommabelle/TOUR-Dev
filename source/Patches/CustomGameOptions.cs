@@ -54,6 +54,7 @@ namespace TownOfUs
         public static int MysticOn => (int)Generate.MysticOn.Get();
         public static int BlackmailerOn => (int)Generate.BlackmailerOn.Get();
         public static int PlaguebearerOn => (int)Generate.PlaguebearerOn.Get();
+        public static int WerewolfOn => (int)Generate.WerewolfOn.Get();
         public static int TorchOn => (int)Generate.TorchOn.Get();
         public static int DiseasedOn => (int)Generate.DiseasedOn.Get();
         public static int FlashOn => (int)Generate.FlashOn.Get();
@@ -216,6 +217,11 @@ namespace TownOfUs
         public static float BaitMaxDelay => Generate.BaitMaxDelay.Get();
         public static float InfectCd => Generate.InfectCooldown.Get();
         public static float PestKillCd => Generate.PestKillCooldown.Get();
+        public static bool PestVent => Generate.PestVent.Get();
+        public static float RampageCd => Generate.RampageCooldown.Get();
+        public static float RampageDuration => Generate.RampageDuration.Get();
+        public static float RampageKillCd => Generate.RampageKillCooldown.Get();
+        public static bool WerewolfVent => Generate.WerewolfVent.Get();
         public static DisableSkipButtonMeetings SkipButtonDisable =>
             (DisableSkipButtonMeetings)Generate.SkipButtonDisable.Get();
     }

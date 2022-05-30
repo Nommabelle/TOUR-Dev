@@ -14,6 +14,7 @@ namespace TownOfUs.NeutralRoles.PlaguebearerMod
             if (PlayerControl.AllPlayerControls.Count <= 1) return;
             if (PlayerControl.LocalPlayer == null) return;
             if (PlayerControl.LocalPlayer.Data == null) return;
+            if (PlayerControl.LocalPlayer.Data.IsDead) return;
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Plaguebearer)) return;
             var role = Role.GetRole<Plaguebearer>(PlayerControl.LocalPlayer);
 

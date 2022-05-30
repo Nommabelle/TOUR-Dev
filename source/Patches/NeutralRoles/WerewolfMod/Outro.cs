@@ -3,22 +3,22 @@ using HarmonyLib;
 using TownOfUs.Roles;
 using UnityEngine;
 
-namespace TownOfUs.NeutralRoles.PestilenceMod
+namespace TownOfUs.NeutralRoles.WerewolfMod
 {
     [HarmonyPatch(typeof(EndGameManager), nameof(EndGameManager.Start))]
-    public static class Outro
+    public class Outro
     {
         public static void Postfix(EndGameManager __instance)
         {
             var role = Role.AllRoles.FirstOrDefault(x =>
-                x.RoleType == RoleEnum.Pestilence && ((Pestilence)x).PestilenceWins);
+                x.RoleType == RoleEnum.Werewolf && ((Werewolf) x).WerewolfWins);
             if (role == null) return;
-            if (Role.GetRoles(RoleEnum.Jester).Any(x => ((Jester)x).VotedOut)) return;
+            if (Role.GetRoles(RoleEnum.Jester).Any(x => ((Jester) x).VotedOut)) return;
             PoolablePlayer[] array = Object.FindObjectsOfType<PoolablePlayer>();
             array[0].NameText.text = role.ColorString + array[0].NameText.text + "</color>";
             __instance.BackgroundBar.material.color = role.Color;
             var text = Object.Instantiate(__instance.WinText);
-            text.text = "Pestilence wins";
+            text.text = "Werewolf wins";
             text.color = role.Color;
             var pos = __instance.WinText.transform.localPosition;
             pos.y = 1.5f;

@@ -49,6 +49,7 @@ namespace TownOfUs
 
             if (player.Is(RoleEnum.Engineer) || (player.roleAssigned && playerInfo.Role?.Role == RoleTypes.Engineer) ||
                 (player.Is(RoleEnum.Glitch) && CustomGameOptions.GlitchVent) || (player.Is(RoleEnum.Juggernaut) && CustomGameOptions.GlitchVent) ||
+                (player.Is(RoleEnum.Pestilence) && CustomGameOptions.PestVent) || (player.Is(RoleEnum.Werewolf) && CustomGameOptions.WerewolfVent) ||
                 (player.Is(RoleEnum.Jester) && CustomGameOptions.JesterVent))
                 return true;
 

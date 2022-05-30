@@ -30,6 +30,7 @@ namespace TownOfUs
         Mystic,
         Plaguebearer,
         Pestilence,
+        Werewolf,
 
         Miner,
         Swooper,

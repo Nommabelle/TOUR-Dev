@@ -21,7 +21,7 @@ namespace TownOfUs.NeutralRoles.ArsonistMod
 
             if (__instance == role.IgniteButton && role.DousedAlive > 0)
             {
-                if (!__instance.isActiveAndEnabled) return false;
+                if (!__instance.isActiveAndEnabled || __instance.isCoolingDown) return false;
 
                 role.LastDoused = DateTime.UtcNow;
 
@@ -34,7 +34,7 @@ namespace TownOfUs.NeutralRoles.ArsonistMod
             }
 
             if (__instance != DestroyableSingleton<HudManager>.Instance.KillButton) return true;
-            if (!__instance.isActiveAndEnabled) return false;
+            if (!__instance.isActiveAndEnabled || __instance.isCoolingDown) return false;
             if (role.ClosestPlayer == null) return false;
             if (role.DousedAlive == CustomGameOptions.MaxDoused) return false;
             if (role.DousedPlayers.Contains(role.ClosestPlayer.PlayerId)) return false;
