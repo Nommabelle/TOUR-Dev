@@ -26,6 +26,11 @@ namespace TownOfUs.ImpostorRoles.PoisonerMod
             if (!__instance.isActiveAndEnabled) return false;
             if (role.PoisonTimer() > 0) return false;
             if (role.Enabled == true) return false;
+            if (role.Player.inVent)
+            {
+                role.PoisonButton.SetCoolDown(0.01f, 1f);
+                return false;
+            }
             if (role.ClosestPlayer.IsOnAlert())
             {
                 if (role.ClosestPlayer.IsShielded())
