@@ -130,6 +130,7 @@ namespace TownOfUs.Roles
             {
                 if (__gInstance.KillTarget != null)
                 {
+                    if (__gInstance.Player.inVent) return;
                     if (__gInstance.KillTarget.IsOnAlert())
                     {
                         if (__gInstance.KillTarget.IsShielded())
