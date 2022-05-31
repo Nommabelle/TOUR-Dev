@@ -742,7 +742,7 @@ namespace TownOfUs.CustomOption
             RampageKillCooldown =
                 new CustomNumberOption(num++, "Rampage Kill Cooldown", 5f, 0.5f, 15f, 0.5f, CooldownFormat);
             WerewolfVent =
-                new CustomToggleOption(num++, "Werewolf Can Vent", false);
+                new CustomToggleOption(num++, "Werewolf Can Vent When Rampaged", false);
 
             Grenadier =
                 new CustomHeaderOption(num++, "<color=#FF0000FF>Grenadier</color>");
