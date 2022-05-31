@@ -101,6 +101,11 @@ namespace TownOfUs.ImpostorRoles.PoisonerMod
                         AmongUsClient.Instance.FinishRpcImmediately(writer3);
                         // role.Player.SetKillTimer(0);
                     }
+                    else
+                    {
+                        role.LastPoisoned.AddSeconds(CustomGameOptions.ProtectKCReset + 0.01f);
+                        role.PoisonButton.SetCoolDown(0.01f, 1f);
+                    }
                 }
                 return false;
             }

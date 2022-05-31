@@ -68,6 +68,10 @@ namespace TownOfUs
                             Utils.RpcMurderPlayer(PlayerControl.LocalPlayer, target);
                             PlayerControl.LocalPlayer.SetKillTimer(PlayerControl.GameOptions.KillCooldown);
                         }
+                        else
+                        {
+                            PlayerControl.LocalPlayer.SetKillTimer(CustomGameOptions.ProtectKCReset + 0.01f);
+                        }
                     }
                 }
                 return false;

@@ -179,6 +179,10 @@ namespace TownOfUs.Roles
                             __gInstance.JuggKills = __gInstance.JuggKills + 1;
                             __gInstance.Player.SetKillTimer(CustomGameOptions.GlitchKillCooldown + 5.0f - 5.0f * __gInstance.JuggKills);
                         }
+                        else if (!CustomGameOptions.KilledOnAlert && __gInstance.Player.IsProtected())
+                        {
+                            __gInstance.Player.SetKillTimer(CustomGameOptions.ProtectKCReset);
+                        }
                         else
                         {
                             Utils.RpcMurderPlayer(__gInstance.KillTarget, __gInstance.Player);

@@ -521,6 +521,10 @@ namespace TownOfUs.Roles
                             Utils.RpcMurderPlayer(__gInstance.Player, __gInstance.KillTarget);
                             __gInstance.Player.SetKillTimer(CustomGameOptions.GlitchKillCooldown);
                         }
+                        else if (!CustomGameOptions.KilledOnAlert && __gInstance.Player.IsProtected())
+                        {
+                            __gInstance.Player.SetKillTimer(CustomGameOptions.ProtectKCReset);
+                        }
                         else
                         {
                             Utils.RpcMurderPlayer(__gInstance.KillTarget, __gInstance.Player);
