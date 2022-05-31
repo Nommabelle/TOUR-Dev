@@ -41,10 +41,8 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption PhantomOn;
 
         public static CustomHeaderOption NeutralKillingRoles;
-        public static CustomNumberOption ArsonistOn;
-        public static CustomNumberOption PlaguebearerOn;
         public static CustomNumberOption GlitchOn;
-        public static CustomNumberOption WerewolfOn;
+        public static CustomNumberOption ArsonistOn;
 
         public static CustomHeaderOption ImpostorConcealingRoles;
         public static CustomNumberOption MorphlingOn;
@@ -68,8 +66,8 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption TorchOn;
 
         public static CustomHeaderOption GlobalModifiers;
-        public static CustomNumberOption BlindOn;
         public static CustomNumberOption ButtonBarryOn;
+        public static CustomNumberOption DrunkOn;
         public static CustomNumberOption FlashOn;
         public static CustomNumberOption GiantOn;
         public static CustomNumberOption LoversOn;
@@ -103,7 +101,6 @@ namespace TownOfUs.CustomOption
         public static CustomToggleOption SheriffKillsGlitch;
         public static CustomToggleOption SheriffKillsExecutioner;
         public static CustomToggleOption SheriffKillsArsonist;
-        public static CustomToggleOption SheriffKillsPlaguebearer;
         public static CustomNumberOption SheriffKillCd;
         public static CustomToggleOption SheriffBodyReport;
 
@@ -193,7 +190,7 @@ namespace TownOfUs.CustomOption
 
         public static CustomHeaderOption Arsonist;
         public static CustomNumberOption DouseCooldown;
-        public static CustomNumberOption MaxDoused;
+        public static CustomToggleOption ArsonistGameEnd;
 
         public static CustomHeaderOption Undertaker;
         public static CustomNumberOption DragCooldown;
@@ -292,17 +289,6 @@ namespace TownOfUs.CustomOption
         public static CustomHeaderOption Blackmailer;
         public static CustomNumberOption BlackmailCooldown;
 
-        public static CustomHeaderOption Plaguebearer;
-        public static CustomNumberOption InfectCooldown;
-        public static CustomNumberOption PestKillCooldown;
-        public static CustomToggleOption PestVent;
-
-        public static CustomHeaderOption Werewolf;
-        public static CustomNumberOption RampageCooldown;
-        public static CustomNumberOption RampageDuration;
-        public static CustomNumberOption RampageKillCooldown;
-        public static CustomToggleOption WerewolfVent;
-
         public static CustomHeaderOption Giant;
         public static CustomNumberOption GiantSlow;
 
@@ -398,11 +384,7 @@ namespace TownOfUs.CustomOption
             NeutralKillingRoles = new CustomHeaderOption(num++, "Neutral Killing Roles");
             ArsonistOn = new CustomNumberOption(true, num++, "<color=#FF4D00FF>Arsonist</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
-            PlaguebearerOn = new CustomNumberOption(true, num++, "<color=#E6FFB3FF>Plaguebearer</color>", 0f, 0f, 100f, 10f,
-                PercentFormat);
             GlitchOn = new CustomNumberOption(true, num++, "<color=#00FF00FF>The Glitch</color>", 0f, 0f, 100f, 10f,
-                PercentFormat);
-            WerewolfOn = new CustomNumberOption(true, num++, "<color=#A86629FF>Werewolf</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
 
             ImpostorConcealingRoles = new CustomHeaderOption(num++, "Impostor Concealing Roles");
@@ -440,9 +422,9 @@ namespace TownOfUs.CustomOption
                 PercentFormat);
 
             GlobalModifiers = new CustomHeaderOption(num++, "Global Modifiers");
-            BlindOn = new CustomNumberOption(true, num++, "<color=#AAAAAAFF>Blind</color>", 0f, 0f, 100f, 10f,
-                PercentFormat);
             ButtonBarryOn = new CustomNumberOption(true, num++, "<color=#E600FFFF>Button Barry</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
+            DrunkOn = new CustomNumberOption(true, num++, "<color=#758000FF>Drunk</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             FlashOn = new CustomNumberOption(true, num++, "<color=#FF8080FF>Flash</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
@@ -557,8 +539,6 @@ namespace TownOfUs.CustomOption
                 new CustomToggleOption(num++, "Sheriff Kills Executioner", false);
             SheriffKillsArsonist =
                 new CustomToggleOption(num++, "Sheriff Kills Arsonist", false);
-            SheriffKillsPlaguebearer =
-                new CustomToggleOption(num++, "Sheriff Kills Plaguebearer", false);
             SheriffKillCd =
                 new CustomNumberOption(num++, "Sheriff Kill Cooldown", 25f, 10f, 40f, 2.5f, CooldownFormat);
             SheriffBodyReport = new CustomToggleOption(num++, "Sheriff Can Report Who They've Killed");
@@ -709,17 +689,8 @@ namespace TownOfUs.CustomOption
 
             Arsonist = new CustomHeaderOption(num++, "<color=#FF4D00FF>Arsonist</color>");
             DouseCooldown =
-                new CustomNumberOption(num++, "Douse Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
-            MaxDoused =
-                new CustomNumberOption(num++, "Maximum Alive Players Doused", 5, 1, 15, 1);
-
-            Plaguebearer = new CustomHeaderOption(num++, "<color=#E6FFB3FF>Plaguebearer</color>");
-            InfectCooldown =
-                new CustomNumberOption(num++, "Infect Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
-            PestKillCooldown =
-                new CustomNumberOption(num++, "Pestilence Kill Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
-            PestVent =
-                new CustomToggleOption(num++, "Pestilence Can Vent", false);
+                new CustomNumberOption(num++, "Douse Cooldown", 25f, 10f, 40f, 2.5f, CooldownFormat);
+            ArsonistGameEnd = new CustomToggleOption(num++, "Game Continues As Long As Arsonist Is Alive", false);
 
             TheGlitch =
                 new CustomHeaderOption(num++, "<color=#00FF00FF>The Glitch</color>");
@@ -733,16 +704,6 @@ namespace TownOfUs.CustomOption
                 new CustomStringOption(num++, "Glitch Hack Distance", new[] { "Short", "Normal", "Long" });
             GlitchVent =
                 new CustomToggleOption(num++, "Glitch Can Vent", false);
-
-            Werewolf = new CustomHeaderOption(num++, "<color=#A86629FF>Werewolf</color>");
-            RampageCooldown =
-                new CustomNumberOption(num++, "Rampage Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
-            RampageDuration =
-                new CustomNumberOption(num++, "Rampage Duration", 25f, 10f, 60f, 2.5f, CooldownFormat);
-            RampageKillCooldown =
-                new CustomNumberOption(num++, "Rampage Kill Cooldown", 5f, 0.5f, 15f, 0.5f, CooldownFormat);
-            WerewolfVent =
-                new CustomToggleOption(num++, "Werewolf Can Vent When Rampaged", false);
 
             Grenadier =
                 new CustomHeaderOption(num++, "<color=#FF0000FF>Grenadier</color>");

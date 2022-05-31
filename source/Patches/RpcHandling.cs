@@ -160,7 +160,7 @@ namespace TownOfUs
                 Role.Gen<Modifier>(type, canHaveModifier, rpc);
             }
 
-            canHaveModifier.RemoveAll(player => player.Is(RoleEnum.Juggernaut) || player.Is(RoleEnum.Werewolf) || player.Is(RoleEnum.Plaguebearer) || player.Is(Faction.Impostors));
+            canHaveModifier.RemoveAll(player => player.Is(RoleEnum.Juggernaut) || player.Is(Faction.Impostors));
             canHaveModifier.Shuffle();
 
             while (canHaveModifier.Count > 0 && CrewmateModifiers.Count > 0)
@@ -703,17 +703,14 @@ namespace TownOfUs
                     case CustomRPC.SetTiebreaker:
                         new Tiebreaker(Utils.PlayerById(reader.ReadByte()));
                         break;
-                    case CustomRPC.SetBlind:
-                        new Blind(Utils.PlayerById(reader.ReadByte()));
+                    case CustomRPC.SetDrunk:
+                        new Drunk(Utils.PlayerById(reader.ReadByte()));
                         break;
                     case CustomRPC.SetSleuth:
                         new Sleuth(Utils.PlayerById(reader.ReadByte()));
                         break;
                     case CustomRPC.SetArsonist:
                         new Arsonist(Utils.PlayerById(reader.ReadByte()));
-                        break;
-                    case CustomRPC.SetWerewolf:
-                        new Werewolf(Utils.PlayerById(reader.ReadByte()));
                         break;
                     case CustomRPC.Douse:
                         var arsonist = Utils.PlayerById(reader.ReadByte());
@@ -726,7 +723,7 @@ namespace TownOfUs
                     case CustomRPC.Ignite:
                         var theArsonist = Utils.PlayerById(reader.ReadByte());
                         var theArsonistRole = Role.GetRole<Arsonist>(theArsonist);
-                        theArsonistRole.Ignite();
+                        global::TownOfUs.NeutralRoles.ArsonistMod.PerformKill.Ignite(theArsonistRole);
                         break;
 
                     case CustomRPC.ArsonistWin:
@@ -737,15 +734,7 @@ namespace TownOfUs
                         foreach (var role in Role.AllRoles)
                             if (role.RoleType == RoleEnum.Arsonist)
                                 ((Arsonist) role).Loses();
-                        break;
-                    case CustomRPC.WerewolfWin:
-                        var theWerewolfTheRole = Role.AllRoles.FirstOrDefault(x => x.RoleType == RoleEnum.Werewolf);
-                        ((Werewolf)theWerewolfTheRole)?.Wins();
-                        break;
-                    case CustomRPC.WerewolfLose:
-                        foreach (var role in Role.AllRoles)
-                            if (role.RoleType == RoleEnum.Werewolf)
-                                ((Werewolf)role).Loses();
+
                         break;
                     case CustomRPC.SurvivorImpWin:
                         foreach (var role in Role.AllRoles)
@@ -774,30 +763,6 @@ namespace TownOfUs
                             {
                                 ((GuardianAngel)role).ImpTargetLose();
                             }
-                        break;
-                    case CustomRPC.PlaguebearerWin:
-                        var thePlaguebearerTheRole = Role.AllRoles.FirstOrDefault(x => x.RoleType == RoleEnum.Plaguebearer);
-                        ((Plaguebearer)thePlaguebearerTheRole)?.Wins();
-                        break;
-                    case CustomRPC.PlaguebearerLose:
-                        foreach (var role in Role.AllRoles)
-                            if (role.RoleType == RoleEnum.Plaguebearer)
-                                ((Plaguebearer)role).Loses();
-                        break;
-                    case CustomRPC.Infect:
-                        Role.GetRole<Plaguebearer>(Utils.PlayerById(reader.ReadByte())).InfectedPlayers.Add(reader.ReadByte());
-                        break;
-                    case CustomRPC.TurnPestilence:
-                        Role.GetRole<Plaguebearer>(Utils.PlayerById(reader.ReadByte())).TurnPestilence();
-                        break;
-                    case CustomRPC.PestilenceWin:
-                        var thePestilenceTheRole = Role.AllRoles.FirstOrDefault(x => x.RoleType == RoleEnum.Pestilence);
-                        ((Pestilence)thePestilenceTheRole)?.Wins();
-                        break;
-                    case CustomRPC.PestilenceLose:
-                        foreach (var role in Role.AllRoles)
-                            if (role.RoleType == RoleEnum.Pestilence)
-                                ((Pestilence)role).Loses();
                         break;
                     case CustomRPC.SetImpostor:
                         new Impostor(Utils.PlayerById(reader.ReadByte()));
@@ -977,9 +942,6 @@ namespace TownOfUs
                         traitorRole.RegenTask();
                         SetTraitor.TurnImp(traitor);
                         break;
-                    case CustomRPC.SetPlaguebearer:
-                        new Plaguebearer(Utils.PlayerById(reader.ReadByte()));
-                        break;
                     case CustomRPC.AddMayorVoteBank:
                         Role.GetRole<Mayor>(Utils.PlayerById(reader.ReadByte())).VoteBank += reader.ReadInt32();
                         break;
@@ -1098,12 +1060,6 @@ namespace TownOfUs
                 if (Check(CustomGameOptions.ArsonistOn))
                     NeutralRoles.Add((typeof(Arsonist), CustomRPC.SetArsonist, CustomGameOptions.ArsonistOn));
 
-                if (Check(CustomGameOptions.PlaguebearerOn))
-                    NeutralRoles.Add((typeof(Plaguebearer), CustomRPC.SetPlaguebearer, CustomGameOptions.PlaguebearerOn));
-
-                if (Check(CustomGameOptions.WerewolfOn))
-                    NeutralRoles.Add((typeof(Werewolf), CustomRPC.SetWerewolf, CustomGameOptions.WerewolfOn));
-
                 if (Check(CustomGameOptions.ExecutionerOn))
                     NeutralRoles.Add((typeof(Executioner), CustomRPC.SetExecutioner, CustomGameOptions.ExecutionerOn));
 
@@ -1158,8 +1114,8 @@ namespace TownOfUs
                 if (Check(CustomGameOptions.FlashOn))
                     GlobalModifiers.Add((typeof(Flash), CustomRPC.SetFlash, CustomGameOptions.FlashOn));
 
-                if (Check(CustomGameOptions.BlindOn))
-                    GlobalModifiers.Add((typeof(Blind), CustomRPC.SetBlind, CustomGameOptions.BlindOn));
+                if (Check(CustomGameOptions.DrunkOn))
+                    GlobalModifiers.Add((typeof(Drunk), CustomRPC.SetDrunk, CustomGameOptions.DrunkOn));
 
                 if (Check(CustomGameOptions.GiantOn))
                     GlobalModifiers.Add((typeof(Giant), CustomRPC.SetGiant, CustomGameOptions.GiantOn));

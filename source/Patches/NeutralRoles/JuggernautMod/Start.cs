@@ -1,19 +1,19 @@
-using System;
+﻿using System;
+using System.Linq;
 using HarmonyLib;
 using TownOfUs.Roles;
 
 namespace TownOfUs.NeutralRoles.JuggernautMod
 {
     [HarmonyPatch(typeof(IntroCutscene._CoBegin_d__19), nameof(IntroCutscene._CoBegin_d__19.MoveNext))]
-    public static class Start
+    internal class Start
     {
-        public static void Postfix(IntroCutscene._CoBegin_d__19 __instance)
+        private static void Postfix(IntroCutscene._CoBegin_d__19 __instance)
         {
-            foreach (var role in Role.GetRoles(RoleEnum.Juggernaut))
+            var juggernaut = Role.AllRoles.FirstOrDefault(x => x.RoleType == RoleEnum.Juggernaut);
+            if (juggernaut != null)
             {
-                var juggernaut = (Juggernaut)role;
-                juggernaut.LastKill = DateTime.UtcNow;
-                juggernaut.LastKill = juggernaut.LastKill.AddSeconds(CustomGameOptions.InitialCooldowns - 5.0f - CustomGameOptions.GlitchKillCooldown);
+                ((Juggernaut)juggernaut).LastKill = DateTime.UtcNow.AddSeconds(CustomGameOptions.InitialCooldowns + (CustomGameOptions.GlitchKillCooldown + 5.0f) * -1);
             }
         }
     }

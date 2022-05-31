@@ -11,9 +11,8 @@ namespace TownOfUs.Roles
         public bool ArsonistWins;
         public PlayerControl ClosestPlayer;
         public List<byte> DousedPlayers = new List<byte>();
+        public bool IgniteUsed;
         public DateTime LastDoused;
-
-        public int DousedAlive => DousedPlayers.Count(x => Utils.PlayerById(x) != null && Utils.PlayerById(x).Data != null && !Utils.PlayerById(x).Data.IsDead);
 
 
         public Arsonist(PlayerControl player) : base(player)
@@ -41,9 +40,7 @@ namespace TownOfUs.Roles
 
         internal override bool EABBNOODFGL(ShipStatus __instance)
         {
-            if (Player.Data.IsDead || Player.Data.Disconnected) return true;
-
-            if (PlayerControl.AllPlayerControls.ToArray().Count(x => !x.Data.IsDead && !x.Data.Disconnected) == 1)
+            if (PlayerControl.AllPlayerControls.ToArray().Count(x => !x.Data.IsDead && !x.Data.Disconnected) == 0)
             {
                 var writer = AmongUsClient.Instance.StartRpcImmediately(
                     PlayerControl.LocalPlayer.NetId,
@@ -58,7 +55,9 @@ namespace TownOfUs.Roles
                 return false;
             }
 
-            return false;
+            if (IgniteUsed || Player.Data.IsDead) return true;
+
+            return !CustomGameOptions.ArsonistGameEnd;
         }
 
 
@@ -71,6 +70,22 @@ namespace TownOfUs.Roles
         public void Loses()
         {
             LostByRPC = true;
+        }
+
+        public bool CheckEveryoneDoused()
+        {
+            var arsoId = Player.PlayerId;
+            foreach (var player in PlayerControl.AllPlayerControls)
+            {
+                if (
+                    player.PlayerId == arsoId ||
+                    player.Data.IsDead ||
+                    player.Data.Disconnected
+                ) continue;
+                if (!DousedPlayers.Contains(player.PlayerId)) return false;
+            }
+
+            return true;
         }
 
         protected override void IntroPrefix(IntroCutscene._ShowTeam_d__21 __instance)
@@ -88,23 +103,6 @@ namespace TownOfUs.Roles
             var flag2 = num - (float) timeSpan.TotalMilliseconds < 0f;
             if (flag2) return 0;
             return (num - (float) timeSpan.TotalMilliseconds) / 1000f;
-        }
-
-        public void Ignite()
-        {
-            System.Console.WriteLine("Ignite 1");
-            foreach (var playerId in DousedPlayers)
-            {
-                var player = Utils.PlayerById(playerId);
-                if (
-                    player == null ||
-                    player.Data.Disconnected ||
-                    player.Data.IsDead
-                ) continue;
-                Utils.MurderPlayer(Player, player);
-            }
-            DousedPlayers.Clear();
-            System.Console.WriteLine("Ignite 2");
         }
     }
 }

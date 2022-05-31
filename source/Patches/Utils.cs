@@ -184,15 +184,6 @@ namespace TownOfUs
             });
         }
 
-        public static bool IsInfected(this PlayerControl player)
-        {
-            return Role.GetRoles(RoleEnum.Plaguebearer).Any(role =>
-            {
-                var plaguebearer = (Plaguebearer)role;
-                return plaguebearer != null && (plaguebearer.InfectedPlayers.Contains(player.PlayerId) || player.PlayerId == plaguebearer.Player.PlayerId);
-            });
-        }
-
         public static PlayerControl GetClosestPlayer(PlayerControl refPlayer, List<PlayerControl> AllPlayers)
         {
             var num = double.MaxValue;
@@ -271,7 +262,6 @@ namespace TownOfUs
 
         public static void MurderPlayer(PlayerControl killer, PlayerControl target)
         {
-            if (target.Is(RoleEnum.Pestilence)) return;
             foreach (var player in Murder.KilledPlayers)
             {
                 if (player.KillerId == killer.PlayerId)
@@ -361,7 +351,7 @@ namespace TownOfUs
                     target.myTasks.Insert(0, importantTextTask);
                 }
 
-                if (!killer.Is(RoleEnum.Poisoner) && !killer.Is(RoleEnum.Arsonist))
+                if (!killer.Is(RoleEnum.Poisoner))
                 {
                     killer.MyPhysics.StartCoroutine(killer.KillAnimations.Random().CoPerformKill(killer, target));
                 }
@@ -483,7 +473,7 @@ namespace TownOfUs
                 }
                 
             }
-
+            
         }
 
         public static IEnumerator FlashCoroutine(Color color, float waitfor = 1f, float alpha = 0.3f)

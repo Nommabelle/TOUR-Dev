@@ -32,18 +32,8 @@ namespace TownOfUs.CrewmateRoles.SheriffMod
                         role.ClosestPlayer.Is(RoleEnum.Glitch) && CustomGameOptions.SheriffKillsGlitch ||
                         role.ClosestPlayer.Is(RoleEnum.Juggernaut) && CustomGameOptions.SheriffKillsGlitch ||
                         role.ClosestPlayer.Is(RoleEnum.Executioner) && CustomGameOptions.SheriffKillsExecutioner ||
-                        role.ClosestPlayer.Is(RoleEnum.Arsonist) && CustomGameOptions.SheriffKillsArsonist ||
-                        role.ClosestPlayer.Is(RoleEnum.Plaguebearer) && CustomGameOptions.SheriffKillsPlaguebearer;
+                        role.ClosestPlayer.Is(RoleEnum.Arsonist) && CustomGameOptions.SheriffKillsArsonist;
 
-            if (role.ClosestPlayer.Is(RoleEnum.Pestilence))
-            {
-                Utils.RpcMurderPlayer(role.ClosestPlayer, PlayerControl.LocalPlayer);
-                return false;
-            }
-            if (role.ClosestPlayer.IsInfected() || role.Player.IsInfected())
-            {
-                foreach (var pb in Role.GetRoles(RoleEnum.Plaguebearer)) ((Plaguebearer)pb).RpcSpreadInfection(role.ClosestPlayer, role.Player);
-            }
             if (role.ClosestPlayer.IsOnAlert())
             {
                 if (role.ClosestPlayer.IsShielded())

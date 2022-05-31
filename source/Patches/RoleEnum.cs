@@ -28,9 +28,6 @@ namespace TownOfUs
         Survivor,
         GuardianAngel,
         Mystic,
-        Plaguebearer,
-        Pestilence,
-        Werewolf,
 
         Miner,
         Swooper,
@@ -58,11 +55,11 @@ namespace TownOfUs
         Diseased,
         Flash,
         Tiebreaker,
+        Drunk,
         Giant,
         ButtonBarry,
         Bait,
-        Sleuth,
-        Blind
+        Sleuth
     }
 
     public enum AbilityEnum

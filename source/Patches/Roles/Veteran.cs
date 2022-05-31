@@ -26,6 +26,7 @@ namespace TownOfUs.Roles
             AddToRoleHistory(RoleType);
 
             UsesLeft = CustomGameOptions.MaxAlerts;
+            if (UsesLeft == 0) UsesLeft = -1;
         }
 
         public bool OnAlert => TimeRemaining > 0f;
