@@ -25,6 +25,15 @@ namespace TownOfUs.CrewmateRoles.SeerMod
                 PlayerControl.LocalPlayer.GetTruePosition()) > maxDistance) return false;
             if (role.ClosestPlayer == null) return false;
             var playerId = role.ClosestPlayer.PlayerId;
+            if (role.ClosestPlayer.Is(RoleEnum.Pestilence))
+            {
+                Utils.RpcMurderPlayer(role.ClosestPlayer, PlayerControl.LocalPlayer);
+                return false;
+            }
+            if (role.ClosestPlayer.IsInfected() || role.Player.IsInfected())
+            {
+                foreach (var pb in Role.GetRoles(RoleEnum.Plaguebearer)) ((Plaguebearer)pb).RpcSpreadInfection(role.ClosestPlayer, role.Player);
+            }
             if (role.ClosestPlayer.IsOnAlert())
             {
                 if (role.Player.IsShielded())

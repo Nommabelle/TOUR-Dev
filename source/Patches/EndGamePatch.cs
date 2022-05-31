@@ -77,6 +77,9 @@ namespace TownOfUs.Patches {
                     else if (role.Value == RoleEnum.GuardianAngel) { playerRole += "<color=#" + Patches.Colors.GuardianAngel.ToHtmlStringRGBA() + ">Guardian Angel</color> > "; }
                     else if (role.Value == RoleEnum.Mystic) { playerRole += "<color=#" + Patches.Colors.Mystic.ToHtmlStringRGBA() + ">Mystic</color> > "; }
                     else if (role.Value == RoleEnum.Blackmailer) { playerRole += "<color=#" + Patches.Colors.Impostor.ToHtmlStringRGBA() + ">Blackmailer</color> > "; }
+                    else if (role.Value == RoleEnum.Plaguebearer) { playerRole += "<color=#" + Patches.Colors.Plaguebearer.ToHtmlStringRGBA() + ">Plaguebearer</color> > "; }
+                    else if (role.Value == RoleEnum.Pestilence) { playerRole += "<color=#" + Patches.Colors.Pestilence.ToHtmlStringRGBA() + ">Pestilence</color> > "; }
+                    else if (role.Value == RoleEnum.Werewolf) { playerRole += "<color=#" + Patches.Colors.Werewolf.ToHtmlStringRGBA() + ">Werewolf</color> > "; }
                 }
                 playerRole = playerRole.Remove(playerRole.Length - 3);
 
@@ -84,12 +87,12 @@ namespace TownOfUs.Patches {
                     playerRole += " (<color=#" + Patches.Colors.Giant.ToHtmlStringRGBA() + ">Giant</color>)";
                 } else if (playerControl.Is(ModifierEnum.ButtonBarry)) {
                     playerRole += " (<color=#" + Patches.Colors.ButtonBarry.ToHtmlStringRGBA() + ">Button Barry</color>)";
+                } else if (playerControl.Is(ModifierEnum.Blind)) {
+                    playerRole += " (<color=#" + Patches.Colors.Blind.ToHtmlStringRGBA() + ">Blind</color>)";
                 } else if (playerControl.Is(ModifierEnum.Bait)) {
                     playerRole += " (<color=#" + Patches.Colors.Bait.ToHtmlStringRGBA() + ">Bait</color>)";
                 } else if (playerControl.Is(ModifierEnum.Diseased)) {
                     playerRole += " (<color=#" + Patches.Colors.Diseased.ToHtmlStringRGBA() + ">Diseased</color>)";
-                } else if (playerControl.Is(ModifierEnum.Drunk)) {
-                    playerRole += " (<color=#" + Patches.Colors.Drunk.ToHtmlStringRGBA() + ">Drunk</color>)";
                 } else if (playerControl.Is(ModifierEnum.Flash)) {
                     playerRole += " (<color=#" + Patches.Colors.Flash.ToHtmlStringRGBA() + ">Flash</color>)";
                 } else if (playerControl.Is(ModifierEnum.Tiebreaker)) {

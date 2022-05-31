@@ -41,18 +41,22 @@ namespace TownOfUs.NeutralRoles.ArsonistMod
 
             role.IgniteButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
             __instance.KillButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
-            role.IgniteButton.SetCoolDown(0f, 1f);
-            __instance.KillButton.SetCoolDown(role.DouseTimer(), CustomGameOptions.DouseCd);
+            role.IgniteButton.SetCoolDown(role.DouseTimer(), CustomGameOptions.DouseCd);
+            if (role.DousedAlive < CustomGameOptions.MaxDoused)
+            {
+                __instance.KillButton.SetCoolDown(role.DouseTimer(), CustomGameOptions.DouseCd);
+            }
 
             var notDoused = PlayerControl.AllPlayerControls.ToArray().Where(
                 player => !role.DousedPlayers.Contains(player.PlayerId)
             ).ToList();
 
-            Utils.SetTarget(ref role.ClosestPlayer, __instance.KillButton, float.NaN, notDoused);
+            if (role.DousedAlive < CustomGameOptions.MaxDoused)
+            {
+                Utils.SetTarget(ref role.ClosestPlayer, __instance.KillButton, float.NaN, notDoused);
+            }
 
-
-            if (!role.IgniteButton.isCoolingDown & role.IgniteButton.isActiveAndEnabled & !role.IgniteUsed &
-                role.CheckEveryoneDoused())
+            if (!role.IgniteButton.isCoolingDown && role.IgniteButton.isActiveAndEnabled && role.DousedAlive > 0)
             {
                 role.IgniteButton.graphic.color = Palette.EnabledColor;
                 role.IgniteButton.graphic.material.SetFloat("_Desat", 0f);

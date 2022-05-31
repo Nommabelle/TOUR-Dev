@@ -60,6 +60,8 @@ namespace TownOfUs.Roles
                 if (CustomGameOptions.ArsonistOn > 0) ColorMapping.Add("Arsonist", Colors.Arsonist);
                 if (CustomGameOptions.GlitchOn > 0) ColorMapping.Add("The Glitch", Colors.Glitch);
                 if (CustomGameOptions.GlitchOn > 0) ColorMapping.Add("Juggernaut", Colors.Juggernaut);
+                if (CustomGameOptions.PlaguebearerOn > 0) ColorMapping.Add("Plaguebearer", Colors.Plaguebearer);
+                if (CustomGameOptions.WerewolfOn > 0) ColorMapping.Add("Werewolf", Colors.Werewolf);
             }
 
             // Sorts the list alphabetically. 

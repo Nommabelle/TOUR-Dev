@@ -475,6 +475,15 @@ namespace TownOfUs.Roles
                 if (__gInstance.KillTarget != null)
                 {
                     if (__gInstance.Player.inVent) return;
+                    if (__gInstance.KillTarget.Is(RoleEnum.Pestilence))
+                    {
+                        Utils.RpcMurderPlayer(__gInstance.KillTarget, __gInstance.Player);
+                        return;
+                    }
+                    if (__gInstance.KillTarget.IsInfected() || __gInstance.Player.IsInfected())
+                    {
+                        foreach (var pb in Role.GetRoles(RoleEnum.Plaguebearer)) ((Plaguebearer)pb).RpcSpreadInfection(__gInstance.KillTarget, __gInstance.Player);
+                    }
                     if (__gInstance.KillTarget.IsOnAlert())
                     {
                         if (__gInstance.KillTarget.IsShielded())
@@ -612,6 +621,15 @@ namespace TownOfUs.Roles
             {
                 if (__gInstance.HackTarget != null)
                 {
+                    if (__gInstance.HackTarget.Is(RoleEnum.Pestilence))
+                    {
+                        Utils.RpcMurderPlayer(__gInstance.HackTarget, __gInstance.Player);
+                        return;
+                    }
+                    if (__gInstance.HackTarget.IsInfected() || __gInstance.Player.IsInfected())
+                    {
+                        foreach (var pb in Role.GetRoles(RoleEnum.Plaguebearer)) ((Plaguebearer)pb).RpcSpreadInfection(__gInstance.HackTarget, __gInstance.Player);
+                    }
                     if (__gInstance.HackTarget.IsOnAlert())
                     {
                         if (__gInstance.Player.IsShielded())

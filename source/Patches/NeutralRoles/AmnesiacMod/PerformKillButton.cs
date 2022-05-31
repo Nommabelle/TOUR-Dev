@@ -104,6 +104,8 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 case RoleEnum.Juggernaut:
                 case RoleEnum.Survivor:
                 case RoleEnum.GuardianAngel:
+                case RoleEnum.Plaguebearer:
+                case RoleEnum.Pestilence:
 
                     rememberImp = false;
 
@@ -363,6 +365,19 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
             {
                 var dienerRole = Role.GetRole<Undertaker>(amnesiac);
                 dienerRole.LastDragged = DateTime.UtcNow;
+            }
+
+            else if (role == RoleEnum.Plaguebearer)
+            {
+                var plagueRole = Role.GetRole<Plaguebearer>(amnesiac);
+                plagueRole.InfectedPlayers.Clear();
+                plagueRole.LastInfected = DateTime.UtcNow;
+            }
+
+            else if (role == RoleEnum.Pestilence)
+            {
+                var pestRole = Role.GetRole<Pestilence>(amnesiac);
+                pestRole.LastKill = DateTime.UtcNow;
             }
 
             else if (!(amnesiac.Is(RoleEnum.Altruist) || amnesiac.Is(RoleEnum.Amnesiac) || amnesiac.Is(Faction.Impostors)))
