@@ -67,6 +67,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 # Releases
 | Among Us - Version| Mod Version | Link |
 |----------|-------------|-----------------|
+| 2022.3.29s & 2022.3.29e & 2022.4.19e | v3.1.1 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.1.1/ToU.v3.1.1.zip) |
 | 2022.3.29s & 2022.3.29e & 2022.4.19e | v3.1.0 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.1.0/ToU.v3.1.0.zip) |
 | 2022.3.29s & 2022.3.29e & 2022.4.19e | v3.0.1 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.0.1/ToU.v3.0.1.zip) |
 | 2022.3.29s & 2022.3.29e & 2022.4.19e | v3.0.0 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.0.0/ToU.v3.0.0.zip) |
@@ -113,6 +114,13 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 
 <details>
   <summary> Changelog </summary>
+  <details>
+  <summary> v3.1.1 </summary>
+  <ul> <li>Bug Fix: Impostors on high ping can no longer kill multiple players</li> </ul>
+  <ul> <li>Bug Fix: Poisoned players now die before a meeting and not during a meeting</li> </ul>
+  <ul> <li>Bug Fix: Glitch and Poisoner can no longer kill/poison in vents</li> </ul>
+  <ul> <li>Bug Fix: Underdog now gets the correct cooldown when killing a diseased player</li> </ul>
+  </details>
   <details>
   <summary> v3.1.0 </summary>
   <ul> <li>Submerged Compatibility mostly thanks to MyDragonBreath</li> </ul>
