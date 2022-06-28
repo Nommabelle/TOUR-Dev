@@ -31,6 +31,15 @@ namespace TownOfUs.ImpostorRoles.PoisonerMod
                 role.PoisonButton.SetCoolDown(0.01f, 1f);
                 return false;
             }
+            if (role.ClosestPlayer.Is(RoleEnum.Pestilence))
+            {
+                Utils.RpcMurderPlayer(role.ClosestPlayer, PlayerControl.LocalPlayer);
+                return false;
+            }
+            if (role.ClosestPlayer.IsInfected() || role.Player.IsInfected())
+            {
+                foreach (var pb in Role.GetRoles(RoleEnum.Plaguebearer)) ((Plaguebearer)pb).RpcSpreadInfection(role.ClosestPlayer, role.Player);
+            }
             if (role.ClosestPlayer.IsOnAlert())
             {
                 if (role.ClosestPlayer.IsShielded())

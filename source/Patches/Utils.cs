@@ -44,7 +44,9 @@ namespace TownOfUs
         {
             foreach (var player in PlayerControl.AllPlayerControls)
             {
-                if (player.GetCustomOutfitType() != CustomPlayerOutfitType.Camouflage)
+                if (player.GetCustomOutfitType() != CustomPlayerOutfitType.Camouflage &&
+                    player.GetCustomOutfitType() != CustomPlayerOutfitType.Swooper &&
+                    player.GetCustomOutfitType() != CustomPlayerOutfitType.PlayerNameOnly)
                 {
                     player.SetOutfit(CustomPlayerOutfitType.Camouflage, new GameData.PlayerOutfit()
                     {
@@ -52,10 +54,10 @@ namespace TownOfUs
                         HatId = "",
                         SkinId = "",
                         VisorId = "",
-                        _playerName = " "
+                        PlayerName = " "
                     });
-                    //player.nameText.text = "";
-                    PlayerControl.SetPlayerMaterialColors(Color.grey, player.MyRend);
+                    PlayerMaterial.SetColors(Color.grey, player.myRend());
+                    player.nameText().color = Color.clear;
                 }
             }
         }
@@ -184,6 +186,15 @@ namespace TownOfUs
             });
         }
 
+        public static bool IsInfected(this PlayerControl player)
+        {
+            return Role.GetRoles(RoleEnum.Plaguebearer).Any(role =>
+            {
+                var plaguebearer = (Plaguebearer)role;
+                return plaguebearer != null && (plaguebearer.InfectedPlayers.Contains(player.PlayerId) || player.PlayerId == plaguebearer.Player.PlayerId);
+            });
+        }
+
         public static PlayerControl GetClosestPlayer(PlayerControl refPlayer, List<PlayerControl> AllPlayers)
         {
             var num = double.MaxValue;
@@ -262,31 +273,6 @@ namespace TownOfUs
 
         public static void MurderPlayer(PlayerControl killer, PlayerControl target)
         {
-            foreach (var player in Murder.KilledPlayers)
-            {
-                if (player.KillerId == killer.PlayerId)
-                {
-                    if (killer.Is(RoleEnum.Underdog))
-                    {
-                        if (PerformKill.LastImp())
-                        {
-                            if ((float)(DateTime.UtcNow - player.KillTime).TotalSeconds < PlayerControl.GameOptions.KillCooldown - CustomGameOptions.UnderdogKillBonus) return;
-                        }
-                        else if (!PerformKill.LastImp() && PerformKill.IncreasedKC())
-                        {
-                            if ((float)(DateTime.UtcNow - player.KillTime).TotalSeconds < PlayerControl.GameOptions.KillCooldown) return;
-                        }
-                        else
-                        {
-                            if ((float)(DateTime.UtcNow - player.KillTime).TotalSeconds < PlayerControl.GameOptions.KillCooldown + CustomGameOptions.UnderdogKillBonus) return;
-                        }
-                    }
-                    else if (killer.Data.IsImpostor() && (float)(DateTime.UtcNow - player.KillTime).TotalSeconds < PlayerControl.GameOptions.KillCooldown)
-                    {
-                        return;
-                    }
-                }
-            }
             var data = target.Data;
             if (data != null && !data.IsDead)
             {
@@ -323,7 +309,7 @@ namespace TownOfUs
 
                     DestroyableSingleton<HudManager>.Instance.KillOverlay.ShowKillAnimation(killer.Data, data);
                     DestroyableSingleton<HudManager>.Instance.ShadowQuad.gameObject.SetActive(false);
-                    target.nameText.GetComponent<MeshRenderer>().material.SetInt("_Mask", 0);
+                    target.nameText().GetComponent<MeshRenderer>().material.SetInt("_Mask", 0);
                     target.RpcSetScanner(false);
                     var importantTextTask = new GameObject("_Player").AddComponent<ImportantTextTask>();
                     importantTextTask.transform.SetParent(AmongUsClient.Instance.transform, false);
@@ -351,7 +337,7 @@ namespace TownOfUs
                     target.myTasks.Insert(0, importantTextTask);
                 }
 
-                if (!killer.Is(RoleEnum.Poisoner))
+                if (!killer.Is(RoleEnum.Poisoner) && !killer.Is(RoleEnum.Arsonist))
                 {
                     killer.MyPhysics.StartCoroutine(killer.KillAnimations.Random().CoPerformKill(killer, target));
                 }
@@ -367,7 +353,17 @@ namespace TownOfUs
                 };
 
                 Murder.KilledPlayers.Add(deadBody);
-                
+
+                if (!killer.AmOwner) return;
+
+                if (target.Is(ModifierEnum.Diseased) && killer.Is(RoleEnum.Werewolf))
+                {
+                    var werewolf = Role.GetRole<Werewolf>(killer);
+                    werewolf.LastKilled = DateTime.UtcNow.AddSeconds((CustomGameOptions.DiseasedMultiplier - 1f) * CustomGameOptions.RampageKillCd);
+                    werewolf.Player.SetKillTimer(CustomGameOptions.RampageKillCd * CustomGameOptions.DiseasedMultiplier);
+                    return;
+                }
+
                 if (!killer.AmOwner) return;
 
                 if (target.Is(ModifierEnum.Diseased) && killer.Is(RoleEnum.Glitch))
@@ -473,7 +469,7 @@ namespace TownOfUs
                 }
                 
             }
-            
+
         }
 
         public static IEnumerator FlashCoroutine(Color color, float waitfor = 1f, float alpha = 0.3f)
@@ -535,7 +531,7 @@ namespace TownOfUs
             }
         }
       
-        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CoStartMeeting))]
+        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.StartMeeting))]
         class StartMeetingPatch {
             public static void Prefix(PlayerControl __instance, [HarmonyArgument(0)]GameData.PlayerInfo meetingTarget) {
                 voteTarget = meetingTarget;
@@ -595,6 +591,14 @@ namespace TownOfUs
             {
                 role.LastAlerted = DateTime.UtcNow;
             }
+            foreach (Trapper role in Role.GetRoles(RoleEnum.Trapper))
+            {
+                role.LastTrapped = DateTime.UtcNow;
+            }
+            foreach (Detective role in Role.GetRoles(RoleEnum.Detective))
+            {
+                role.LastExamined = DateTime.UtcNow;
+            }
             #endregion
             #region NeutralRoles
             foreach (Survivor role in Role.GetRoles(RoleEnum.Survivor))
@@ -616,6 +620,19 @@ namespace TownOfUs
                 role.LastMimic = DateTime.UtcNow;
             }
             foreach (Juggernaut role in Role.GetRoles(RoleEnum.Juggernaut))
+            {
+                role.LastKill = DateTime.UtcNow;
+            }
+            foreach (Werewolf role in Role.GetRoles(RoleEnum.Werewolf))
+            {
+                role.LastRampaged = DateTime.UtcNow;
+                role.LastKilled = DateTime.UtcNow;
+            }
+            foreach (Plaguebearer role in Role.GetRoles(RoleEnum.Plaguebearer))
+            {
+                role.LastInfected = DateTime.UtcNow;
+            }
+            foreach (Pestilence role in Role.GetRoles(RoleEnum.Pestilence))
             {
                 role.LastKill = DateTime.UtcNow;
             }
