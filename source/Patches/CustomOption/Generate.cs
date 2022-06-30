@@ -89,6 +89,11 @@ namespace TownOfUs.CustomOption
         public static CustomToggleOption ParallelMedScans;
         public static CustomStringOption SkipButtonDisable;
 
+        public static CustomHeaderOption BetterPolusSettings;
+        public static CustomToggleOption VentImprovements;
+        public static CustomToggleOption VitalsLab;
+        public static CustomToggleOption WifiChartCourseSwap;
+
         public static CustomHeaderOption RoleCountSettings;
         public static CustomNumberOption MinNeutralNonKillingRoles;
         public static CustomNumberOption MaxNeutralNonKillingRoles;
@@ -500,6 +505,13 @@ namespace TownOfUs.CustomOption
             SkipButtonDisable = new CustomStringOption(num++, "Disable Meeting Skip Button", new[] { "No", "Emergency", "Always" });
             DisableLevels = new CustomToggleOption(num++, "Disable Level Icons", false);
             WhiteNameplates = new CustomToggleOption(num++, "Disable Player Nameplates", false);
+
+            BetterPolusSettings =
+                new CustomHeaderOption(num++, "Better Polus Settings");
+            VentImprovements = new CustomToggleOption(num++, "Better Polus Vent Layout", false);
+            VitalsLab = new CustomToggleOption(num++, "Vitals Moved To Lab", false);
+            WifiChartCourseSwap =
+                new CustomToggleOption(num++, "Reboot Wifi And Chart Course Swapped", false);
 
             RoleCountSettings =
                 new CustomHeaderOption(num++, "Role Count Settings");

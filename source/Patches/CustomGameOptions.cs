@@ -243,6 +243,9 @@ namespace TownOfUs
         public static bool DetectiveReportOn => Generate.DetectiveReportOn.Get();
         public static float DetectiveRoleDuration => Generate.DetectiveRoleDuration.Get();
         public static float DetectiveFactionDuration => Generate.DetectiveFactionDuration.Get();
+        public static bool VentImprovements => Generate.VentImprovements.Get();
+        public static bool VitalsLab => Generate.VitalsLab.Get();
+        public static bool WifiChartCourseSwap => Generate.WifiChartCourseSwap.Get();
 
         public static DisableSkipButtonMeetings SkipButtonDisable =>
             (DisableSkipButtonMeetings)Generate.SkipButtonDisable.Get();
