@@ -479,6 +479,25 @@ namespace TownOfUs.Roles
                     if (__gInstance.Player.inVent) return;
                     if (__gInstance.KillTarget.Is(RoleEnum.Pestilence))
                     {
+                        if (__gInstance.Player.IsShielded())
+                        {
+                            var medic = __gInstance.Player.GetMedic().Player.PlayerId;
+                            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                                (byte)CustomRPC.AttemptSound, SendOption.Reliable, -1);
+                            writer.Write(medic);
+                            writer.Write(__gInstance.Player.PlayerId);
+                            AmongUsClient.Instance.FinishRpcImmediately(writer);
+
+                            if (CustomGameOptions.ShieldBreaks) __gInstance.LastKill = DateTime.UtcNow;
+
+                            StopKill.BreakShield(medic, __gInstance.Player.PlayerId,
+                                CustomGameOptions.ShieldBreaks);
+                        }
+                        if (__gInstance.Player.IsProtected())
+                        {
+                            __gInstance.LastKill.AddSeconds(CustomGameOptions.ProtectKCReset);
+                            return;
+                        }
                         Utils.RpcMurderPlayer(__gInstance.KillTarget, __gInstance.Player);
                         return;
                     }
@@ -627,16 +646,11 @@ namespace TownOfUs.Roles
             {
                 if (__gInstance.HackTarget != null)
                 {
-                    if (__gInstance.HackTarget.Is(RoleEnum.Pestilence))
-                    {
-                        Utils.RpcMurderPlayer(__gInstance.HackTarget, __gInstance.Player);
-                        return;
-                    }
                     if (__gInstance.HackTarget.IsInfected() || __gInstance.Player.IsInfected())
                     {
                         foreach (var pb in Role.GetRoles(RoleEnum.Plaguebearer)) ((Plaguebearer)pb).RpcSpreadInfection(__gInstance.HackTarget, __gInstance.Player);
                     }
-                    if (__gInstance.HackTarget.IsOnAlert())
+                    if (__gInstance.HackTarget.IsOnAlert() || __gInstance.HackTarget.Is(RoleEnum.Pestilence))
                     {
                         if (__gInstance.Player.IsShielded())
                         {
