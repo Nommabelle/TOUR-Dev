@@ -92,6 +92,7 @@ namespace TownOfUs.CustomOption
         public static CustomHeaderOption BetterPolusSettings;
         public static CustomToggleOption VentImprovements;
         public static CustomToggleOption VitalsLab;
+        public static CustomToggleOption ColdTempDeathValley;
         public static CustomToggleOption WifiChartCourseSwap;
 
         public static CustomHeaderOption RoleCountSettings;
@@ -510,6 +511,7 @@ namespace TownOfUs.CustomOption
                 new CustomHeaderOption(num++, "Better Polus Settings");
             VentImprovements = new CustomToggleOption(num++, "Better Polus Vent Layout", false);
             VitalsLab = new CustomToggleOption(num++, "Vitals Moved To Lab", false);
+            ColdTempDeathValley = new CustomToggleOption(num++, "Cold Temp Moved To Death Valley", false);
             WifiChartCourseSwap =
                 new CustomToggleOption(num++, "Reboot Wifi And Chart Course Swapped", false);
 

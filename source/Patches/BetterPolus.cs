@@ -7,43 +7,36 @@ namespace TownOfUs
     [HarmonyPatch(typeof(ShipStatus))]
     public static class ShipStatusPatch
     {
-        // Positions
         public static readonly Vector3 DvdScreenNewPos = new Vector3(26.635f, -15.92f, 1f);
         public static readonly Vector3 VitalsNewPos = new Vector3(31.275f, -6.45f, 1f);
 
         public static readonly Vector3 WifiNewPos = new Vector3(15.975f, 0.084f, 1f);
         public static readonly Vector3 NavNewPos = new Vector3(11.07f, -15.298f, -0.015f);
 
-        public static readonly Vector3 TempColdNewPos = new Vector3(7.772f, -17.103f, -0.017f);
+        public static readonly Vector3 TempColdNewPos = new Vector3(25.4f, -6.4f, 1f);
+        public static readonly Vector3 TempColdNewPosDV = new Vector3(7.772f, -17.103f, -0.017f);
 
-        // Scales
         public const float DvdScreenNewScale = 0.75f;
 
-        // Checks
         public static bool IsAdjustmentsDone;
         public static bool IsObjectsFetched;
         public static bool IsRoomsFetched;
         public static bool IsVentsFetched;
 
-        // Tasks Tweak
         public static Console WifiConsole;
         public static Console NavConsole;
 
-        // Vitals Tweak
         public static SystemConsole Vitals;
         public static GameObject DvdScreenOffice;
 
-        // Vents Tweak
         public static Vent ElectricBuildingVent;
         public static Vent ElectricalVent;
         public static Vent ScienceBuildingVent;
         public static Vent StorageVent;
         public static Vent LightCageVent;
 
-        // TempCold Tweak
         public static Console TempCold;
 
-        // Rooms
         public static GameObject Comms;
         public static GameObject DropShip;
         public static GameObject Outside;
@@ -105,11 +98,9 @@ namespace TownOfUs
         {
             if (IsObjectsFetched && IsRoomsFetched)
             {
-                if (CustomGameOptions.VitalsLab)
-                {
-                    MoveVitals();
-                    MoveTempCold();
-                }
+                if (CustomGameOptions.VitalsLab) MoveVitals();
+                if (!CustomGameOptions.ColdTempDeathValley && CustomGameOptions.VitalsLab) MoveTempCold();
+                if (CustomGameOptions.ColdTempDeathValley) MoveTempColdDV();
                 if (CustomGameOptions.WifiChartCourseSwap) SwitchNavWifi();
             }
 
@@ -117,10 +108,6 @@ namespace TownOfUs
 
             IsAdjustmentsDone = true;
         }
-
-        // --------------------
-        // - Objects Fetching -
-        // --------------------
 
         public static void FindVents()
         {
@@ -221,10 +208,6 @@ namespace TownOfUs
                                DvdScreenOffice != null && TempCold != null;
         }
 
-        // -------------------
-        // - Map Adjustments -
-        // -------------------
-
         public static void AdjustVents()
         {
             if (IsVentsFetched)
@@ -247,7 +230,20 @@ namespace TownOfUs
                 tempColdTransform.parent = Outside.transform;
                 tempColdTransform.position = TempColdNewPos;
 
-                // Fixes collider being too high
+                BoxCollider2D collider = TempCold.GetComponent<BoxCollider2D>();
+                collider.isTrigger = false;
+                collider.size += new Vector2(0f, -0.3f);
+            }
+        }
+
+        public static void MoveTempColdDV()
+        {
+            if (TempCold.transform.position != TempColdNewPosDV)
+            {
+                Transform tempColdTransform = TempCold.transform;
+                tempColdTransform.parent = Outside.transform;
+                tempColdTransform.position = TempColdNewPosDV;
+
                 BoxCollider2D collider = TempCold.GetComponent<BoxCollider2D>();
                 collider.isTrigger = false;
                 collider.size += new Vector2(0f, -0.3f);
@@ -269,7 +265,6 @@ namespace TownOfUs
                 navTransform.parent = Comms.transform;
                 navTransform.position = NavNewPos;
 
-                // Prevents crewmate being able to do the task from outside
                 NavConsole.checkWalls = true;
             }
         }
@@ -278,7 +273,6 @@ namespace TownOfUs
         {
             if (Vitals.transform.position != VitalsNewPos)
             {
-                // Vitals
                 Transform vitalsTransform = Vitals.gameObject.transform;
                 vitalsTransform.parent = Science.transform;
                 vitalsTransform.position = VitalsNewPos;
@@ -286,7 +280,6 @@ namespace TownOfUs
 
             if (DvdScreenOffice.transform.position != DvdScreenNewPos)
             {
-                // DvdScreen
                 Transform dvdScreenTransform = DvdScreenOffice.transform;
                 dvdScreenTransform.position = DvdScreenNewPos;
 
