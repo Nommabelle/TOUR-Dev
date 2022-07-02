@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TownOfUs.Roles;
 using TownOfUs.Roles.Modifiers;
+using UnityEngine;
 
 namespace TownOfUs.Extensions
 {
@@ -101,7 +102,7 @@ namespace TownOfUs.Extensions
             playerControl.RawSetVisor(newOutfit.VisorId);
             playerControl.RawSetPet(newOutfit.PetId, newOutfit.ColorId);
             playerControl.RawSetSkin(newOutfit.SkinId, newOutfit.ColorId);
-
+            playerControl.cosmetics.colorBlindText.color = Color.white;
         }
 
 

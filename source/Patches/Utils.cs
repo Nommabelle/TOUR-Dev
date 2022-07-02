@@ -58,6 +58,8 @@ namespace TownOfUs
                     });
                     PlayerMaterial.SetColors(Color.grey, player.myRend());
                     player.nameText().color = Color.clear;
+                    player.cosmetics.colorBlindText.color = Color.clear;
+                  
                 }
             }
         }
