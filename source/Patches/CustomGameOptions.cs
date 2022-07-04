@@ -14,6 +14,11 @@ namespace TownOfUs
         Emergency,
         Always
     }
+    public enum GameMode
+    {
+        Classic,
+        AllAny
+    }
     public static class CustomGameOptions
     {
         public static int MayorOn => (int)Generate.MayorOn.Get();
@@ -247,8 +252,9 @@ namespace TownOfUs
         public static bool VitalsLab => Generate.VitalsLab.Get();
         public static bool ColdTempDeathValley => Generate.ColdTempDeathValley.Get();
         public static bool WifiChartCourseSwap => Generate.WifiChartCourseSwap.Get();
-
         public static DisableSkipButtonMeetings SkipButtonDisable =>
             (DisableSkipButtonMeetings)Generate.SkipButtonDisable.Get();
+        public static GameMode GameMode =>
+            (GameMode)Generate.GameMode.Get();
     }
 }

@@ -95,6 +95,9 @@ namespace TownOfUs.CustomOption
         public static CustomToggleOption ColdTempDeathValley;
         public static CustomToggleOption WifiChartCourseSwap;
 
+        public static CustomHeaderOption GameModeSettings;
+        public static CustomStringOption GameMode;
+
         public static CustomHeaderOption RoleCountSettings;
         public static CustomNumberOption MinNeutralNonKillingRoles;
         public static CustomNumberOption MaxNeutralNonKillingRoles;
@@ -492,6 +495,10 @@ namespace TownOfUs.CustomOption
             TiebreakerOn = new CustomNumberOption(true, num++, "<color=#99E699FF>Tiebreaker</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
 
+            GameModeSettings =
+                new CustomHeaderOption(num++, "Game Mode Settings");
+            GameMode = new CustomStringOption(num++, "Game Mode", new[] {"Classic", "All Any"});
+
             CustomGameSettings =
                 new CustomHeaderOption(num++, "Custom Game Settings");
             ColourblindComms = new CustomToggleOption(num++, "Camouflaged Comms", false);
@@ -533,7 +540,7 @@ namespace TownOfUs.CustomOption
             SeeTasksWhenDead = new CustomToggleOption(num++, "See Tasks When Dead", true);
 
             Assassin = new CustomHeaderOption(num++, "<color=#FF0000FF>Assassin Ability</color>");
-            NumberOfAssassins = new CustomNumberOption(num++, "Number Of Assassins", 1, 0, 3, 1);
+            NumberOfAssassins = new CustomNumberOption(num++, "Number Of Assassins", 1, 0, 4, 1);
             AmneTurnAssassin = new CustomToggleOption(num++, "Amnesiac Turned Impostor Gets Ability", false);
             TraitorCanAssassin = new CustomToggleOption(num++, "Traitor Gets Ability", false);
             AssassinKills = new CustomNumberOption(num++, "Number Of Assassin Kills", 1, 1, 15, 1);
