@@ -62,20 +62,30 @@ namespace TownOfUs.Patches
                 var impostors = 1;
                 var random = Random.RandomRangeInt(0, 100);
                 if (players <= 6) impostors = 1; //1 imp for less than
-                else if (players <= 8)
+                else if (players <= 7)
                 {
                     if (random < 20) impostors = 2;
                     else impostors = 1;
                 }
+                else if (players <= 8)
+                {
+                    if (random < 40) impostors = 2;
+                    else impostors = 1;
+                }
+                else if (players <= 9)
+                {
+                    if (random < 50) impostors = 2;
+                    else impostors = 1;
+                }
                 else if (players <= 10)
                 {
-                    if (random < 80) impostors = 2;
+                    if (random < 60) impostors = 2;
                     else impostors = 1;
                 }
                 else if (players <= 12)
                 {
-                    if (random < 80) impostors = 2;
-                    else if (random < 90) impostors = 3;
+                    if (random < 60) impostors = 2;
+                    else if (random < 80) impostors = 3;
                     else impostors = 1;
                 }
                 else if (players <= 14)
