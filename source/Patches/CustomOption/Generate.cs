@@ -357,6 +357,7 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption LovingImpPercent;
         public static CustomToggleOption NeutralLovers;
 
+        public static CustomToggleOption FlipMap;
         public static Func<object, string> PercentFormat { get; } = value => $"{value:0}%";
         private static Func<object, string> CooldownFormat { get; } = value => $"{value:0.0#}s";
         private static Func<object, string> MultiplierFormat { get; } = value => $"{value:0.0#}x";
@@ -513,6 +514,7 @@ namespace TownOfUs.CustomOption
             SkipButtonDisable = new CustomStringOption(num++, "Disable Meeting Skip Button", new[] { "No", "Emergency", "Always" });
             DisableLevels = new CustomToggleOption(num++, "Disable Level Icons", false);
             WhiteNameplates = new CustomToggleOption(num++, "Disable Player Nameplates", false);
+            FlipMap = new CustomToggleOption(num++, "????????", false);
 
             BetterPolusSettings =
                 new CustomHeaderOption(num++, "Better Polus Settings");

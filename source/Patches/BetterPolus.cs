@@ -1,5 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
+using Reactor;
 using UnityEngine;
 
 namespace TownOfUs
@@ -8,6 +11,8 @@ namespace TownOfUs
     public static class ShipStatusPatch
     {
         public static readonly Vector3 DvdScreenNewPos = new Vector3(26.635f, -15.92f, 1f);
+        public static readonly Vector3 flippedDvdScreenNewPos = new Vector3(12.3f, -15.92f, 1f);
+
         public static readonly Vector3 VitalsNewPos = new Vector3(31.275f, -6.45f, 1f);
 
         public static readonly Vector3 WifiNewPos = new Vector3(15.975f, 0.084f, 1f);
@@ -22,6 +27,8 @@ namespace TownOfUs
         public static bool IsObjectsFetched;
         public static bool IsRoomsFetched;
         public static bool IsVentsFetched;
+
+        public static bool flipMap => TutorialManager.InstanceExists ? false : CustomGameOptions.FlipMap;
 
         public static Console WifiConsole;
         public static Console NavConsole;
@@ -61,6 +68,7 @@ namespace TownOfUs
             public static void Prefix(ShipStatus __instance)
             {
                 ApplyChanges(__instance);
+                if (__instance.Type != ShipStatus.MapType.Pb) if (flipMap) FlipMap(__instance);
             }
         }
 
@@ -74,7 +82,7 @@ namespace TownOfUs
                 if (!IsObjectsFetched || !IsAdjustmentsDone)
                 {
                     ApplyChanges(__instance);
-                }
+                } 
             }
         }
 
@@ -83,8 +91,13 @@ namespace TownOfUs
             if (instance.Type == ShipStatus.MapType.Pb)
             {
                 FindPolusObjects();
-                AdjustPolus();
+                AdjustPolus(instance);
             }
+            if (instance.Type == (ShipStatus.MapType)3)
+            {
+                if (flipMap) FlipMap(instance);
+            }
+            
         }
 
         public static void FindPolusObjects()
@@ -94,7 +107,38 @@ namespace TownOfUs
             FindObjects();
         }
 
-        public static void AdjustPolus()
+
+        // these are going to be painful to update :(
+        public static Vector3 skeldSize = new Vector3(-1.2f, 1.2f, 1.2f);
+        public static Vector3 miraSize = new Vector3(-1f, 1f, 1f);
+        public static Vector3 polusSize = new Vector3(-1f, 1f, 1f);
+        public static Vector3 airshipSize = new Vector3(-0.7f, 0.7f, 1f);
+        public static Vector3 submergedSize = new Vector3(-0.8f, 0.8f, 0.9412f);
+
+        public static Vector3 offsetSkeld = new Vector3(0f, 0f, 1f);
+        public static Vector3 offsetMira = new Vector3(-9f, 0f, 1f);
+        public static Vector3 offsetPolus = new Vector3(34f, 0f, 1f);
+        public static Vector3 offsetAirship = Vector3.zero;
+        public static Vector3 offsetSubmerged = new Vector3(7f, 0, 0);
+
+        public static Vector3[] offsetMap = new Vector3[] {offsetSkeld, offsetMira, offsetPolus, offsetAirship, offsetAirship, offsetSubmerged };
+        public static Vector3[] sizeMap = new Vector3[] { skeldSize, miraSize, polusSize, airshipSize, airshipSize, submergedSize };
+
+        // The best method for a new era of superior amongus gameplay
+        public static void FlipMap(ShipStatus instance)
+        {
+            instance.gameObject.transform.localScale = sizeMap[(int)instance.Type];
+            instance.gameObject.transform.position = offsetMap[(int)instance.Type];
+
+            if (instance.Type == (ShipStatus.MapType)5)
+            {
+                instance.gameObject.transform.FindChild("TopFloor/UpperCentral/GlassFloorPlayer/Floor").localScale = new Vector3(-10, 10, 1);
+                instance.gameObject.transform.FindChild("BottomFloor/LowerCentral/ShadowStuff/ShadowLayer").localScale = new Vector3(-1, 1, 1);
+            }
+            
+        }
+
+        public static void AdjustPolus(ShipStatus instance)
         {
             if (IsObjectsFetched && IsRoomsFetched)
             {
@@ -102,6 +146,7 @@ namespace TownOfUs
                 if (!CustomGameOptions.ColdTempDeathValley && CustomGameOptions.VitalsLab) MoveTempCold();
                 if (CustomGameOptions.ColdTempDeathValley) MoveTempColdDV();
                 if (CustomGameOptions.WifiChartCourseSwap) SwitchNavWifi();
+                if (flipMap) Coroutines.Start(delayedFlip(instance));
             }
 
             if (CustomGameOptions.VentImprovements) AdjustVents();
@@ -282,6 +327,7 @@ namespace TownOfUs
             {
                 Transform dvdScreenTransform = DvdScreenOffice.transform;
                 dvdScreenTransform.position = DvdScreenNewPos;
+                if (flipMap) dvdScreenTransform.position = flippedDvdScreenNewPos;
 
                 var localScale = dvdScreenTransform.localScale;
                 localScale =
@@ -290,5 +336,100 @@ namespace TownOfUs
                 dvdScreenTransform.localScale = localScale;
             }
         }
+
+
+        public static IEnumerator delayedFlip(ShipStatus __instance)
+        {
+            yield return new WaitForSeconds(0.1f);
+            FlipMap(__instance);
+        }
     }
+
+
+
+    [HarmonyPatch(typeof(MapBehaviour), nameof(MapBehaviour.GenericShow))]
+    public static class MapBehaviourGenericShowUpdate
+    {
+        [HarmonyPostfix]
+        [HarmonyPatch]
+        public static void Postfix(MapBehaviour __instance)
+        {
+            if (!ShipStatusPatch.flipMap) return;
+            __instance.gameObject.transform.localScale = new Vector3(-1, 1, 1);
+            if (ShipStatus.Instance.Type == (ShipStatus.MapType)5)
+            {
+
+                __instance.gameObject.transform.FindChild("MapHud/RoomNames/Upper").GetComponentsInChildren<Transform>().ToList().ForEach(x => x.localScale = new Vector3(-1, 1, 1));
+                __instance.gameObject.transform.FindChild("MapHud/RoomNames/Upper").transform.localScale = Vector3.one;
+
+                __instance.gameObject.transform.FindChild("MapHud/RoomNames/Lower").GetComponentsInChildren<Transform>().ToList().ForEach(x => x.localScale = new Vector3(-1, 1, 1));
+                __instance.gameObject.transform.FindChild("MapHud/RoomNames/Lower").transform.localScale = Vector3.one;
+
+                for (int i = 0; i < __instance.infectedOverlay.transform.childCount; i++)
+                {
+                    for (int e = 0; e < __instance.infectedOverlay.transform.GetChild(i).childCount; e ++)
+                    {
+                        for (int o = 0; o < __instance.infectedOverlay.transform.GetChild(i).GetChild(e).childCount; o ++)
+                        {
+                            __instance.infectedOverlay.transform.GetChild(i).GetChild(e).GetChild(o).localScale = new Vector3(-1, 1, 1);
+                        }
+                    }
+                }
+            }else if (ShipStatus.Instance.Type == (ShipStatus.MapType)1 )
+            {
+                __instance.gameObject.transform.GetChild(__instance.gameObject.transform.GetChildCount() - 1).GetComponentsInChildren<Transform>().ToList().ForEach(x => x.localScale = new Vector3(-1, 1, 1));
+                __instance.gameObject.transform.GetChild(__instance.gameObject.transform.GetChildCount() - 1).transform.localScale = Vector3.one;
+
+                for (int i = 0; i < __instance.infectedOverlay.transform.childCount; i++)
+                {
+                    for (int e = 0; e < __instance.infectedOverlay.transform.GetChild(i).childCount; e++)
+                    {
+                        __instance.infectedOverlay.transform.GetChild(i).GetChild(e).localScale = new Vector3(-0.8f, 0.8f, 1);
+                    }
+                }
+            }
+            else
+            {
+                __instance.gameObject.transform.GetChild(__instance.gameObject.transform.GetChildCount() - 1).GetComponentsInChildren<Transform>().ToList().ForEach(x => x.localScale = new Vector3(-1, 1, 1));
+                __instance.gameObject.transform.GetChild(__instance.gameObject.transform.GetChildCount() - 1).transform.localScale = Vector3.one;
+                for (int i = 0; i < __instance.infectedOverlay.transform.childCount; i++) __instance.infectedOverlay.transform.GetChild(i).localScale = new Vector3(-1, 1, 1);
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(MapBehaviour), nameof(MapBehaviour.Awake))]
+    public static class MapBehaviourStartClass
+    {
+        [HarmonyPostfix]
+        public static void Postfix(MapBehaviour __instance)
+        {
+            if (!ShipStatusPatch.flipMap) return;
+            switch ((int)ShipStatus.Instance.Type)
+            {
+                case 1:
+                    __instance.HerePoint.gameObject.transform.parent.localPosition = new Vector3(-3.2384f, -2.05f, 0f);
+                    break;
+                case 2:
+                    __instance.HerePoint.gameObject.transform.parent.localPosition = new Vector3(2.711f, 2.4508f, - 0.1f);
+                    break;
+                case 5:
+                    __instance.HerePoint.gameObject.transform.parent.localPosition = new Vector3(1.4f, - 3.45f, 0f);
+                    break;
+            }
+            
+        }
+    }
+
+    [HarmonyPatch(typeof(SpawnInMinigame),nameof(SpawnInMinigame.SpawnAt))]
+    public static class ArishipSpawnLoc
+    {
+        [HarmonyPrefix]
+        public static void Prefix(SpawnInMinigame __instance, ref Vector3 spawnAt)
+        {
+            if (!ShipStatusPatch.flipMap) return;
+            Vector3 spawnNew = new Vector3(-spawnAt.x, spawnAt.y, spawnAt.z);
+            spawnAt = spawnNew;
+        }
+    }
+
 }

@@ -256,5 +256,7 @@ namespace TownOfUs
             (DisableSkipButtonMeetings)Generate.SkipButtonDisable.Get();
         public static GameMode GameMode =>
             (GameMode)Generate.GameMode.Get();
+
+        public static bool FlipMap => Generate.FlipMap.Get();
     }
 }
