@@ -15,7 +15,7 @@ namespace TownOfUs.ImpostorRoles.TraitorMod
             if (PlayerControl.LocalPlayer == null) return;
             if (PlayerControl.LocalPlayer.Data == null) return;
             if (PlayerControl.LocalPlayer != SetTraitor.WillBeTraitor) return;
-            if (PlayerControl.LocalPlayer.Is(RoleEnum.Traitor)) return;
+            if (PlayerControl.LocalPlayer.Is(Faction.Impostors)) return;
             if (!PlayerControl.LocalPlayer.Data.IsDead) return;
             var exeTarget = PlayerControl.LocalPlayer;
             foreach (var role in Role.GetRoles(RoleEnum.Executioner))
