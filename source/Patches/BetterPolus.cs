@@ -67,6 +67,7 @@ namespace TownOfUs
             [HarmonyPatch]
             public static void Prefix(ShipStatus __instance)
             {
+                if (flipMap) SwitchSpawns(__instance);
                 ApplyChanges(__instance);
                 if (__instance.Type != ShipStatus.MapType.Pb) if (flipMap) FlipMap(__instance);
             }
@@ -107,28 +108,25 @@ namespace TownOfUs
             FindObjects();
         }
 
-
-        // these are going to be painful to update :(
+        
         public static Vector3 skeldSize = new Vector3(-1.2f, 1.2f, 1.2f);
         public static Vector3 miraSize = new Vector3(-1f, 1f, 1f);
         public static Vector3 polusSize = new Vector3(-1f, 1f, 1f);
         public static Vector3 airshipSize = new Vector3(-0.7f, 0.7f, 1f);
         public static Vector3 submergedSize = new Vector3(-0.8f, 0.8f, 0.9412f);
-
-        public static Vector3 offsetSkeld = new Vector3(0f, 0f, 1f);
-        public static Vector3 offsetMira = new Vector3(-9f, 0f, 1f);
-        public static Vector3 offsetPolus = new Vector3(34f, 0f, 1f);
-        public static Vector3 offsetAirship = Vector3.zero;
-        public static Vector3 offsetSubmerged = new Vector3(7f, 0, 0);
-
-        public static Vector3[] offsetMap = new Vector3[] {offsetSkeld, offsetMira, offsetPolus, offsetAirship, offsetAirship, offsetSubmerged };
         public static Vector3[] sizeMap = new Vector3[] { skeldSize, miraSize, polusSize, airshipSize, airshipSize, submergedSize };
+
+        public static void SwitchSpawns(ShipStatus instance)
+        {
+            instance.InitialSpawnCenter = new Vector2(-instance.InitialSpawnCenter.x, instance.InitialSpawnCenter.y);
+            instance.MeetingSpawnCenter = new Vector2(-instance.MeetingSpawnCenter.x, instance.MeetingSpawnCenter.y);
+            instance.MeetingSpawnCenter2 = new Vector2(-instance.MeetingSpawnCenter2.x, instance.MeetingSpawnCenter2.y);
+        }
 
         // The best method for a new era of superior amongus gameplay
         public static void FlipMap(ShipStatus instance)
         {
             instance.gameObject.transform.localScale = sizeMap[(int)instance.Type];
-            instance.gameObject.transform.position = offsetMap[(int)instance.Type];
 
             if (instance.Type == (ShipStatus.MapType)5)
             {
@@ -340,7 +338,7 @@ namespace TownOfUs
 
         public static IEnumerator delayedFlip(ShipStatus __instance)
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.3f);
             FlipMap(__instance);
         }
     }
@@ -375,7 +373,7 @@ namespace TownOfUs
                         }
                     }
                 }
-            }else if (ShipStatus.Instance.Type == (ShipStatus.MapType)1 )
+            }else if (ShipStatus.Instance.Type == ShipStatus.MapType.Hq || ShipStatus.Instance.Type == ShipStatus.MapType.Pb)
             {
                 __instance.gameObject.transform.GetChild(__instance.gameObject.transform.GetChildCount() - 1).GetComponentsInChildren<Transform>().ToList().ForEach(x => x.localScale = new Vector3(-1, 1, 1));
                 __instance.gameObject.transform.GetChild(__instance.gameObject.transform.GetChildCount() - 1).transform.localScale = Vector3.one;
@@ -407,10 +405,10 @@ namespace TownOfUs
             switch ((int)ShipStatus.Instance.Type)
             {
                 case 1:
-                    __instance.HerePoint.gameObject.transform.parent.localPosition = new Vector3(-3.2384f, -2.05f, 0f);
+                    __instance.HerePoint.gameObject.transform.parent.localPosition = new Vector3(-1.6f, -2f, 0f);
                     break;
                 case 2:
-                    __instance.HerePoint.gameObject.transform.parent.localPosition = new Vector3(2.711f, 2.4508f, - 0.1f);
+                    __instance.HerePoint.gameObject.transform.parent.localPosition = new Vector3(-4.1f, 2.4508f, - 0.1f);
                     break;
                 case 5:
                     __instance.HerePoint.gameObject.transform.parent.localPosition = new Vector3(1.4f, - 3.45f, 0f);
