@@ -142,6 +142,7 @@ namespace TownOfUs
         SyncCustomSettings,
         FixAnimation,
         SetPos,
+        SetSettings,
         
         AddMayorVoteBank,
         RemoveAllBodies,

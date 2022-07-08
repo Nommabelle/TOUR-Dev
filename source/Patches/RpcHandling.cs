@@ -1079,6 +1079,11 @@ namespace TownOfUs
                         var setplayer = Utils.PlayerById(reader.ReadByte());
                         setplayer.transform.position = new Vector3(reader.ReadSingle(), reader.ReadSingle(), setplayer.transform.position.z);
                         break;
+                    case CustomRPC.SetSettings:
+                        readByte = reader.ReadByte();
+                        PlayerControl.GameOptions.MapId = readByte == byte.MaxValue ? (byte)0 : readByte;
+                        if (CustomGameOptions.AutoAdjustSettings) RandomMap.AdjustSettings(readByte);
+                        break;
                 }
             }
         }

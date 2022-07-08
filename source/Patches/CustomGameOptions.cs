@@ -252,6 +252,20 @@ namespace TownOfUs
         public static bool VitalsLab => Generate.VitalsLab.Get();
         public static bool ColdTempDeathValley => Generate.ColdTempDeathValley.Get();
         public static bool WifiChartCourseSwap => Generate.WifiChartCourseSwap.Get();
+        public static bool RandomMapEnabled => Generate.RandomMapEnabled.Get();
+        public static float RandomMapSkeld => Generate.RandomMapSkeld.Get();
+        public static float RandomMapMira => Generate.RandomMapMira.Get();
+        public static float RandomMapPolus => Generate.RandomMapPolus.Get();
+        public static float RandomMapAirship => Generate.RandomMapAirship.Get();
+        public static float RandomMapSubmerged => Patches.SubmergedCompatibility.Loaded ? Generate.RandomMapSubmerged.Get() : 0f;
+        public static bool AutoAdjustSettings => Generate.AutoAdjustSettings.Get();
+        public static bool SmallMapHalfVision => Generate.SmallMapHalfVision.Get();
+        public static float SmallMapDecreasedCooldown => Generate.SmallMapDecreasedCooldown.Get();
+        public static float LargeMapIncreasedCooldown => Generate.LargeMapIncreasedCooldown.Get();
+        public static int SmallMapIncreasedShortTasks => (int)Generate.SmallMapIncreasedShortTasks.Get();
+        public static int SmallMapIncreasedLongTasks => (int)Generate.SmallMapIncreasedLongTasks.Get();
+        public static int LargeMapDecreasedShortTasks => (int)Generate.LargeMapDecreasedShortTasks.Get();
+        public static int LargeMapDecreasedLongTasks => (int)Generate.LargeMapDecreasedLongTasks.Get();
         public static DisableSkipButtonMeetings SkipButtonDisable =>
             (DisableSkipButtonMeetings)Generate.SkipButtonDisable.Get();
         public static GameMode GameMode =>

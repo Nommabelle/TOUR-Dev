@@ -78,6 +78,22 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption SleuthOn;
         public static CustomNumberOption TiebreakerOn;
 
+        public static CustomHeaderOption MapSettings;
+        public static CustomToggleOption RandomMapEnabled;
+        public static CustomNumberOption RandomMapSkeld;
+        public static CustomNumberOption RandomMapMira;
+        public static CustomNumberOption RandomMapPolus;
+        public static CustomNumberOption RandomMapAirship;
+        public static CustomNumberOption RandomMapSubmerged;
+        public static CustomToggleOption AutoAdjustSettings;
+        public static CustomToggleOption SmallMapHalfVision;
+        public static CustomNumberOption SmallMapDecreasedCooldown;
+        public static CustomNumberOption LargeMapIncreasedCooldown;
+        public static CustomNumberOption SmallMapIncreasedShortTasks;
+        public static CustomNumberOption SmallMapIncreasedLongTasks;
+        public static CustomNumberOption LargeMapDecreasedShortTasks;
+        public static CustomNumberOption LargeMapDecreasedLongTasks;
+
         public static CustomHeaderOption CustomGameSettings;
         public static CustomToggleOption ColourblindComms;
         public static CustomToggleOption ImpostorSeeRoles;
@@ -498,6 +514,28 @@ namespace TownOfUs.CustomOption
             GameModeSettings =
                 new CustomHeaderOption(num++, "Game Mode Settings");
             GameMode = new CustomStringOption(num++, "Game Mode", new[] {"Classic", "All Any"});
+
+            MapSettings = new CustomHeaderOption(num++, "Map Settings");
+            RandomMapEnabled = new CustomToggleOption(num++, "Choose Random Map", false);
+            RandomMapSkeld = new CustomNumberOption(num++, "Skeld Chance", 0f, 0f, 100f, 10f, PercentFormat);
+            RandomMapMira = new CustomNumberOption(num++, "Mira Chance", 0f, 0f, 100f, 10f, PercentFormat);
+            RandomMapPolus = new CustomNumberOption(num++, "Polus Chance", 0f, 0f, 100f, 10f, PercentFormat);
+            RandomMapAirship = new CustomNumberOption(num++, "Airship Chance", 0f, 0f, 100f, 10f, PercentFormat);
+            RandomMapSubmerged = new CustomNumberOption(num++, "Submerged Chance", 0f, 0f, 100f, 10f, PercentFormat);
+            AutoAdjustSettings = new CustomToggleOption(num++, "Auto Adjust Settings", false);
+            SmallMapHalfVision = new CustomToggleOption(num++, "Half Vision On Skeld/Mira HQ", false);
+            SmallMapDecreasedCooldown =
+                new CustomNumberOption(num++, "Mira HQ Decreased Cooldowns", 0f, 0f, 15f, 2.5f, CooldownFormat);
+            LargeMapIncreasedCooldown =
+                new CustomNumberOption(num++, "Airship/Submerged Increased Cooldowns", 0f, 0f, 15f, 2.5f, CooldownFormat);
+            SmallMapIncreasedShortTasks =
+                 new CustomNumberOption(num++, "Skeld/Mira HQ Increased Short Tasks", 0, 0, 5, 1);
+            SmallMapIncreasedLongTasks =
+                 new CustomNumberOption(num++, "Skeld/Mira HQ Increased Long Tasks", 0, 0, 3, 1);
+            LargeMapDecreasedShortTasks =
+                 new CustomNumberOption(num++, "Airship/Submerged Decreased Short Tasks", 0, 0, 5, 1);
+            LargeMapDecreasedLongTasks =
+                 new CustomNumberOption(num++, "Airship/Submerged Decreased Long Tasks", 0, 0, 3, 1);
 
             CustomGameSettings =
                 new CustomHeaderOption(num++, "Custom Game Settings");
