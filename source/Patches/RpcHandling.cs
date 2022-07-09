@@ -134,8 +134,8 @@ namespace TownOfUs
 
                 SortRoles(CrewmateRoles, crewmates.Count - NeutralNonKillingRoles.Count - NeutralKillingRoles.Count,
                     crewmates.Count - NeutralNonKillingRoles.Count - NeutralKillingRoles.Count);
+                SortRoles(ImpostorRoles, impostors.Count, impostors.Count);
             }
-            SortRoles(ImpostorRoles, impostors.Count, impostors.Count);
 
             var crewAndNeutralRoles = new List<(Type, CustomRPC, int, bool)>();
             crewAndNeutralRoles.AddRange(CrewmateRoles);
@@ -143,6 +143,7 @@ namespace TownOfUs
             crewAndNeutralRoles.AddRange(NeutralKillingRoles);
 
             var crewRoles = new List<(Type, CustomRPC, int, bool)>();
+            var impRoles = new List<(Type, CustomRPC, int, bool)>();
 
             if (CustomGameOptions.GameMode == GameMode.AllAny)
             {
@@ -158,8 +159,15 @@ namespace TownOfUs
                 }
                 CrewmateRoles.Shuffle();
                 if (CrewmateRoles.Count > 0) crewRoles.Add(CrewmateRoles[0]);
+                while (impRoles.Count < impostors.Count && ImpostorRoles.Count > 0)
+                {
+                    ImpostorRoles.Shuffle();
+                    impRoles.Add(ImpostorRoles[0]);
+                    if (ImpostorRoles[0].Item4 == true) ImpostorRoles.Remove(ImpostorRoles[0]);
+                }
             }
             crewRoles.Shuffle();
+            impRoles.Shuffle();
 
             SortModifiers(CrewmateModifiers, crewmates.Count);
             SortModifiers(GlobalModifiers, crewmates.Count + impostors.Count);
@@ -177,6 +185,7 @@ namespace TownOfUs
                 ImpostorRoles.Clear();
                 crewAndNeutralRoles.Clear();
                 crewRoles.Clear();
+                impRoles.Clear();
                 PhantomOn = false;
                 HaunterOn = false;
                 TraitorOn = false;
@@ -188,6 +197,10 @@ namespace TownOfUs
                 {
                     Role.Gen<Role>(type, crewmates, rpc);
                 }
+                foreach (var (type, rpc, _, unique) in impRoles)
+                {
+                    Role.Gen<Role>(type, impostors, rpc);
+                }
             }
             else
             {
@@ -195,11 +208,10 @@ namespace TownOfUs
                 {
                     Role.Gen<Role>(type, crewmates, rpc);
                 }
-            }
-
-            foreach (var (type, rpc, _, unique) in ImpostorRoles)
-            {
-                Role.Gen<Role>(type, impostors, rpc);
+                foreach (var (type, rpc, _, unique) in ImpostorRoles)
+                {
+                    Role.Gen<Role>(type, impostors, rpc);
+                }
             }
 
             foreach (var crewmate in crewmates)
@@ -355,7 +367,6 @@ namespace TownOfUs
         {
             public static void Postfix([HarmonyArgument(0)] byte callId, [HarmonyArgument(1)] MessageReader reader)
             {
-                //if (callId >= 43) //System.Console.WriteLine("Received " + callId);
                 byte readByte, readByte1, readByte2;
                 sbyte readSByte, readSByte2;
                 switch ((CustomRPC) callId)
@@ -380,10 +391,8 @@ namespace TownOfUs
                         new Engineer(Utils.PlayerById(readByte));
                         break;
 
-
                     case CustomRPC.SetJanitor:
                         new Janitor(Utils.PlayerById(reader.ReadByte()));
-
                         break;
 
                     case CustomRPC.SetSwapper:
@@ -441,18 +450,16 @@ namespace TownOfUs
                         Modifier.GetModifier<Lover>(winnerlover).Win();
                         break;
 
-
                     case CustomRPC.JesterLose:
                         foreach (var role in Role.AllRoles)
                             if (role.RoleType == RoleEnum.Jester)
                                 ((Jester) role).Loses();
-
                         break;
+
                     case CustomRPC.PhantomLose:
                         foreach (var role in Role.AllRoles)
                             if (role.RoleType == RoleEnum.Phantom)
                                 ((Phantom) role).Loses();
-
                         break;
 
 
@@ -460,7 +467,6 @@ namespace TownOfUs
                         foreach (var role in Role.AllRoles)
                             if (role.RoleType == RoleEnum.Glitch)
                                 ((Glitch) role).Loses();
-
                         break;
 
 
@@ -468,28 +474,18 @@ namespace TownOfUs
                         foreach (var role in Role.AllRoles)
                             if (role.RoleType == RoleEnum.Juggernaut)
                                 ((Juggernaut)role).Loses();
-
                         break;
-
-                    /*case CustomRPC.ShifterLose:
-                        foreach (var role in Role.AllRoles)
-                            if (role.RoleType == RoleEnum.Shifter)
-                                ((Shifter) role).Loses();
-
-                        break;*/
 
                     case CustomRPC.AmnesiacLose:
                         foreach (var role in Role.AllRoles)
                             if (role.RoleType == RoleEnum.Amnesiac)
                                 ((Amnesiac)role).Loses();
-
                         break;
 
                     case CustomRPC.ExecutionerLose:
                         foreach (var role in Role.AllRoles)
                             if (role.RoleType == RoleEnum.Executioner)
                                 ((Executioner) role).Loses();
-
                         break;
 
                     case CustomRPC.NobodyWins:
@@ -515,10 +511,6 @@ namespace TownOfUs
                         break;
 
                     case CustomRPC.Start:
-                        /*
-                        EngineerMod.PerformKill.UsedThisRound = false;
-                        EngineerMod.PerformKill.SabotageTime = DateTime.UtcNow.AddSeconds(-100);
-                        */
                         Utils.ShowDeadBodies = false;
                         Murder.KilledPlayers.Clear();
                         Role.NobodyWins = false;
@@ -1159,16 +1151,16 @@ namespace TownOfUs
                     CrewmateRoles.Add((typeof(Vigilante), CustomRPC.SetVigilante, CustomGameOptions.VigilanteOn, false));
 
                 if (CustomGameOptions.VeteranOn > 0)
-                    CrewmateRoles.Add((typeof(Veteran), CustomRPC.SetVeteran, CustomGameOptions.VeteranOn, true));
+                    CrewmateRoles.Add((typeof(Veteran), CustomRPC.SetVeteran, CustomGameOptions.VeteranOn, false));
 
                 if (CustomGameOptions.TrackerOn > 0)
                     CrewmateRoles.Add((typeof(Tracker), CustomRPC.SetTracker, CustomGameOptions.TrackerOn, false));
 
                 if (CustomGameOptions.TransporterOn > 0)
-                    CrewmateRoles.Add((typeof(Transporter), CustomRPC.SetTransporter, CustomGameOptions.TransporterOn, true));
+                    CrewmateRoles.Add((typeof(Transporter), CustomRPC.SetTransporter, CustomGameOptions.TransporterOn, false));
 
                 if (CustomGameOptions.MediumOn > 0)
-                    CrewmateRoles.Add((typeof(Medium), CustomRPC.SetMedium, CustomGameOptions.MediumOn, true));
+                    CrewmateRoles.Add((typeof(Medium), CustomRPC.SetMedium, CustomGameOptions.MediumOn, false));
 
                 if (CustomGameOptions.MysticOn > 0)
                     CrewmateRoles.Add((typeof(Mystic), CustomRPC.SetMystic, CustomGameOptions.MysticOn, false));
@@ -1215,10 +1207,10 @@ namespace TownOfUs
                     ImpostorRoles.Add((typeof(Undertaker), CustomRPC.SetUndertaker, CustomGameOptions.UndertakerOn, true));
 
                 if (CustomGameOptions.UnderdogOn > 0)
-                    ImpostorRoles.Add((typeof(Underdog), CustomRPC.SetUnderdog, CustomGameOptions.UnderdogOn, true));
+                    ImpostorRoles.Add((typeof(Underdog), CustomRPC.SetUnderdog, CustomGameOptions.UnderdogOn, false));
 
                 if (CustomGameOptions.MorphlingOn > 0)
-                    ImpostorRoles.Add((typeof(Morphling), CustomRPC.SetMorphling, CustomGameOptions.MorphlingOn, true));
+                    ImpostorRoles.Add((typeof(Morphling), CustomRPC.SetMorphling, CustomGameOptions.MorphlingOn, false));
 
                 if (CustomGameOptions.BlackmailerOn > 0)
                     ImpostorRoles.Add((typeof(Blackmailer), CustomRPC.SetBlackmailer, CustomGameOptions.BlackmailerOn, true));
@@ -1227,10 +1219,10 @@ namespace TownOfUs
                     ImpostorRoles.Add((typeof(Miner), CustomRPC.SetMiner, CustomGameOptions.MinerOn, true));
 
                 if (CustomGameOptions.SwooperOn > 0)
-                    ImpostorRoles.Add((typeof(Swooper), CustomRPC.SetSwooper, CustomGameOptions.SwooperOn, true));
+                    ImpostorRoles.Add((typeof(Swooper), CustomRPC.SetSwooper, CustomGameOptions.SwooperOn, false));
 
                 if (CustomGameOptions.JanitorOn > 0)
-                    ImpostorRoles.Add((typeof(Janitor), CustomRPC.SetJanitor, CustomGameOptions.JanitorOn, true));
+                    ImpostorRoles.Add((typeof(Janitor), CustomRPC.SetJanitor, CustomGameOptions.JanitorOn, false));
 
                 if (CustomGameOptions.GrenadierOn > 0)
                     ImpostorRoles.Add((typeof(Grenadier), CustomRPC.SetGrenadier, CustomGameOptions.GrenadierOn, true));

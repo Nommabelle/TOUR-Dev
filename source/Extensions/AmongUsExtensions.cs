@@ -103,6 +103,7 @@ namespace TownOfUs.Extensions
             playerControl.RawSetPet(newOutfit.PetId, newOutfit.ColorId);
             playerControl.RawSetSkin(newOutfit.SkinId, newOutfit.ColorId);
             playerControl.cosmetics.colorBlindText.color = Color.white;
+            if (PlayerControl.LocalPlayer.Data.IsImpostor() && playerControl.Data.IsImpostor()) playerControl.nameText().color = Patches.Colors.Impostor;
         }
 
 

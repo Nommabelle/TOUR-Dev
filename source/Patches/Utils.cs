@@ -69,11 +69,6 @@ namespace TownOfUs
             foreach (var player in PlayerControl.AllPlayerControls) Unmorph(player);
         }
 
-        public static bool IsCrewmate(this PlayerControl player)
-        {
-            return GetRole(player) == RoleEnum.Crewmate;
-        }
-
         public static void AddUnique<T>(this Il2CppSystem.Collections.Generic.List<T> self, T item)
             where T : IDisconnectHandler
         {
