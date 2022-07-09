@@ -1074,6 +1074,10 @@ namespace TownOfUs
                     case CustomRPC.SetSettings:
                         readByte = reader.ReadByte();
                         PlayerControl.GameOptions.MapId = readByte == byte.MaxValue ? (byte)0 : readByte;
+                        PlayerControl.GameOptions.RoleOptions.SetRoleRate(RoleTypes.Scientist, 0, 0);
+                        PlayerControl.GameOptions.RoleOptions.SetRoleRate(RoleTypes.Engineer, 0, 0);
+                        PlayerControl.GameOptions.RoleOptions.SetRoleRate(RoleTypes.GuardianAngel, 0, 0);
+                        PlayerControl.GameOptions.RoleOptions.SetRoleRate(RoleTypes.Shapeshifter, 0, 0);
                         if (CustomGameOptions.AutoAdjustSettings) RandomMap.AdjustSettings(readByte);
                         break;
                 }

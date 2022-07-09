@@ -146,7 +146,7 @@ namespace TownOfUs.Roles
         }
         internal virtual bool GuardianAngelCriteria()
         {
-            return PlayerControl.LocalPlayer.Is(RoleEnum.GuardianAngel) && CustomGameOptions.GAKnowsTargetRole && Player == Role.GetRole<GuardianAngel>(PlayerControl.LocalPlayer).target;
+            return PlayerControl.LocalPlayer.Is(RoleEnum.GuardianAngel) && CustomGameOptions.GAKnowsTargetRole && Player == GetRole<GuardianAngel>(PlayerControl.LocalPlayer).target;
         }
 
         protected virtual void IntroPrefix(IntroCutscene._ShowTeam_d__21 __instance)
@@ -233,15 +233,13 @@ namespace TownOfUs.Roles
 
             if (Player == null) return "";
 
-            String PlayerName = Player.GetDefaultOutfit().PlayerName;
-            if (CustomGameOptions.GATargetKnows) {
-                foreach (var role in Role.GetRoles(RoleEnum.GuardianAngel))
+            PlayerName = Player.GetDefaultOutfit().PlayerName;
+            foreach (var role in GetRoles(RoleEnum.GuardianAngel))
+            {
+                var ga = (GuardianAngel)role;
+                if (Player == ga.target && Player == PlayerControl.LocalPlayer && CustomGameOptions.GATargetKnows)
                 {
-                    var ga = (GuardianAngel)role;
-                    if (Player == ga.target)
-                    {
-                        PlayerName += "<color=#B2FFFFFF> ★</color>";
-                    }
+                    PlayerName += "<color=#B2FFFFFF> ★</color>";
                 }
             }
 
