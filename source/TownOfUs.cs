@@ -71,6 +71,9 @@ namespace TownOfUs
         public static Sprite RampageSprite;
         public static Sprite TrapSprite;
         public static Sprite ExamineSprite;
+        public static Sprite HackSprite;
+        public static Sprite MimicSprite;
+        public static Sprite LockSprite;
 
         public static Sprite SettingsButtonSprite;
         public static Sprite CrewSettingsButtonSprite;
@@ -144,6 +147,9 @@ namespace TownOfUs
             RampageSprite = CreateSprite("TownOfUs.Resources.Rampage.png");
             TrapSprite = CreateSprite("TownOfUs.Resources.Trap.png");
             ExamineSprite = CreateSprite("TownOfUs.Resources.Examine.png");
+            HackSprite = CreateSprite("TownOfUs.Resources.Hack.png");
+            MimicSprite = CreateSprite("TownOfUs.Resources.Mimic.png");
+            LockSprite = CreateSprite("TownOfUs.Resources.Lock.png");
 
             SettingsButtonSprite = CreateSprite("TownOfUs.Resources.SettingsButton.png");
             CrewSettingsButtonSprite = CreateSprite("TownOfUs.Resources.Crewmate.png");

@@ -17,10 +17,9 @@ namespace TownOfUs.Roles
 {
     public class Glitch : Role, IVisualAlteration
     {
-        public static AssetBundle bundle = loadBundle();
-        public static Sprite MimicSprite = bundle.LoadAsset<Sprite>("MimicSprite").DontUnload();
-        public static Sprite HackSprite = bundle.LoadAsset<Sprite>("HackSprite").DontUnload();
-        public static Sprite LockSprite = bundle.LoadAsset<Sprite>("Lock").DontUnload();
+        public static Sprite MimicSprite = TownOfUs.MimicSprite;
+        public static Sprite HackSprite = TownOfUs.HackSprite;
+        public static Sprite LockSprite = TownOfUs.LockSprite;
 
         public bool lastMouse;
 
@@ -57,14 +56,6 @@ namespace TownOfUs.Roles
 
         public PlayerControl MimicTarget { get; set; }
         public bool GlitchWins { get; set; }
-
-        public static AssetBundle loadBundle()
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            var stream = assembly.GetManifestResourceStream("TownOfUs.Resources.glitchbundle");
-            var assets = stream.ReadFully();
-            return AssetBundle.LoadFromMemory(assets);
-        }
 
         internal override bool EABBNOODFGL(ShipStatus __instance)
         {

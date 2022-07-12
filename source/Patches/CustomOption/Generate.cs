@@ -517,7 +517,7 @@ namespace TownOfUs.CustomOption
             GameMode = new CustomStringOption(num++, MultiMenu.main, "Game Mode", new[] {"Classic", "All Any"});
 
             ClassicSettings =
-                new CustomHeaderOption(num++, MultiMenu.main, "Role Count Settings");
+                new CustomHeaderOption(num++, MultiMenu.main, "Classic Game Mode Settings");
             MinNeutralNonKillingRoles =
                 new CustomNumberOption(num++, MultiMenu.main, "Min Neutral Non-Killing Roles", 1f, 0f, 5f, 1f);
             MaxNeutralNonKillingRoles =
