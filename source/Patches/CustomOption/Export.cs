@@ -6,10 +6,9 @@ using System.Linq;
 using Il2CppSystem.Text;
 using Reactor;
 using Reactor.Extensions;
-using TownOfUs.Extensions;
 using UnhollowerBaseLib;
 using UnityEngine;
-using Object = UnityEngine.Object; //using Il2CppSystem.Collections.Generic;
+using Object = UnityEngine.Object;
 
 namespace TownOfUs.CustomOption
 {
@@ -91,6 +90,8 @@ namespace TownOfUs.CustomOption
             SlotButtons.Add(new CustomButtonOption(1, MultiMenu.external, "Slot 1", delegate { ExportSlot(1); }));
             SlotButtons.Add(new CustomButtonOption(1, MultiMenu.external, "Slot 2", delegate { ExportSlot(2); }));
             SlotButtons.Add(new CustomButtonOption(1, MultiMenu.external, "Slot 3", delegate { ExportSlot(3); }));
+            SlotButtons.Add(new CustomButtonOption(1, MultiMenu.external, "Slot 4", delegate { ExportSlot(4); }));
+            SlotButtons.Add(new CustomButtonOption(1, MultiMenu.external, "Slot 5", delegate { ExportSlot(5); }));
             SlotButtons.Add(new CustomButtonOption(1, MultiMenu.external, "Cancel", delegate { Cancel(FlashWhite); }));
 
             var options = CreateOptions();
