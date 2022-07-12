@@ -155,7 +155,7 @@ namespace TownOfUs
             CrewSettingsButtonSprite = CreateSprite("TownOfUs.Resources.Crewmate.png");
             NeutralSettingsButtonSprite = CreateSprite("TownOfUs.Resources.Neutral.png");
             ImposterSettingsButtonSprite = CreateSprite("TownOfUs.Resources.Impostor.png");
-            ModifierSettingsButtonSprite = CreateSprite("TownOfUs.Resources.Placeholder.png");
+            ModifierSettingsButtonSprite = CreateSprite("TownOfUs.Resources.Modifiers.png");
             ToUBanner = CreateSprite("TownOfUs.Resources.TownOfUsBanner.png");
             UpdateTOUButton = CreateSprite("TownOfUs.Resources.UpdateToUButton.png");
             UpdateSubmergedButton = CreateSprite("TownOfUs.Resources.UpdateSubmergedButton.png");
