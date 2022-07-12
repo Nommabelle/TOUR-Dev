@@ -20,7 +20,7 @@ namespace TownOfUs.CustomOption
 
         public List<CustomButtonOption> SlotButtons = new List<CustomButtonOption>();
 
-        protected internal Export(int id) : base(id, "Save Custom Settings")
+        protected internal Export(int id) : base(id, MultiMenu.main, "Save Custom Settings")
         {
             Do = ToDo;
         }
@@ -88,10 +88,10 @@ namespace TownOfUs.CustomOption
         protected internal void ToDo()
         {
             SlotButtons.Clear();
-            SlotButtons.Add(new CustomButtonOption(1, "Slot 1", delegate { ExportSlot(1); }));
-            SlotButtons.Add(new CustomButtonOption(1, "Slot 2", delegate { ExportSlot(2); }));
-            SlotButtons.Add(new CustomButtonOption(1, "Slot 3", delegate { ExportSlot(3); }));
-            SlotButtons.Add(new CustomButtonOption(1, "Cancel", delegate { Cancel(FlashWhite); }));
+            SlotButtons.Add(new CustomButtonOption(1, MultiMenu.external, "Slot 1", delegate { ExportSlot(1); }));
+            SlotButtons.Add(new CustomButtonOption(1, MultiMenu.external, "Slot 2", delegate { ExportSlot(2); }));
+            SlotButtons.Add(new CustomButtonOption(1, MultiMenu.external, "Slot 3", delegate { ExportSlot(3); }));
+            SlotButtons.Add(new CustomButtonOption(1, MultiMenu.external, "Cancel", delegate { Cancel(FlashWhite); }));
 
             var options = CreateOptions();
 

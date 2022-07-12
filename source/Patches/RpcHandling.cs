@@ -335,6 +335,7 @@ namespace TownOfUs
                 if (exeTargets.Count > 0)
                 {
                     exe.target = exeTargets[Random.RandomRangeInt(0, exeTargets.Count)];
+                    exeTargets.Remove(exe.target);
 
                     var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                         (byte)CustomRPC.SetTarget, SendOption.Reliable, -1);
@@ -351,6 +352,7 @@ namespace TownOfUs
                 if (gaTargets.Count > 0)
                 {
                     ga.target = gaTargets[Random.RandomRangeInt(0, gaTargets.Count)];
+                    gaTargets.Remove(ga.target);
 
                     var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                         (byte)CustomRPC.SetGATarget, SendOption.Reliable, -1);
@@ -1183,13 +1185,13 @@ namespace TownOfUs
                     NeutralNonKillingRoles.Add((typeof(Amnesiac), CustomRPC.SetAmnesiac, CustomGameOptions.AmnesiacOn, false));
 
                 if (CustomGameOptions.ExecutionerOn > 0)
-                    NeutralNonKillingRoles.Add((typeof(Executioner), CustomRPC.SetExecutioner, CustomGameOptions.ExecutionerOn, true));
+                    NeutralNonKillingRoles.Add((typeof(Executioner), CustomRPC.SetExecutioner, CustomGameOptions.ExecutionerOn, false));
 
                 if (CustomGameOptions.SurvivorOn > 0)
                     NeutralNonKillingRoles.Add((typeof(Survivor), CustomRPC.SetSurvivor, CustomGameOptions.SurvivorOn, false));
 
                 if (CustomGameOptions.GuardianAngelOn > 0)
-                    NeutralNonKillingRoles.Add((typeof(GuardianAngel), CustomRPC.SetGuardianAngel, CustomGameOptions.GuardianAngelOn, true));
+                    NeutralNonKillingRoles.Add((typeof(GuardianAngel), CustomRPC.SetGuardianAngel, CustomGameOptions.GuardianAngelOn, false));
 
                 if (CustomGameOptions.GlitchOn > 0)
                     NeutralKillingRoles.Add((typeof(Glitch), CustomRPC.SetGlitch, CustomGameOptions.GlitchOn, true));

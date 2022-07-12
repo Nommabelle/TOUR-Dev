@@ -73,6 +73,10 @@ namespace TownOfUs
         public static Sprite ExamineSprite;
 
         public static Sprite SettingsButtonSprite;
+        public static Sprite CrewSettingsButtonSprite;
+        public static Sprite NeutralSettingsButtonSprite;
+        public static Sprite ImposterSettingsButtonSprite;
+        public static Sprite ModifierSettingsButtonSprite;
         public static Sprite ToUBanner;
         public static Sprite UpdateTOUButton;
         public static Sprite UpdateSubmergedButton;
@@ -142,6 +146,10 @@ namespace TownOfUs
             ExamineSprite = CreateSprite("TownOfUs.Resources.Examine.png");
 
             SettingsButtonSprite = CreateSprite("TownOfUs.Resources.SettingsButton.png");
+            CrewSettingsButtonSprite = CreateSprite("TownOfUs.Resources.Crewmate.png");
+            NeutralSettingsButtonSprite = CreateSprite("TownOfUs.Resources.Neutral.png");
+            ImposterSettingsButtonSprite = CreateSprite("TownOfUs.Resources.Impostor.png");
+            ModifierSettingsButtonSprite = CreateSprite("TownOfUs.Resources.Placeholder.png");
             ToUBanner = CreateSprite("TownOfUs.Resources.TownOfUsBanner.png");
             UpdateTOUButton = CreateSprite("TownOfUs.Resources.UpdateToUButton.png");
             UpdateSubmergedButton = CreateSprite("TownOfUs.Resources.UpdateSubmergedButton.png");
