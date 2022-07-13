@@ -1329,7 +1329,7 @@ The Flash travels at twice the speed of a normal player.
 | Name | Description | Type | Default |
 |----------|:-------------:|:------:|:------:|
 | Flash | The percentage probability of the Flash appearing | Percentage | 0% |
-| Speed | How fast the Flash moves in comparison to normal | Time | 1.25x |
+| Speed | How fast the Flash moves in comparison to normal | Factor | 1.25x |
 
 -----------------------
 ## Giant
@@ -1339,7 +1339,7 @@ The Giant is a gigantic Crewmate, that has a decreased walk speed.
 | Name | Description | Type | Default |
 |----------|:-------------:|:------:|:------:|
 | Giant | The percentage probability of the Giant appearing | Percentage | 0% |
-| Speed | How fast the Giant moves in comparison to normal | Time | 0.75x |
+| Speed | How fast the Giant moves in comparison to normal | Factor | 0.75x |
 
 -----------------------
 ## Lovers
