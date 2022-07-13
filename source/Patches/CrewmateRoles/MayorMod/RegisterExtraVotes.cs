@@ -99,7 +99,7 @@ namespace TownOfUs.CrewmateRoles.MayorMod
         public static void Prefix(
             MeetingHud __instance, [HarmonyArgument(0)] PlayerControl player)
         {
-            if (AmongUsClient.Instance.AmHost)
+            if (AmongUsClient.Instance.AmHost && MeetingHud.Instance)
             {
                 foreach (var role in Role.GetRoles(RoleEnum.Mayor))
                 {
