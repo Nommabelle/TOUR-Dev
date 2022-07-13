@@ -121,6 +121,9 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption MinNeutralKillingRoles;
         public static CustomNumberOption MaxNeutralKillingRoles;
 
+        public static CustomHeaderOption AllAnySettings;
+        public static CustomToggleOption RandomNumberImps;
+
         public static CustomHeaderOption TaskTrackingSettings;
         public static CustomToggleOption SeeTasksDuringRound;
         public static CustomToggleOption SeeTasksDuringMeeting;
@@ -526,6 +529,10 @@ namespace TownOfUs.CustomOption
                 new CustomNumberOption(num++, MultiMenu.main, "Min Neutral Killing Roles", 1f, 0f, 4f, 1f);
             MaxNeutralKillingRoles =
                 new CustomNumberOption(num++, MultiMenu.main, "Max Neutral Killing Roles", 1f, 0f, 4f, 1f);
+
+            AllAnySettings =
+                new CustomHeaderOption(num++, MultiMenu.main, "All Any Settings");
+            RandomNumberImps = new CustomToggleOption(num++, MultiMenu.main, "Random Number Of Impostors", true);
 
             MapSettings = new CustomHeaderOption(num++, MultiMenu.main, "Map Settings");
             FlipMap = new CustomToggleOption(num++, MultiMenu.main, "Reverse Map", false);

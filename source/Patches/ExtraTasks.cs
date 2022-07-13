@@ -33,7 +33,7 @@ namespace TownOfUs.Patches
     {
         public static bool Prefix(GameOptionsData __instance, ref int __result)
         {
-            if (CustomGameOptions.GameMode == GameMode.AllAny)
+            if (CustomGameOptions.GameMode == GameMode.AllAny && CustomGameOptions.RandomNumberImps)
             {
                 var players = GameData.Instance.PlayerCount;
 

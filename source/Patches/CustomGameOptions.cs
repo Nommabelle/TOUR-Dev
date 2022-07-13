@@ -147,6 +147,7 @@ namespace TownOfUs
         public static int MaxNeutralNonKillingRoles => (int)Generate.MaxNeutralNonKillingRoles.Get();
         public static int MinNeutralKillingRoles => (int)Generate.MinNeutralKillingRoles.Get();
         public static int MaxNeutralKillingRoles => (int)Generate.MaxNeutralKillingRoles.Get();
+        public static bool RandomNumberImps => Generate.RandomNumberImps.Get();
         public static bool ParallelMedScans => Generate.ParallelMedScans.Get();
         public static EngineerFixPer EngineerFixPer => (EngineerFixPer)Generate.EngineerPer.Get();
         public static float ReviveDuration => Generate.ReviveDuration.Get();

@@ -138,7 +138,7 @@ namespace TownOfUs
             }
 
             var crewAndNeutralRoles = new List<(Type, CustomRPC, int, bool)>();
-            crewAndNeutralRoles.AddRange(CrewmateRoles);
+            if (CustomGameOptions.GameMode == GameMode.Classic) crewAndNeutralRoles.AddRange(CrewmateRoles);
             crewAndNeutralRoles.AddRange(NeutralNonKillingRoles);
             crewAndNeutralRoles.AddRange(NeutralKillingRoles);
 
@@ -147,7 +147,24 @@ namespace TownOfUs
 
             if (CustomGameOptions.GameMode == GameMode.AllAny)
             {
-                while (crewRoles.Count < crewmates.Count - 1 && crewAndNeutralRoles.Count > 0)
+                crewAndNeutralRoles.Shuffle();
+                if (crewAndNeutralRoles.Count > 0)
+                {
+                    crewRoles.Add(crewAndNeutralRoles[0]);
+                    if (crewAndNeutralRoles[0].Item4 == true) crewAndNeutralRoles.Remove(crewAndNeutralRoles[0]);
+                }
+                if (CrewmateRoles.Count > 0)
+                {
+                    CrewmateRoles.Shuffle();
+                    crewRoles.Add(CrewmateRoles[0]);
+                    if (CrewmateRoles[0].Item4 == true) CrewmateRoles.Remove(CrewmateRoles[0]);
+                }
+                else
+                {
+                    crewRoles.Add((typeof(Crewmate), CustomRPC.SetCrewmate, 100, false));
+                }
+                crewAndNeutralRoles.AddRange(CrewmateRoles);
+                while (crewRoles.Count < crewmates.Count && crewAndNeutralRoles.Count > 0)
                 {
                     crewAndNeutralRoles.Shuffle();
                     crewRoles.Add(crewAndNeutralRoles[0]);
@@ -157,8 +174,6 @@ namespace TownOfUs
                         crewAndNeutralRoles.Remove(crewAndNeutralRoles[0]);
                     }
                 }
-                CrewmateRoles.Shuffle();
-                if (CrewmateRoles.Count > 0) crewRoles.Add(CrewmateRoles[0]);
                 while (impRoles.Count < impostors.Count && ImpostorRoles.Count > 0)
                 {
                     ImpostorRoles.Shuffle();

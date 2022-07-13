@@ -485,7 +485,7 @@ namespace TownOfUs.Roles
                         ModifierText.gameObject.SetActive(true);
                     }
 
-                    if (CustomGameOptions.GameMode == GameMode.AllAny)
+                    if (CustomGameOptions.GameMode == GameMode.AllAny && CustomGameOptions.RandomNumberImps)
                         __instance.__4__this.ImpostorText.text = "There are an <color=#FF0000FF>Unknown Number of Impostors</color> among us";
                 }
             }
@@ -524,7 +524,7 @@ namespace TownOfUs.Roles
                         ModifierText.gameObject.SetActive(true);
                     }
 
-                    if (CustomGameOptions.GameMode == GameMode.AllAny)
+                    if (CustomGameOptions.GameMode == GameMode.AllAny && CustomGameOptions.RandomNumberImps)
                         __instance.__4__this.ImpostorText.text = "There are an <color=#FF0000FF>Unknown Number of Impostors</color> among us";
                 }
             }
