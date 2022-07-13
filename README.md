@@ -1381,6 +1381,56 @@ If the Tiebreaker is the Mayor, it applies to the Mayor's __first__ vote.
 | Tiebreaker | The percentage probability of the Tiebreaker appearing | Percentage | 0% |
 
 -----------------------
+# Game Mode Settings
+| Name | Description | Type | Default |
+|----------|:-------------:|:------:|:------:|
+| Game Mode | What game mode the next game will be | Classic / All Any | Classic |
+
+-----------------------
+# Classic Game Mode Settings
+| Name | Description | Type | Default |
+|----------|:-------------:|:------:|:------:|
+| Min Neutral Non-Killing Roles | The minimum number of Neutral non-killing roles a game can have | Number | 1 |
+| Max Neutral Non-Killing Roles | The maximum number of Neutral non-killing roles a game can have | Number | 1 |
+| Min Neutral Killing Roles | The minimum number of Neutral killing roles a game can have | Number | 1 |
+| Max Neutral Killing Roles | The maximum number of Neutral killing roles a game can have | Number | 1 |
+
+-----------------------
+# All Any Settings
+| Name | Description | Type | Default |
+|----------|:-------------:|:------:|:------:|
+| Random Number of Impostors | Whether there are a random number of Impostors | Toggle | True |
+
+-----------------------
+# Map Settings
+| Name | Description | Type | Default |
+|----------|:-------------:|:------:|:------:|
+| Reverse Map | Whether the Map is mirrored on the y-axis | Toggle | False |
+| Choose Random Map | Whether the Map is randomly picked at the start of the game | Toggle | False |
+| Skeld Chance | The percentage probability of the Skeld map being chosen | Percentage | 0% |
+| Mira HQ Chance | The percentage probability of the Mira HQ map being chosen | Percentage | 0% |
+| Polus Chance | The percentage probability of the Polus map being chosen | Percentage | 0% |
+| Airship Chance | The percentage probability of the Airship map being chosen | Percentage | 0% |
+| Submerged Chance | The percentage probability of the Submerged map being chosen | Percentage | 0% |
+| Auto Adjust Settings | Whether the Settings of the game are auto adjusted depending on the map | Toggle | False |
+| Half Vision on Skeld/Mira HQ | Whether the Vision is automatically halved on Skeld/Mira HQ | Toggle | False |
+| Mira HQ Decreased Cooldowns | How much less time the cooldowns are set to for Mira HQ | Time | 0s |
+| Airship/Submerged Increased Cooldowns | How much more time the cooldowns are set to for Airship/Submerged | Time | 0s |
+| Skeld/Mira HQ Increased Short Tasks | How many extra short tasks when the map is Skeld/Mira HQ | Number | 0 |
+| Skeld/Mira HQ Increased Longt Tasks | How many extra long tasks when the map is Skeld/Mira HQ | Number | 0 |
+| Airship/Submerged Decreased Short Tasks | How many less short tasks when the map is Airship/Submerged | Number | 0 |
+| Airship/Submerged Decreased Longt Tasks | How many less long tasks when the map is Airship/Submerged | Number | 0 |
+
+-----------------------
+# Better Polus Settings
+| Name | Description | Type | Default |
+|----------|:-------------:|:------:|:------:|
+| Better Polus Vent Layout | Optimises Vent Layout on Polus | Toggle | False |
+| Vitals Moved to Lab | Whether the Vitals panel is moved into the Laboratory | Toggle | False |
+| Cole Temp Moved to Death Valley | Whether the cold temperaure task is moved to death valley | Toggle | False |
+| Reboot Wifi and Chart Course Swapped | Whether the Reboot Wifi and Chart Course swap locations | Toggle | False |
+
+-----------------------
 # Custom Game Options
 | Name | Description | Type | Default |
 |----------|:-------------:|:------:|:------:|
@@ -1388,20 +1438,11 @@ If the Tiebreaker is the Mayor, it applies to the Mayor's __first__ vote.
 | Impostors can see the roles of their team | Whether Impostors are able to see which Impostor roles their teammates have | Toggle | False |
 | Dead can see everyone's roles and Votes | Whether dead players are able to see the roles and votes of everyone else | Toggle | False |
 | Probability of a completely vanilla game | The percentage probability of a vanilla Among Us game happening | Percentage | 0% |
-| Game Start Cooldowns | The cooldown for all roles at the start of the game (excluding Impostor's Kill Cooldown) | Time | 10s |
+| Game Start Cooldowns | The cooldown for all roles at the start of the game | Time | 10s |
 | Parallel Medbay Scans | Whether players have to wait for others to scan | Toggle | False |
 | Disable Meeting Skip Button | Whether the meeting button is disabled | No / Emergency / Always | No |
 | Disable Level Icons | Whether all level icons are removed in meetings | Toggle | False |
 | Disable Player Nameplates | Whether all decorative nameplates are disabled in meetings | Toggle | False |
-
------------------------
-# Role Count Settings
-| Name | Description | Type | Default |
-|----------|:-------------:|:------:|:------:|
-| Min Neutral Non-Killing Roles | The minimum number of Neutral non-killing roles a game can have | Number | 1 |
-| Max Neutral Non-Killing Roles | The maximum number of Neutral non-killing roles a game can have | Number | 1 |
-| Min Neutral Killing Roles | The minimum number of Neutral killing roles a game can have | Number | 1 |
-| Max Neutral Killing Roles | The maximum number of Neutral killing roles a game can have | Number | 1 |
 
 -----------------------
 # Task Tracking Settings
