@@ -71,6 +71,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 # Releases
 | Among Us - Version| Mod Version | Link |
 |----------|-------------|-----------------|
+| 2022.6.21s & 2022.6.21e | v3.3.0 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.3.0/ToU.v3.3.0.zip) |
 | 2022.6.21s & 2022.6.21e | v3.2.0 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.2.0/ToU.v3.2.0.zip) |
 | 2022.3.29s & 2022.3.29e & 2022.4.19e | v3.1.0 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.1.0/ToU.v3.1.0.zip) |
 | 2022.3.29s & 2022.3.29e & 2022.4.19e | v3.0.1 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.0.1/ToU.v3.0.1.zip) |
@@ -118,6 +119,22 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 
 <details>
   <summary> Changelog </summary>
+  <details>
+  <summary> v3.3.0 </summary>
+  <ul> <li>New Game Mode: All Any</li> </ul>
+  <ul> <li>New Settings for Random Maps</li> </ul>
+  <ul> <li>New Settings for Automatically adjusting settings depending on the map</li> </ul>
+  <ul> <li>New Settings for Better Polus (and some adjustments were added as well)</li> </ul>
+  <ul> <li>Split Settings Menu into 5 different menus (however settings are still loaded from the main one)</li> </ul>
+  <ul> <li>Added 2 more Settings slots (bringing the total to 5)</li> </ul>
+  <ul> <li>Bug Fix: Sheriff can no longer get the report button through walls</li> </ul>
+  <ul> <li>Bug Fix: Starting Impostor Kill Cooldown is now always set to the right amount</li> </ul>
+  <ul> <li>Bug Fix: Amnesiac remembering Traitor no longer makes another Traitor spawn</li> </ul>
+  <ul> <li>Bug Fix: Underdog now gets the correct cooldown when there is more then 1 Impostor</li> </ul>
+  <ul> <li>Bug Fix: An Impostor killing a Diseased player will now get the correct cooldown</li> </ul>
+  <ul> <li>Bug Fix: The only person who will know they have a GA is the GA target (if target knows they have a GA)</li> </ul>
+  <ul> <li>Bug Fix: Revived players from Poisoner kills no longer instantly die at the start of the next meeting</li> </ul>
+  </details>
   <details>
   <summary> v3.2.0 </summary>
   <ul> <li>Compatability with the new Among Us version thanks to MyDragonBreath</li> </ul>
@@ -1449,7 +1466,8 @@ If you have any bugs or any need to contact me, join the [Discord Server](https:
 [MyDragonBreath](https://github.com/MyDragonBreath) - For Submerged Compatibility, the Trapper role and support for the new Among Us version (v2022.6.21).\
 [ItsTheNumberH](https://github.com/itsTheNumberH/Town-Of-H) - For the code used for Blind, Bait, Poisoner and partially for Tracker, as well as other bug fixes.\
 [Ruiner](https://github.com/ruiner189/Town-Of-Us-Redux) - For lovers changed into a modifier and Task Tracking.\
-[Term](https://www.twitch.tv/termboii) - For creating Transporter, Medium, Blackmailer, Plaguebearer, Sleuth, and porting v2.5.0 to the new Among Us version (v2021.12.15).
+[Term](https://www.twitch.tv/termboii) - For creating Transporter, Medium, Blackmailer, Plaguebearer, Sleuth, and porting v2.5.0 to the new Among Us version (v2021.12.15).\
+[BryBry16](https://github.com/Brybry16/BetterPolus) - For the code used for Better Polus.
 
 [Essentials](https://github.com/DorCoMaNdO/Reactor-Essentials) - For created custom game options.\
 v1.0.3 uses [Essentials](https://github.com/DorCoMaNdO/Reactor-Essentials) directly.\
