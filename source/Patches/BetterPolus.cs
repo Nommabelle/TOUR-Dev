@@ -11,7 +11,7 @@ namespace TownOfUs
     public static class ShipStatusPatch
     {
         public static readonly Vector3 DvdScreenNewPos = new Vector3(26.635f, -15.92f, 1f);
-        public static readonly Vector3 flippedDvdScreenNewPos = new Vector3(12.3f, -15.92f, 1f);
+        public static readonly Vector3 flippedDvdScreenNewPos = new Vector3(-26.635f, -15.92f, 1f);
 
         public static readonly Vector3 VitalsNewPos = new Vector3(31.275f, -6.45f, 1f);
 
@@ -132,6 +132,7 @@ namespace TownOfUs
             {
                 instance.gameObject.transform.FindChild("TopFloor/UpperCentral/GlassFloorPlayer/Floor").localScale = new Vector3(-10, 10, 1);
                 instance.gameObject.transform.FindChild("BottomFloor/LowerCentral/ShadowStuff/ShadowLayer").localScale = new Vector3(-1, 1, 1);
+                instance.gameObject.transform.FindChild("panel_vitals(Clone)").localPosition = new Vector3(6.2353f, 41.1096f, 0.0389f);
             }
             
         }
@@ -338,7 +339,7 @@ namespace TownOfUs
 
         public static IEnumerator delayedFlip(ShipStatus __instance)
         {
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.4f);
             FlipMap(__instance);
         }
     }
@@ -409,9 +410,6 @@ namespace TownOfUs
                     break;
                 case 2:
                     __instance.HerePoint.gameObject.transform.parent.localPosition = new Vector3(-4.1f, 2.4508f, - 0.1f);
-                    break;
-                case 5:
-                    __instance.HerePoint.gameObject.transform.parent.localPosition = new Vector3(1.4f, - 3.45f, 0f);
                     break;
             }
             
