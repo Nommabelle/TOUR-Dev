@@ -83,6 +83,7 @@ namespace TownOfUs
                 if (!IsObjectsFetched || !IsAdjustmentsDone)
                 {
                     ApplyChanges(__instance);
+                    if (__instance.Type == (ShipStatus.MapType)5) FindAndFixSubmergedVitals(__instance);
                 } 
             }
         }
@@ -132,9 +133,14 @@ namespace TownOfUs
             {
                 instance.gameObject.transform.FindChild("TopFloor/UpperCentral/GlassFloorPlayer/Floor").localScale = new Vector3(-10, 10, 1);
                 instance.gameObject.transform.FindChild("BottomFloor/LowerCentral/ShadowStuff/ShadowLayer").localScale = new Vector3(-1, 1, 1);
-                instance.gameObject.transform.FindChild("panel_vitals(Clone)").localPosition = new Vector3(6.2353f, 41.1096f, 0.0389f);
             }
             
+        }
+
+        public static void FindAndFixSubmergedVitals(ShipStatus instance)
+        {
+            //constantly moving it here isnt great, but given im not constantly moving an entire map and submerged loads vitals late idk what else to do.
+            instance.gameObject.transform.FindChild("panel_vitals(Clone)").localPosition = new Vector3(6.2353f, 41.1096f, 0.0389f);
         }
 
         public static void AdjustPolus(ShipStatus instance)
@@ -370,7 +376,7 @@ namespace TownOfUs
                     {
                         for (int o = 0; o < __instance.infectedOverlay.transform.GetChild(i).GetChild(e).childCount; o ++)
                         {
-                            __instance.infectedOverlay.transform.GetChild(i).GetChild(e).GetChild(o).localScale = new Vector3(-1, 1, 1);
+                            __instance.infectedOverlay.transform.GetChild(i).GetChild(e).GetChild(o).localScale = new Vector3(-0.8f, 0.8f, 1);
                         }
                     }
                 }
@@ -425,6 +431,25 @@ namespace TownOfUs
             if (!ShipStatusPatch.flipMap) return;
             Vector3 spawnNew = new Vector3(-spawnAt.x, spawnAt.y, spawnAt.z);
             spawnAt = spawnNew;
+        }
+    }
+
+    [HarmonyPatch(typeof(PolusShipStatus), nameof(PolusShipStatus.SpawnPlayer))]
+    public static class PolusSpawnFixes
+    {
+        [HarmonyPrefix]
+        public static bool Prefix(PolusShipStatus __instance, ref PlayerControl player, ref int numPlayers, ref bool initialSpawn)
+        {
+            if (!ShipStatusPatch.flipMap) return true;
+            if (initialSpawn) return true;
+
+            int num = Mathf.FloorToInt((float)numPlayers / 2f);
+            int num2 = (int)(player.PlayerId % 15);
+            Vector2 position;
+            if (num2 < num) position = __instance.MeetingSpawnCenter + Vector2.left * (float)num2 * 0.6f;
+            else position = __instance.MeetingSpawnCenter2 + Vector2.left * (float)(num2 - num) * 0.6f;
+            player.NetTransform.SnapTo(position);
+            return false; 
         }
     }
 
