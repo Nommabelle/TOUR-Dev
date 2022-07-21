@@ -346,6 +346,11 @@ namespace TownOfUs
         public static IEnumerator delayedFlip(ShipStatus __instance)
         {
             yield return new WaitForSeconds(0.4f);
+            while (!PlayerControl.LocalPlayer.CanMove)
+            {
+                yield return null;
+            }
+            yield return new WaitForSeconds(0.1f);
             FlipMap(__instance);
         }
     }
