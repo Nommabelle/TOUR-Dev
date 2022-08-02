@@ -79,7 +79,6 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption TiebreakerOn;
 
         public static CustomHeaderOption MapSettings;
-        public static CustomToggleOption FlipMap;
         public static CustomToggleOption RandomMapEnabled;
         public static CustomNumberOption RandomMapSkeld;
         public static CustomNumberOption RandomMapMira;
@@ -535,7 +534,6 @@ namespace TownOfUs.CustomOption
             RandomNumberImps = new CustomToggleOption(num++, MultiMenu.main, "Random Number Of Impostors", true);
 
             MapSettings = new CustomHeaderOption(num++, MultiMenu.main, "Map Settings");
-            FlipMap = new CustomToggleOption(num++, MultiMenu.main, "Reverse Map", false);
             RandomMapEnabled = new CustomToggleOption(num++, MultiMenu.main, "Choose Random Map", false);
             RandomMapSkeld = new CustomNumberOption(num++, MultiMenu.main, "Skeld Chance", 0f, 0f, 100f, 10f, PercentFormat);
             RandomMapMira = new CustomNumberOption(num++, MultiMenu.main, "Mira Chance", 0f, 0f, 100f, 10f, PercentFormat);
