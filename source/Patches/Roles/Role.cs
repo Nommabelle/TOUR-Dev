@@ -218,7 +218,6 @@ namespace TownOfUs.Roles
                     return false;
                 }
             }
-
             return true;
         }
 

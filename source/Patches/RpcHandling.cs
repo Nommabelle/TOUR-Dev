@@ -21,7 +21,6 @@ using TownOfUs.CrewmateRoles.HaunterMod;
 using TownOfUs.ImpostorRoles.TraitorMod;
 using TownOfUs.Roles;
 using TownOfUs.Roles.Modifiers;
-using UnhollowerBaseLib;
 using UnityEngine;
 using Coroutine = TownOfUs.ImpostorRoles.JanitorMod.Coroutine;
 using Object = UnityEngine.Object;

@@ -51,7 +51,6 @@ namespace TownOfUs.Roles
 
         public void Wins()
         {
-            //System.Console.WriteLine("Reached Here - Glitch Edition");
             JuggernautWins = true;
         }
 
