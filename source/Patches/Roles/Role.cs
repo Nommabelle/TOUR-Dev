@@ -233,15 +233,12 @@ namespace TownOfUs.Roles
             if (Player == null) return "";
 
             String PlayerName = Player.GetDefaultOutfit().PlayerName;
-            if (CustomGameOptions.GATargetKnows)
+            foreach (var role in GetRoles(RoleEnum.GuardianAngel))
             {
-                foreach (var role in Role.GetRoles(RoleEnum.GuardianAngel))
+                var ga = (GuardianAngel)role;
+                if (Player == ga.target && Player == PlayerControl.LocalPlayer && CustomGameOptions.GATargetKnows)
                 {
-                    var ga = (GuardianAngel)role;
-                    if (Player == ga.target)
-                    {
-                        PlayerName += "<color=#B2FFFFFF> ★</color>";
-                    }
+                    PlayerName += "<color=#B2FFFFFF> ★</color>";
                 }
             }
 
