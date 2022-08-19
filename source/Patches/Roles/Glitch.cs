@@ -38,8 +38,8 @@ namespace TownOfUs.Roles
             IsUsingMimic = false;
             RoleType = RoleEnum.Glitch;
             AddToRoleHistory(RoleType);
-            ImpostorText = () => "You are the glitch";
-            TaskText = () => "Murder players as the Glitch:";
+            ImpostorText = () => "Murder, Mimic, Hack... Data Lost";
+            TaskText = () => "Murder everyone to win\nFake Tasks:";
             Faction = Faction.Neutral;
         }
 
