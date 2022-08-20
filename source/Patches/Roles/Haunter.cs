@@ -7,6 +7,7 @@ namespace TownOfUs.Roles
     public class Haunter : Role
     {
         public bool Caught;
+        public bool Revealed;
         public bool CompletedTasks;
         public bool Faded;
 
