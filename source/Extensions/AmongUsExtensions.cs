@@ -99,7 +99,7 @@ namespace TownOfUs.Extensions
             playerControl.RawSetName(newOutfit.PlayerName);
             playerControl.RawSetColor(newOutfit.ColorId);
             playerControl.RawSetHat(newOutfit.HatId, newOutfit.ColorId);
-            playerControl.RawSetVisor(newOutfit.VisorId);
+            playerControl.RawSetVisor(newOutfit.VisorId, newOutfit.ColorId);
             playerControl.RawSetPet(newOutfit.PetId, newOutfit.ColorId);
             playerControl.RawSetSkin(newOutfit.SkinId, newOutfit.ColorId);
             playerControl.cosmetics.colorBlindText.color = Color.white;
