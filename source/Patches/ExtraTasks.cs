@@ -60,10 +60,22 @@ namespace TownOfUs.Patches
                     if (random < 60) impostors = 2;
                     else impostors = 1;
                 }
+                else if (players <= 11)
+                {
+                    if (random < 60) impostors = 2;
+                    else if (random < 70) impostors = 3;
+                    else impostors = 1;
+                }
                 else if (players <= 12)
                 {
                     if (random < 60) impostors = 2;
                     else if (random < 80) impostors = 3;
+                    else impostors = 1;
+                }
+                else if (players <= 13)
+                {
+                    if (random < 60) impostors = 2;
+                    else if (random < 90) impostors = 3;
                     else impostors = 1;
                 }
                 else if (players <= 14)

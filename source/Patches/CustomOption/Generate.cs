@@ -123,6 +123,13 @@ namespace TownOfUs.CustomOption
         public static CustomHeaderOption AllAnySettings;
         public static CustomToggleOption RandomNumberImps;
 
+        public static CustomHeaderOption KillingOnlySettings;
+        public static CustomNumberOption NeutralRoles;
+        public static CustomNumberOption VeteranCount;
+        public static CustomNumberOption VigilanteCount;
+        public static CustomToggleOption AddArsonist;
+        public static CustomToggleOption AddPlaguebearer;
+
         public static CustomHeaderOption TaskTrackingSettings;
         public static CustomToggleOption SeeTasksDuringRound;
         public static CustomToggleOption SeeTasksDuringMeeting;
@@ -516,7 +523,7 @@ namespace TownOfUs.CustomOption
 
             GameModeSettings =
                 new CustomHeaderOption(num++, MultiMenu.main, "Game Mode Settings");
-            GameMode = new CustomStringOption(num++, MultiMenu.main, "Game Mode", new[] {"Classic", "All Any"});
+            GameMode = new CustomStringOption(num++, MultiMenu.main, "Game Mode", new[] {"Classic", "All Any", "Killing Only"});
 
             ClassicSettings =
                 new CustomHeaderOption(num++, MultiMenu.main, "Classic Game Mode Settings");
@@ -532,6 +539,17 @@ namespace TownOfUs.CustomOption
             AllAnySettings =
                 new CustomHeaderOption(num++, MultiMenu.main, "All Any Settings");
             RandomNumberImps = new CustomToggleOption(num++, MultiMenu.main, "Random Number Of Impostors", true);
+
+            KillingOnlySettings =
+                new CustomHeaderOption(num++, MultiMenu.main, "Killing Only Settings");
+            NeutralRoles =
+                new CustomNumberOption(num++, MultiMenu.main, "Neutral Roles", 1f, 0f, 5f, 1f);
+            VeteranCount =
+                new CustomNumberOption(num++, MultiMenu.main, "Veteran Count", 1f, 0f, 5f, 1f);
+            VigilanteCount =
+                new CustomNumberOption(num++, MultiMenu.main, "Vigilante Count", 1f, 0f, 5f, 1f);
+            AddArsonist = new CustomToggleOption(num++, MultiMenu.main, "Add Arsonist", true);
+            AddPlaguebearer = new CustomToggleOption(num++, MultiMenu.main, "Add Plaguebearer", true);
 
             MapSettings = new CustomHeaderOption(num++, MultiMenu.main, "Map Settings");
             RandomMapEnabled = new CustomToggleOption(num++, MultiMenu.main, "Choose Random Map", false);

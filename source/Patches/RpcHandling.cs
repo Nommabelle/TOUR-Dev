@@ -376,6 +376,78 @@ namespace TownOfUs
                 }
             }
         }
+        private static void GenEachRoleKilling(List<GameData.PlayerInfo> infected)
+        {
+            var impostors = Utils.GetImpostors(infected);
+            var crewmates = Utils.GetCrewmates(impostors);
+            crewmates.Shuffle();
+            impostors.Shuffle();
+
+            ImpostorRoles.Add((typeof(Undertaker), CustomRPC.SetUndertaker, 10, true));
+            ImpostorRoles.Add((typeof(Morphling), CustomRPC.SetMorphling, 10, false));
+            ImpostorRoles.Add((typeof(Blackmailer), CustomRPC.SetBlackmailer, 10, true));
+            ImpostorRoles.Add((typeof(Miner), CustomRPC.SetMiner, 10, true));
+            ImpostorRoles.Add((typeof(Swooper), CustomRPC.SetSwooper, 10, false));
+            ImpostorRoles.Add((typeof(Grenadier), CustomRPC.SetGrenadier, 10, true));
+
+            SortRoles(ImpostorRoles, impostors.Count, impostors.Count);
+
+            NeutralKillingRoles.Add((typeof(Glitch), CustomRPC.SetGlitch, 10, true));
+            NeutralKillingRoles.Add((typeof(Werewolf), CustomRPC.SetWerewolf, 10, true));
+            NeutralKillingRoles.Add((typeof(Juggernaut), CustomRPC.SetJuggernaut, 10, true));
+            if (CustomGameOptions.AddArsonist)
+                NeutralKillingRoles.Add((typeof(Arsonist), CustomRPC.SetArsonist, 10, true));
+            if (CustomGameOptions.AddPlaguebearer)
+                NeutralKillingRoles.Add((typeof(Plaguebearer), CustomRPC.SetPlaguebearer, 10, true));
+
+            var neutrals = 0;
+            if (NeutralKillingRoles.Count < CustomGameOptions.NeutralRoles) neutrals = NeutralKillingRoles.Count;
+            else neutrals = CustomGameOptions.NeutralRoles;
+            var spareCrew = crewmates.Count - neutrals;
+            if (spareCrew > 2) SortRoles(NeutralKillingRoles, neutrals, neutrals);
+            else SortRoles(NeutralKillingRoles, crewmates.Count - 3, crewmates.Count - 3);
+
+            var veterans = CustomGameOptions.VeteranCount;
+            while (veterans > 0)
+            {
+                CrewmateRoles.Add((typeof(Veteran), CustomRPC.SetVeteran, 10, false));
+                veterans -= 1;
+            }
+            var vigilantes = CustomGameOptions.VigilanteCount;
+            while (vigilantes > 0)
+            {
+                CrewmateRoles.Add((typeof(Vigilante), CustomRPC.SetVigilante, 10, false));
+                vigilantes -= 1;
+            }
+            if (CrewmateRoles.Count + NeutralKillingRoles.Count > crewmates.Count)
+            {
+                SortRoles(CrewmateRoles, crewmates.Count - NeutralKillingRoles.Count, crewmates.Count - NeutralKillingRoles.Count);
+            }
+            else if (CrewmateRoles.Count + NeutralKillingRoles.Count < crewmates.Count)
+            {
+                var sheriffs = crewmates.Count - NeutralKillingRoles.Count - CrewmateRoles.Count;
+                while (sheriffs > 0)
+                {
+                    CrewmateRoles.Add((typeof(Sheriff), CustomRPC.SetSheriff, 10, false));
+                    sheriffs -= 1;
+                }
+            }
+
+            var crewAndNeutralRoles = new List<(Type, CustomRPC, int, bool)>();
+            crewAndNeutralRoles.AddRange(CrewmateRoles);
+            crewAndNeutralRoles.AddRange(NeutralKillingRoles);
+            crewAndNeutralRoles.Shuffle();
+            ImpostorRoles.Shuffle();
+
+            foreach (var (type, rpc, _, unique) in ImpostorRoles)
+            {
+                Role.Gen<Role>(type, impostors, rpc);
+            }
+            foreach (var (type, rpc, _, unique) in crewAndNeutralRoles)
+            {
+                Role.Gen<Role>(type, crewmates, rpc);
+            }
+        }
 
 
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.HandleRpc))]
@@ -1128,164 +1200,176 @@ namespace TownOfUs
                     (byte) CustomRPC.Start, SendOption.Reliable, -1);
                 AmongUsClient.Instance.FinishRpcImmediately(startWriter);
 
-
-                PhantomOn = Check(CustomGameOptions.PhantomOn);
-                HaunterOn = Check(CustomGameOptions.HaunterOn);
+                if (CustomGameOptions.GameMode != GameMode.KillingOnly)
+                {
+                    PhantomOn = Check(CustomGameOptions.PhantomOn);
+                    HaunterOn = Check(CustomGameOptions.HaunterOn);
+                }
+                else
+                {
+                    PhantomOn = false;
+                    HaunterOn = false;
+                }
                 TraitorOn = Check(CustomGameOptions.TraitorOn);
 
-                #region Crewmate Roles
-                if (CustomGameOptions.MayorOn > 0)
-                    CrewmateRoles.Add((typeof(Mayor), CustomRPC.SetMayor, CustomGameOptions.MayorOn, true));
+                if (CustomGameOptions.GameMode != GameMode.KillingOnly)
+                {
+                    #region Crewmate Roles
+                    if (CustomGameOptions.MayorOn > 0)
+                        CrewmateRoles.Add((typeof(Mayor), CustomRPC.SetMayor, CustomGameOptions.MayorOn, true));
 
-                if (CustomGameOptions.SheriffOn > 0)
-                    CrewmateRoles.Add((typeof(Sheriff), CustomRPC.SetSheriff, CustomGameOptions.SheriffOn, false));
+                    if (CustomGameOptions.SheriffOn > 0)
+                        CrewmateRoles.Add((typeof(Sheriff), CustomRPC.SetSheriff, CustomGameOptions.SheriffOn, false));
 
-                if (CustomGameOptions.EngineerOn > 0)
-                    CrewmateRoles.Add((typeof(Engineer), CustomRPC.SetEngineer, CustomGameOptions.EngineerOn, false));
+                    if (CustomGameOptions.EngineerOn > 0)
+                        CrewmateRoles.Add((typeof(Engineer), CustomRPC.SetEngineer, CustomGameOptions.EngineerOn, false));
 
-                if (CustomGameOptions.SwapperOn > 0)
-                    CrewmateRoles.Add((typeof(Swapper), CustomRPC.SetSwapper, CustomGameOptions.SwapperOn, true));
+                    if (CustomGameOptions.SwapperOn > 0)
+                        CrewmateRoles.Add((typeof(Swapper), CustomRPC.SetSwapper, CustomGameOptions.SwapperOn, true));
 
-                if (CustomGameOptions.InvestigatorOn > 0)
-                    CrewmateRoles.Add((typeof(Investigator), CustomRPC.SetInvestigator, CustomGameOptions.InvestigatorOn, false));
+                    if (CustomGameOptions.InvestigatorOn > 0)
+                        CrewmateRoles.Add((typeof(Investigator), CustomRPC.SetInvestigator, CustomGameOptions.InvestigatorOn, false));
 
-                if (CustomGameOptions.TimeLordOn > 0)
-                    CrewmateRoles.Add((typeof(TimeLord), CustomRPC.SetTimeLord, CustomGameOptions.TimeLordOn, true));
+                    if (CustomGameOptions.TimeLordOn > 0)
+                        CrewmateRoles.Add((typeof(TimeLord), CustomRPC.SetTimeLord, CustomGameOptions.TimeLordOn, true));
 
-                if (CustomGameOptions.MedicOn > 0)
-                    CrewmateRoles.Add((typeof(Medic), CustomRPC.SetMedic, CustomGameOptions.MedicOn, true));
+                    if (CustomGameOptions.MedicOn > 0)
+                        CrewmateRoles.Add((typeof(Medic), CustomRPC.SetMedic, CustomGameOptions.MedicOn, true));
 
-                if (CustomGameOptions.SeerOn > 0)
-                    CrewmateRoles.Add((typeof(Seer), CustomRPC.SetSeer, CustomGameOptions.SeerOn, false));
+                    if (CustomGameOptions.SeerOn > 0)
+                        CrewmateRoles.Add((typeof(Seer), CustomRPC.SetSeer, CustomGameOptions.SeerOn, false));
 
-                if (CustomGameOptions.SpyOn > 0)
-                    CrewmateRoles.Add((typeof(Spy), CustomRPC.SetSpy, CustomGameOptions.SpyOn, false));
+                    if (CustomGameOptions.SpyOn > 0)
+                        CrewmateRoles.Add((typeof(Spy), CustomRPC.SetSpy, CustomGameOptions.SpyOn, false));
 
-                if (CustomGameOptions.SnitchOn > 0)
-                    CrewmateRoles.Add((typeof(Snitch), CustomRPC.SetSnitch, CustomGameOptions.SnitchOn, true));
+                    if (CustomGameOptions.SnitchOn > 0)
+                        CrewmateRoles.Add((typeof(Snitch), CustomRPC.SetSnitch, CustomGameOptions.SnitchOn, true));
 
-                if (CustomGameOptions.AltruistOn > 0)
-                    CrewmateRoles.Add((typeof(Altruist), CustomRPC.SetAltruist, CustomGameOptions.AltruistOn, true));
+                    if (CustomGameOptions.AltruistOn > 0)
+                        CrewmateRoles.Add((typeof(Altruist), CustomRPC.SetAltruist, CustomGameOptions.AltruistOn, true));
 
-                if (CustomGameOptions.VigilanteOn > 0)
-                    CrewmateRoles.Add((typeof(Vigilante), CustomRPC.SetVigilante, CustomGameOptions.VigilanteOn, false));
+                    if (CustomGameOptions.VigilanteOn > 0)
+                        CrewmateRoles.Add((typeof(Vigilante), CustomRPC.SetVigilante, CustomGameOptions.VigilanteOn, false));
 
-                if (CustomGameOptions.VeteranOn > 0)
-                    CrewmateRoles.Add((typeof(Veteran), CustomRPC.SetVeteran, CustomGameOptions.VeteranOn, false));
+                    if (CustomGameOptions.VeteranOn > 0)
+                        CrewmateRoles.Add((typeof(Veteran), CustomRPC.SetVeteran, CustomGameOptions.VeteranOn, false));
 
-                if (CustomGameOptions.TrackerOn > 0)
-                    CrewmateRoles.Add((typeof(Tracker), CustomRPC.SetTracker, CustomGameOptions.TrackerOn, false));
+                    if (CustomGameOptions.TrackerOn > 0)
+                        CrewmateRoles.Add((typeof(Tracker), CustomRPC.SetTracker, CustomGameOptions.TrackerOn, false));
 
-                if (CustomGameOptions.TransporterOn > 0)
-                    CrewmateRoles.Add((typeof(Transporter), CustomRPC.SetTransporter, CustomGameOptions.TransporterOn, false));
+                    if (CustomGameOptions.TransporterOn > 0)
+                        CrewmateRoles.Add((typeof(Transporter), CustomRPC.SetTransporter, CustomGameOptions.TransporterOn, false));
 
-                if (CustomGameOptions.MediumOn > 0)
-                    CrewmateRoles.Add((typeof(Medium), CustomRPC.SetMedium, CustomGameOptions.MediumOn, false));
+                    if (CustomGameOptions.MediumOn > 0)
+                        CrewmateRoles.Add((typeof(Medium), CustomRPC.SetMedium, CustomGameOptions.MediumOn, false));
 
-                if (CustomGameOptions.MysticOn > 0)
-                    CrewmateRoles.Add((typeof(Mystic), CustomRPC.SetMystic, CustomGameOptions.MysticOn, false));
+                    if (CustomGameOptions.MysticOn > 0)
+                        CrewmateRoles.Add((typeof(Mystic), CustomRPC.SetMystic, CustomGameOptions.MysticOn, false));
 
-                if (CustomGameOptions.TrapperOn > 0)
-                    CrewmateRoles.Add((typeof(Trapper), CustomRPC.SetTrapper, CustomGameOptions.TrapperOn, false));
+                    if (CustomGameOptions.TrapperOn > 0)
+                        CrewmateRoles.Add((typeof(Trapper), CustomRPC.SetTrapper, CustomGameOptions.TrapperOn, false));
 
-                if (CustomGameOptions.DetectiveOn > 0)
-                    CrewmateRoles.Add((typeof(Detective), CustomRPC.SetDetective, CustomGameOptions.DetectiveOn, false));
-                #endregion
-                #region Neutral Roles
-                if (CustomGameOptions.JesterOn > 0)
-                    NeutralNonKillingRoles.Add((typeof(Jester), CustomRPC.SetJester, CustomGameOptions.JesterOn, false));
+                    if (CustomGameOptions.DetectiveOn > 0)
+                        CrewmateRoles.Add((typeof(Detective), CustomRPC.SetDetective, CustomGameOptions.DetectiveOn, false));
+                    #endregion
+                    #region Neutral Roles
+                    if (CustomGameOptions.JesterOn > 0)
+                        NeutralNonKillingRoles.Add((typeof(Jester), CustomRPC.SetJester, CustomGameOptions.JesterOn, false));
 
-                if (CustomGameOptions.AmnesiacOn > 0)
-                    NeutralNonKillingRoles.Add((typeof(Amnesiac), CustomRPC.SetAmnesiac, CustomGameOptions.AmnesiacOn, false));
+                    if (CustomGameOptions.AmnesiacOn > 0)
+                        NeutralNonKillingRoles.Add((typeof(Amnesiac), CustomRPC.SetAmnesiac, CustomGameOptions.AmnesiacOn, false));
 
-                if (CustomGameOptions.ExecutionerOn > 0)
-                    NeutralNonKillingRoles.Add((typeof(Executioner), CustomRPC.SetExecutioner, CustomGameOptions.ExecutionerOn, false));
+                    if (CustomGameOptions.ExecutionerOn > 0)
+                        NeutralNonKillingRoles.Add((typeof(Executioner), CustomRPC.SetExecutioner, CustomGameOptions.ExecutionerOn, false));
 
-                if (CustomGameOptions.SurvivorOn > 0)
-                    NeutralNonKillingRoles.Add((typeof(Survivor), CustomRPC.SetSurvivor, CustomGameOptions.SurvivorOn, false));
+                    if (CustomGameOptions.SurvivorOn > 0)
+                        NeutralNonKillingRoles.Add((typeof(Survivor), CustomRPC.SetSurvivor, CustomGameOptions.SurvivorOn, false));
 
-                if (CustomGameOptions.GuardianAngelOn > 0)
-                    NeutralNonKillingRoles.Add((typeof(GuardianAngel), CustomRPC.SetGuardianAngel, CustomGameOptions.GuardianAngelOn, false));
+                    if (CustomGameOptions.GuardianAngelOn > 0)
+                        NeutralNonKillingRoles.Add((typeof(GuardianAngel), CustomRPC.SetGuardianAngel, CustomGameOptions.GuardianAngelOn, false));
 
-                if (CustomGameOptions.GlitchOn > 0)
-                    NeutralKillingRoles.Add((typeof(Glitch), CustomRPC.SetGlitch, CustomGameOptions.GlitchOn, true));
+                    if (CustomGameOptions.GlitchOn > 0)
+                        NeutralKillingRoles.Add((typeof(Glitch), CustomRPC.SetGlitch, CustomGameOptions.GlitchOn, true));
 
-                if (CustomGameOptions.ArsonistOn > 0)
-                    NeutralKillingRoles.Add((typeof(Arsonist), CustomRPC.SetArsonist, CustomGameOptions.ArsonistOn, true));
+                    if (CustomGameOptions.ArsonistOn > 0)
+                        NeutralKillingRoles.Add((typeof(Arsonist), CustomRPC.SetArsonist, CustomGameOptions.ArsonistOn, true));
 
-                if (CustomGameOptions.PlaguebearerOn > 0)
-                    NeutralKillingRoles.Add((typeof(Plaguebearer), CustomRPC.SetPlaguebearer, CustomGameOptions.PlaguebearerOn, true));
+                    if (CustomGameOptions.PlaguebearerOn > 0)
+                        NeutralKillingRoles.Add((typeof(Plaguebearer), CustomRPC.SetPlaguebearer, CustomGameOptions.PlaguebearerOn, true));
 
-                if (CustomGameOptions.WerewolfOn > 0)
-                    NeutralKillingRoles.Add((typeof(Werewolf), CustomRPC.SetWerewolf, CustomGameOptions.WerewolfOn, true));
+                    if (CustomGameOptions.WerewolfOn > 0)
+                        NeutralKillingRoles.Add((typeof(Werewolf), CustomRPC.SetWerewolf, CustomGameOptions.WerewolfOn, true));
 
-                if (CustomGameOptions.GameMode == GameMode.AllAny)
-                    NeutralKillingRoles.Add((typeof(Juggernaut), CustomRPC.SetJuggernaut, 10, true));
-                #endregion
-                #region Impostor Roles
-                if (CustomGameOptions.UndertakerOn > 0)
-                    ImpostorRoles.Add((typeof(Undertaker), CustomRPC.SetUndertaker, CustomGameOptions.UndertakerOn, true));
+                    if (CustomGameOptions.GameMode == GameMode.AllAny)
+                        NeutralKillingRoles.Add((typeof(Juggernaut), CustomRPC.SetJuggernaut, 10, true));
+                    #endregion
+                    #region Impostor Roles
+                    if (CustomGameOptions.UndertakerOn > 0)
+                        ImpostorRoles.Add((typeof(Undertaker), CustomRPC.SetUndertaker, CustomGameOptions.UndertakerOn, true));
 
-                if (CustomGameOptions.UnderdogOn > 0)
-                    ImpostorRoles.Add((typeof(Underdog), CustomRPC.SetUnderdog, CustomGameOptions.UnderdogOn, false));
+                    if (CustomGameOptions.UnderdogOn > 0)
+                        ImpostorRoles.Add((typeof(Underdog), CustomRPC.SetUnderdog, CustomGameOptions.UnderdogOn, false));
 
-                if (CustomGameOptions.MorphlingOn > 0)
-                    ImpostorRoles.Add((typeof(Morphling), CustomRPC.SetMorphling, CustomGameOptions.MorphlingOn, false));
+                    if (CustomGameOptions.MorphlingOn > 0)
+                        ImpostorRoles.Add((typeof(Morphling), CustomRPC.SetMorphling, CustomGameOptions.MorphlingOn, false));
 
-                if (CustomGameOptions.BlackmailerOn > 0)
-                    ImpostorRoles.Add((typeof(Blackmailer), CustomRPC.SetBlackmailer, CustomGameOptions.BlackmailerOn, true));
+                    if (CustomGameOptions.BlackmailerOn > 0)
+                        ImpostorRoles.Add((typeof(Blackmailer), CustomRPC.SetBlackmailer, CustomGameOptions.BlackmailerOn, true));
 
-                if (CustomGameOptions.MinerOn > 0)
-                    ImpostorRoles.Add((typeof(Miner), CustomRPC.SetMiner, CustomGameOptions.MinerOn, true));
+                    if (CustomGameOptions.MinerOn > 0)
+                        ImpostorRoles.Add((typeof(Miner), CustomRPC.SetMiner, CustomGameOptions.MinerOn, true));
 
-                if (CustomGameOptions.SwooperOn > 0)
-                    ImpostorRoles.Add((typeof(Swooper), CustomRPC.SetSwooper, CustomGameOptions.SwooperOn, false));
+                    if (CustomGameOptions.SwooperOn > 0)
+                        ImpostorRoles.Add((typeof(Swooper), CustomRPC.SetSwooper, CustomGameOptions.SwooperOn, false));
 
-                if (CustomGameOptions.JanitorOn > 0)
-                    ImpostorRoles.Add((typeof(Janitor), CustomRPC.SetJanitor, CustomGameOptions.JanitorOn, false));
+                    if (CustomGameOptions.JanitorOn > 0)
+                        ImpostorRoles.Add((typeof(Janitor), CustomRPC.SetJanitor, CustomGameOptions.JanitorOn, false));
 
-                if (CustomGameOptions.GrenadierOn > 0)
-                    ImpostorRoles.Add((typeof(Grenadier), CustomRPC.SetGrenadier, CustomGameOptions.GrenadierOn, true));
+                    if (CustomGameOptions.GrenadierOn > 0)
+                        ImpostorRoles.Add((typeof(Grenadier), CustomRPC.SetGrenadier, CustomGameOptions.GrenadierOn, true));
 
-                if (CustomGameOptions.PoisonerOn > 0)
-                    ImpostorRoles.Add((typeof(Poisoner), CustomRPC.SetPoisoner, CustomGameOptions.PoisonerOn, true));
-                #endregion
-                #region Crewmate Modifiers
-                if (Check(CustomGameOptions.TorchOn))
-                    CrewmateModifiers.Add((typeof(Torch), CustomRPC.SetTorch, CustomGameOptions.TorchOn));
+                    if (CustomGameOptions.PoisonerOn > 0 && CustomGameOptions.GameMode != GameMode.KillingOnly)
+                        ImpostorRoles.Add((typeof(Poisoner), CustomRPC.SetPoisoner, CustomGameOptions.PoisonerOn, true));
+                    #endregion
+                    #region Crewmate Modifiers
+                    if (Check(CustomGameOptions.TorchOn))
+                        CrewmateModifiers.Add((typeof(Torch), CustomRPC.SetTorch, CustomGameOptions.TorchOn));
 
-                if (Check(CustomGameOptions.DiseasedOn))
-                    CrewmateModifiers.Add((typeof(Diseased), CustomRPC.SetDiseased, CustomGameOptions.DiseasedOn));
+                    if (Check(CustomGameOptions.DiseasedOn))
+                        CrewmateModifiers.Add((typeof(Diseased), CustomRPC.SetDiseased, CustomGameOptions.DiseasedOn));
 
-                if (Check(CustomGameOptions.BaitOn))
-                    CrewmateModifiers.Add((typeof(Bait), CustomRPC.SetBait, CustomGameOptions.BaitOn));
-                #endregion
-                #region Global Modifiers
-                if (Check(CustomGameOptions.TiebreakerOn))
-                    GlobalModifiers.Add((typeof(Tiebreaker), CustomRPC.SetTiebreaker, CustomGameOptions.TiebreakerOn));
+                    if (Check(CustomGameOptions.BaitOn))
+                        CrewmateModifiers.Add((typeof(Bait), CustomRPC.SetBait, CustomGameOptions.BaitOn));
+                    #endregion
+                    #region Global Modifiers
+                    if (Check(CustomGameOptions.TiebreakerOn))
+                        GlobalModifiers.Add((typeof(Tiebreaker), CustomRPC.SetTiebreaker, CustomGameOptions.TiebreakerOn));
 
-                if (Check(CustomGameOptions.FlashOn))
-                    GlobalModifiers.Add((typeof(Flash), CustomRPC.SetFlash, CustomGameOptions.FlashOn));
+                    if (Check(CustomGameOptions.FlashOn))
+                        GlobalModifiers.Add((typeof(Flash), CustomRPC.SetFlash, CustomGameOptions.FlashOn));
 
-                if (Check(CustomGameOptions.BlindOn))
-                    GlobalModifiers.Add((typeof(Blind), CustomRPC.SetBlind, CustomGameOptions.BlindOn));
+                    if (Check(CustomGameOptions.BlindOn))
+                        GlobalModifiers.Add((typeof(Blind), CustomRPC.SetBlind, CustomGameOptions.BlindOn));
 
-                if (Check(CustomGameOptions.GiantOn))
-                    GlobalModifiers.Add((typeof(Giant), CustomRPC.SetGiant, CustomGameOptions.GiantOn));
+                    if (Check(CustomGameOptions.GiantOn))
+                        GlobalModifiers.Add((typeof(Giant), CustomRPC.SetGiant, CustomGameOptions.GiantOn));
 
-                if (Check(CustomGameOptions.ButtonBarryOn))
-                    ButtonModifiers.Add((typeof(ButtonBarry), CustomRPC.SetButtonBarry, CustomGameOptions.ButtonBarryOn));
+                    if (Check(CustomGameOptions.ButtonBarryOn))
+                        ButtonModifiers.Add((typeof(ButtonBarry), CustomRPC.SetButtonBarry, CustomGameOptions.ButtonBarryOn));
 
-                if (Check(CustomGameOptions.LoversOn))
-                    GlobalModifiers.Add((typeof(Lover), CustomRPC.SetCouple, CustomGameOptions.LoversOn));
-                    
-                if (Check(CustomGameOptions.SleuthOn))
-                    GlobalModifiers.Add((typeof(Sleuth), CustomRPC.SetSleuth, CustomGameOptions.SleuthOn));
-                #endregion
-                #region Assassin Modifier
-                AssassinModifier.Add((typeof(Assassin), CustomRPC.SetAssassin, 100));
-                #endregion
-                GenEachRole(infected.ToList());
+                    if (Check(CustomGameOptions.LoversOn))
+                        GlobalModifiers.Add((typeof(Lover), CustomRPC.SetCouple, CustomGameOptions.LoversOn));
+
+                    if (Check(CustomGameOptions.SleuthOn))
+                        GlobalModifiers.Add((typeof(Sleuth), CustomRPC.SetSleuth, CustomGameOptions.SleuthOn));
+                    #endregion
+                    #region Assassin Modifier
+                    AssassinModifier.Add((typeof(Assassin), CustomRPC.SetAssassin, 100));
+                    #endregion
+                }
+
+                if (CustomGameOptions.GameMode == GameMode.KillingOnly) GenEachRoleKilling(infected.ToList());
+                else GenEachRole(infected.ToList());
             }
         }
     }

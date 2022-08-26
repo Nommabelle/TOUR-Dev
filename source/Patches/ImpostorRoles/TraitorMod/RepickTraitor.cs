@@ -3,7 +3,6 @@ using System.Linq;
 using Hazel;
 using UnityEngine;
 using TownOfUs.Roles;
-using System.Collections.Generic;
 
 namespace TownOfUs.ImpostorRoles.TraitorMod
 {

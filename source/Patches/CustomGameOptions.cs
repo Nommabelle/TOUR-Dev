@@ -17,7 +17,8 @@ namespace TownOfUs
     public enum GameMode
     {
         Classic,
-        AllAny
+        AllAny,
+        KillingOnly
     }
     public static class CustomGameOptions
     {
@@ -148,6 +149,11 @@ namespace TownOfUs
         public static int MinNeutralKillingRoles => (int)Generate.MinNeutralKillingRoles.Get();
         public static int MaxNeutralKillingRoles => (int)Generate.MaxNeutralKillingRoles.Get();
         public static bool RandomNumberImps => Generate.RandomNumberImps.Get();
+        public static int NeutralRoles => (int)Generate.NeutralRoles.Get();
+        public static int VeteranCount => (int)Generate.VeteranCount.Get();
+        public static int VigilanteCount => (int)Generate.VigilanteCount.Get();
+        public static bool AddArsonist => Generate.AddArsonist.Get();
+        public static bool AddPlaguebearer => Generate.AddPlaguebearer.Get();
         public static bool ParallelMedScans => Generate.ParallelMedScans.Get();
         public static EngineerFixPer EngineerFixPer => (EngineerFixPer)Generate.EngineerPer.Get();
         public static float ReviveDuration => Generate.ReviveDuration.Get();
