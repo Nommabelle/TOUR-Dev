@@ -1204,13 +1204,14 @@ namespace TownOfUs
                 {
                     PhantomOn = Check(CustomGameOptions.PhantomOn);
                     HaunterOn = Check(CustomGameOptions.HaunterOn);
+                    TraitorOn = Check(CustomGameOptions.TraitorOn);
                 }
                 else
                 {
                     PhantomOn = false;
                     HaunterOn = false;
+                    TraitorOn = true;
                 }
-                TraitorOn = Check(CustomGameOptions.TraitorOn);
 
                 if (CustomGameOptions.GameMode != GameMode.KillingOnly)
                 {
