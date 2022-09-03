@@ -167,7 +167,7 @@ namespace TownOfUs.Modifiers.AssassinMod
                     if (playerModifier != null)
                         toDie = (playerRole.Name == currentGuess || playerModifier.Name == currentGuess) ? playerRole.Player : role.Player;
 
-                if (!toDie.Is(RoleEnum.Pestilence))
+                if (!toDie.Is(RoleEnum.Pestilence) || PlayerControl.LocalPlayer.Is(RoleEnum.Pestilence))
                 {
                     AssassinKill.RpcMurderPlayer(toDie);
                     role.RemainingKills--;
