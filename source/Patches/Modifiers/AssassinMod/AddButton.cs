@@ -23,12 +23,23 @@ namespace TownOfUs.Modifiers.AssassinMod
         {
             if (voteArea.AmDead) return true;
             var player = Utils.PlayerById(voteArea.TargetPlayerId);
-            if (
-                player == null ||
-                player.Data.IsImpostor() ||
-                player.Data.IsDead ||
-                player.Data.Disconnected
-            ) return true;
+            if (PlayerControl.LocalPlayer.Is(Faction.Neutral))
+            {
+                if (
+                    player == null ||
+                    player.Data.IsDead ||
+                    player.Data.Disconnected
+                ) return true;
+            }
+            else
+            {
+                if (
+                    player == null ||
+                    player.Data.IsImpostor() ||
+                    player.Data.IsDead ||
+                    player.Data.Disconnected
+                ) return true;
+            }
             var role = Role.GetRole(player);
             return role != null && role.Criteria();
         }

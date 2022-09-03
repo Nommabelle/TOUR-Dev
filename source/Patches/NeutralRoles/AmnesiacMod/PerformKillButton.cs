@@ -147,6 +147,17 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 else
                 {
                     new Survivor(other);
+                    if (role == RoleEnum.Arsonist || role == RoleEnum.Glitch || role == RoleEnum.Plaguebearer ||
+                            role == RoleEnum.Pestilence || role == RoleEnum.Werewolf || role == RoleEnum.Juggernaut)
+                    {
+                        if (CustomGameOptions.AmneTurnNeutAssassin)
+                        {
+                            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                                (byte)CustomRPC.SetAssassin, SendOption.Reliable, -1);
+                            writer.Write(amnesiac.PlayerId);
+                            AmongUsClient.Instance.FinishRpcImmediately(writer);
+                        }
+                    }
                 }
             }
             else if (rememberImp == true)
@@ -162,7 +173,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                         player.nameText().color = Patches.Colors.Impostor;
                     }
                 }
-                if (CustomGameOptions.AmneTurnAssassin)
+                if (CustomGameOptions.AmneTurnImpAssassin)
                 {
                     var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                         (byte)CustomRPC.SetAssassin, SendOption.Reliable, -1);
