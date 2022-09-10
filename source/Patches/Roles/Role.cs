@@ -6,7 +6,7 @@ using System.Linq;
 using Reactor.Extensions;
 using TMPro;
 using TownOfUs.Roles.Modifiers;
-using UnhollowerBaseLib;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;

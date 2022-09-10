@@ -6,7 +6,7 @@ using System.Linq;
 using Il2CppSystem.Text;
 using Reactor;
 using Reactor.Extensions;
-using UnhollowerBaseLib;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using UnityEngine;
 using Object = UnityEngine.Object;
 

@@ -5,7 +5,7 @@ using System.Net.Sockets;
 using System.Reflection;
 using BepInEx;
 using BepInEx.Configuration;
-using BepInEx.IL2CPP;
+using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
 using Reactor;
 using Reactor.Extensions;
@@ -13,8 +13,9 @@ using TownOfUs.CustomOption;
 using TownOfUs.Patches;
 using TownOfUs.Patches.CustomHats;
 using TownOfUs.RainbowMod;
-using UnhollowerBaseLib;
-using UnhollowerRuntimeLib;
+using Il2CppInterop.Runtime;
+using Il2CppInterop.Runtime.Injection;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -26,7 +27,7 @@ namespace TownOfUs
     public class TownOfUs : BasePlugin
     {
         public const string Id = "com.slushiegoose.townofus";
-        public const string VersionString = "3.3.2";
+        public const string VersionString = "3.4.0";
         public static System.Version Version = System.Version.Parse(VersionString);
         
         public static Sprite JanitorClean;

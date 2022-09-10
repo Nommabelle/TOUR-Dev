@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>netstandard2.1</TargetFramework>
-		<Version>3.3.2</Version>
+		<TargetFramework>net6.0</TargetFramework>
+		<Version>3.4.0</Version>
 		<DebugType>embedded</DebugType>
 		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
@@ -13,15 +13,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Reactor" Version="1.2.5" />
-		<PackageReference Include="BepInEx.IL2CPP" Version="6.0.0-be.562" />
+		<Reference Include="C:/Program Files (x86)/Steam/steamapps/common/Among Us Modded Test 6/BepInEx/plugins/Reactor.dll"/>
+		<PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.652" />
 		<PackageReference Include="AmongUs.GameLibs.$(GamePlatform)" Version="$(GameVersion)" PrivateAssets="all" />
-		<PackageReference Include="BepInEx.IL2CPP.MSBuild" Version="1.1.1" PrivateAssets="all" />
+		<PackageReference Include="BepInEx.IL2CPP.MSBuild" Version="2.0.1" PrivateAssets="all" />
 		<PackageReference Include="System.Text.Json" Version="5.0.2" PrivateAssets="all" />
 	</ItemGroup>
 
 	<Target Name="Copy" AfterTargets="Build" Condition="'$(AmongUs)' != ''">
-		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(AmongUs)/BepInEx/plugins/" UseSymboliclinksIfPossible="true"></Copy>
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="C:/Program Files (x86)/Steam/steamapps/common/Among Us Modded Test 6/BepInEx/plugins/" UseSymboliclinksIfPossible="true"></Copy>
 	</Target>
 
 	<ItemGroup>
