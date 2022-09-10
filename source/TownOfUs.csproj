@@ -21,7 +21,7 @@
 	</ItemGroup>
 
 	<Target Name="Copy" AfterTargets="Build" Condition="'$(AmongUs)' != ''">
-		<Copy SourceFiles="$(TargetPath)" DestinationFolder="C:/Program Files (x86)/Steam/steamapps/common/Among Us Modded Test 6/BepInEx/plugins/" UseSymboliclinksIfPossible="true"></Copy>
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(AmongUs)/BepInEx/plugins/" UseSymboliclinksIfPossible="true"></Copy>
 	</Target>
 
 	<ItemGroup>
