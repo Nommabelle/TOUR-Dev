@@ -92,6 +92,11 @@ namespace TownOfUs.Roles.Modifiers
                 .FirstOrDefault();
         }
 
+        public static IEnumerable<Modifier> GetModifiers(ModifierEnum modifiertype)
+        {
+            return AllModifiers.Where(x => x.ModifierType == modifiertype);
+        }
+
         public virtual List<PlayerControl> GetTeammates()
         {
             var team = new List<PlayerControl>();

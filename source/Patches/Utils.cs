@@ -212,7 +212,7 @@ namespace TownOfUs
                 num = distBetweenPlayers;
                 result = player;
             }
-
+            
             return result;
         }
 

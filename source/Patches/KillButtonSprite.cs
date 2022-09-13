@@ -1,7 +1,5 @@
 ﻿using HarmonyLib;
 using UnityEngine;
-using System.IO;
-using Rewired.UI.ControlMapper;
 
 namespace TownOfUs
 {
@@ -11,22 +9,6 @@ namespace TownOfUs
         public static void Prefix(KillButton __instance)
         {
             __instance.transform.Find("Text_TMP").gameObject.SetActive(false);
-        }
-    }
-
-    [HarmonyPatch(typeof(ControlMapper), nameof(ControlMapper.OnKeyboardElementAssignmentPollingWindowUpdate))]
-    public class KillKeybind
-    {
-        [HarmonyPostfix]
-        public static void postfix(ControlMapper __instance)
-        {
-            if (!File.Exists(Application.persistentDataPath + "\\ToUKeybind.txt"))
-                File.WriteAllTextAsync(Application.persistentDataPath + "\\ToUKeybind.txt", "Q");
-            if (__instance.pendingInputMapping.actionName == "Kill")
-            {
-                string newbind = __instance.pendingInputMapping.elementName;
-                File.WriteAllTextAsync(Application.persistentDataPath + "\\ToUKeybind.txt", newbind.Replace(" ", string.Empty));
-            }
         }
     }
 
@@ -48,7 +30,7 @@ namespace TownOfUs
         private static Sprite Infect => TownOfUs.InfectSprite;
         private static Sprite Trap => TownOfUs.TrapSprite;
         private static Sprite Examine => TownOfUs.ExamineSprite;
-        private static Sprite Button => TownOfUs.ButtonSprite;
+
         private static Sprite Kill;
 
 
@@ -146,9 +128,7 @@ namespace TownOfUs
                     PlayerControl.LocalPlayer.Is(RoleEnum.Werewolf) || PlayerControl.LocalPlayer.Is(RoleEnum.Juggernaut);
             }
 
-            string key = File.ReadAllText(Application.persistentDataPath + "\\ToUKeybind.txt");
-            KeyCode KeyCode = (KeyCode)System.Enum.Parse(typeof(KeyCode), key);
-            var keyInt = Input.GetKeyInt(KeyCode);
+            var keyInt = Input.GetKeyInt(KeyCode.Q);
             var controller = ConsoleJoystick.player.GetButtonDown(8);
             if (keyInt | controller && __instance.KillButton != null && flag && !PlayerControl.LocalPlayer.Data.IsDead)
                 __instance.KillButton.DoClick();

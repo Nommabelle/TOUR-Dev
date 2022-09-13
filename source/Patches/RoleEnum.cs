@@ -64,7 +64,9 @@ namespace TownOfUs
         ButtonBarry,
         Bait,
         Sleuth,
-        Blind
+        Blind,
+        Radar,
+        Disperser
     }
 
     public enum AbilityEnum

@@ -54,6 +54,8 @@ namespace TownOfUs
         SetSleuth,
         SetBlind,
         SetAssassin,
+        SetRadar,
+        SetDisperser,
 
         SetPhantom,
         PhantomDied,
@@ -117,9 +119,9 @@ namespace TownOfUs
         HaunterFinished,
         FlashGrenade,
         Alert,
-        Remember,
+        Remember = 220,
         BaitReport,
-        Transport = 220,
+        Transport,
         SetUntransportable,
         Mediate,
         Vest,
@@ -128,6 +130,7 @@ namespace TownOfUs
         Poison,
         Infect,
         TurnPestilence,
+        Disperse,
 
         SetGlitch,
         BypassKill,

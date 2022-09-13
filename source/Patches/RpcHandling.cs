@@ -37,6 +37,7 @@ namespace TownOfUs
         private static readonly List<(Type, CustomRPC, int, bool)> ImpostorRoles = new List<(Type, CustomRPC, int, bool)>();
         private static readonly List<(Type, CustomRPC, int)> CrewmateModifiers = new List<(Type, CustomRPC, int)>();
         private static readonly List<(Type, CustomRPC, int)> GlobalModifiers = new List<(Type, CustomRPC, int)>();
+        private static readonly List<(Type, CustomRPC, int)> ImpostorModifiers = new List<(Type, CustomRPC, int)>();
         private static readonly List<(Type, CustomRPC, int)> ButtonModifiers = new List<(Type, CustomRPC, int)>();
         private static readonly List<(Type, CustomRPC, int)> AssassinModifier = new List<(Type, CustomRPC, int)>();
         private static bool PhantomOn;
@@ -185,6 +186,7 @@ namespace TownOfUs
 
             SortModifiers(CrewmateModifiers, crewmates.Count);
             SortModifiers(GlobalModifiers, crewmates.Count + impostors.Count);
+            SortModifiers(ImpostorModifiers, impostors.Count);
             SortModifiers(ButtonModifiers, crewmates.Count + impostors.Count);
 
             if (Check(CustomGameOptions.VanillaGame))
@@ -194,6 +196,7 @@ namespace TownOfUs
                 NeutralKillingRoles.Clear();
                 CrewmateModifiers.Clear();
                 GlobalModifiers.Clear();
+                ImpostorModifiers.Clear();
                 ButtonModifiers.Clear();
                 AssassinModifier.Clear();
                 ImpostorRoles.Clear();
@@ -235,6 +238,8 @@ namespace TownOfUs
                 Role.Gen<Role>(typeof(Impostor), impostor, CustomRPC.SetImpostor);
 
             var canHaveModifier = PlayerControl.AllPlayerControls.ToArray().ToList();
+            var canHaveImpModifier = PlayerControl.AllPlayerControls.ToArray().ToList();
+            canHaveImpModifier.RemoveAll(player => !player.Is(Faction.Impostors));
             var canHaveAbility = PlayerControl.AllPlayerControls.ToArray().ToList();
             var canHaveAbility2 = PlayerControl.AllPlayerControls.ToArray().ToList();
             canHaveModifier.Shuffle();
@@ -245,6 +250,14 @@ namespace TownOfUs
             canHaveAbility2.Shuffle();
             var impAssassins = CustomGameOptions.NumberOfImpostorAssassins;
             var neutAssassins = CustomGameOptions.NumberOfNeutralAssassins;
+
+            foreach (var (type, rpc, _) in ImpostorModifiers)
+            {
+                if (canHaveImpModifier.Count == 0) break;
+                Role.Gen<Modifier>(type, canHaveImpModifier, rpc);
+            }
+
+            canHaveModifier.RemoveAll(player => player.Is(ModifierEnum.Disperser));
 
             foreach (var (type, rpc, _) in GlobalModifiers)
             {
@@ -881,6 +894,12 @@ namespace TownOfUs
                     case CustomRPC.SetSleuth:
                         new Sleuth(Utils.PlayerById(reader.ReadByte()));
                         break;
+                    case CustomRPC.SetRadar:
+                        new Radar(Utils.PlayerById(reader.ReadByte()));
+                        break;
+                    case CustomRPC.SetDisperser:
+                        new Disperser(Utils.PlayerById(reader.ReadByte()));
+                        break;
                     case CustomRPC.SetArsonist:
                         new Arsonist(Utils.PlayerById(reader.ReadByte()));
                         break;
@@ -1029,6 +1048,17 @@ namespace TownOfUs
                             DestroyableSingleton<HudManager>.Instance.OpenMeetingRoom(buttonBarry);
                             buttonBarry.RpcStartMeeting(null);
                         }
+                        break;
+                    case CustomRPC.Disperse:
+                        byte teleports = reader.ReadByte();
+                        Dictionary<byte, Vector2> coordinates = new Dictionary<byte, Vector2>();
+                        for (int i = 0; i < teleports; i++)
+                        {
+                            byte playerId = reader.ReadByte();
+                            Vector2 location = reader.ReadVector2();
+                            coordinates.Add(playerId, location);
+                        }
+                        Disperser.DispersePlayersToCoordinates(coordinates);
                         break;
                     case CustomRPC.BaitReport:
                         var baitKiller = Utils.PlayerById(reader.ReadByte());
@@ -1202,6 +1232,7 @@ namespace TownOfUs
                 ImpostorRoles.Clear();
                 CrewmateModifiers.Clear();
                 GlobalModifiers.Clear();
+                ImpostorModifiers.Clear();
                 ButtonModifiers.Clear();
                 AssassinModifier.Clear();
 
@@ -1376,6 +1407,13 @@ namespace TownOfUs
 
                     if (Check(CustomGameOptions.SleuthOn))
                         GlobalModifiers.Add((typeof(Sleuth), CustomRPC.SetSleuth, CustomGameOptions.SleuthOn));
+
+                    if (Check(CustomGameOptions.RadarOn))
+                        GlobalModifiers.Add((typeof(Radar), CustomRPC.SetRadar, CustomGameOptions.RadarOn));
+                    #endregion
+                    #region Impostor Modifiers
+                    if (Check(CustomGameOptions.DisperserOn) && PlayerControl.GameOptions.MapId != 5)
+                        ImpostorModifiers.Add((typeof(Disperser), CustomRPC.SetDisperser, CustomGameOptions.DisperserOn));
                     #endregion
                     #region Assassin Modifier
                     AssassinModifier.Add((typeof(Assassin), CustomRPC.SetAssassin, 100));

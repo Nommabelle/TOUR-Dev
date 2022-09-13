@@ -61,9 +61,11 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 - [Button Barry](#button-barry)
 - [Flash](#flash)
 - [Giant](#giant)
+- [Radar](#radar)
 - [Lovers](#lovers)
 - [Sleuth](#sleuth)
 - [Tiebreaker](#tiebreaker)
+- [Disperser](#disperser)
 
 
 
@@ -71,6 +73,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 # Releases
 | Among Us - Version| Mod Version | Link |
 |----------|-------------|-----------------|
+| 2022.8.24s & 2022.8.24e | v3.4.0 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.4.0/ToU.v3.4.0.zip) |
 | 2022.8.24s & 2022.8.24e | v3.3.2 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.3.2/ToU.v3.3.2.zip) |
 | 2022.8.24s & 2022.8.24e | v3.3.1 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.3.1/ToU.v3.3.1.zip) |
 | 2022.8.24s & 2022.8.24e | v3.3.0 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.3.0/ToU.v3.3.0.zip) |
@@ -121,6 +124,11 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 
 <details>
   <summary> Changelog </summary>
+  <details>
+  <summary> v3.4.0 </summary>
+  <ul> <li>New Modifier: Radar</li> </ul>
+  <ul> <li>New Modifier: Disperser</li> </ul>
+  </details>
   <details>
   <summary> v3.3.2 </summary>
   <ul> <li>New Setting: Snitch doesn't see Traitor</li> </ul>
@@ -1374,6 +1382,15 @@ However, they can also win with their respective team, hence why the Lovers do n
 | Neutral Roles Can Be Lovers | Whether a Lover can be a Neutral Role | Toggle | True |
 
 -----------------------
+## Radar
+### **Applied to: All**
+The Radar is a crewmate who knows where the closest player is to them.
+### Game Options
+| Name | Description | Type | Default |
+|----------|:-------------:|:------:|:------:|
+| Radar | The percentage probability of the Radar appearing | Percentage | 0% |
+
+-----------------------
 ## Sleuth
 ### **Applied to: All**
 The Sleuth is a crewmate who gains knowledge from reporting dead bodies.\
@@ -1393,6 +1410,17 @@ If the Tiebreaker is the Mayor, it applies to the Mayor's __first__ vote.
 | Name | Description | Type | Default |
 |----------|:-------------:|:------:|:------:|
 | Tiebreaker | The percentage probability of the Tiebreaker appearing | Percentage | 0% |
+
+-----------------------
+## Disperser
+### **Applied to: Impostors**
+The Disperser is an impostor who has a 1 time use ability to send all players to a random vent.\
+This includes miner vents.\
+Does not appear on Submerged.
+### Game Options
+| Name | Description | Type | Default |
+|----------|:-------------:|:------:|:------:|
+| Disperser | The percentage probability of the Disperser appearing | Percentage | 0% |
 
 -----------------------
 # Game Mode Settings
