@@ -1616,6 +1616,66 @@
       "artist": "Rum"
     },
     {
+      "id": "hats0323",
+      "name": "Side Arms hat 2 alt",
+      "artist": "Ghost_ejims"
+    },
+    {
+      "id": "hats0324",
+      "name": "Basedkm hat ",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0325",
+      "name": "CaspersGrovyle hat ",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0326",
+      "name": "CowboyMav hat ",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0327",
+      "name": "DigDuck hat ",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0328",
+      "name": "DougDimadome hat ",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0329",
+      "name": "JapandasSkitty hat ",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0330",
+      "name": "Magikarp hat ",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0331",
+      "name": "Nidoking hat ",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0332",
+      "name": "QuirtysPolywhirl hat ",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0333",
+      "name": "Salamence hat ",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0334",
+      "name": "WolvsMimikyu hat ",
+      "artist": "Ophidian"
+    },
+    {
       "id": "misc0000",
       "name": "ZeroXFusionz hat",
       "artist": "TheLastShaymin"
@@ -2063,6 +2123,11 @@
     {
       "id": "standard0043",
       "name": "Sunflower hat",
+      "artist": "Little Doo Doo"
+    },
+    {
+      "id": "standard0044",
+      "name": "Juicebox hat",
       "artist": "Little Doo Doo"
     }
   ]
