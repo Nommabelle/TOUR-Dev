@@ -66,12 +66,12 @@ namespace TownOfUs.CustomOption
 
         public static CustomHeaderOption CrewmateModifiers;
         public static CustomNumberOption BaitOn;
+        public static CustomNumberOption BlindOn;
         public static CustomNumberOption DiseasedOn;
         public static CustomNumberOption MultitaskerOn;
         public static CustomNumberOption TorchOn;
 
         public static CustomHeaderOption GlobalModifiers;
-        public static CustomNumberOption BlindOn;
         public static CustomNumberOption ButtonBarryOn;
         public static CustomNumberOption FlashOn;
         public static CustomNumberOption GiantOn;
@@ -512,6 +512,8 @@ namespace TownOfUs.CustomOption
             CrewmateModifiers = new CustomHeaderOption(num++, MultiMenu.modifiers, "Crewmate Modifiers");
             BaitOn = new CustomNumberOption(true, num++, MultiMenu.modifiers, "<color=#00B3B3FF>Bait</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
+            BlindOn = new CustomNumberOption(true, num++, MultiMenu.modifiers, "<color=#AAAAAAFF>Blind</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
             DiseasedOn = new CustomNumberOption(true, num++, MultiMenu.modifiers, "<color=#808080FF>Diseased</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             MultitaskerOn = new CustomNumberOption(true, num++, MultiMenu.modifiers, "<color=#FF804DFF>Multitasker</color>", 0f, 0f, 100f, 10f,
@@ -520,8 +522,6 @@ namespace TownOfUs.CustomOption
                 PercentFormat);
 
             GlobalModifiers = new CustomHeaderOption(num++, MultiMenu.modifiers, "Global Modifiers");
-            BlindOn = new CustomNumberOption(true, num++, MultiMenu.modifiers, "<color=#AAAAAAFF>Blind</color>", 0f, 0f, 100f, 10f,
-                PercentFormat);
             ButtonBarryOn = new CustomNumberOption(true, num++, MultiMenu.modifiers, "<color=#E600FFFF>Button Barry</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             FlashOn = new CustomNumberOption(true, num++, MultiMenu.modifiers, "<color=#FF8080FF>Flash</color>", 0f, 0f, 100f, 10f,

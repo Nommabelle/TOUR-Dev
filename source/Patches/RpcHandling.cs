@@ -1389,6 +1389,9 @@ namespace TownOfUs
                     if (Check(CustomGameOptions.BaitOn))
                         CrewmateModifiers.Add((typeof(Bait), CustomRPC.SetBait, CustomGameOptions.BaitOn));
 
+                    if (Check(CustomGameOptions.BlindOn))
+                        CrewmateModifiers.Add((typeof(Blind), CustomRPC.SetBlind, CustomGameOptions.BlindOn));
+
                     if (Check(CustomGameOptions.MultitaskerOn))
                         CrewmateModifiers.Add((typeof(Multitasker), CustomRPC.SetMultitasker, CustomGameOptions.MultitaskerOn));
                     #endregion
@@ -1398,9 +1401,6 @@ namespace TownOfUs
 
                     if (Check(CustomGameOptions.FlashOn))
                         GlobalModifiers.Add((typeof(Flash), CustomRPC.SetFlash, CustomGameOptions.FlashOn));
-
-                    if (Check(CustomGameOptions.BlindOn))
-                        GlobalModifiers.Add((typeof(Blind), CustomRPC.SetBlind, CustomGameOptions.BlindOn));
 
                     if (Check(CustomGameOptions.GiantOn))
                         GlobalModifiers.Add((typeof(Giant), CustomRPC.SetGiant, CustomGameOptions.GiantOn));

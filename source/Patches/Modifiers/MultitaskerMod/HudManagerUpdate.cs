@@ -15,7 +15,10 @@ namespace TownOfUs.Modifiers
             SpriteRenderer[] rends = Base.GetComponentsInChildren<SpriteRenderer>();
             for (int i = 0; i < rends.Length; i++)
             {
-                rends[i].color = new Color(1.0f, 1.0f, 1.0f, 0.3f);
+                var oldColor1 = rends[i].color[0];
+                var oldColor2 = rends[i].color[1];
+                var oldColor3 = rends[i].color[2];
+                rends[i].color = new Color(oldColor1, oldColor2, oldColor3, 0.5f);
             }
         }
     }
