@@ -66,7 +66,8 @@ namespace TownOfUs
         Sleuth,
         Blind,
         Radar,
-        Disperser
+        Disperser,
+        Multitasker
     }
 
     public enum AbilityEnum

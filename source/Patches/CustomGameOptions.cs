@@ -74,6 +74,7 @@ namespace TownOfUs
         public static int BlindOn => (int)Generate.BlindOn.Get();
         public static int RadarOn => (int)Generate.RadarOn.Get();
         public static int DisperserOn => (int)Generate.DisperserOn.Get();
+        public static int MultitaskerOn => (int)Generate.MultitaskerOn.Get();
         public static int VanillaGame => (int)Generate.VanillaGame.Get();
         public static float InitialCooldowns => Generate.InitialCooldowns.Get();
         public static bool BothLoversDie => Generate.BothLoversDie.Get();
@@ -96,6 +97,7 @@ namespace TownOfUs
         public static bool VentFootprintVisible => Generate.VentFootprintVisible.Get();
         public static bool JesterButton => Generate.JesterButton.Get();
         public static bool JesterVent => Generate.JesterVent.Get();
+        public static bool JesterImpVision => Generate.JesterImpVision.Get();
         public static bool RewindRevive => Generate.RewindRevive.Get();
         public static float RewindDuration => Generate.RewindDuration.Get();
         public static float RewindCooldown => Generate.RewindCooldown.Get();
@@ -147,6 +149,8 @@ namespace TownOfUs
         public static bool SeeTasksWhenDead => Generate.SeeTasksWhenDead.Get();
         public static float DouseCd => Generate.DouseCooldown.Get();
         public static int MaxDoused => (int)Generate.MaxDoused.Get();
+        public static bool ArsoImpVision => Generate.ArsoImpVision.Get();
+        public static bool IgniteCdRemoved => Generate.IgniteCdRemoved.Get();
         public static int MinNeutralNonKillingRoles => (int)Generate.MinNeutralNonKillingRoles.Get();
         public static int MaxNeutralNonKillingRoles => (int)Generate.MaxNeutralNonKillingRoles.Get();
         public static int MinNeutralKillingRoles => (int)Generate.MinNeutralKillingRoles.Get();

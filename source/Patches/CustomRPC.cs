@@ -56,6 +56,7 @@ namespace TownOfUs
         SetAssassin,
         SetRadar,
         SetDisperser,
+        SetMultitasker,
 
         SetPhantom,
         PhantomDied,

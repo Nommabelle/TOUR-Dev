@@ -67,6 +67,7 @@ namespace TownOfUs.CustomOption
         public static CustomHeaderOption CrewmateModifiers;
         public static CustomNumberOption BaitOn;
         public static CustomNumberOption DiseasedOn;
+        public static CustomNumberOption MultitaskerOn;
         public static CustomNumberOption TorchOn;
 
         public static CustomHeaderOption GlobalModifiers;
@@ -199,6 +200,7 @@ namespace TownOfUs.CustomOption
         public static CustomHeaderOption Jester;
         public static CustomToggleOption JesterButton;
         public static CustomToggleOption JesterVent;
+        public static CustomToggleOption JesterImpVision;
 
         public static CustomHeaderOption TheGlitch;
         public static CustomNumberOption MimicCooldownOption;
@@ -243,6 +245,8 @@ namespace TownOfUs.CustomOption
         public static CustomHeaderOption Arsonist;
         public static CustomNumberOption DouseCooldown;
         public static CustomNumberOption MaxDoused;
+        public static CustomToggleOption ArsoImpVision;
+        public static CustomToggleOption IgniteCdRemoved;
 
         public static CustomHeaderOption Undertaker;
         public static CustomNumberOption DragCooldown;
@@ -509,6 +513,8 @@ namespace TownOfUs.CustomOption
             BaitOn = new CustomNumberOption(true, num++, MultiMenu.modifiers, "<color=#00B3B3FF>Bait</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             DiseasedOn = new CustomNumberOption(true, num++, MultiMenu.modifiers, "<color=#808080FF>Diseased</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
+            MultitaskerOn = new CustomNumberOption(true, num++, MultiMenu.modifiers, "<color=#FF804DFF>Multitasker</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             TorchOn = new CustomNumberOption(true, num++, MultiMenu.modifiers, "<color=#FFFF99FF>Torch</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
@@ -880,6 +886,8 @@ namespace TownOfUs.CustomOption
                 new CustomToggleOption(num++, MultiMenu.neutral, "Jester Can Button", true);
             JesterVent =
                 new CustomToggleOption(num++, MultiMenu.neutral, "Jester Can Hide In Vents", false);
+            JesterImpVision =
+                new CustomToggleOption(num++, MultiMenu.neutral, "Jester Has Impostor Vision", false);
 
             Phantom =
                 new CustomHeaderOption(num++, MultiMenu.neutral, "<color=#662962FF>Phantom</color>");
@@ -891,6 +899,10 @@ namespace TownOfUs.CustomOption
                 new CustomNumberOption(num++, MultiMenu.neutral, "Douse Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
             MaxDoused =
                 new CustomNumberOption(num++, MultiMenu.neutral, "Maximum Alive Players Doused", 5, 1, 15, 1);
+            ArsoImpVision =
+                new CustomToggleOption(num++, MultiMenu.neutral, "Arsonist Has Impostor Vision", false);
+            IgniteCdRemoved =
+                new CustomToggleOption(num++, MultiMenu.neutral, "Ignite Cooldown Removed When Arsonist Is Last Killer", false);
 
             Plaguebearer = new CustomHeaderOption(num++, MultiMenu.neutral, "<color=#E6FFB3FF>Plaguebearer</color>");
             InfectCooldown =

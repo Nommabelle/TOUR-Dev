@@ -897,6 +897,9 @@ namespace TownOfUs
                     case CustomRPC.SetRadar:
                         new Radar(Utils.PlayerById(reader.ReadByte()));
                         break;
+                    case CustomRPC.SetMultitasker:
+                        new Multitasker(Utils.PlayerById(reader.ReadByte()));
+                        break;
                     case CustomRPC.SetDisperser:
                         new Disperser(Utils.PlayerById(reader.ReadByte()));
                         break;
@@ -1385,6 +1388,9 @@ namespace TownOfUs
 
                     if (Check(CustomGameOptions.BaitOn))
                         CrewmateModifiers.Add((typeof(Bait), CustomRPC.SetBait, CustomGameOptions.BaitOn));
+
+                    if (Check(CustomGameOptions.MultitaskerOn))
+                        CrewmateModifiers.Add((typeof(Multitasker), CustomRPC.SetMultitasker, CustomGameOptions.MultitaskerOn));
                     #endregion
                     #region Global Modifiers
                     if (Check(CustomGameOptions.TiebreakerOn))
