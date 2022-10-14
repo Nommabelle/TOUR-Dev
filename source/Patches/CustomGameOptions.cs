@@ -75,6 +75,7 @@ namespace TownOfUs
         public static int RadarOn => (int)Generate.RadarOn.Get();
         public static int DisperserOn => (int)Generate.DisperserOn.Get();
         public static int MultitaskerOn => (int)Generate.MultitaskerOn.Get();
+        public static int DoubleShotOn => (int)Generate.DoubleShotOn.Get();
         public static int VanillaGame => (int)Generate.VanillaGame.Get();
         public static float InitialCooldowns => Generate.InitialCooldowns.Get();
         public static bool BothLoversDie => Generate.BothLoversDie.Get();

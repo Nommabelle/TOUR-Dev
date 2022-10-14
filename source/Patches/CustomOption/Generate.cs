@@ -82,6 +82,7 @@ namespace TownOfUs.CustomOption
 
         public static CustomHeaderOption ImpostorModifiers;
         public static CustomNumberOption DisperserOn;
+        public static CustomNumberOption DoubleShotOn;
 
         public static CustomHeaderOption MapSettings;
         public static CustomToggleOption RandomMapEnabled;
@@ -539,6 +540,8 @@ namespace TownOfUs.CustomOption
 
             ImpostorModifiers = new CustomHeaderOption(num++, MultiMenu.modifiers, "Impostor Modifiers");
             DisperserOn = new CustomNumberOption(true, num++, MultiMenu.modifiers, "<color=#FF0000FF>Disperser</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
+            DoubleShotOn = new CustomNumberOption(true, num++, MultiMenu.modifiers, "<color=#FF0000FF>Double Shot</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
 
             GameModeSettings =
