@@ -72,7 +72,7 @@ namespace TownOfUs.Roles
                 ColorMapping.Add("Undertaker", Colors.Impostor);
                 ColorMapping.Add("Grenadier", Colors.Impostor);
                 ColorMapping.Add("Traitor", Colors.Impostor);
-                ColorMapping.Add("Blackmailer", Colors.Impostor);
+                ColorMapping.Add("Escapist", Colors.Impostor);
 
                 if (CustomGameOptions.VigilanteGuessNeutralKilling)
                 {

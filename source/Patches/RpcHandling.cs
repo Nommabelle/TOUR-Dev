@@ -424,7 +424,7 @@ namespace TownOfUs
 
             ImpostorRoles.Add((typeof(Undertaker), CustomRPC.SetUndertaker, 10, true));
             ImpostorRoles.Add((typeof(Morphling), CustomRPC.SetMorphling, 10, false));
-            ImpostorRoles.Add((typeof(Blackmailer), CustomRPC.SetBlackmailer, 10, true));
+            ImpostorRoles.Add((typeof(Escapist), CustomRPC.SetEscapist, 10, false));
             ImpostorRoles.Add((typeof(Miner), CustomRPC.SetMiner, 10, true));
             ImpostorRoles.Add((typeof(Swooper), CustomRPC.SetSwooper, 10, false));
             ImpostorRoles.Add((typeof(Grenadier), CustomRPC.SetGrenadier, 10, true));
