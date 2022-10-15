@@ -43,7 +43,6 @@ namespace TownOfUs
         public static int ArsonistOn => (int)Generate.ArsonistOn.Get();
         public static int AltruistOn => (int)Generate.AltruistOn.Get();
         public static int UndertakerOn => (int)Generate.UndertakerOn.Get();
-        public static int UnderdogOn => (int)Generate.UnderdogOn.Get();
         public static int PhantomOn => (int)Generate.PhantomOn.Get();
         public static int VigilanteOn => (int)Generate.VigilanteOn.Get();
         public static int HaunterOn => (int)Generate.HaunterOn.Get();
@@ -76,6 +75,7 @@ namespace TownOfUs
         public static int DisperserOn => (int)Generate.DisperserOn.Get();
         public static int MultitaskerOn => (int)Generate.MultitaskerOn.Get();
         public static int DoubleShotOn => (int)Generate.DoubleShotOn.Get();
+        public static int UnderdogOn => (int)Generate.UnderdogOn.Get();
         public static int VanillaGame => (int)Generate.VanillaGame.Get();
         public static float InitialCooldowns => Generate.InitialCooldowns.Get();
         public static bool BothLoversDie => Generate.BothLoversDie.Get();

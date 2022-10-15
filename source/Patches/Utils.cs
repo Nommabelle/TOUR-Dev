@@ -13,7 +13,7 @@ using Il2CppInterop.Runtime.InteropTypes;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using UnityEngine;
 using Object = UnityEngine.Object;
-using PerformKill = TownOfUs.ImpostorRoles.UnderdogMod.PerformKill;
+using PerformKill = TownOfUs.Modifiers.UnderdogMod.PerformKill;
 using Reactor;
 using Random = UnityEngine.Random;
 
@@ -378,7 +378,7 @@ namespace TownOfUs
                     return;
                 }
 
-                if (target.Is(ModifierEnum.Diseased) && killer.Is(RoleEnum.Underdog))
+                if (target.Is(ModifierEnum.Diseased) && killer.Is(ModifierEnum.Underdog))
                 {
                     var lowerKC = (PlayerControl.GameOptions.KillCooldown - CustomGameOptions.UnderdogKillBonus) * CustomGameOptions.DiseasedMultiplier;
                     var normalKC = PlayerControl.GameOptions.KillCooldown * CustomGameOptions.DiseasedMultiplier;
@@ -399,7 +399,7 @@ namespace TownOfUs
                     return;
                 }
 
-                if (killer.Is(RoleEnum.Underdog))
+                if (killer.Is(ModifierEnum.Underdog))
                 {
                     var lowerKC = PlayerControl.GameOptions.KillCooldown - CustomGameOptions.UnderdogKillBonus;
                     var normalKC = PlayerControl.GameOptions.KillCooldown;

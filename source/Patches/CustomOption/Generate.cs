@@ -56,7 +56,6 @@ namespace TownOfUs.CustomOption
         public static CustomHeaderOption ImpostorKillingRoles;
         public static CustomNumberOption PoisonerOn;
         public static CustomNumberOption TraitorOn;
-        public static CustomNumberOption UnderdogOn;
 
         public static CustomHeaderOption ImpostorSupportRoles;
         public static CustomNumberOption BlackmailerOn;
@@ -83,6 +82,7 @@ namespace TownOfUs.CustomOption
         public static CustomHeaderOption ImpostorModifiers;
         public static CustomNumberOption DisperserOn;
         public static CustomNumberOption DoubleShotOn;
+        public static CustomNumberOption UnderdogOn;
 
         public static CustomHeaderOption MapSettings;
         public static CustomToggleOption RandomMapEnabled;
@@ -497,8 +497,6 @@ namespace TownOfUs.CustomOption
                 PercentFormat);
             TraitorOn = new CustomNumberOption(true, num++, MultiMenu.imposter, "<color=#FF0000FF>Traitor</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
-            UnderdogOn = new CustomNumberOption(true, num++, MultiMenu.imposter, "<color=#FF0000FF>Underdog</color>", 0f, 0f, 100f, 10f,
-                PercentFormat);
 
             ImpostorSupportRoles = new CustomHeaderOption(num++, MultiMenu.imposter, "Impostor Support Roles");
             BlackmailerOn = new CustomNumberOption(true, num++, MultiMenu.imposter, "<color=#FF0000FF>Blackmailer</color>", 0f, 0f, 100f, 10f,
@@ -542,6 +540,8 @@ namespace TownOfUs.CustomOption
             DisperserOn = new CustomNumberOption(true, num++, MultiMenu.modifiers, "<color=#FF0000FF>Disperser</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             DoubleShotOn = new CustomNumberOption(true, num++, MultiMenu.modifiers, "<color=#FF0000FF>Double Shot</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
+            UnderdogOn = new CustomNumberOption(true, num++, MultiMenu.modifiers, "<color=#FF0000FF>Underdog</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
 
             GameModeSettings =
@@ -983,10 +983,6 @@ namespace TownOfUs.CustomOption
             NeutralKillingStopsTraitor =
                 new CustomToggleOption(num++, MultiMenu.imposter, "Traitor Won't Spawn If Any Neutral Killing Is Alive", false);
 
-            Underdog = new CustomHeaderOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Underdog</color>");
-            UnderdogKillBonus = new CustomNumberOption(num++, MultiMenu.imposter, "Kill Cooldown Bonus", 5, 2.5f, 30, 2.5f, CooldownFormat);
-            UnderdogIncreasedKC = new CustomToggleOption(num++, MultiMenu.imposter, "Increased Kill Cooldown When 2+ Imps", true);
-
             Blackmailer = new CustomHeaderOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Blackmailer</color>");
             BlackmailCooldown =
                 new CustomNumberOption(num++, MultiMenu.imposter, "Initial Blackmail Cooldown", 10, 1, 15, 1f, CooldownFormat);
@@ -1021,6 +1017,10 @@ namespace TownOfUs.CustomOption
             LovingImpPercent = new CustomNumberOption(num++, MultiMenu.modifiers, "Loving Impostor Probability", 20f, 0f, 100f, 10f,
                 PercentFormat);
             NeutralLovers = new CustomToggleOption(num++, MultiMenu.modifiers, "Neutral Roles Can Be Lovers");
+
+            Underdog = new CustomHeaderOption(num++, MultiMenu.modifiers, "<color=#FF0000FF>Underdog</color>");
+            UnderdogKillBonus = new CustomNumberOption(num++, MultiMenu.modifiers, "Kill Cooldown Bonus", 5, 2.5f, 30, 2.5f, CooldownFormat);
+            UnderdogIncreasedKC = new CustomToggleOption(num++, MultiMenu.modifiers, "Increased Kill Cooldown When 2+ Imps", true);
         }
     }
 }

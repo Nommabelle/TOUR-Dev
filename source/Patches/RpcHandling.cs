@@ -270,20 +270,21 @@ namespace TownOfUs
             var canHaveAssassinModifier = PlayerControl.AllPlayerControls.ToArray().ToList();
             canHaveAssassinModifier.RemoveAll(player => !player.Is(Faction.Impostors) || !player.Is(AbilityEnum.Assassin));
 
-            foreach (var (type, rpc, _) in ImpostorModifiers)
-            {
-                if (canHaveImpModifier.Count == 0) break;
-                Role.Gen<Modifier>(type, canHaveImpModifier, rpc);
-            }
-
-            canHaveAssassinModifier.RemoveAll(player => player.Is(ModifierEnum.Disperser));
             foreach (var (type, rpc, _) in AssassinModifiers)
             {
                 if (canHaveAssassinModifier.Count == 0) break;
                 Role.Gen<Modifier>(type, canHaveAssassinModifier, rpc);
             }
 
-            canHaveModifier.RemoveAll(player => player.Is(ModifierEnum.Disperser) || player.Is(ModifierEnum.DoubleShot));
+            canHaveImpModifier.RemoveAll(player => player.Is(ModifierEnum.DoubleShot));
+
+            foreach (var (type, rpc, _) in ImpostorModifiers)
+            {
+                if (canHaveImpModifier.Count == 0) break;
+                Role.Gen<Modifier>(type, canHaveImpModifier, rpc);
+            }
+
+            canHaveModifier.RemoveAll(player => player.Is(ModifierEnum.Disperser) || player.Is(ModifierEnum.DoubleShot) || player.Is(ModifierEnum.Underdog));
 
             foreach (var (type, rpc, _) in GlobalModifiers)
             {
@@ -1371,9 +1372,6 @@ namespace TownOfUs
                     if (CustomGameOptions.UndertakerOn > 0)
                         ImpostorRoles.Add((typeof(Undertaker), CustomRPC.SetUndertaker, CustomGameOptions.UndertakerOn, true));
 
-                    if (CustomGameOptions.UnderdogOn > 0)
-                        ImpostorRoles.Add((typeof(Underdog), CustomRPC.SetUnderdog, CustomGameOptions.UnderdogOn, false));
-
                     if (CustomGameOptions.MorphlingOn > 0)
                         ImpostorRoles.Add((typeof(Morphling), CustomRPC.SetMorphling, CustomGameOptions.MorphlingOn, false));
 
@@ -1439,6 +1437,9 @@ namespace TownOfUs
 
                     if (Check(CustomGameOptions.DoubleShotOn))
                         AssassinModifiers.Add((typeof(DoubleShot), CustomRPC.SetDoubleShot, CustomGameOptions.DoubleShotOn));
+
+                    if (CustomGameOptions.UnderdogOn > 0)
+                        ImpostorModifiers.Add((typeof(Underdog), CustomRPC.SetUnderdog, CustomGameOptions.UnderdogOn));
                     #endregion
                     #region Assassin Ability
                     AssassinAbility.Add((typeof(Assassin), CustomRPC.SetAssassin, 100));

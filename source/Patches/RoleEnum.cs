@@ -39,7 +39,6 @@ namespace TownOfUs
         Morphling,
         Janitor,
         Undertaker,
-        Underdog,
         Grenadier,
         Poisoner,
         Traitor,
@@ -68,7 +67,8 @@ namespace TownOfUs
         Radar,
         Disperser,
         Multitasker,
-        DoubleShot
+        DoubleShot,
+        Underdog
     }
 
     public enum AbilityEnum
