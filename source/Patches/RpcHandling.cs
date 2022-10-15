@@ -1206,6 +1206,16 @@ namespace TownOfUs
                     case CustomRPC.SetTrapper:
                         new Trapper(Utils.PlayerById(reader.ReadByte()));
                         break;
+                    case CustomRPC.SetEscapist:
+                        new Escapist(Utils.PlayerById(reader.ReadByte()));
+                        break;
+                    case CustomRPC.Escape:
+                        var escapist = Utils.PlayerById(reader.ReadByte());
+                        var escapistRole = Role.GetRole<Escapist>(escapist);
+                        var escapePos = reader.ReadVector2();
+                        escapistRole.EscapePoint = escapePos;
+                        Escapist.Escape(escapist);
+                        break;
                     case CustomRPC.AddMayorVoteBank:
                         Role.GetRole<Mayor>(Utils.PlayerById(reader.ReadByte())).VoteBank += reader.ReadInt32();
                         break;
@@ -1392,6 +1402,9 @@ namespace TownOfUs
 
                     if (CustomGameOptions.PoisonerOn > 0 && CustomGameOptions.GameMode != GameMode.KillingOnly)
                         ImpostorRoles.Add((typeof(Poisoner), CustomRPC.SetPoisoner, CustomGameOptions.PoisonerOn, true));
+
+                    if (CustomGameOptions.EscapistOn > 0)
+                        ImpostorRoles.Add((typeof(Escapist), CustomRPC.SetEscapist, CustomGameOptions.EscapistOn, false));
                     #endregion
                     #region Crewmate Modifiers
                     if (Check(CustomGameOptions.TorchOn))

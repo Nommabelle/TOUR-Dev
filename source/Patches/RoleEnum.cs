@@ -33,6 +33,7 @@ namespace TownOfUs
         Pestilence,
         Werewolf,
         Detective,
+        Escapist,
 
         Miner,
         Swooper,

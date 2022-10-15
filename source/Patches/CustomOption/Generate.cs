@@ -49,6 +49,7 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption WerewolfOn;
 
         public static CustomHeaderOption ImpostorConcealingRoles;
+        public static CustomNumberOption EscapistOn;
         public static CustomNumberOption MorphlingOn;
         public static CustomNumberOption SwooperOn;
         public static CustomNumberOption GrenadierOn;
@@ -378,6 +379,9 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption DetectiveRoleDuration;
         public static CustomNumberOption DetectiveFactionDuration;
 
+        public static CustomHeaderOption Escapist;
+        public static CustomNumberOption EscapeCooldown;
+
         public static CustomHeaderOption Giant;
         public static CustomNumberOption GiantSlow;
 
@@ -485,6 +489,8 @@ namespace TownOfUs.CustomOption
                 PercentFormat);
 
             ImpostorConcealingRoles = new CustomHeaderOption(num++, MultiMenu.imposter, "Impostor Concealing Roles");
+            EscapistOn = new CustomNumberOption(true, num++, MultiMenu.imposter, "<color=#FF0000FF>Escapist</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
             GrenadierOn = new CustomNumberOption(true, num++, MultiMenu.imposter, "<color=#FF0000FF>Grenadier</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             MorphlingOn = new CustomNumberOption(true, num++, MultiMenu.imposter, "<color=#FF0000FF>Morphling</color>", 0f, 0f, 100f, 10f,
@@ -937,6 +943,11 @@ namespace TownOfUs.CustomOption
                 new CustomNumberOption(num++, MultiMenu.neutral, "Rampage Kill Cooldown", 10f, 0.5f, 15f, 0.5f, CooldownFormat);
             WerewolfVent =
                 new CustomToggleOption(num++, MultiMenu.neutral, "Werewolf Can Vent When Rampaged", false);
+
+            Escapist =
+                new CustomHeaderOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Escapist</color>");
+            EscapeCooldown =
+                new CustomNumberOption(num++, MultiMenu.imposter, "Escape Cooldown", 25, 10, 40, 2.5f, CooldownFormat);
 
             Grenadier =
                 new CustomHeaderOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Grenadier</color>");

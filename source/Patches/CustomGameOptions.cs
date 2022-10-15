@@ -61,6 +61,7 @@ namespace TownOfUs
         public static int PlaguebearerOn => (int)Generate.PlaguebearerOn.Get();
         public static int WerewolfOn => (int)Generate.WerewolfOn.Get();
         public static int DetectiveOn => (int)Generate.DetectiveOn.Get();
+        public static int EscapistOn => (int)Generate.EscapistOn.Get();
         public static int TorchOn => (int)Generate.TorchOn.Get();
         public static int DiseasedOn => (int)Generate.DiseasedOn.Get();
         public static int FlashOn => (int)Generate.FlashOn.Get();
@@ -266,6 +267,7 @@ namespace TownOfUs
         public static bool DetectiveReportOn => Generate.DetectiveReportOn.Get();
         public static float DetectiveRoleDuration => Generate.DetectiveRoleDuration.Get();
         public static float DetectiveFactionDuration => Generate.DetectiveFactionDuration.Get();
+        public static float EscapeCd => Generate.EscapeCooldown.Get();
         public static bool VentImprovements => Generate.VentImprovements.Get();
         public static bool VitalsLab => Generate.VitalsLab.Get();
         public static bool ColdTempDeathValley => Generate.ColdTempDeathValley.Get();
