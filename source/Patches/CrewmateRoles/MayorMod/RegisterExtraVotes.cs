@@ -4,7 +4,7 @@ using System.Linq;
 using HarmonyLib;
 using Hazel;
 using InnerNet;
-using Reactor;
+using Reactor.Utilities;
 using TownOfUs.Extensions;
 using TownOfUs.Roles;
 using TownOfUs.Roles.Modifiers;

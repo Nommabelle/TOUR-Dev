@@ -17,6 +17,7 @@ using Il2CppInterop.Runtime.Injection;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TownOfUs.Extensions;
 
 namespace TownOfUs
 {
@@ -204,7 +205,7 @@ namespace TownOfUs
             var pivot = new Vector2(0.5f, 0.5f);
 
             var assembly = Assembly.GetExecutingAssembly();
-            var tex = GUIExtensions.CreateEmptyTexture();
+            var tex = AmongUsExtensions.CreateEmptyTexture();
             var imageStream = assembly.GetManifestResourceStream(name);
             var img = imageStream.ReadFully();
             LoadImage(tex, img, true);

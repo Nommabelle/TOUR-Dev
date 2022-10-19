@@ -9,7 +9,7 @@ using HarmonyLib;
 using Il2CppInterop.Runtime;
 using Il2CppInterop.Runtime.Injection;
 using UnityEngine;
-using Reactor;
+using Reactor.Utilities;
 using TownOfUs.Roles;
 using Hazel;
 
