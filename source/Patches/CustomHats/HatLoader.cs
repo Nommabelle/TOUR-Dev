@@ -8,7 +8,6 @@ using System.Text.Json;
 using Reactor.Utilities;
 using Reactor.Utilities.Extensions;
 using UnityEngine;
-using HarmonyLib;
 
 namespace TownOfUs.Patches.CustomHats
 {
@@ -33,7 +32,6 @@ namespace TownOfUs.Patches.CustomHats
 
         internal static IEnumerator LoadHats()
         {
-          
             try
             {
                 var hatJson = LoadJson();
@@ -46,7 +44,7 @@ namespace TownOfUs.Patches.CustomHats
                 for (var i = 0; i < hatBehaviours.Count; i++)
                 {
                     hatBehaviours[i].displayOrder = originalCount + i;
-                    HatManager.Instance.allHats.AddItem(hatBehaviours[i]);
+                    HatManager.Instance.allHats.Add(hatBehaviours[i]);
                 }
 
             }
