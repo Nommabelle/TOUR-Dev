@@ -1727,7 +1727,7 @@
     },
     {
       "id": "hats0345",
-      "name": "FBI Monkey hat ",
+      "name": "Paradox Monkey hat ",
       "artist": "Ophidian"
     },
     {
@@ -1778,6 +1778,36 @@
     {
       "id": "hats0355",
       "name": "Valak hat ",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0356",
+      "name": "Bait hat ",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0357",
+      "name": "Chickenz hat ",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0358",
+      "name": "HeckMeowstic hat ",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0359",
+      "name": "HecksBunBun hat ",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0360",
+      "name": "MxJosie hat ",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0361",
+      "name": "SpiceMeowstic hat ",
       "artist": "Ophidian"
     },
     {
@@ -2233,6 +2263,21 @@
     {
       "id": "standard0044",
       "name": "Juicebox hat",
+      "artist": "Little Doo Doo"
+    },
+    {
+      "id": "standard0045",
+      "name": "Crow hat",
+      "artist": "Little Doo Doo"
+    },
+    {
+      "id": "standard0046",
+      "name": "Ghost hat",
+      "artist": "Little Doo Doo"
+    },
+    {
+      "id": "standard0047",
+      "name": "Pumpkin hat",
       "artist": "Little Doo Doo"
     }
   ]
