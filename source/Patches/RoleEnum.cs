@@ -33,7 +33,6 @@ namespace TownOfUs
         Pestilence,
         Werewolf,
         Detective,
-        Escapist,
 
         Miner,
         Swooper,
@@ -44,6 +43,7 @@ namespace TownOfUs
         Poisoner,
         Traitor,
         Blackmailer,
+        Escapist,
 
 
         Glitch,

@@ -527,7 +527,7 @@ namespace TownOfUs.Roles
 
                             StopKill.BreakShield(medic, __gInstance.Player.PlayerId,
                                 CustomGameOptions.ShieldBreaks);
-                            if (CustomGameOptions.KilledOnAlert && !__gInstance.ClosestPlayer.IsProtected())
+                            if (CustomGameOptions.KilledOnAlert && !__gInstance.KillTarget.IsProtected())
                             {
                                 Utils.RpcMurderPlayer(__gInstance.Player, __gInstance.KillTarget);
                                 __gInstance.Player.SetKillTimer(CustomGameOptions.GlitchKillCooldown);

@@ -12,7 +12,7 @@ namespace TownOfUs.ImpostorRoles.PoisonerMod
         {
             foreach (var role in Role.GetRoles(RoleEnum.Poisoner))
             {
-                var poisoner = (Poisoner) role;
+                var poisoner = (Poisoner)role;
                 poisoner.LastPoisoned = DateTime.UtcNow;
                 if (poisoner.Player.Is(ModifierEnum.Underdog))
                 {

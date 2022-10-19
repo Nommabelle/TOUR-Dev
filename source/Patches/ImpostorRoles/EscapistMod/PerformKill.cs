@@ -4,7 +4,6 @@ using Hazel;
 using TownOfUs.Roles;
 using UnityEngine;
 using Reactor.Extensions;
-using Reactor;
 
 namespace TownOfUs.ImpostorRoles.EscapistMod
 {

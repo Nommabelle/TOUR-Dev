@@ -1445,7 +1445,7 @@ namespace TownOfUs
                         GlobalModifiers.Add((typeof(Radar), CustomRPC.SetRadar, CustomGameOptions.RadarOn));
                     #endregion
                     #region Impostor Modifiers
-                    if (Check(CustomGameOptions.DisperserOn) && PlayerControl.GameOptions.MapId != 5)
+                    if (Check(CustomGameOptions.DisperserOn) && PlayerControl.GameOptions.MapId != 4 && PlayerControl.GameOptions.MapId != 5)
                         ImpostorModifiers.Add((typeof(Disperser), CustomRPC.SetDisperser, CustomGameOptions.DisperserOn));
 
                     if (Check(CustomGameOptions.DoubleShotOn))
