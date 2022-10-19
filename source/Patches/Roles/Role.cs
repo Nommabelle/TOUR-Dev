@@ -529,10 +529,10 @@ namespace TownOfUs.Roles
             }
         }
 
-        [HarmonyPatch(typeof(PlayerControl._CoSetTasks_d__107), nameof(PlayerControl._CoSetTasks_d__107.MoveNext))]
+        [HarmonyPatch(typeof(PlayerControl._CoSetTasks_d__110), nameof(PlayerControl._CoSetTasks_d__110.MoveNext))]
         public static class PlayerControl_SetTasks
         {
-            public static void Postfix(PlayerControl._CoSetTasks_d__107 __instance)
+            public static void Postfix(PlayerControl._CoSetTasks_d__110 __instance)
             {
                 if (__instance == null) return;
                 var player = __instance.__4__this;
