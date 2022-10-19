@@ -5,8 +5,8 @@ using System.Reflection;
 using System.Text;
 using BepInEx.Logging;
 using System.Text.Json;
-using Reactor;
-using Reactor.Extensions;
+using Reactor.Utilities;
+using Reactor.Utilities.Extensions;
 using UnityEngine;
 
 namespace TownOfUs.Patches.CustomHats

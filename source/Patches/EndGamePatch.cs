@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 using System.Linq;
-using Reactor.Extensions;
+using Reactor.Utilities.Extensions;
 using TownOfUs.Roles;
 
 namespace TownOfUs.Patches {

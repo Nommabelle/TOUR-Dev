@@ -3,7 +3,7 @@ using Hazel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Reactor.Extensions;
+using Reactor.Utilities.Extensions;
 using TMPro;
 using TownOfUs.Roles.Modifiers;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;

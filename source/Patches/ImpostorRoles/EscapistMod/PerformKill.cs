@@ -3,7 +3,7 @@ using HarmonyLib;
 using Hazel;
 using TownOfUs.Roles;
 using UnityEngine;
-using Reactor.Extensions;
+using Reactor.Networking.Extensions;
 
 namespace TownOfUs.ImpostorRoles.EscapistMod
 {

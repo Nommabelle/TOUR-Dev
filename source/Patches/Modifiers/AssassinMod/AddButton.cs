@@ -1,7 +1,7 @@
 ﻿using System;
 using HarmonyLib;
-using Reactor;
-using Reactor.Extensions;
+using Reactor.Utilities;
+using Reactor.Utilities.Extensions;
 using TMPro;
 using TownOfUs.Extensions;
 using TownOfUs.Roles;

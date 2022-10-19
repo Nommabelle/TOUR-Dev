@@ -1,10 +1,11 @@
 using Hazel;
-using Reactor;
 using System.Linq;
 using UnityEngine;
 using System.Collections.Generic;
-using Reactor.Extensions;
+using Reactor.Utilities;
+using Reactor.Utilities.Extensions;
 using Object = UnityEngine.Object;
+using Reactor.Networking.Extensions;
 
 namespace TownOfUs.Roles.Modifiers
 {
