@@ -43,6 +43,7 @@ namespace TownOfUs.Patches.CustomHats
                 hatData.ForEach((Action<HatData>)(x => x.StoreName = "Vanilla"));
 
                 var originalCount = DestroyableSingleton<HatManager>.Instance.allHats.ToList().Count;
+                hatBehaviours.Reverse();
                 for (var i = 0; i < hatBehaviours.Count; i++)
                 {
                     hatBehaviours[i].displayOrder = originalCount + i;
