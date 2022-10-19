@@ -42,12 +42,12 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 - [Werewolf](#werewolf)
 
 **Impostor Roles**
+- [Escapist](#escapist)
 - [Grenadier](#grenadier)
 - [Morphling](#morphling)
 - [Swooper](#swooper)
 - [Poisoner](#poisoner)
 - [Traitor](#traitor)
-- [Underdog](#underdog)
 - [Blackmailer](#blackmailer)
 - [Janitor](#janitor)
 - [Miner](#miner)
@@ -67,6 +67,8 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 - [Sleuth](#sleuth)
 - [Tiebreaker](#tiebreaker)
 - [Disperser](#disperser)
+- [Double Shot](#double-shot)
+- [Underdog](#underdog)
 
 
 
@@ -74,7 +76,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 # Releases
 | Among Us - Version| Mod Version | Link |
 |----------|-------------|-----------------|
-| 2022.8.24s & 2022.8.24e | v3.4.0 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.4.0/ToU.v3.4.0.zip) |
+| 2022.10.18s & 2022.10.18e | v3.4.0 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.4.0/ToU.v3.4.0.zip) |
 | 2022.8.24s & 2022.8.24e | v3.3.2 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.3.2/ToU.v3.3.2.zip) |
 | 2022.8.24s & 2022.8.24e | v3.3.1 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.3.1/ToU.v3.3.1.zip) |
 | 2022.8.24s & 2022.8.24e | v3.3.0 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.3.0/ToU.v3.3.0.zip) |
@@ -127,12 +129,15 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <summary> Changelog </summary>
   <details>
   <summary> v3.4.0 </summary>
+  <ul> <li>New Role: Escapist</li> </ul>
   <ul> <li>New Modifier: Radar</li> </ul>
   <ul> <li>New Modifier: Disperser</li> </ul>
   <ul> <li>New Modifier: Multitasker</li> </ul>
+  <ul> <li>New Modifier: Double Shot</li> </ul>
   <ul> <li>New Settings: Arsonist/Jester has Impostor Vision</li> </ul>
   <ul> <li>New Setting: Arsonist Ignite Cooldown removed when they're the final killer</li> </ul>
   <ul> <li>Reporting bodies now spreads the Plaguebearer's infection</li> </ul>
+  <ul> <li>Changed Underdog from a role to a modifier</li> </ul>
   <ul> <li>Changed Blind to a Crewmate Modifier</li> </ul>
   </details>
   <details>
@@ -1159,6 +1164,19 @@ The Werewolf needs to be the last killer alive to win the game.
 
 -----------------------
 # Impostor Roles
+## Escapist
+### **Team: Impostors**
+
+The Escapist is an Impostor that can teleport to a different location.\
+Once per round the Escapist can Mark a location which they can then escape to later in the round.
+
+### Game Options
+| Name | Description | Type | Default |
+|----------|:-------------:|:------:|:------:|
+| Escapist | The percentage probability of the Escapist appearing | Percentage | 0% |
+| Escape Cooldown | The cooldown of the Escapist's Escape button | Time | 25s |
+
+-----------------------
 ## Grenadier
 ### **Team: Impostors**
 
@@ -1234,20 +1252,6 @@ Once this player has turned into the Traitor their alliance sits with the Impost
 | Traitor | The percentage probability of the Traitor appearing | Percentage | 0% |
 | Latest Spawn | The minimum number of people alive when a Traitor can spawn | Number | 5 |
 | Traitor Won't Spawn if Neutral Killing are Alive | Whether the Traitor won't spawn if any Neutral Killing roles are alive | Toggle | False |
-
------------------------
-## Underdog
-### **Team: Impostors**
-
-The Underdog is an Impostor with a prolonged kill cooldown.\
-When they are the only remaining Impostor, they will have their kill cooldown shortened.
-
-### Game Options
-| Name | Description | Type | Default |
-|----------|:-------------:|:------:|:------:|
-| Underdog | The percentage probability of the Underdog appearing | Percentage | 0% |
-| Kill Cooldown Bonus | The amount of time added or removed from the Underdog's Kill Cooldown | Time | 5s |
-| Increased Kill Cooldown  | Whether the Underdog's Kill Cooldown is Increased when 2+ Imps are alive | Toggle | True |
 
 -----------------------
 ## Blackmailer
@@ -1432,13 +1436,38 @@ If the Tiebreaker is the Mayor, it applies to the Mayor's __first__ vote.
 -----------------------
 ## Disperser
 ### **Applied to: Impostors**
-The Disperser is an impostor who has a 1 time use ability to send all players to a random vent.\
+The Disperser is an Impostor who has a 1 time use ability to send all players to a random vent.\
 This includes miner vents.\
-Does not appear on Submerged.
+Does not appear on Airship or Submerged.
 ### Game Options
 | Name | Description | Type | Default |
 |----------|:-------------:|:------:|:------:|
 | Disperser | The percentage probability of the Disperser appearing | Percentage | 0% |
+
+-----------------------
+## Double Shot
+### **Applied to: Impostors**
+Double Shot is an Impostor who gets an extra life when assassinating.\
+Once they use their life they are indicated with a red flash\
+and can no longer geuss the person who they guessed wrong for the remainder of that meeting.
+### Game Options
+| Name | Description | Type | Default |
+|----------|:-------------:|:------:|:------:|
+| Double Shot| The percentage probability of Double Shot appearing | Percentage | 0% |
+
+-----------------------
+## Underdog
+### **Applied to: Impostors**
+
+The Underdog is an Impostor with a prolonged kill cooldown.\
+When they are the only remaining Impostor, they will have their kill cooldown shortened.
+
+### Game Options
+| Name | Description | Type | Default |
+|----------|:-------------:|:------:|:------:|
+| Underdog | The percentage probability of the Underdog appearing | Percentage | 0% |
+| Kill Cooldown Bonus | The amount of time added or removed from the Underdog's Kill Cooldown | Time | 5s |
+| Increased Kill Cooldown  | Whether the Underdog's Kill Cooldown is Increased when 2+ Imps are alive | Toggle | True |
 
 -----------------------
 # Game Mode Settings
