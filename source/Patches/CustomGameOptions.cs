@@ -268,6 +268,7 @@ namespace TownOfUs
         public static float DetectiveRoleDuration => Generate.DetectiveRoleDuration.Get();
         public static float DetectiveFactionDuration => Generate.DetectiveFactionDuration.Get();
         public static float EscapeCd => Generate.EscapeCooldown.Get();
+        public static bool EscapistVent => Generate.EscapistVent.Get();
         public static bool VentImprovements => Generate.VentImprovements.Get();
         public static bool VitalsLab => Generate.VitalsLab.Get();
         public static bool ColdTempDeathValley => Generate.ColdTempDeathValley.Get();
