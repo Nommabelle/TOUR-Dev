@@ -152,7 +152,7 @@ namespace TownOfUs
             RampageSprite = CreateSprite("TownOfUs.Resources.Rampage.png");
             TrapSprite = CreateSprite("TownOfUs.Resources.Trap.png");
             ExamineSprite = CreateSprite("TownOfUs.Resources.Examine.png");
-            EscapeSprite = CreateSprite("TownOfUs.Resources.Escape.png");
+            EscapeSprite = CreateSprite("TownOfUs.Resources.Recall.png");
             MarkSprite = CreateSprite("TownOfUs.Resources.Mark.png");
             HackSprite = CreateSprite("TownOfUs.Resources.Hack.png");
             MimicSprite = CreateSprite("TownOfUs.Resources.Mimic.png");

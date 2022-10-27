@@ -53,7 +53,7 @@ namespace TownOfUs
             {
                 if (CustomGameOptions.AutoAdjustSettings)
                 {
-                    if (CustomGameOptions.SmallMapHalfVision) PlayerControl.GameOptions.CrewLightMod = vision;
+                    if (CustomGameOptions.SmallMapHalfVision && vision != 0) PlayerControl.GameOptions.CrewLightMod = vision;
                     if (PlayerControl.GameOptions.MapId == 1) AdjustCooldowns(CustomGameOptions.SmallMapDecreasedCooldown);
                     if (PlayerControl.GameOptions.MapId >= 4) AdjustCooldowns(-CustomGameOptions.LargeMapIncreasedCooldown);
                 }

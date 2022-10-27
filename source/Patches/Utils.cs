@@ -634,6 +634,10 @@ namespace TownOfUs
             }
             #endregion
             #region ImposterRoles
+            foreach (Escapist role in Role.GetRoles(RoleEnum.Escapist))
+            {
+                role.LastEscape = DateTime.UtcNow;
+            }
             foreach (Blackmailer role in Role.GetRoles(RoleEnum.Blackmailer))
             {
                 role.LastBlackmailed = DateTime.UtcNow;

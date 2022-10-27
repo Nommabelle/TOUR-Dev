@@ -41,8 +41,8 @@ namespace TownOfUs.ImpostorRoles.EscapistMod
                     writer.Write(PlayerControl.LocalPlayer.PlayerId);
                     writer.Write(role.EscapePoint);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
-                    Escapist.Escape(role.Player);
                     role.LastEscape = DateTime.UtcNow;
+                    Escapist.Escape(role.Player);
                 }
 
                 return false;

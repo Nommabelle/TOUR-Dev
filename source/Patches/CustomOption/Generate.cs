@@ -948,7 +948,7 @@ namespace TownOfUs.CustomOption
             Escapist =
                 new CustomHeaderOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Escapist</color>");
             EscapeCooldown =
-                new CustomNumberOption(num++, MultiMenu.imposter, "Escape Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
+                new CustomNumberOption(num++, MultiMenu.imposter, "Recall Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
             EscapistVent =
                 new CustomToggleOption(num++, MultiMenu.imposter, "Escapist Can Vent", false);
 
