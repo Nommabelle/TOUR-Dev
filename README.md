@@ -1172,7 +1172,8 @@ Once per round the Escapist can Mark a location which they can then escape to la
 | Name | Description | Type | Default |
 |----------|:-------------:|:------:|:------:|
 | Escapist | The percentage probability of the Escapist appearing | Percentage | 0% |
-| Escape Cooldown | The cooldown of the Escapist's Escape button | Time | 25s |
+| Recall Cooldown | The cooldown of the Escapist's Recall button | Time | 25s |
+| Escapist can Vent | Whether the Escapist can Vent | Toggle | False |
 
 -----------------------
 ## Grenadier
