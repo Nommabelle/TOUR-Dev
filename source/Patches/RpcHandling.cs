@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using Hazel;
-using Reactor;
 using Reactor.Utilities;
 using Reactor.Utilities.Extensions;
 using TownOfUs.CrewmateRoles.AltruistMod;
@@ -128,7 +127,7 @@ namespace TownOfUs
                     SortRoles(NeutralKillingRoles, CustomGameOptions.MaxNeutralKillingRoles, CustomGameOptions.MinNeutralKillingRoles);
                 else SortRoles(NeutralKillingRoles, crewmates.Count - NeutralNonKillingRoles.Count - 1, CustomGameOptions.MinNeutralKillingRoles);
 
-                if (CheckJugg() && NeutralKillingRoles.Count > 0)
+                if (CheckJugg() && NeutralKillingRoles.Count > 0 && CustomGameOptions.HiddenRoles)
                 {
                     NeutralKillingRoles.RemoveAt(NeutralKillingRoles.Count - 1);
                     NeutralKillingRoles.Add((typeof(Juggernaut), CustomRPC.SetJuggernaut, 100, true));
@@ -310,8 +309,7 @@ namespace TownOfUs
                 Role.Gen<Modifier>(type, canHaveModifier, rpc);
             }
 
-            canHaveModifier.RemoveAll(player => player.Is(RoleEnum.Juggernaut) || player.Is(RoleEnum.Werewolf)
-            || player.Is(RoleEnum.Plaguebearer) || player.Is(RoleEnum.Arsonist) || player.Is(Faction.Impostors));
+            canHaveModifier.RemoveAll(player => player.Is(Faction.Neutral) || player.Is(Faction.Impostors));
             canHaveModifier.Shuffle();
 
             while (canHaveModifier.Count > 0 && CrewmateModifiers.Count > 0)
@@ -435,7 +433,8 @@ namespace TownOfUs
 
             NeutralKillingRoles.Add((typeof(Glitch), CustomRPC.SetGlitch, 10, true));
             NeutralKillingRoles.Add((typeof(Werewolf), CustomRPC.SetWerewolf, 10, true));
-            NeutralKillingRoles.Add((typeof(Juggernaut), CustomRPC.SetJuggernaut, 10, true));
+            if (CustomGameOptions.HiddenRoles)
+                NeutralKillingRoles.Add((typeof(Juggernaut), CustomRPC.SetJuggernaut, 10, true));
             if (CustomGameOptions.AddArsonist)
                 NeutralKillingRoles.Add((typeof(Arsonist), CustomRPC.SetArsonist, 10, true));
             if (CustomGameOptions.AddPlaguebearer)
@@ -1116,7 +1115,6 @@ namespace TownOfUs
 
                         body2.transform.position = new Vector3(v2.x, v2.y, v2z);
 
-
                         break;
                     case CustomRPC.SetAssassin:
                         new Assassin(Utils.PlayerById(reader.ReadByte()));
@@ -1377,7 +1375,7 @@ namespace TownOfUs
                     if (CustomGameOptions.WerewolfOn > 0)
                         NeutralKillingRoles.Add((typeof(Werewolf), CustomRPC.SetWerewolf, CustomGameOptions.WerewolfOn, true));
 
-                    if (CustomGameOptions.GameMode == GameMode.AllAny)
+                    if (CustomGameOptions.GameMode == GameMode.AllAny && CustomGameOptions.HiddenRoles)
                         NeutralKillingRoles.Add((typeof(Juggernaut), CustomRPC.SetJuggernaut, 10, true));
                     #endregion
                     #region Impostor Roles

@@ -19,7 +19,7 @@ namespace TownOfUs.NeutralRoles.JuggernautMod
 
             __instance.KillButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
 
-            __instance.KillButton.SetCoolDown(role.KillTimer(), CustomGameOptions.GlitchKillCooldown + 5.0f - 5.0f * role.JuggKills);
+            __instance.KillButton.SetCoolDown(role.KillTimer(), CustomGameOptions.JuggKCd - CustomGameOptions.ReducedKCdPerKill * role.JuggKills);
 
             Utils.SetTarget(ref role.ClosestPlayer, __instance.KillButton);
         }

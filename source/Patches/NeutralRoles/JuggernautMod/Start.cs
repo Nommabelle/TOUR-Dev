@@ -13,7 +13,7 @@ namespace TownOfUs.NeutralRoles.JuggernautMod
             {
                 var juggernaut = (Juggernaut)role;
                 juggernaut.LastKill = DateTime.UtcNow;
-                juggernaut.LastKill = juggernaut.LastKill.AddSeconds(CustomGameOptions.InitialCooldowns - 5.0f - CustomGameOptions.GlitchKillCooldown);
+                juggernaut.LastKill = juggernaut.LastKill.AddSeconds(CustomGameOptions.InitialCooldowns - CustomGameOptions.JuggKCd);
             }
         }
     }
