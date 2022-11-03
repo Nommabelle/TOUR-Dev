@@ -7,7 +7,7 @@ namespace TownOfUs.Roles.Modifiers
         public Underdog(PlayerControl player) : base(player)
         {
             Name = "Underdog";
-            TaskText = () => PerformKill.LastImp() ? "You have a shortened kill cooldown!" : "You have a long kill cooldown until your teammate(s) die";
+            TaskText = () => "When you're alone your kill cooldown is shortened";
             Color = Patches.Colors.Impostor;
             ModifierType = ModifierEnum.Underdog;
         }

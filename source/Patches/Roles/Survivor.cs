@@ -14,13 +14,14 @@ namespace TownOfUs.Roles
         public TextMeshPro UsesText;
 
         public bool ButtonUsable => UsesLeft != 0;
+        public bool SpawnedAs = true;
 
 
         public Survivor(PlayerControl player) : base(player)
         {
             Name = "Survivor";
             ImpostorText = () => "Do Whatever It Takes To Live";
-            TaskText = () => "Stay alive to win";
+            TaskText = () => SpawnedAs ? "Stay alive to win" : "Your target was killed. Now you just need to live!";
             Color = Patches.Colors.Survivor;
             LastVested = DateTime.UtcNow;
             RoleType = RoleEnum.Survivor;

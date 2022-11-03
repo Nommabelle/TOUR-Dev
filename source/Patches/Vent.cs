@@ -1,6 +1,4 @@
 using HarmonyLib;
-using Reactor;
-using System.Linq;
 using TownOfUs.Extensions;
 using TownOfUs.Roles;
 using UnityEngine;
@@ -129,6 +127,11 @@ namespace TownOfUs
         {
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Jester) && CustomGameOptions.JesterVent)
                 return false;
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Werewolf) && CustomGameOptions.WerewolfVent)
+            {
+                var role = Role.GetRole<Werewolf>(PlayerControl.LocalPlayer);
+                if (!role.Rampaged) return false;
+            }
             return true;
         }
     }

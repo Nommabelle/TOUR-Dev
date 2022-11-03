@@ -55,8 +55,6 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
         {
             var role = Utils.GetRole(other);
             var amnesiac = amneRole.Player;
-            List<PlayerTask> tasks1, tasks2;
-            List<GameData.TaskInfo> taskinfos1, taskinfos2;
 
             var rememberImp = true;
             var rememberNeut = true;
@@ -93,8 +91,6 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 case RoleEnum.Mystic:
                 case RoleEnum.Trapper:
                 case RoleEnum.Detective:
-                case RoleEnum.Haunter:
-                case RoleEnum.Phantom:
 
                     rememberImp = false;
                     rememberNeut = false;
@@ -119,34 +115,33 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                     break;
             }
 
-            if (role == RoleEnum.Investigator) Footprint.DestroyAll(Role.GetRole<Investigator>(other));
-
             newRole = Role.GetRole(other);
             newRole.Player = amnesiac;
+            if (!(newRole.Player.Is(RoleEnum.Crewmate) || newRole.Player.Is(RoleEnum.Impostor)))
+            {
+                newRole.RegenTask();
+            }
+
+            if (role == RoleEnum.Investigator) Footprint.DestroyAll(Role.GetRole<Investigator>(other));
 
             if (role == RoleEnum.Snitch) CompleteTask.Postfix(amnesiac);
 
             Role.RoleDictionary.Remove(amnesiac.PlayerId);
-            if (!(role == RoleEnum.Haunter || role == RoleEnum.Phantom))
-            {
-                Role.RoleDictionary.Remove(other.PlayerId);
-                Role.RoleDictionary.Add(amnesiac.PlayerId, newRole);
-                newRole.AddToRoleHistory(newRole.RoleType);
-            }
-            else
-            {
-                new Crewmate(amnesiac);
-            }
+            Role.RoleDictionary.Remove(other.PlayerId);
+            Role.RoleDictionary.Add(amnesiac.PlayerId, newRole);
+            newRole.AddToRoleHistory(newRole.RoleType);
 
-            if (rememberImp == false && (!(role == RoleEnum.Haunter || role == RoleEnum.Phantom)))
+            if (rememberImp == false)
             {
                 if (rememberNeut == false)
                 {
-                    new Crewmate(other);
+                    var crewmate = new Crewmate(other);
+                    /*crewmate.RegenTask();*/
                 }
                 else
                 {
-                    new Survivor(other);
+                    var survivor = new Survivor(other);
+                    survivor.RegenTask();
                     if (role == RoleEnum.Arsonist || role == RoleEnum.Glitch || role == RoleEnum.Plaguebearer ||
                             role == RoleEnum.Pestilence || role == RoleEnum.Werewolf || role == RoleEnum.Juggernaut)
                     {
@@ -162,7 +157,8 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
             }
             else if (rememberImp == true)
             {
-                new Impostor(other);
+                var impostor = new Impostor(other);
+                /*impostor.RegenTask();*/
                 amnesiac.Data.Role.TeamType = RoleTeamTypes.Impostor;
                 RoleManager.Instance.SetRole(amnesiac, RoleTypes.Impostor);
                 amnesiac.SetKillTimer(PlayerControl.GameOptions.KillCooldown);
@@ -195,16 +191,6 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                     }
                 }
             }
-
-            tasks1 = other.myTasks;
-            taskinfos1 = other.Data.Tasks;
-            tasks2 = amnesiac.myTasks;
-            taskinfos2 = amnesiac.Data.Tasks;
-
-            amnesiac.myTasks = tasks1;
-            amnesiac.Data.Tasks = taskinfos1;
-            other.myTasks = tasks2;
-            other.Data.Tasks = taskinfos2;
 
             if (role == RoleEnum.Snitch)
             {
@@ -461,23 +447,6 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                     }
                 }
             }
-
-            if (other.Is(RoleEnum.Crewmate))
-            {
-                var role2 = Role.GetRole<Crewmate>(other);
-                role2.RegenTask();
-            }
-            else if (other.Is(RoleEnum.Survivor))
-            {
-                var role2 = Role.GetRole<Survivor>(other);
-                role2.RegenTask();
-            }
-            else
-            {
-                var role2 = Role.GetRole<Impostor>(other);
-                role2.RegenTask();
-            }
-            
             Lights.SetLights();
         }
     }
