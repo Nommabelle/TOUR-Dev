@@ -74,6 +74,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 # Releases
 | Among Us - Version| Mod Version | Link |
 |----------|-------------|-----------------|
+| 2022.10.25s & 2022.10.25e | v3.4.1 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.4.1/ToU.v3.4.1.zip) |
 | 2022.10.25s & 2022.10.25e | v3.4.0 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.4.0/ToU.v3.4.0.zip) |
 | 2022.8.24s & 2022.8.24e & 2022.9.20s & 2022.9.20e | v3.3.2 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.3.2/ToU.v3.3.2.zip) |
 | 2022.8.24s & 2022.8.24e & 2022.9.20s & 2022.9.20e | v3.3.1 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.3.1/ToU.v3.3.1.zip) |
@@ -125,6 +126,18 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 
 <details>
   <summary> Changelog </summary>
+  <details>
+  <summary> v3.4.1 </summary>
+  <ul> <li>New Setting: Enable Hidden Roles</li> </ul>
+  <ul> <li>New Settings for hidden roles</li> </ul>
+  <ul> <li>Bug Fix: Executioner/Guardian Angel turned Amnesiac/Jester/Survivor no longer have red text after changing role</li> </ul>
+  <ul> <li>Amnesiac remembering a role no longer makes their task list swap with the player they remembered</li> </ul>
+  <ul> <li>Bug Fix: Amnesiac no longer sees themself with the remembered players' modifier</li> </ul>
+  <ul> <li>Bug Fix: Amnesiac no longer loses tasks if the person they remembered from disconnects or vice versa</li> </ul>
+  <ul> <li>Bug Fix: Underdog kill timer is now in sync with normal kill cooldowns</li> </ul>
+  <ul> <li>Bug Fix: Underdog now has the correct kill cooldown on game start</li> </ul>
+  <ul> <li>Bug Fix: Underdog now can have a kill cooldown below 10secs</li> </ul>
+  </details>
   <details>
   <summary> v3.4.0 </summary>
   <ul> <li>New Role: Escapist</li> </ul>
@@ -1103,6 +1116,22 @@ The Arsonist needs to be the last killer alive to win the game.
 | Ignite Cooldown Removed When Arso Is Last Killer | Whether the Arsonist's Ignite Cooldown is removed when they're the final killer | Toggle | False |
 
 -----------------------
+## Juggernaut
+### **Team: Neutral**
+
+The Juggernaut is a Neutral role with its own win condition.\
+The Juggernaut's special ability is that their kill cooldown reduces with each kill.\
+This means in theory the Juggernaut can have a 0 second kill cooldown!\
+The Juggernaut is also a hidden role, meaning it will show up randomly and can not be toggled by percentages like other roles.\
+The Juggernaut needs to be the last killer alive to win the game.
+### Game Options
+| Name | Description | Type | Default |
+|----------|:-------------:|:------:|:------:|
+| Juggernaut Kill Cooldown | The initial cooldown of the Juggernaut's Kill button | Time | 25s |
+| Reduced Kill Cooldown Per Kill | The amount of time removed from the Juggernaut's Kill Cooldown Per Kill | Time | 5s |
+| Juggernaut can Vent | Whether the Juggernaut can Vent | Toggle | False |
+
+-----------------------
 ## Plaguebearer
 ### **Team: Neutral**
 
@@ -1540,6 +1569,7 @@ When they are the only remaining Impostor, they will have their kill cooldown sh
 | Disable Meeting Skip Button | Whether the meeting button is disabled | No / Emergency / Always | No |
 | Disable Level Icons | Whether all level icons are removed in meetings | Toggle | False |
 | Disable Player Nameplates | Whether all decorative nameplates are disabled in meetings | Toggle | False |
+| Enable Hidden Roles | Whether hidden roles are added to the role selections | Toggle | True |
 
 -----------------------
 # Task Tracking Settings
