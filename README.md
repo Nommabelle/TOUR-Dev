@@ -37,6 +37,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 - [Jester](#jester)
 - [Phantom](#phantom)
 - [Arsonist](#arsonist)
+- [Juggernaut](#juggernaut)
 - [Plaguebearer](#plaguebearer)
 - [The Glitch](#the-glitch)
 - [Werewolf](#werewolf)
