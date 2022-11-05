@@ -138,6 +138,19 @@ namespace TownOfUs.CustomOption
         public static CustomToggleOption AddArsonist;
         public static CustomToggleOption AddPlaguebearer;
 
+        public static CustomHeaderOption CultistSettings;
+        public static CustomNumberOption MayorCultistOn;
+        public static CustomNumberOption SeerCultistOn;
+        public static CustomNumberOption SheriffCultistOn;
+        public static CustomNumberOption SurvivorCultistOn;
+        public static CustomNumberOption NumberOfSpecialRoles;
+        public static CustomNumberOption MaxEngineers;
+        public static CustomNumberOption MaxInvestigators;
+        public static CustomNumberOption MaxMystics;
+        public static CustomNumberOption MaxSpies;
+        public static CustomNumberOption MaxVigilantes;
+        public static CustomNumberOption MaxTransporters;
+
         public static CustomHeaderOption TaskTrackingSettings;
         public static CustomToggleOption SeeTasksDuringRound;
         public static CustomToggleOption SeeTasksDuringMeeting;
@@ -559,7 +572,7 @@ namespace TownOfUs.CustomOption
 
             GameModeSettings =
                 new CustomHeaderOption(num++, MultiMenu.main, "Game Mode Settings");
-            GameMode = new CustomStringOption(num++, MultiMenu.main, "Game Mode", new[] {"Classic", "All Any", "Killing Only"});
+            GameMode = new CustomStringOption(num++, MultiMenu.main, "Game Mode", new[] {"Classic", "All Any", "Killing Only", "Cultist" });
 
             ClassicSettings =
                 new CustomHeaderOption(num++, MultiMenu.main, "Classic Game Mode Settings");
@@ -586,6 +599,31 @@ namespace TownOfUs.CustomOption
                 new CustomNumberOption(num++, MultiMenu.main, "Vigilante Count", 1f, 0f, 5f, 1f);
             AddArsonist = new CustomToggleOption(num++, MultiMenu.main, "Add Arsonist", true);
             AddPlaguebearer = new CustomToggleOption(num++, MultiMenu.main, "Add Plaguebearer", true);
+
+            CultistSettings =
+                new CustomHeaderOption(num++, MultiMenu.main, "Cultist Settings");
+            MayorCultistOn = new CustomNumberOption(num++, MultiMenu.main, "<color=#704FA8FF>Mayor</color> (Cultist Mode)", 100f, 0f, 100f, 10f,
+                PercentFormat);
+            SeerCultistOn = new CustomNumberOption(num++, MultiMenu.main, "<color=#FFCC80FF>Seer</color> (Cultist Mode)", 100f, 0f, 100f, 10f,
+                PercentFormat);
+            SheriffCultistOn = new CustomNumberOption(num++, MultiMenu.main, "<color=#FFFF00FF>Sheriff</color> (Cultist Mode)", 100f, 0f, 100f, 10f,
+                PercentFormat);
+            SurvivorCultistOn = new CustomNumberOption(num++, MultiMenu.main, "<color=#FFE64DFF>Survivor</color> (Cultist Mode)", 100f, 0f, 100f, 10f,
+                PercentFormat);
+            NumberOfSpecialRoles =
+                new CustomNumberOption(num++, MultiMenu.main, "Number Of Special Roles", 4f, 0f, 4f, 1f);
+            MaxEngineers =
+                new CustomNumberOption(num++, MultiMenu.main, "Max Engineers", 3f, 0f, 5f, 1f);
+            MaxInvestigators =
+                new CustomNumberOption(num++, MultiMenu.main, "Max Investigators", 3f, 0f, 5f, 1f);
+            MaxMystics =
+                new CustomNumberOption(num++, MultiMenu.main, "Max Mystics", 3f, 0f, 5f, 1f);
+            MaxSpies =
+                new CustomNumberOption(num++, MultiMenu.main, "Max Spies", 3f, 0f, 5f, 1f);
+            MaxTransporters =
+                new CustomNumberOption(num++, MultiMenu.main, "Max Transporters", 3f, 0f, 5f, 1f);
+            MaxVigilantes =
+                new CustomNumberOption(num++, MultiMenu.main, "Max Vigilantes", 3f, 0f, 5f, 1f);
 
             MapSettings = new CustomHeaderOption(num++, MultiMenu.main, "Map Settings");
             RandomMapEnabled = new CustomToggleOption(num++, MultiMenu.main, "Choose Random Map", false);

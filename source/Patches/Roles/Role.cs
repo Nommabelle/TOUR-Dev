@@ -322,15 +322,47 @@ namespace TownOfUs.Roles
             return role;
         }
 
-        public static T Gen<T>(Type type, List<PlayerControl> players, CustomRPC rpc)
+        public static T GenRole<T>(Type type, PlayerControl player, int id)
+        {
+            var role = (T)Activator.CreateInstance(type, new object[] { player });
+
+            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                (byte)CustomRPC.SetRole, SendOption.Reliable, -1);
+            writer.Write(player.PlayerId);
+            writer.Write(id);
+            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            return role;
+        }
+
+        public static T GenModifier<T>(Type type, PlayerControl player, int id)
+        {
+            var modifier = (T)Activator.CreateInstance(type, new object[] { player });
+
+            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                (byte)CustomRPC.SetModifier, SendOption.Reliable, -1);
+            writer.Write(player.PlayerId);
+            writer.Write(id);
+            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            return modifier;
+        }
+
+        public static T GenRole<T>(Type type, List<PlayerControl> players, int id)
         {
             var player = players[Random.RandomRangeInt(0, players.Count)];
-            
-            var role = Gen<T>(type, player, rpc);
+
+            var role = GenRole<T>(type, player, id);
             players.Remove(player);
             return role;
         }
-        
+        public static T GenModifier<T>(Type type, List<PlayerControl> players, int id)
+        {
+            var player = players[Random.RandomRangeInt(0, players.Count)];
+
+            var modifier = GenModifier<T>(type, player, id);
+            players.Remove(player);
+            return modifier;
+        }
+
         public static Role GetRole(PlayerControl player)
         {
             if (player == null) return null;
