@@ -81,6 +81,8 @@ namespace TownOfUs
         TurnPestilence,
         Disperse,
         Escape,
+        Revive,
+        Convert,
 
         SetGlitch,
         BypassKill,

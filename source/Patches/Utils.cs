@@ -8,7 +8,9 @@ using Reactor.Utilities;
 using Reactor.Utilities.Extensions;
 using TownOfUs.CrewmateRoles.MedicMod;
 using TownOfUs.Extensions;
+using TownOfUs.Patches;
 using TownOfUs.Roles;
+using TownOfUs.Roles.Cultist;
 using TownOfUs.Roles.Modifiers;
 using Il2CppInterop.Runtime.InteropTypes;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
@@ -463,9 +465,108 @@ namespace TownOfUs
                     {
                     }
                 }
-                
+            }
+        }
+
+        public static void Convert(PlayerControl player)
+        {
+            if (PlayerControl.LocalPlayer == player) Coroutines.Start(FlashCoroutine(Patches.Colors.Impostor));
+            if (PlayerControl.LocalPlayer != player && PlayerControl.LocalPlayer.Is(RoleEnum.CultistMystic)
+                && !PlayerControl.LocalPlayer.Data.IsDead) Coroutines.Start(FlashCoroutine(Patches.Colors.Mystic));
+
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Transporter) && PlayerControl.LocalPlayer == player)
+            {
+                var transporterRole = Role.GetRole<Transporter>(PlayerControl.LocalPlayer);
+                Object.Destroy(transporterRole.UsesText);
             }
 
+            if (player.Is(RoleEnum.Engineer))
+            {
+                var engineer = Role.GetRole<Engineer>(player);
+                engineer.Name = "Demolitionist";
+                engineer.Color = Patches.Colors.Impostor;
+                engineer.Faction = Faction.Impostors;
+                engineer.RegenTask();
+            }
+
+            if (player.Is(RoleEnum.Investigator))
+            {
+                var investigator = Role.GetRole<Investigator>(player);
+                investigator.Name = "Consigliere";
+                investigator.Color = Patches.Colors.Impostor;
+                investigator.Faction = Faction.Impostors;
+                investigator.RegenTask();
+            }
+
+            if (player.Is(RoleEnum.CultistMystic))
+            {
+                var mystic = Role.GetRole<CultistMystic>(player);
+                mystic.Name = "Cabalistic";
+                mystic.Color = Patches.Colors.Impostor;
+                mystic.Faction = Faction.Impostors;
+                mystic.RegenTask();
+            }
+
+            if (player.Is(RoleEnum.Spy))
+            {
+                var spy = Role.GetRole<Spy>(player);
+                spy.Name = "Rogue Agent";
+                spy.Color = Patches.Colors.Impostor;
+                spy.Faction = Faction.Impostors;
+                spy.RegenTask();
+            }
+
+            if (player.Is(RoleEnum.Transporter))
+            {
+                Role.RoleDictionary.Remove(player.PlayerId);
+                var escapist = new Escapist(player);
+                escapist.RegenTask();
+            }
+
+            if (player.Is(RoleEnum.Vigilante))
+            {
+                var vigi = Role.GetRole<Vigilante>(player);
+                vigi.Name = "Assassin";
+                vigi.TaskText = () => "Guess the roles of crewmates mid-meeting to kill them!";
+                vigi.Color = Patches.Colors.Impostor;
+                vigi.Faction = Faction.Impostors;
+                vigi.RegenTask();
+                var colorMapping = new Dictionary<string, Color>();
+                if (CustomGameOptions.MayorCultistOn > 0) colorMapping.Add("Mayor", Colors.Mayor);
+                if (CustomGameOptions.SeerCultistOn > 0) colorMapping.Add("Seer", Colors.Seer);
+                if (CustomGameOptions.SheriffCultistOn > 0) colorMapping.Add("Sheriff", Colors.Sheriff);
+                if (CustomGameOptions.SurvivorCultistOn > 0) colorMapping.Add("Survivor", Colors.Survivor);
+                if (CustomGameOptions.MaxEngineers > 0) colorMapping.Add("Engineer", Colors.Engineer);
+                if (CustomGameOptions.MaxInvestigators > 0) colorMapping.Add("Investigator", Colors.Investigator);
+                if (CustomGameOptions.MaxMystics > 0) colorMapping.Add("Mystic", Colors.Mystic);
+                if (CustomGameOptions.MaxSpies > 0) colorMapping.Add("Spy", Colors.Spy);
+                if (CustomGameOptions.MaxTransporters > 0) colorMapping.Add("Spy", Colors.Transporter);
+                if (CustomGameOptions.MaxVigilantes > 1) colorMapping.Add("Vigilante", Colors.Vigilante);
+                colorMapping.Add("Crewmate", Colors.Crewmate);
+                vigi.SortedColorMapping = colorMapping.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
+            }
+
+            if (player.Is(RoleEnum.Crewmate))
+            {
+                Role.RoleDictionary.Remove(player.PlayerId);
+                new Impostor(player);
+            }
+
+            player.Data.Role.TeamType = RoleTeamTypes.Impostor;
+            RoleManager.Instance.SetRole(player, RoleTypes.Impostor);
+            player.SetKillTimer(PlayerControl.GameOptions.KillCooldown);
+
+            foreach (var player2 in PlayerControl.AllPlayerControls)
+            {
+                if (player2.Data.IsImpostor() && PlayerControl.LocalPlayer.Data.IsImpostor())
+                {
+                    player2.nameText().color = Patches.Colors.Impostor;
+                }
+            }
+
+            Lights.SetLights();
+
+            return;
         }
 
         public static IEnumerator FlashCoroutine(Color color, float waitfor = 1f, float alpha = 0.3f)

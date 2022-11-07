@@ -46,7 +46,7 @@ namespace TownOfUs
                 __instance.KillButton.graphic.sprite = Rewind;
                 flag = true;
             }
-            else if (PlayerControl.LocalPlayer.Is(RoleEnum.Seer))
+            else if (PlayerControl.LocalPlayer.Is(RoleEnum.Seer) || PlayerControl.LocalPlayer.Is(RoleEnum.CultistSeer))
             {
                 __instance.KillButton.graphic.sprite = Seer;
                 flag = true;
@@ -106,7 +106,7 @@ namespace TownOfUs
                 __instance.KillButton.graphic.sprite = Infect;
                 flag = true;
             }
-            else if (PlayerControl.LocalPlayer.Is(RoleEnum.Engineer))
+            else if (PlayerControl.LocalPlayer.Is(RoleEnum.Engineer) && CustomGameOptions.GameMode != GameMode.Cultist)
             {
                 flag = true;
             }

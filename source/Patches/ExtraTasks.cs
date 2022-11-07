@@ -92,6 +92,11 @@ namespace TownOfUs.Patches
                 __result = impostors;
                 return false;
             }
+            else if (CustomGameOptions.GameMode == GameMode.Cultist)
+            {
+                __result = 1;
+                return false;
+            }
             return true;
         }
     }

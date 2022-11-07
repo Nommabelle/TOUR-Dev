@@ -18,7 +18,8 @@ namespace TownOfUs
     {
         Classic,
         AllAny,
-        KillingOnly
+        KillingOnly,
+        Cultist
     }
     public static class CustomGameOptions
     {
@@ -265,7 +266,7 @@ namespace TownOfUs
         public static int MaxTraps => (int)Generate.MaxTraps.Get();
         public static float MinAmountOfTimeInTrap => Generate.MinAmountOfTimeInTrap.Get();
         public static float TrapSize => Generate.TrapSize.Get();
-        public static float MinAmountOfPlayersInTrap => Generate.MinAmountOfPlayersInTrap.Get();
+        public static int MinAmountOfPlayersInTrap => (int) Generate.MinAmountOfPlayersInTrap.Get();
         public static float InitialExamineCd => Generate.InitialExamineCooldown.Get();
         public static float ExamineCd => Generate.ExamineCooldown.Get();
         public static float RecentKill => Generate.RecentKill.Get();
@@ -296,5 +297,23 @@ namespace TownOfUs
             (DisableSkipButtonMeetings)Generate.SkipButtonDisable.Get();
         public static GameMode GameMode =>
             (GameMode)Generate.GameMode.Get();
+        public static int MayorCultistOn => (int)Generate.MayorCultistOn.Get();
+        public static int SeerCultistOn => (int)Generate.SeerCultistOn.Get();
+        public static int SheriffCultistOn => (int)Generate.SheriffCultistOn.Get();
+        public static int SurvivorCultistOn => (int)Generate.SurvivorCultistOn.Get();
+        public static int SpecialRoleCount => (int)Generate.NumberOfSpecialRoles.Get();
+        public static int MaxEngineers => (int)Generate.MaxEngineers.Get();
+        public static int MaxInvestigators => (int)Generate.MaxInvestigators.Get();
+        public static int MaxMystics => (int)Generate.MaxMystics.Get();
+        public static int MaxSpies => (int)Generate.MaxSpies.Get();
+        public static int MaxTransporters => (int)Generate.MaxTransporters.Get();
+        public static int MaxVigilantes => (int)Generate.MaxVigilantes.Get();
+        public static float WhisperCooldown => Generate.WhisperCooldown.Get();
+        public static float IncreasedCooldownPerWhisper => Generate.IncreasedCooldownPerWhisper.Get();
+        public static float WhisperRadius => Generate.WhisperRadius.Get();
+        public static int ConversionPercentage => (int) Generate.ConversionPercentage.Get();
+        public static int DecreasedPercentagePerConversion => (int) Generate.DecreasedPercentagePerConversion.Get();
+        public static float ReviveCooldown => Generate.ReviveCooldown.Get();
+        public static float IncreasedCooldownPerRevive => Generate.IncreasedCooldownPerRevive.Get();
     }
 }

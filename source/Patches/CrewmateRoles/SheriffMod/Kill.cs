@@ -4,7 +4,6 @@ using Hazel;
 using TownOfUs.CrewmateRoles.MedicMod;
 using TownOfUs.Extensions;
 using TownOfUs.Roles;
-using UnityEngine;
 
 namespace TownOfUs.CrewmateRoles.SheriffMod
 {
@@ -116,6 +115,15 @@ namespace TownOfUs.CrewmateRoles.SheriffMod
                 }
                 role.LastKilled.AddSeconds(CustomGameOptions.ProtectKCReset);
                 return false;
+            }
+
+            if (role.ClosestPlayer.Is(RoleEnum.Necromancer) || role.ClosestPlayer.Is(RoleEnum.Whisperer))
+            {
+                foreach (var player in PlayerControl.AllPlayerControls)
+                {
+                    if (player.Data.IsImpostor() && !player.Is(RoleEnum.Necromancer)
+                        && !player.Is(RoleEnum.Whisperer)) Utils.RpcMurderPlayer(player, player);
+                }
             }
 
             if (!flag4)

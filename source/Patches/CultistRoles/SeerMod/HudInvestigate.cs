@@ -1,32 +1,33 @@
 ﻿using HarmonyLib;
 using TownOfUs.Roles;
+using TownOfUs.Roles.Cultist;
 using UnityEngine;
 
-namespace TownOfUs.CrewmateRoles.TrapperMod
+namespace TownOfUs.CultistRoles.SeerMod
 {
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
-    public class HudTrap
+    public class HudInvestigate
     {
         public static void Postfix(PlayerControl __instance)
         {
-            UpdateTrapButton(__instance);
+            UpdateInvButton(__instance);
         }
 
-        public static void UpdateTrapButton(PlayerControl __instance)
+        public static void UpdateInvButton(PlayerControl __instance)
         {
             if (PlayerControl.AllPlayerControls.Count <= 1) return;
             if (PlayerControl.LocalPlayer == null) return;
             if (PlayerControl.LocalPlayer.Data == null) return;
-            if (!PlayerControl.LocalPlayer.Is(RoleEnum.Trapper)) return;
+            if (!PlayerControl.LocalPlayer.Is(RoleEnum.CultistSeer)) return;
             var data = PlayerControl.LocalPlayer.Data;
             var isDead = data.IsDead;
-            var trapButton = DestroyableSingleton<HudManager>.Instance.KillButton;
+            var investigateButton = DestroyableSingleton<HudManager>.Instance.KillButton;
 
-            var role = Role.GetRole<Trapper>(PlayerControl.LocalPlayer);
+            var role = Role.GetRole<CultistSeer>(PlayerControl.LocalPlayer);
 
             if (role.UsesText == null && role.UsesLeft > 0)
             {
-                role.UsesText = Object.Instantiate(trapButton.cooldownTimerText, trapButton.transform);
+                role.UsesText = Object.Instantiate(investigateButton.cooldownTimerText, investigateButton.transform);
                 role.UsesText.gameObject.SetActive(true);
                 role.UsesText.transform.localPosition = new Vector3(
                     role.UsesText.transform.localPosition.x + 0.26f,
@@ -43,20 +44,21 @@ namespace TownOfUs.CrewmateRoles.TrapperMod
 
             if (isDead)
             {
-                trapButton.gameObject.SetActive(false);
+                investigateButton.gameObject.SetActive(false);
             }
             else
             {
-                trapButton.gameObject.SetActive(!MeetingHud.Instance);
+                investigateButton.gameObject.SetActive(!MeetingHud.Instance);
                 if (role.ButtonUsable)
                 {
-                    trapButton.SetCoolDown(role.TrapTimer(), CustomGameOptions.TrapCooldown);
+                    investigateButton.SetCoolDown(role.SeerTimer(), CustomGameOptions.SeerCd);
                 }
-                
+
+                Utils.SetTarget(ref role.ClosestPlayer, investigateButton, float.NaN);
             }
 
-            var renderer = trapButton.graphic;
-            if (!trapButton.isCoolingDown && trapButton.gameObject.active && role.ButtonUsable)
+            var renderer = investigateButton.graphic;
+            if (!investigateButton.isCoolingDown && investigateButton.gameObject.active && role.ButtonUsable)
             {
                 renderer.color = Palette.EnabledColor;
                 renderer.material.SetFloat("_Desat", 0f);

@@ -48,6 +48,12 @@ namespace TownOfUs
 
         Crewmate, // 38
         Impostor, // 39
+
+        Necromancer, // 100
+        Whisperer, // 101
+        CultistSeer, // 102
+        CultistMystic, // 103
+
         None
     }
 

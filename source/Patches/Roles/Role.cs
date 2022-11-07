@@ -233,6 +233,7 @@ namespace TownOfUs.Roles
             if (Player == null) return "";
 
             String PlayerName = Player.GetDefaultOutfit().PlayerName;
+
             foreach (var role in GetRoles(RoleEnum.GuardianAngel))
             {
                 var ga = (GuardianAngel)role;

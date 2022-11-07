@@ -16,7 +16,7 @@ namespace TownOfUs
                 && Math.Abs(__instance.killTimer - time) > 2 * Time.deltaTime
                 && GameStarted == false)
             {
-                time = CustomGameOptions.InitialCooldowns;
+                time = CustomGameOptions.InitialCooldowns - 0.25f;
                 GameStarted = true;
             }
         }

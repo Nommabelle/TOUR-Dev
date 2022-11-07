@@ -10,6 +10,7 @@ namespace TownOfUs.CrewmateRoles.EngineerMod
     {
         public static bool Prefix(KillButton __instance)
         {
+            if (CustomGameOptions.GameMode == GameMode.Cultist) return false;
             if (__instance != DestroyableSingleton<HudManager>.Instance.KillButton) return true;
             var flag = PlayerControl.LocalPlayer.Is(RoleEnum.Engineer);
             if (!flag) return true;

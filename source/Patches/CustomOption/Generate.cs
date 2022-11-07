@@ -148,8 +148,15 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption MaxInvestigators;
         public static CustomNumberOption MaxMystics;
         public static CustomNumberOption MaxSpies;
-        public static CustomNumberOption MaxVigilantes;
         public static CustomNumberOption MaxTransporters;
+        public static CustomNumberOption MaxVigilantes;
+        public static CustomNumberOption WhisperCooldown;
+        public static CustomNumberOption IncreasedCooldownPerWhisper;
+        public static CustomNumberOption WhisperRadius;
+        public static CustomNumberOption ConversionPercentage;
+        public static CustomNumberOption DecreasedPercentagePerConversion;
+        public static CustomNumberOption ReviveCooldown;
+        public static CustomNumberOption IncreasedCooldownPerRevive;
 
         public static CustomHeaderOption TaskTrackingSettings;
         public static CustomToggleOption SeeTasksDuringRound;
@@ -577,13 +584,13 @@ namespace TownOfUs.CustomOption
             ClassicSettings =
                 new CustomHeaderOption(num++, MultiMenu.main, "Classic Game Mode Settings");
             MinNeutralNonKillingRoles =
-                new CustomNumberOption(num++, MultiMenu.main, "Min Neutral Non-Killing Roles", 1f, 0f, 5f, 1f);
+                new CustomNumberOption(num++, MultiMenu.main, "Min Neutral Non-Killing Roles", 1, 0, 5, 1);
             MaxNeutralNonKillingRoles =
-                new CustomNumberOption(num++, MultiMenu.main, "Max Neutral Non-Killing Roles", 1f, 0f, 5f, 1f);
+                new CustomNumberOption(num++, MultiMenu.main, "Max Neutral Non-Killing Roles", 1, 0, 5, 1);
             MinNeutralKillingRoles =
-                new CustomNumberOption(num++, MultiMenu.main, "Min Neutral Killing Roles", 1f, 0f, 4f, 1f);
+                new CustomNumberOption(num++, MultiMenu.main, "Min Neutral Killing Roles", 1, 0, 4, 1);
             MaxNeutralKillingRoles =
-                new CustomNumberOption(num++, MultiMenu.main, "Max Neutral Killing Roles", 1f, 0f, 4f, 1f);
+                new CustomNumberOption(num++, MultiMenu.main, "Max Neutral Killing Roles", 1, 0, 4, 1);
 
             AllAnySettings =
                 new CustomHeaderOption(num++, MultiMenu.main, "All Any Settings");
@@ -592,11 +599,11 @@ namespace TownOfUs.CustomOption
             KillingOnlySettings =
                 new CustomHeaderOption(num++, MultiMenu.main, "Killing Only Settings");
             NeutralRoles =
-                new CustomNumberOption(num++, MultiMenu.main, "Neutral Roles", 1f, 0f, 5f, 1f);
+                new CustomNumberOption(num++, MultiMenu.main, "Neutral Roles", 1, 0, 5, 1);
             VeteranCount =
-                new CustomNumberOption(num++, MultiMenu.main, "Veteran Count", 1f, 0f, 5f, 1f);
+                new CustomNumberOption(num++, MultiMenu.main, "Veteran Count", 1, 0, 5, 1);
             VigilanteCount =
-                new CustomNumberOption(num++, MultiMenu.main, "Vigilante Count", 1f, 0f, 5f, 1f);
+                new CustomNumberOption(num++, MultiMenu.main, "Vigilante Count", 1, 0, 5, 1);
             AddArsonist = new CustomToggleOption(num++, MultiMenu.main, "Add Arsonist", true);
             AddPlaguebearer = new CustomToggleOption(num++, MultiMenu.main, "Add Plaguebearer", true);
 
@@ -611,19 +618,33 @@ namespace TownOfUs.CustomOption
             SurvivorCultistOn = new CustomNumberOption(num++, MultiMenu.main, "<color=#FFE64DFF>Survivor</color> (Cultist Mode)", 100f, 0f, 100f, 10f,
                 PercentFormat);
             NumberOfSpecialRoles =
-                new CustomNumberOption(num++, MultiMenu.main, "Number Of Special Roles", 4f, 0f, 4f, 1f);
+                new CustomNumberOption(num++, MultiMenu.main, "Number Of Special Roles", 4, 0, 4, 1);
             MaxEngineers =
-                new CustomNumberOption(num++, MultiMenu.main, "Max Engineers", 3f, 0f, 5f, 1f);
+                new CustomNumberOption(num++, MultiMenu.main, "Max Engineers", 3, 0, 5, 1);
             MaxInvestigators =
-                new CustomNumberOption(num++, MultiMenu.main, "Max Investigators", 3f, 0f, 5f, 1f);
+                new CustomNumberOption(num++, MultiMenu.main, "Max Investigators", 3, 0, 5, 1);
             MaxMystics =
-                new CustomNumberOption(num++, MultiMenu.main, "Max Mystics", 3f, 0f, 5f, 1f);
+                new CustomNumberOption(num++, MultiMenu.main, "Max Mystics", 3, 0, 5, 1);
             MaxSpies =
-                new CustomNumberOption(num++, MultiMenu.main, "Max Spies", 3f, 0f, 5f, 1f);
+                new CustomNumberOption(num++, MultiMenu.main, "Max Spies", 3, 0, 5, 1);
             MaxTransporters =
-                new CustomNumberOption(num++, MultiMenu.main, "Max Transporters", 3f, 0f, 5f, 1f);
+                new CustomNumberOption(num++, MultiMenu.main, "Max Transporters", 3, 0, 5, 1);
             MaxVigilantes =
-                new CustomNumberOption(num++, MultiMenu.main, "Max Vigilantes", 3f, 0f, 5f, 1f);
+                new CustomNumberOption(num++, MultiMenu.main, "Max Vigilantes", 3, 0, 5, 1);
+            WhisperCooldown =
+                new CustomNumberOption(num++, MultiMenu.main, "Initial Whisper Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
+            IncreasedCooldownPerWhisper =
+                new CustomNumberOption(num++, MultiMenu.main, "Increased Cooldown Per Whisper", 5f, 0f, 15f, 1f, CooldownFormat);
+            WhisperRadius =
+                new CustomNumberOption(num++, MultiMenu.main, "Whisper Radius", 1f, 0.25f, 5f, 0.25f, MultiplierFormat);
+            ConversionPercentage = new CustomNumberOption(num++, MultiMenu.main, "Conversion Percentage", 25f, 0f, 100f, 5f,
+                PercentFormat);
+            DecreasedPercentagePerConversion = new CustomNumberOption(num++, MultiMenu.main, "Decreased Conversion Percentage Per Conversion", 5f, 0f, 15f, 1f,
+                PercentFormat);
+            ReviveCooldown =
+                new CustomNumberOption(num++, MultiMenu.main, "Initial Revive Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
+            IncreasedCooldownPerRevive =
+                new CustomNumberOption(num++, MultiMenu.main, "Increased Cooldown Per Revive", 25f, 10f, 60f, 2.5f, CooldownFormat);
 
             MapSettings = new CustomHeaderOption(num++, MultiMenu.main, "Map Settings");
             RandomMapEnabled = new CustomToggleOption(num++, MultiMenu.main, "Choose Random Map", false);

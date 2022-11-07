@@ -1,9 +1,10 @@
 using System;
 using HarmonyLib;
 using TownOfUs.Roles;
+using TownOfUs.Roles.Cultist;
 using Object = UnityEngine.Object;
 
-namespace TownOfUs.CrewmateRoles.SheriffMod
+namespace TownOfUs.CultistRoles.WhispererMod
 {
     [HarmonyPatch(typeof(Object), nameof(Object.Destroy), typeof(Object))]
     public static class HUDClose
@@ -11,10 +12,10 @@ namespace TownOfUs.CrewmateRoles.SheriffMod
         public static void Postfix(Object obj)
         {
             if (ExileController.Instance == null || obj != ExileController.Instance.gameObject) return;
-            foreach (var role in Role.GetRoles(RoleEnum.Sheriff))
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Whisperer))
             {
-                var sheriff = (Sheriff) role;
-                sheriff.LastKilled = DateTime.UtcNow;
+                var role = Role.GetRole<Whisperer>(PlayerControl.LocalPlayer);
+                role.LastWhispered = DateTime.UtcNow;
             }
         }
     }

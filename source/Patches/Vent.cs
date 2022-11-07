@@ -30,12 +30,15 @@ namespace TownOfUs
         }
 
         public static bool CanVent(PlayerControl player, GameData.PlayerInfo playerInfo)
-        { 
+        {
             if (player.inVent)
                 return true;
 
             if (playerInfo.IsDead)
                 return false;
+
+            if (CustomGameOptions.GameMode == GameMode.Cultist && !player.Is(RoleEnum.Engineer)) return false;
+            else if (CustomGameOptions.GameMode == GameMode.Cultist && player.Is(RoleEnum.Engineer)) return true;
 
             if (player.Is(RoleEnum.Morphling) && !CustomGameOptions.MorphlingVent
                 || player.Is(RoleEnum.Swooper) && !CustomGameOptions.SwooperVent

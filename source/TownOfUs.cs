@@ -77,6 +77,8 @@ namespace TownOfUs
         public static Sprite ExamineSprite;
         public static Sprite EscapeSprite;
         public static Sprite MarkSprite;
+        public static Sprite Revive2Sprite;
+        public static Sprite WhisperSprite;
         public static Sprite HackSprite;
         public static Sprite MimicSprite;
         public static Sprite LockSprite;
@@ -156,6 +158,8 @@ namespace TownOfUs
             ExamineSprite = CreateSprite("TownOfUs.Resources.Examine.png");
             EscapeSprite = CreateSprite("TownOfUs.Resources.Recall.png");
             MarkSprite = CreateSprite("TownOfUs.Resources.Mark.png");
+            Revive2Sprite = CreateSprite("TownOfUs.Resources.Revive2.png");
+            WhisperSprite = CreateSprite("TownOfUs.Resources.Whisper.png");
             HackSprite = CreateSprite("TownOfUs.Resources.Hack.png");
             MimicSprite = CreateSprite("TownOfUs.Resources.Mimic.png");
             LockSprite = CreateSprite("TownOfUs.Resources.Lock.png");
