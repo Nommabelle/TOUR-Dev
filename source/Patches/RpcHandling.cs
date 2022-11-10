@@ -836,6 +836,7 @@ namespace TownOfUs
                         Murder.KilledPlayers.Clear();
                         Role.NobodyWins = false;
                         Role.SurvOnlyWins = false;
+                        PatchKillTimer.GameStarted = false;
                         RecordRewind.points.Clear();
                         KillButtonTarget.DontRevive = byte.MaxValue;
                         break;
@@ -911,11 +912,6 @@ namespace TownOfUs
                         var medicId = reader.ReadByte();
                         readByte = reader.ReadByte();
                         StopKill.BreakShield(medicId, readByte, CustomGameOptions.ShieldBreaks);
-                        break;
-                    case CustomRPC.SetGlitch:
-                        var GlitchId = reader.ReadByte();
-                        var GlitchPlayer = Utils.PlayerById(GlitchId);
-                        new Glitch(GlitchPlayer);
                         break;
                     case CustomRPC.BypassKill:
                         var killer = Utils.PlayerById(reader.ReadByte());
@@ -1350,6 +1346,7 @@ namespace TownOfUs
                 Utils.ShowDeadBodies = false;
                 Role.NobodyWins = false;
                 Role.SurvOnlyWins = false;
+                PatchKillTimer.GameStarted = false;
                 CrewmateRoles.Clear();
                 NeutralNonKillingRoles.Clear();
                 NeutralKillingRoles.Clear();

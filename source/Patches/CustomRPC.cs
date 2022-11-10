@@ -84,7 +84,6 @@ namespace TownOfUs
         Revive,
         Convert,
 
-        SetGlitch,
         BypassKill,
         SetMimic,
         RpcResetAnim,

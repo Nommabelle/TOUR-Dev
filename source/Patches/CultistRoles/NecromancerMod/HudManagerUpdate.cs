@@ -30,7 +30,8 @@ namespace TownOfUs.CultistRoles.NecromancerMod
             role.ReviveButton.graphic.sprite = ReviveSprite;
             role.ReviveButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
 
-            role.ReviveButton.SetCoolDown(role.ReviveTimer(), CustomGameOptions.ReviveCooldown);
+            role.ReviveButton.SetCoolDown(role.ReviveTimer(),
+                CustomGameOptions.ReviveCooldown + CustomGameOptions.IncreasedCooldownPerRevive * role.ReviveCount);
 
             var data = PlayerControl.LocalPlayer.Data;
             var isDead = data.IsDead;

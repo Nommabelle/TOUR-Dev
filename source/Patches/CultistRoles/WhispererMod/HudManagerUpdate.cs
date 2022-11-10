@@ -28,7 +28,8 @@ namespace TownOfUs.CultistRoles.WhispererMod
             role.WhisperButton.graphic.sprite = WhisperSprite;
             role.WhisperButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
 
-            role.WhisperButton.SetCoolDown(role.WhisperTimer(), CustomGameOptions.WhisperCooldown);
+            role.WhisperButton.SetCoolDown(role.WhisperTimer(),
+                CustomGameOptions.WhisperCooldown + CustomGameOptions.IncreasedCooldownPerWhisper * role.WhisperCount);
 
             var renderer = role.WhisperButton.graphic;
             if (!role.WhisperButton.isCoolingDown && role.WhisperButton.gameObject.active)

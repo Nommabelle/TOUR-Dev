@@ -64,6 +64,7 @@ namespace TownOfUs.CultistRoles.WhispererMod
                         (byte)CustomRPC.Convert, SendOption.Reliable, -1);
                     writer.Write(playerConversion.Item1.PlayerId);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    role.PlayerConversion.Remove(playerConversion);
                 }
             }
         }
