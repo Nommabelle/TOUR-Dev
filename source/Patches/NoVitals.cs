@@ -8,7 +8,10 @@ namespace TownOfUs.Patches
     {
         public static bool Prefix(VitalsMinigame __instance)
         {
-            if (CustomGameOptions.GameMode == GameMode.Cultist)
+            if (PlayerControl.LocalPlayer.Data.IsDead) return true;
+            if (CustomGameOptions.GameMode == GameMode.Cultist ||
+                (PlayerControl.LocalPlayer.Is(RoleEnum.Transporter) && !CustomGameOptions.TransporterVitals) ||
+                (PlayerControl.LocalPlayer.Is(RoleEnum.TimeLord) && !CustomGameOptions.TimeLordVitals))
             {
                 Object.Destroy(__instance.gameObject);
                 return false;
