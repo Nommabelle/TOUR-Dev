@@ -83,6 +83,7 @@ namespace TownOfUs
         Escape,
         Revive,
         Convert,
+        ChameleonSwoop,
 
         BypassKill,
         SetMimic,

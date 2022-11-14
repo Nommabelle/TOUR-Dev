@@ -76,9 +76,9 @@ namespace TownOfUs.CultistRoles.NecromancerMod
 
             if (closestBody != null && closestBody.ParentId == DontRevive) closestBody = null;
             role.CurrentTarget = closestBody;
+            var player = Utils.PlayerById(role.CurrentTarget.ParentId);
             if (role.CurrentTarget && __instance.enabled)
             {
-                var player = Utils.PlayerById(role.CurrentTarget.ParentId);
                 if (player.Is(RoleEnum.Sheriff) || player.Is(RoleEnum.CultistSeer) || player.Is(RoleEnum.Survivor) || player.Is(RoleEnum.Mayor)) return;
                 var component = role.CurrentTarget.bodyRenderer;
                 component.material.SetFloat("_Outline", 1f);

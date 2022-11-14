@@ -302,6 +302,7 @@ namespace TownOfUs
         public static int SheriffCultistOn => (int)Generate.SheriffCultistOn.Get();
         public static int SurvivorCultistOn => (int)Generate.SurvivorCultistOn.Get();
         public static int SpecialRoleCount => (int)Generate.NumberOfSpecialRoles.Get();
+        public static int MaxChameleons => (int)Generate.MaxChameleons.Get();
         public static int MaxEngineers => (int)Generate.MaxEngineers.Get();
         public static int MaxInvestigators => (int)Generate.MaxInvestigators.Get();
         public static int MaxMystics => (int)Generate.MaxMystics.Get();

@@ -53,6 +53,7 @@ namespace TownOfUs
         Whisperer, // 101
         CultistSeer, // 102
         CultistMystic, // 103
+        Chameleon, // 104
 
         None
     }

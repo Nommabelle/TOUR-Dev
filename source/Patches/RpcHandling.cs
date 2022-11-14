@@ -508,12 +508,18 @@ namespace TownOfUs
             if (specialRoles.Count > crewmates.Count) SortRoles(specialRoles, crewmates.Count, crewmates.Count);
             if (specialRoles.Count < crewmates.Count)
             {
+                var chameleons = CustomGameOptions.MaxChameleons;
                 var engineers = CustomGameOptions.MaxEngineers;
                 var investigators = CustomGameOptions.MaxInvestigators;
                 var mystics = CustomGameOptions.MaxMystics;
                 var spies = CustomGameOptions.MaxSpies;
                 var transporters = CustomGameOptions.MaxTransporters;
                 var vigilantes = CustomGameOptions.MaxVigilantes;
+                while (chameleons > 0)
+                {
+                    crewRoles.Add((typeof(Chameleon), 104, 10, false));
+                    chameleons--;
+                }
                 while (engineers > 0)
                 {
                     crewRoles.Add((typeof(Engineer), 2, 10, false));
@@ -713,6 +719,9 @@ namespace TownOfUs
                                 break;
                             case 103:
                                 new CultistMystic(player);
+                                break;
+                            case 104:
+                                new Chameleon(player);
                                 break;
                         }
                         break;
@@ -1007,6 +1016,12 @@ namespace TownOfUs
                         var swooperRole = Role.GetRole<Swooper>(swooper);
                         swooperRole.TimeRemaining = CustomGameOptions.SwoopDuration;
                         swooperRole.Swoop();
+                        break;
+                    case CustomRPC.ChameleonSwoop:
+                        var chameleon = Utils.PlayerById(reader.ReadByte());
+                        var chameleonRole = Role.GetRole<Chameleon>(chameleon);
+                        chameleonRole.TimeRemaining = CustomGameOptions.SwoopDuration;
+                        chameleonRole.Swoop();
                         break;
                     case CustomRPC.Alert:
                         var veteran = Utils.PlayerById(reader.ReadByte());

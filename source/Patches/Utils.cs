@@ -474,10 +474,25 @@ namespace TownOfUs
             if (PlayerControl.LocalPlayer != player && PlayerControl.LocalPlayer.Is(RoleEnum.CultistMystic)
                 && !PlayerControl.LocalPlayer.Data.IsDead) Coroutines.Start(FlashCoroutine(Patches.Colors.Mystic));
 
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Chameleon) && PlayerControl.LocalPlayer == player)
+            {
+                var chameleonRole = Role.GetRole<Chameleon>(PlayerControl.LocalPlayer);
+                chameleonRole.UnSwoop();
+                DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(false);
+            }
+
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Transporter) && PlayerControl.LocalPlayer == player)
             {
                 var transporterRole = Role.GetRole<Transporter>(PlayerControl.LocalPlayer);
                 Object.Destroy(transporterRole.UsesText);
+                DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(false);
+            }
+
+            if (player.Is(RoleEnum.Chameleon))
+            {
+                Role.RoleDictionary.Remove(player.PlayerId);
+                var swooper = new Swooper(player);
+                swooper.RegenTask();
             }
 
             if (player.Is(RoleEnum.Engineer))
@@ -536,11 +551,12 @@ namespace TownOfUs
                 if (CustomGameOptions.SeerCultistOn > 0) colorMapping.Add("Seer", Colors.Seer);
                 if (CustomGameOptions.SheriffCultistOn > 0) colorMapping.Add("Sheriff", Colors.Sheriff);
                 if (CustomGameOptions.SurvivorCultistOn > 0) colorMapping.Add("Survivor", Colors.Survivor);
+                if (CustomGameOptions.MaxChameleons > 0) colorMapping.Add("Chameleon", Colors.Chameleon);
                 if (CustomGameOptions.MaxEngineers > 0) colorMapping.Add("Engineer", Colors.Engineer);
                 if (CustomGameOptions.MaxInvestigators > 0) colorMapping.Add("Investigator", Colors.Investigator);
                 if (CustomGameOptions.MaxMystics > 0) colorMapping.Add("Mystic", Colors.Mystic);
                 if (CustomGameOptions.MaxSpies > 0) colorMapping.Add("Spy", Colors.Spy);
-                if (CustomGameOptions.MaxTransporters > 0) colorMapping.Add("Spy", Colors.Transporter);
+                if (CustomGameOptions.MaxTransporters > 0) colorMapping.Add("Transporter", Colors.Transporter);
                 if (CustomGameOptions.MaxVigilantes > 1) colorMapping.Add("Vigilante", Colors.Vigilante);
                 colorMapping.Add("Crewmate", Colors.Crewmate);
                 vigi.SortedColorMapping = colorMapping.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
@@ -667,6 +683,10 @@ namespace TownOfUs
             {
                 role.LastInvestigated = DateTime.UtcNow;
             }
+            foreach (CultistSeer role in Role.GetRoles(RoleEnum.CultistSeer))
+            {
+                role.LastInvestigated = DateTime.UtcNow;
+            }
             foreach (Sheriff role in Role.GetRoles(RoleEnum.Sheriff))
             {
                 role.LastKilled = DateTime.UtcNow;
@@ -695,6 +715,10 @@ namespace TownOfUs
             foreach (Detective role in Role.GetRoles(RoleEnum.Detective))
             {
                 role.LastExamined = DateTime.UtcNow;
+            }
+            foreach (Chameleon role in Role.GetRoles(RoleEnum.Chameleon))
+            {
+                role.LastSwooped = DateTime.UtcNow;
             }
             #endregion
             #region NeutralRoles
@@ -766,6 +790,14 @@ namespace TownOfUs
             foreach (Undertaker role in Role.GetRoles(RoleEnum.Undertaker))
             {
                 role.LastDragged = DateTime.UtcNow;
+            }
+            foreach (Necromancer role in Role.GetRoles(RoleEnum.Necromancer))
+            {
+                role.LastRevived = DateTime.UtcNow;
+            }
+            foreach (Whisperer role in Role.GetRoles(RoleEnum.Whisperer))
+            {
+                role.LastWhispered = DateTime.UtcNow;
             }
             #endregion
         }

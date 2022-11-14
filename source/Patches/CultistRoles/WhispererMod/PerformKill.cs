@@ -5,7 +5,6 @@ using TownOfUs.Roles.Cultist;
 using UnityEngine;
 using System.Collections.Generic;
 using System;
-using static StatsManager;
 
 namespace TownOfUs.CultistRoles.WhispererMod
 {
@@ -30,7 +29,7 @@ namespace TownOfUs.CultistRoles.WhispererMod
                 if (!__instance.enabled) return false;
                 var closestPlayers = GetClosestPlayers(role.Player);
                 var oldStats = role.PlayerConversion;
-                role.PlayerConversion = new List<(PlayerControl, float)>();
+                role.PlayerConversion = new List<(PlayerControl, int)>();
                 foreach (var conversionRate in oldStats)
                 {
                     var player = conversionRate.Item1;
@@ -41,9 +40,9 @@ namespace TownOfUs.CultistRoles.WhispererMod
                     }
                     role.PlayerConversion.Add((player, stats));
                 }
-                CheckConversion(role);
                 role.WhisperCount += 1;
                 role.LastWhispered = DateTime.UtcNow;
+                CheckConversion(role);
                 return false;
             }
 

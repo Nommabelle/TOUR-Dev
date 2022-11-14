@@ -87,6 +87,7 @@ namespace TownOfUs.Roles
             {
                 ColorMapping.Add("Necromancer", Colors.Impostor);
                 ColorMapping.Add("Whisperer", Colors.Impostor);
+                if (CustomGameOptions.MaxChameleons > 0) ColorMapping.Add("Swooper", Colors.Impostor);
                 if (CustomGameOptions.MaxEngineers > 0) ColorMapping.Add("Demolitionist", Colors.Impostor);
                 if (CustomGameOptions.MaxInvestigators > 0) ColorMapping.Add("Consigliere", Colors.Impostor);
                 if (CustomGameOptions.MaxMystics > 0) ColorMapping.Add("Cabalistic", Colors.Impostor);

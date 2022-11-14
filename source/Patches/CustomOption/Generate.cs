@@ -144,6 +144,7 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption SheriffCultistOn;
         public static CustomNumberOption SurvivorCultistOn;
         public static CustomNumberOption NumberOfSpecialRoles;
+        public static CustomNumberOption MaxChameleons;
         public static CustomNumberOption MaxEngineers;
         public static CustomNumberOption MaxInvestigators;
         public static CustomNumberOption MaxMystics;
@@ -619,6 +620,8 @@ namespace TownOfUs.CustomOption
                 PercentFormat);
             NumberOfSpecialRoles =
                 new CustomNumberOption(num++, MultiMenu.main, "Number Of Special Roles", 4, 0, 4, 1);
+            MaxChameleons =
+                new CustomNumberOption(num++, MultiMenu.main, "Max Chameleons", 3, 0, 5, 1);
             MaxEngineers =
                 new CustomNumberOption(num++, MultiMenu.main, "Max Engineers", 3, 0, 5, 1);
             MaxInvestigators =
@@ -634,7 +637,7 @@ namespace TownOfUs.CustomOption
             WhisperCooldown =
                 new CustomNumberOption(num++, MultiMenu.main, "Initial Whisper Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
             IncreasedCooldownPerWhisper =
-                new CustomNumberOption(num++, MultiMenu.main, "Increased Cooldown Per Whisper", 5f, 0f, 15f, 1f, CooldownFormat);
+                new CustomNumberOption(num++, MultiMenu.main, "Increased Cooldown Per Whisper", 5f, 0f, 15f, 0.5f, CooldownFormat);
             WhisperRadius =
                 new CustomNumberOption(num++, MultiMenu.main, "Whisper Radius", 1f, 0.25f, 5f, 0.25f, MultiplierFormat);
             ConversionPercentage = new CustomNumberOption(num++, MultiMenu.main, "Conversion Percentage", 25f, 0f, 100f, 5f,

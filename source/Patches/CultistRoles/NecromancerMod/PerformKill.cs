@@ -41,6 +41,8 @@ namespace TownOfUs.CultistRoles.NecromancerMod
                 var playerId = role.CurrentTarget.ParentId;
                 var player = Utils.PlayerById(playerId);
                 if (player.Is(RoleEnum.Sheriff) || player.Is(RoleEnum.CultistSeer) || player.Is(RoleEnum.Survivor) || player.Is(RoleEnum.Mayor)) return false;
+                role.ReviveCount += 1;
+                role.LastRevived = DateTime.UtcNow;
 
                 var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                     (byte)CustomRPC.Revive, SendOption.Reliable, -1);
@@ -48,8 +50,6 @@ namespace TownOfUs.CultistRoles.NecromancerMod
                 writer.Write(playerId);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
 
-                role.ReviveCount += 1;
-                role.LastRevived = DateTime.UtcNow;
                 Revive(role.CurrentTarget, role);
                 return false;
             }
