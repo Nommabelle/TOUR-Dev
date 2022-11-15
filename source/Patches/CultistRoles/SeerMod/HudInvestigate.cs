@@ -58,7 +58,7 @@ namespace TownOfUs.CultistRoles.SeerMod
             }
 
             var renderer = investigateButton.graphic;
-            if (!investigateButton.isCoolingDown && investigateButton.gameObject.active && role.ButtonUsable)
+            if (!investigateButton.isCoolingDown && investigateButton.gameObject.active && role.ButtonUsable && role.ClosestPlayer != null)
             {
                 renderer.color = Palette.EnabledColor;
                 renderer.material.SetFloat("_Desat", 0f);

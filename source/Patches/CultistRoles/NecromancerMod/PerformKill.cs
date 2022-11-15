@@ -40,7 +40,10 @@ namespace TownOfUs.CultistRoles.NecromancerMod
                     PlayerControl.LocalPlayer.GetTruePosition()) > maxDistance) return false;
                 var playerId = role.CurrentTarget.ParentId;
                 var player = Utils.PlayerById(playerId);
+
                 if (player.Is(RoleEnum.Sheriff) || player.Is(RoleEnum.CultistSeer) || player.Is(RoleEnum.Survivor) || player.Is(RoleEnum.Mayor)) return false;
+                if (PlayerControl.LocalPlayer.killTimer > PlayerControl.GameOptions.KillCooldown - 0.5f) return false;
+
                 role.ReviveCount += 1;
                 role.LastRevived = DateTime.UtcNow;
 

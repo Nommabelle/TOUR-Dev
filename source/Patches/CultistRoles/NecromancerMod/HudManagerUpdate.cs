@@ -80,6 +80,8 @@ namespace TownOfUs.CultistRoles.NecromancerMod
             if (role.CurrentTarget && __instance.enabled)
             {
                 if (player.Is(RoleEnum.Sheriff) || player.Is(RoleEnum.CultistSeer) || player.Is(RoleEnum.Survivor) || player.Is(RoleEnum.Mayor)) return;
+                if (PlayerControl.LocalPlayer.killTimer > PlayerControl.GameOptions.KillCooldown - 0.5f) return;
+
                 var component = role.CurrentTarget.bodyRenderer;
                 component.material.SetFloat("_Outline", 1f);
                 component.material.SetColor("_OutlineColor", Color.red);

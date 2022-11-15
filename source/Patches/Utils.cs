@@ -478,14 +478,12 @@ namespace TownOfUs
             {
                 var chameleonRole = Role.GetRole<Chameleon>(PlayerControl.LocalPlayer);
                 chameleonRole.UnSwoop();
-                DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(false);
             }
 
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Transporter) && PlayerControl.LocalPlayer == player)
             {
                 var transporterRole = Role.GetRole<Transporter>(PlayerControl.LocalPlayer);
                 Object.Destroy(transporterRole.UsesText);
-                DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(false);
             }
 
             if (player.Is(RoleEnum.Chameleon))

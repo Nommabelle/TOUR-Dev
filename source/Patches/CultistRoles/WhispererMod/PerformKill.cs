@@ -38,7 +38,7 @@ namespace TownOfUs.CultistRoles.WhispererMod
                     {
                         stats -= role.WhisperConversion;
                     }
-                    role.PlayerConversion.Add((player, stats));
+                    if (!player.Data.IsDead) role.PlayerConversion.Add((player, stats));
                 }
                 role.WhisperCount += 1;
                 role.LastWhispered = DateTime.UtcNow;
