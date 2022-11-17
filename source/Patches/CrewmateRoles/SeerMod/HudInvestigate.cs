@@ -45,15 +45,16 @@ namespace TownOfUs.CrewmateRoles.SeerMod
             }
 
             var renderer = investigateButton.graphic;
-            if (!investigateButton.isCoolingDown && investigateButton.gameObject.active)
+            if (role.ClosestPlayer != null)
             {
                 renderer.color = Palette.EnabledColor;
                 renderer.material.SetFloat("_Desat", 0f);
-                return;
             }
-
-            renderer.color = Palette.DisabledClear;
-            renderer.material.SetFloat("_Desat", 1f);
+            else
+            {
+                renderer.color = Palette.DisabledClear;
+                renderer.material.SetFloat("_Desat", 1f);
+            }
         }
     }
 }

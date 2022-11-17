@@ -58,15 +58,20 @@ namespace TownOfUs.CultistRoles.SeerMod
             }
 
             var renderer = investigateButton.graphic;
-            if (!investigateButton.isCoolingDown && investigateButton.gameObject.active && role.ButtonUsable && role.ClosestPlayer != null)
+            if (role.ClosestPlayer != null && role.ButtonUsable)
             {
                 renderer.color = Palette.EnabledColor;
                 renderer.material.SetFloat("_Desat", 0f);
-                return;
+                role.UsesText.color = Palette.EnabledColor;
+                role.UsesText.material.SetFloat("_Desat", 0f);
             }
-
-            renderer.color = Palette.DisabledClear;
-            renderer.material.SetFloat("_Desat", 1f);
+            else
+            {
+                renderer.color = Palette.DisabledClear;
+                renderer.material.SetFloat("_Desat", 1f);
+                role.UsesText.color = Palette.DisabledClear;
+                role.UsesText.material.SetFloat("_Desat", 1f);
+            }
         }
     }
 }
