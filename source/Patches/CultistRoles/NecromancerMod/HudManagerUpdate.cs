@@ -6,7 +6,7 @@ using UnityEngine;
 namespace TownOfUs.CultistRoles.NecromancerMod
 {
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
-    public class HudManagerUpdate
+    public class ReviveHudManagerUpdate
     {
         public static Sprite ReviveSprite => TownOfUs.Revive2Sprite;
         public static byte DontRevive = byte.MaxValue;
@@ -29,9 +29,6 @@ namespace TownOfUs.CultistRoles.NecromancerMod
             role.ReviveButton.GetComponent<AspectPosition>().Update();
             role.ReviveButton.graphic.sprite = ReviveSprite;
             role.ReviveButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
-
-            role.ReviveButton.SetCoolDown(role.ReviveTimer(),
-                CustomGameOptions.ReviveCooldown + CustomGameOptions.IncreasedCooldownPerRevive * role.ReviveCount);
 
             var data = PlayerControl.LocalPlayer.Data;
             var isDead = data.IsDead;
@@ -70,18 +67,25 @@ namespace TownOfUs.CultistRoles.NecromancerMod
                 role.ReviveButton.gameObject.SetActive(!MeetingHud.Instance);
             }
 
+            role.ReviveButton.SetCoolDown(role.ReviveTimer(),
+                CustomGameOptions.ReviveCooldown + CustomGameOptions.IncreasedCooldownPerRevive * role.ReviveCount);
+
             if (role.CurrentTarget && role.CurrentTarget != closestBody)
                 role.CurrentTarget.bodyRenderer.material.SetFloat("_Outline", 0f);
 
-
             if (closestBody != null && closestBody.ParentId == DontRevive) closestBody = null;
             role.CurrentTarget = closestBody;
-            var player = Utils.PlayerById(role.CurrentTarget.ParentId);
-            if (role.CurrentTarget && __instance.enabled)
+            if (role.CurrentTarget == null)
             {
-                if (player.Is(RoleEnum.Sheriff) || player.Is(RoleEnum.CultistSeer) || player.Is(RoleEnum.Survivor) || player.Is(RoleEnum.Mayor)) return;
-                if (PlayerControl.LocalPlayer.killTimer > PlayerControl.GameOptions.KillCooldown - 0.5f) return;
-
+                role.ReviveButton.graphic.color = Palette.DisabledClear;
+                role.ReviveButton.graphic.material.SetFloat("_Desat", 1f);
+                return;
+            }
+            var player = Utils.PlayerById(role.CurrentTarget.ParentId);
+            if (role.CurrentTarget && role.ReviveButton.enabled &&
+                !(player.Is(RoleEnum.Sheriff) || player.Is(RoleEnum.CultistSeer) || player.Is(RoleEnum.Survivor) || player.Is(RoleEnum.Mayor)) &&
+                !(PlayerControl.LocalPlayer.killTimer > PlayerControl.GameOptions.KillCooldown - 0.5f))
+            {
                 var component = role.CurrentTarget.bodyRenderer;
                 component.material.SetFloat("_Outline", 1f);
                 component.material.SetColor("_OutlineColor", Color.red);
