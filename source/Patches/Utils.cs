@@ -472,13 +472,7 @@ namespace TownOfUs
         {
             if (PlayerControl.LocalPlayer == player) Coroutines.Start(FlashCoroutine(Patches.Colors.Impostor));
             if (PlayerControl.LocalPlayer != player && PlayerControl.LocalPlayer.Is(RoleEnum.CultistMystic)
-                && !PlayerControl.LocalPlayer.Data.IsDead) Coroutines.Start(FlashCoroutine(Patches.Colors.Mystic));
-
-            if (PlayerControl.LocalPlayer.Is(RoleEnum.Chameleon) && PlayerControl.LocalPlayer == player)
-            {
-                var chameleonRole = Role.GetRole<Chameleon>(PlayerControl.LocalPlayer);
-                chameleonRole.UnSwoop();
-            }
+                && !PlayerControl.LocalPlayer.Data.IsDead) Coroutines.Start(FlashCoroutine(Patches.Colors.Impostor));
 
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Transporter) && PlayerControl.LocalPlayer == player)
             {
@@ -488,6 +482,8 @@ namespace TownOfUs
 
             if (player.Is(RoleEnum.Chameleon))
             {
+                var chameleonRole = Role.GetRole<Chameleon>(player);
+                if (chameleonRole.IsSwooped) chameleonRole.UnSwoop();
                 Role.RoleDictionary.Remove(player.PlayerId);
                 var swooper = new Swooper(player);
                 swooper.RegenTask();
@@ -514,7 +510,7 @@ namespace TownOfUs
             if (player.Is(RoleEnum.CultistMystic))
             {
                 var mystic = Role.GetRole<CultistMystic>(player);
-                mystic.Name = "Cabalistic";
+                mystic.Name = "Clairvoyant";
                 mystic.Color = Patches.Colors.Impostor;
                 mystic.Faction = Faction.Impostors;
                 mystic.RegenTask();
@@ -579,8 +575,6 @@ namespace TownOfUs
             }
 
             Lights.SetLights();
-
-            return;
         }
 
         public static IEnumerator FlashCoroutine(Color color, float waitfor = 1f, float alpha = 0.3f)

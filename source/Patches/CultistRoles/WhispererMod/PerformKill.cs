@@ -51,6 +51,7 @@ namespace TownOfUs.CultistRoles.WhispererMod
 
         public static void CheckConversion(Whisperer role)
         {
+            var removals = new List<(PlayerControl, int)>();
             foreach (var playerConversion in role.PlayerConversion)
             {
                 if (playerConversion.Item2 <= 0)
@@ -64,15 +65,18 @@ namespace TownOfUs.CultistRoles.WhispererMod
                         (byte)CustomRPC.Convert, SendOption.Reliable, -1);
                     writer.Write(playerConversion.Item1.PlayerId);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
-                    role.PlayerConversion.Remove(playerConversion);
+                    removals.Add(playerConversion);
                 }
             }
+            foreach (var removal in removals) role.PlayerConversion.Remove(removal);
+            removals.Clear();
+            return;
         }
 
         public static Il2CppSystem.Collections.Generic.List<PlayerControl> GetClosestPlayers(PlayerControl player)
         {
             Il2CppSystem.Collections.Generic.List<PlayerControl> playerControlList = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
-            float flashRadius = CustomGameOptions.WhisperRadius * 5;
+            float whisperRadius = CustomGameOptions.WhisperRadius * 5;
             Vector2 truePosition = player.GetTruePosition();
             Il2CppSystem.Collections.Generic.List<GameData.PlayerInfo> allPlayers = GameData.Instance.AllPlayers;
             for (int index = 0; index < allPlayers.Count; ++index)
@@ -82,7 +86,7 @@ namespace TownOfUs.CultistRoles.WhispererMod
                 {
                     Vector2 vector2 = new Vector2(playerInfo.Object.GetTruePosition().x - truePosition.x, playerInfo.Object.GetTruePosition().y - truePosition.y);
                     float magnitude = ((Vector2)vector2).magnitude;
-                    if (magnitude <= flashRadius)
+                    if (magnitude <= whisperRadius)
                     {
                         PlayerControl playerControl = playerInfo.Object;
                         playerControlList.Add(playerControl);

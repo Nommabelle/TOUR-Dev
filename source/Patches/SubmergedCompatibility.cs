@@ -271,7 +271,6 @@ namespace TownOfUs.Patches
 
             Coroutines.Start(waitMeeting(resetTimers));
             Coroutines.Start(waitMeeting(GhostRoleBegin));
-            
         }
 
         public static IEnumerator waitStart(Action next)

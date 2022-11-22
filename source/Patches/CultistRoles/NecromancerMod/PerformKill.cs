@@ -98,6 +98,7 @@ namespace TownOfUs.CultistRoles.NecromancerMod
                 {
                 }
             Utils.Convert(player);
+            return;
         }
     }
 }
