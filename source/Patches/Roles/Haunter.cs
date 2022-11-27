@@ -30,6 +30,7 @@ namespace TownOfUs.Roles
         public void Fade()
         {
             Faded = true;
+            Player.Visible = true;
             var color = new Color(1f, 1f, 1f, 0f);
 
             var maxDistance = ShipStatus.Instance.MaxLightRadius * PlayerControl.GameOptions.CrewLightMod;

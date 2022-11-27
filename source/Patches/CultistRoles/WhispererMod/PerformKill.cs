@@ -28,6 +28,7 @@ namespace TownOfUs.CultistRoles.WhispererMod
                 if (flag2) return false;
                 if (!__instance.enabled) return false;
                 var closestPlayers = GetClosestPlayers(role.Player);
+                if (role.PlayerConversion.Count == 0) role.PlayerConversion = role.GetPlayers();
                 var oldStats = role.PlayerConversion;
                 role.PlayerConversion = new List<(PlayerControl, int)>();
                 foreach (var conversionRate in oldStats)

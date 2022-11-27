@@ -158,6 +158,7 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption DecreasedPercentagePerConversion;
         public static CustomNumberOption ReviveCooldown;
         public static CustomNumberOption IncreasedCooldownPerRevive;
+        public static CustomNumberOption MaxReveals;
 
         public static CustomHeaderOption TaskTrackingSettings;
         public static CustomToggleOption SeeTasksDuringRound;
@@ -648,6 +649,7 @@ namespace TownOfUs.CustomOption
                 new CustomNumberOption(num++, MultiMenu.main, "Initial Revive Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
             IncreasedCooldownPerRevive =
                 new CustomNumberOption(num++, MultiMenu.main, "Increased Cooldown Per Revive", 25f, 10f, 60f, 2.5f, CooldownFormat);
+            MaxReveals = new CustomNumberOption(num++, MultiMenu.crewmate, "Maximum Number Of Reveals", 5, 1, 15, 1);
 
             MapSettings = new CustomHeaderOption(num++, MultiMenu.main, "Map Settings");
             RandomMapEnabled = new CustomToggleOption(num++, MultiMenu.main, "Choose Random Map", false);

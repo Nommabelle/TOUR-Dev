@@ -18,7 +18,7 @@ namespace TownOfUs.Roles.Cultist
             LastInvestigated = DateTime.UtcNow;
             RoleType = RoleEnum.CultistSeer;
             AddToRoleHistory(RoleType);
-            UsesLeft = 5;
+            UsesLeft = CustomGameOptions.MaxReveals;
         }
 
         public PlayerControl ClosestPlayer;

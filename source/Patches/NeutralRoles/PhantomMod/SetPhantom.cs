@@ -97,28 +97,6 @@ namespace TownOfUs.NeutralRoles.PhantomMod
                 }
         }
 
-        /*public static void ResetTowels(NormalPlayerTask task)
-        {
-            var towelTask = task.Cast<TowelTask>();
-            var data = new byte[8];
-            var array = Enumerable.Range(0, 14).ToList();
-            array.Shuffle();
-            var b3 = 0;
-            while (b3 < data.Length)
-            {
-                data[b3] = (byte)array[b3];
-                b3++;
-            }
-
-            towelTask.Data = data;
-            return;
-        }
-
-        public static void ResetRecords(NormalPlayerTask task)
-        {
-            task.Data = new 
-        }*/
-
         public static void AddCollider(Phantom role)
         {
             var player = role.Player;

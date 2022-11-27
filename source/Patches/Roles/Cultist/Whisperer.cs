@@ -24,7 +24,6 @@ namespace TownOfUs.Roles.Cultist
             RoleType = RoleEnum.Whisperer;
             AddToRoleHistory(RoleType);
             Faction = Faction.Impostors;
-            PlayerConversion = GetPlayers();
             WhisperConversion = CustomGameOptions.ConversionPercentage;
         }
 

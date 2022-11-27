@@ -316,5 +316,6 @@ namespace TownOfUs
         public static int DecreasedPercentagePerConversion => (int) Generate.DecreasedPercentagePerConversion.Get();
         public static float ReviveCooldown => Generate.ReviveCooldown.Get();
         public static float IncreasedCooldownPerRevive => Generate.IncreasedCooldownPerRevive.Get();
+        public static int MaxReveals => (int)Generate.MaxReveals.Get();
     }
 }
