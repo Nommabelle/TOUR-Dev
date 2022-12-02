@@ -5,15 +5,16 @@ using UnityEngine;
 
 namespace TownOfUs.CultistRoles.SeerMod
 {
-    [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
+    [HarmonyPatch(typeof(HudManager))]
     public class HudInvestigate
     {
-        public static void Postfix(PlayerControl __instance)
+        [HarmonyPatch(nameof(HudManager.Update))]
+        public static void Postfix(HudManager __instance)
         {
             UpdateInvButton(__instance);
         }
 
-        public static void UpdateInvButton(PlayerControl __instance)
+        public static void UpdateInvButton(HudManager __instance)
         {
             if (PlayerControl.AllPlayerControls.Count <= 1) return;
             if (PlayerControl.LocalPlayer == null) return;
@@ -21,7 +22,7 @@ namespace TownOfUs.CultistRoles.SeerMod
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.CultistSeer)) return;
             var data = PlayerControl.LocalPlayer.Data;
             var isDead = data.IsDead;
-            var investigateButton = DestroyableSingleton<HudManager>.Instance.KillButton;
+            var investigateButton = __instance.KillButton;
 
             var role = Role.GetRole<CultistSeer>(PlayerControl.LocalPlayer);
 

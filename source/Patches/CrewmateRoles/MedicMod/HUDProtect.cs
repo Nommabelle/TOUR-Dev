@@ -3,15 +3,16 @@ using TownOfUs.Roles;
 
 namespace TownOfUs.CrewmateRoles.MedicMod
 {
-    [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
+    [HarmonyPatch(typeof(HudManager))]
     public class HUDProtect
     {
-        public static void Postfix(PlayerControl __instance)
+        [HarmonyPatch(nameof(HudManager.Update))]
+        public static void Postfix(HudManager __instance)
         {
             UpdateProtectButton(__instance);
         }
 
-        public static void UpdateProtectButton(PlayerControl __instance)
+        public static void UpdateProtectButton(HudManager __instance)
         {
             if (PlayerControl.AllPlayerControls.Count <= 1) return;
             if (PlayerControl.LocalPlayer == null) return;
@@ -19,7 +20,7 @@ namespace TownOfUs.CrewmateRoles.MedicMod
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Medic)) return;
             var data = PlayerControl.LocalPlayer.Data;
             var isDead = data.IsDead;
-            var protectButton = DestroyableSingleton<HudManager>.Instance.KillButton;
+            var protectButton = __instance.KillButton;
 
             var role = Role.GetRole<Medic>(PlayerControl.LocalPlayer);
 

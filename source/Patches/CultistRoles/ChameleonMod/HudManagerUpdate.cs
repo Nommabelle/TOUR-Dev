@@ -7,12 +7,12 @@ namespace TownOfUs.CultistRoles.ChameleonMod
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
     public class HudManagerUpdate
     {
-        public static void Postfix(PlayerControl __instance)
+        public static void Postfix(HudManager __instance)
         {
             UpdateSwoopButton(__instance);
         }
 
-        public static void UpdateSwoopButton(PlayerControl __instance)
+        public static void UpdateSwoopButton(HudManager __instance)
         {
             if (PlayerControl.AllPlayerControls.Count <= 1) return;
             if (PlayerControl.LocalPlayer == null) return;
@@ -20,7 +20,7 @@ namespace TownOfUs.CultistRoles.ChameleonMod
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Chameleon)) return;
             var data = PlayerControl.LocalPlayer.Data;
             var isDead = data.IsDead;
-            var swoopButton = DestroyableSingleton<HudManager>.Instance.KillButton;
+            var swoopButton = __instance.KillButton;
 
             var role = Role.GetRole<Chameleon>(PlayerControl.LocalPlayer);
 

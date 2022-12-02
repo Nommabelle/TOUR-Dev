@@ -5,15 +5,16 @@ using UnityEngine;
 
 namespace TownOfUs.CrewmateRoles.TrackerMod
 {
-    [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
+    [HarmonyPatch(typeof(HudManager))]
     public class HudTrack
     {
-        public static void Postfix(PlayerControl __instance)
+        [HarmonyPatch(nameof(HudManager.Update))]
+        public static void Postfix(HudManager __instance)
         {
             UpdateTrackButton(__instance);
         }
 
-        public static void UpdateTrackButton(PlayerControl __instance)
+        public static void UpdateTrackButton(HudManager __instance)
         {
             if (PlayerControl.AllPlayerControls.Count <= 1) return;
             if (PlayerControl.LocalPlayer == null) return;
@@ -21,7 +22,7 @@ namespace TownOfUs.CrewmateRoles.TrackerMod
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Tracker)) return;
             var data = PlayerControl.LocalPlayer.Data;
             var isDead = data.IsDead;
-            var trackButton = DestroyableSingleton<HudManager>.Instance.KillButton;
+            var trackButton = __instance.KillButton;
 
             var role = Role.GetRole<Tracker>(PlayerControl.LocalPlayer);
 

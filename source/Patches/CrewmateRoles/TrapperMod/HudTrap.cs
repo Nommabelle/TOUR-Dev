@@ -4,15 +4,16 @@ using UnityEngine;
 
 namespace TownOfUs.CrewmateRoles.TrapperMod
 {
-    [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
+    [HarmonyPatch(typeof(HudManager))]
     public class HudTrap
     {
-        public static void Postfix(PlayerControl __instance)
+        [HarmonyPatch(nameof(HudManager.Update))]
+        public static void Postfix(HudManager __instance)
         {
             UpdateTrapButton(__instance);
         }
 
-        public static void UpdateTrapButton(PlayerControl __instance)
+        public static void UpdateTrapButton(HudManager __instance)
         {
             if (PlayerControl.AllPlayerControls.Count <= 1) return;
             if (PlayerControl.LocalPlayer == null) return;
@@ -20,7 +21,7 @@ namespace TownOfUs.CrewmateRoles.TrapperMod
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Trapper)) return;
             var data = PlayerControl.LocalPlayer.Data;
             var isDead = data.IsDead;
-            var trapButton = DestroyableSingleton<HudManager>.Instance.KillButton;
+            var trapButton = __instance.KillButton;
 
             var role = Role.GetRole<Trapper>(PlayerControl.LocalPlayer);
 

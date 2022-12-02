@@ -7,12 +7,12 @@ namespace TownOfUs.NeutralRoles.SurvivorMod
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
     public class HudManagerUpdate
     {
-        public static void Postfix(PlayerControl __instance)
+        public static void Postfix(HudManager __instance)
         {
             UpdateVestButton(__instance);
         }
 
-        public static void UpdateVestButton(PlayerControl __instance)
+        public static void UpdateVestButton(HudManager __instance)
         {
             if (PlayerControl.AllPlayerControls.Count <= 1) return;
             if (PlayerControl.LocalPlayer == null) return;
@@ -20,7 +20,7 @@ namespace TownOfUs.NeutralRoles.SurvivorMod
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Survivor)) return;
             var data = PlayerControl.LocalPlayer.Data;
             var isDead = data.IsDead;
-            var vestButton = DestroyableSingleton<HudManager>.Instance.KillButton;
+            var vestButton = __instance.KillButton;
 
             var role = Role.GetRole<Survivor>(PlayerControl.LocalPlayer);
 

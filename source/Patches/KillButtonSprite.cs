@@ -15,6 +15,7 @@ namespace TownOfUs
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
     public class KillButtonSprite
     {
+        private static Sprite Fix => TownOfUs.EngineerFix;
         private static Sprite Rewind => TownOfUs.Rewind;
         private static Sprite Medic => TownOfUs.MedicSprite;
         private static Sprite Seer => TownOfUs.SeerSprite;
@@ -109,6 +110,7 @@ namespace TownOfUs
             }
             else if (PlayerControl.LocalPlayer.Is(RoleEnum.Engineer) && CustomGameOptions.GameMode != GameMode.Cultist)
             {
+                __instance.KillButton.graphic.sprite = Fix;
                 flag = true;
             }
             else if (PlayerControl.LocalPlayer.Is(RoleEnum.Trapper))

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 using System.Linq;
+using TownOfUs.Patches;
 
 namespace TownOfUs.NeutralRoles.PhantomMod
 {
@@ -66,6 +67,13 @@ namespace TownOfUs.NeutralRoles.PhantomMod
         }
 
         public static void Postfix(ExileController __instance) => ExileControllerPostfix(__instance);
+
+        [HarmonyPatch(typeof(Object), nameof(Object.Destroy), new Type[] { typeof(GameObject) })]
+        public static void Prefix(GameObject obj)
+        {
+            if (!SubmergedCompatibility.Loaded || PlayerControl.GameOptions.MapId != 5) return;
+            if (obj.name.Contains("ExileCutscene")) ExileControllerPostfix(ExileControllerPatch.lastExiled);
+        }
 
         public static void RemoveTasks(PlayerControl player)
         {

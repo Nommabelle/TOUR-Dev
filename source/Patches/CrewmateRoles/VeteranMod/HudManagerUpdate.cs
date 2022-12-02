@@ -4,15 +4,16 @@ using UnityEngine;
 
 namespace TownOfUs.CrewmateRoles.VeteranMod
 {
-    [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
+    [HarmonyPatch(typeof(HudManager))]
     public class HudManagerUpdate
     {
-        public static void Postfix(PlayerControl __instance)
+        [HarmonyPatch(nameof(HudManager.Update))]
+        public static void Postfix(HudManager __instance)
         {
             UpdateAlertButton(__instance);
         }
 
-        public static void UpdateAlertButton(PlayerControl __instance)
+        public static void UpdateAlertButton(HudManager __instance)
         {
             if (PlayerControl.AllPlayerControls.Count <= 1) return;
             if (PlayerControl.LocalPlayer == null) return;
@@ -20,7 +21,7 @@ namespace TownOfUs.CrewmateRoles.VeteranMod
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Veteran)) return;
             var data = PlayerControl.LocalPlayer.Data;
             var isDead = data.IsDead;
-            var alertButton = DestroyableSingleton<HudManager>.Instance.KillButton;
+            var alertButton = __instance.KillButton;
 
             var role = Role.GetRole<Veteran>(PlayerControl.LocalPlayer);
 

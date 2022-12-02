@@ -217,11 +217,6 @@ namespace TownOfUs
             
             return result;
         }
-
-        public static PlayerControl GetClosestPlayer(PlayerControl refplayer)
-        {
-            return GetClosestPlayer(refplayer, PlayerControl.AllPlayerControls.ToArray().ToList());
-        }
         public static void SetTarget(
             ref PlayerControl closestPlayer,
             KillButton button,

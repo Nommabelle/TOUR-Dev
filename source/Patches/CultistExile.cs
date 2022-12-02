@@ -1,6 +1,8 @@
 using HarmonyLib;
 using System.Linq;
 using TownOfUs.Extensions;
+using UnityEngine;
+using System;
 
 namespace TownOfUs.Patches
 {
@@ -9,7 +11,7 @@ namespace TownOfUs.Patches
     {
         public static void Postfix(AirshipExileController __instance) => CultistExilePatch.ExileControllerPostfix(__instance);
     }
-    
+
     [HarmonyPatch(typeof(ExileController), nameof(ExileController.WrapUp))]
     public class CultistExilePatch
     {
@@ -21,7 +23,7 @@ namespace TownOfUs.Patches
                     .Where(x => x.Is(RoleEnum.Necromancer) || x.Is(RoleEnum.Whisperer)).ToList();
             foreach (var cult in cultist)
             {
-                if (cult.Data.IsDead)
+                if (cult.Data.IsDead || cult.Data.Disconnected)
                 {
                     foreach (var player in PlayerControl.AllPlayerControls)
                     {
@@ -42,5 +44,12 @@ namespace TownOfUs.Patches
         }
 
         public static void Postfix(ExileController __instance) => ExileControllerPostfix(__instance);
+
+        [HarmonyPatch(typeof(UnityEngine.Object), nameof(UnityEngine.Object.Destroy), new Type[] { typeof(GameObject) })]
+        public static void Prefix(GameObject obj)
+        {
+            if (!SubmergedCompatibility.Loaded || PlayerControl.GameOptions.MapId != 5) return;
+            if (obj.name.Contains("ExileCutscene")) ExileControllerPostfix(ExileControllerPatch.lastExiled);
+        }
     }
 }

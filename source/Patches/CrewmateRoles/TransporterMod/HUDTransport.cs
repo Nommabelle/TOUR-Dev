@@ -4,17 +4,18 @@ using UnityEngine;
 
 namespace TownOfUs.CrewmateRoles.TransporterMod
 {
-    [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
+    [HarmonyPatch(typeof(HudManager))]
     public class HUDTransport
     {
-        public static void Postfix(PlayerControl __instance)
+        [HarmonyPatch(nameof(HudManager.Update))]
+        public static void Postfix(HudManager __instance)
         {
             if (PlayerControl.AllPlayerControls.Count <= 1) return;
             if (PlayerControl.LocalPlayer == null) return;
             if (PlayerControl.LocalPlayer.Data == null) return;
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Transporter)) return;
             var data = PlayerControl.LocalPlayer.Data;
-            var transportButton = DestroyableSingleton<HudManager>.Instance.KillButton;
+            var transportButton = __instance.KillButton;
 
             var role = Role.GetRole<Transporter>(PlayerControl.LocalPlayer);
 

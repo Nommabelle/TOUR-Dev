@@ -265,10 +265,6 @@ namespace TownOfUs.Patches
 
         public static void ExileRoleChangePostfix()
         {
-            NeutralRoles.PhantomMod.SetPhantom.ExileControllerPostfix(ExileController.Instance);
-            ImpostorRoles.TraitorMod.SetTraitor.ExileControllerPostfix(ExileController.Instance);
-            CrewmateRoles.HaunterMod.SetHaunter.ExileControllerPostfix(ExileController.Instance);
-
             Coroutines.Start(waitMeeting(resetTimers));
             Coroutines.Start(waitMeeting(GhostRoleBegin));
         }

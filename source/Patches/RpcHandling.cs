@@ -29,6 +29,7 @@ using Coroutine = TownOfUs.ImpostorRoles.JanitorMod.Coroutine;
 using Object = UnityEngine.Object;
 using PerformKillButton = TownOfUs.NeutralRoles.AmnesiacMod.PerformKillButton;
 using Random = UnityEngine.Random; //using Il2CppSystem;
+using TownOfUs.Patches;
 
 namespace TownOfUs
 {
@@ -845,6 +846,7 @@ namespace TownOfUs
                         Murder.KilledPlayers.Clear();
                         Role.NobodyWins = false;
                         Role.SurvOnlyWins = false;
+                        ExileControllerPatch.lastExiled = null;
                         PatchKillTimer.GameStarted = false;
                         RecordRewind.points.Clear();
                         KillButtonTarget.DontRevive = byte.MaxValue;
@@ -1362,6 +1364,7 @@ namespace TownOfUs
                 Utils.ShowDeadBodies = false;
                 Role.NobodyWins = false;
                 Role.SurvOnlyWins = false;
+                ExileControllerPatch.lastExiled = null;
                 PatchKillTimer.GameStarted = false;
                 CrewmateRoles.Clear();
                 NeutralNonKillingRoles.Clear();

@@ -7,6 +7,7 @@ using TownOfUs.CrewmateRoles.SnitchMod;
 using TownOfUs.Extensions;
 using UnityEngine;
 using Reactor.Utilities;
+using TownOfUs.Patches;
 
 namespace TownOfUs.ImpostorRoles.TraitorMod
 {
@@ -183,5 +184,12 @@ namespace TownOfUs.ImpostorRoles.TraitorMod
         }
 
         public static void Postfix(ExileController __instance) => ExileControllerPostfix(__instance);
+
+        [HarmonyPatch(typeof(Object), nameof(Object.Destroy), new System.Type[] { typeof(GameObject) })]
+        public static void Prefix(GameObject obj)
+        {
+            if (!SubmergedCompatibility.Loaded || PlayerControl.GameOptions.MapId != 5) return;
+            if (obj.name.Contains("ExileCutscene")) ExileControllerPostfix(ExileControllerPatch.lastExiled);
+        }
     }
 }

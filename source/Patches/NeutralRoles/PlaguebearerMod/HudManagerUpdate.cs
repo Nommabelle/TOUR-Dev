@@ -17,7 +17,7 @@ namespace TownOfUs.NeutralRoles.PlaguebearerMod
             if (PlayerControl.LocalPlayer.Data == null) return;
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Plaguebearer)) return;
             var isDead = PlayerControl.LocalPlayer.Data.IsDead;
-            var infectButton = DestroyableSingleton<HudManager>.Instance.KillButton;
+            var infectButton = __instance.KillButton;
             var role = Role.GetRole<Plaguebearer>(PlayerControl.LocalPlayer);
 
             foreach (var playerId in role.InfectedPlayers)

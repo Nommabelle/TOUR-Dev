@@ -4,15 +4,16 @@ using UnityEngine;
 
 namespace TownOfUs.CrewmateRoles.TimeLordMod
 {
-    [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
+    [HarmonyPatch(typeof(HudManager))]
     public class HUDRewind
     {
-        public static void Postfix(PlayerControl __instance)
+        [HarmonyPatch(nameof(HudManager.Update))]
+        public static void Postfix(HudManager __instance)
         {
             UpdateRewindButton(__instance);
         }
 
-        public static void UpdateRewindButton(PlayerControl __instance)
+        public static void UpdateRewindButton(HudManager __instance)
         {
             if (PlayerControl.AllPlayerControls.Count <= 1) return;
             if (PlayerControl.LocalPlayer == null) return;
@@ -20,7 +21,7 @@ namespace TownOfUs.CrewmateRoles.TimeLordMod
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.TimeLord)) return;
             var data = PlayerControl.LocalPlayer.Data;
             var isDead = data.IsDead;
-            var rewindButton = DestroyableSingleton<HudManager>.Instance.KillButton;
+            var rewindButton = __instance.KillButton;
 
             var role = Role.GetRole<TimeLord>(PlayerControl.LocalPlayer);
 
