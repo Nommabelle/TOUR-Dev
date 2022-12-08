@@ -3,7 +3,7 @@ using HarmonyLib;
 namespace TownOfUs.Patches
 {
     [HarmonyPatch(typeof(GameData))]
-    public class CultistDisconnect
+    public class DisconnectHandler
     {
         [HarmonyPrefix]
         [HarmonyPatch(nameof(GameData.HandleDisconnect), typeof(PlayerControl), typeof(DisconnectReasons))]

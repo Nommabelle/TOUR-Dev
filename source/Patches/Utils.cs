@@ -473,6 +473,14 @@ namespace TownOfUs
             {
                 var transporterRole = Role.GetRole<Transporter>(PlayerControl.LocalPlayer);
                 Object.Destroy(transporterRole.UsesText);
+                if (transporterRole.TransportList != null)
+                {
+                    transporterRole.TransportList.Toggle();
+                    transporterRole.TransportList.SetVisible(false);
+                    transporterRole.TransportList = null;
+                    transporterRole.PressedButton = false;
+                    transporterRole.TransportPlayer1 = null;
+                }
             }
 
             if (player.Is(RoleEnum.Chameleon))
@@ -481,6 +489,7 @@ namespace TownOfUs
                 if (chameleonRole.IsSwooped) chameleonRole.UnSwoop();
                 Role.RoleDictionary.Remove(player.PlayerId);
                 var swooper = new Swooper(player);
+                swooper.LastSwooped = DateTime.UtcNow;
                 swooper.RegenTask();
             }
 
@@ -524,6 +533,7 @@ namespace TownOfUs
             {
                 Role.RoleDictionary.Remove(player.PlayerId);
                 var escapist = new Escapist(player);
+                escapist.LastEscape = DateTime.UtcNow;
                 escapist.RegenTask();
             }
 

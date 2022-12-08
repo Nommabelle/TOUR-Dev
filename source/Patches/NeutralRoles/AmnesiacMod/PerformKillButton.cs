@@ -6,7 +6,6 @@ using TownOfUs.CrewmateRoles.TrapperMod;
 using TownOfUs.Roles;
 using UnityEngine;
 using System;
-using Il2CppSystem.Collections.Generic;
 using TownOfUs.Extensions;
 
 namespace TownOfUs.NeutralRoles.AmnesiacMod

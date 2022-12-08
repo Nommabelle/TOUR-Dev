@@ -1,4 +1,3 @@
-using System.Linq;
 using HarmonyLib;
 using TownOfUs.Extensions;
 using TownOfUs.Roles;
@@ -9,18 +8,6 @@ namespace TownOfUs.CrewmateRoles.SeerMod
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
     public class Update
     {
-        public static string NameText(PlayerControl player, string str = "", bool meeting = false)
-        {
-            if (CamouflageUnCamouflage.IsCamoed)
-            {
-                if (meeting) return player.name + str;
-
-                return "";
-            }
-
-            return player.name + str;
-        }
-
         private static void UpdateMeeting(MeetingHud __instance, Seer seer)
         {
             foreach (var player in PlayerControl.AllPlayerControls)

@@ -342,6 +342,26 @@ namespace TownOfUs
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
             }
 
+            if (HaunterOn && toChooseFromCrew.Count != 0)
+            {
+                var rand = Random.RandomRangeInt(0, toChooseFromCrew.Count);
+                var pc = toChooseFromCrew[rand];
+
+                SetHaunter.WillBeHaunter = pc;
+
+                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                    (byte)CustomRPC.SetHaunter, SendOption.Reliable, -1);
+                writer.Write(pc.PlayerId);
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
+            }
+            else
+            {
+                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                    (byte)CustomRPC.SetHaunter, SendOption.Reliable, -1);
+                writer.Write(byte.MaxValue);
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
+            }
+
             var toChooseFromNeut = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(Faction.Neutral) && !x.Is(ModifierEnum.Lover)).ToList();
             if (PhantomOn && toChooseFromNeut.Count != 0)
             {
@@ -359,27 +379,6 @@ namespace TownOfUs
             {
                 var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                     (byte)CustomRPC.SetPhantom, SendOption.Reliable, -1);
-                writer.Write(byte.MaxValue);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
-            }
-
-            toChooseFromCrew = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(Faction.Crewmates) && !x.Is(ModifierEnum.Lover) && x != SetTraitor.WillBeTraitor).ToList();
-            if (HaunterOn && toChooseFromCrew.Count != 0)
-            {
-                var rand = Random.RandomRangeInt(0, toChooseFromCrew.Count);
-                var pc = toChooseFromCrew[rand];
-
-                SetHaunter.WillBeHaunter = pc;
-
-                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.SetHaunter, SendOption.Reliable, -1);
-                writer.Write(pc.PlayerId);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
-            }
-            else
-            {
-                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.SetHaunter, SendOption.Reliable, -1);
                 writer.Write(byte.MaxValue);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
             }
