@@ -7,6 +7,7 @@ using TownOfUs.Roles;
 using UnityEngine;
 using System;
 using TownOfUs.Extensions;
+using TownOfUs.CrewmateRoles.ImitatorMod;
 
 namespace TownOfUs.NeutralRoles.AmnesiacMod
 {
@@ -75,7 +76,6 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 case RoleEnum.Mayor:
                 case RoleEnum.Swapper:
                 case RoleEnum.Investigator:
-                case RoleEnum.TimeLord:
                 case RoleEnum.Medic:
                 case RoleEnum.Seer:
                 case RoleEnum.Spy:
@@ -90,6 +90,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 case RoleEnum.Mystic:
                 case RoleEnum.Trapper:
                 case RoleEnum.Detective:
+                case RoleEnum.Imitator:
 
                     rememberImp = false;
                     rememberNeut = false;
@@ -128,7 +129,12 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
             Role.RoleDictionary.Remove(amnesiac.PlayerId);
             Role.RoleDictionary.Remove(other.PlayerId);
             Role.RoleDictionary.Add(amnesiac.PlayerId, newRole);
-            newRole.AddToRoleHistory(newRole.RoleType);
+            if (other == StartImitate.ImitatingPlayer)
+            {
+                StartImitate.ImitatingPlayer = amneRole.Player;
+                newRole.AddToRoleHistory(RoleEnum.Imitator);
+            }
+            else newRole.AddToRoleHistory(newRole.RoleType);
 
             if (rememberImp == false)
             {
@@ -264,15 +270,6 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 mysticRole.BodyArrows.Values.DestroyAll();
                 mysticRole.BodyArrows.Clear();
                 DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(false);
-            }
-
-            else if (role == RoleEnum.TimeLord)
-            {
-                var tlRole = Role.GetRole<TimeLord>(amnesiac);
-                tlRole.FinishRewind = DateTime.UtcNow;
-                tlRole.StartRewind = DateTime.UtcNow;
-                tlRole.StartRewind = tlRole.StartRewind.AddSeconds(-10.0f);
-                tlRole.UsesLeft = CustomGameOptions.RewindMaxUses;
             }
 
             else if (role == RoleEnum.Transporter)

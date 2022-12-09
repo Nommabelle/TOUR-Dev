@@ -688,11 +688,6 @@ namespace TownOfUs
             {
                 role.LastKilled = DateTime.UtcNow;
             }
-            foreach (TimeLord role in Role.GetRoles(RoleEnum.TimeLord))
-            {
-                role.StartRewind = DateTime.UtcNow.AddSeconds(-10.0f);
-                role.FinishRewind = DateTime.UtcNow;
-            }
             foreach (Tracker role in Role.GetRoles(RoleEnum.Tracker))
             {
                 role.LastTracked = DateTime.UtcNow;

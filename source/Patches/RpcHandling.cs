@@ -9,7 +9,6 @@ using Reactor.Networking.Extensions;
 using TownOfUs.CrewmateRoles.AltruistMod;
 using TownOfUs.CrewmateRoles.MedicMod;
 using TownOfUs.CrewmateRoles.SwapperMod;
-using TownOfUs.CrewmateRoles.TimeLordMod;
 using TownOfUs.CrewmateRoles.VigilanteMod;
 using TownOfUs.CultistRoles.NecromancerMod;
 using TownOfUs.CustomOption;
@@ -30,6 +29,7 @@ using Object = UnityEngine.Object;
 using PerformKillButton = TownOfUs.NeutralRoles.AmnesiacMod.PerformKillButton;
 using Random = UnityEngine.Random; //using Il2CppSystem;
 using TownOfUs.Patches;
+using TownOfUs.CrewmateRoles.ImitatorMod;
 
 namespace TownOfUs
 {
@@ -606,9 +606,6 @@ namespace TownOfUs
                             case 5:
                                 new Investigator(player);
                                 break;
-                            case 6:
-                                new TimeLord(player);
-                                break;
                             case 7:
                                 new Medic(player);
                                 break;
@@ -707,6 +704,9 @@ namespace TownOfUs
                                 break;
                             case 39:
                                 new Impostor(player);
+                                break;
+                            case 40:
+                                new Imitator(player);
                                 break;
                             case 100:
                                 new Necromancer(player);
@@ -847,7 +847,7 @@ namespace TownOfUs
                         Role.SurvOnlyWins = false;
                         ExileControllerPatch.lastExiled = null;
                         PatchKillTimer.GameStarted = false;
-                        RecordRewind.points.Clear();
+                        StartImitate.ImitatingPlayer = null;
                         KillButtonTarget.DontRevive = byte.MaxValue;
                         ReviveHudManagerUpdate.DontRevive = byte.MaxValue;
                         break;
@@ -893,18 +893,24 @@ namespace TownOfUs
                         PluginSingleton<TownOfUs>.Instance.Log.LogMessage("Bytes received - " + readSByte + " - " +
                                                                           readSByte2);
                         break;
+
+                    case CustomRPC.Imitate:
+                        var imitator = Utils.PlayerById(reader.ReadByte());
+                        var imitatorRole = Role.GetRole<Imitator>(imitator);
+                        var imitateTarget = Utils.PlayerById(reader.ReadByte());
+                        imitatorRole.ImitatePlayer = imitateTarget;
+                        break;
+                    case CustomRPC.StartImitate:
+                        var imitator2 = Utils.PlayerById(reader.ReadByte());
+                        var imitatorRole2 = Role.GetRole<Imitator>(imitator2);
+                        StartImitate.Imitate(imitatorRole2);
+                        break;
                     case CustomRPC.Remember:
                         readByte1 = reader.ReadByte();
                         readByte2 = reader.ReadByte();
                         var amnesiac = Utils.PlayerById(readByte1);
                         var other = Utils.PlayerById(readByte2);
                         PerformKillButton.Remember(Role.GetRole<Amnesiac>(amnesiac), other);
-                        break;
-                    case CustomRPC.Rewind:
-                        readByte = reader.ReadByte();
-                        var TimeLordPlayer = Utils.PlayerById(readByte);
-                        var TimeLordRole = Role.GetRole<TimeLord>(TimeLordPlayer);
-                        StartStop.StartRewind(TimeLordRole);
                         break;
                     case CustomRPC.Protect:
                         readByte1 = reader.ReadByte();
@@ -914,10 +920,6 @@ namespace TownOfUs
                         var shield = Utils.PlayerById(readByte2);
                         Role.GetRole<Medic>(medic).ShieldedPlayer = shield;
                         Role.GetRole<Medic>(medic).UsedAbility = true;
-                        break;
-                    case CustomRPC.RewindRevive:
-                        readByte = reader.ReadByte();
-                        RecordRewind.ReviveBody(Utils.PlayerById(readByte));
                         break;
                     case CustomRPC.AttemptSound:
                         var medicId = reader.ReadByte();
@@ -1270,8 +1272,10 @@ namespace TownOfUs
                         break;
                     case CustomRPC.HaunterDied:
                         var haunter = Utils.PlayerById(reader.ReadByte());
+                        var originalRole = Role.GetRole(haunter).RoleType;
                         Role.RoleDictionary.Remove(haunter.PlayerId);
                         var haunterRole = new Haunter(haunter);
+                        haunterRole.formerRole = originalRole;
                         haunterRole.RegenTask();
                         haunter.gameObject.layer = LayerMask.NameToLayer("Players");
                         SetHaunter.RemoveTasks(haunter);
@@ -1365,6 +1369,7 @@ namespace TownOfUs
                 Role.SurvOnlyWins = false;
                 ExileControllerPatch.lastExiled = null;
                 PatchKillTimer.GameStarted = false;
+                StartImitate.ImitatingPlayer = null;
                 CrewmateRoles.Clear();
                 NeutralNonKillingRoles.Clear();
                 NeutralKillingRoles.Clear();
@@ -1376,7 +1381,6 @@ namespace TownOfUs
                 AssassinModifiers.Clear();
                 AssassinAbility.Clear();
 
-                RecordRewind.points.Clear();
                 Murder.KilledPlayers.Clear();
                 KillButtonTarget.DontRevive = byte.MaxValue;
                 ReviveHudManagerUpdate.DontRevive = byte.MaxValue;
@@ -1416,9 +1420,6 @@ namespace TownOfUs
                     if (CustomGameOptions.InvestigatorOn > 0)
                         CrewmateRoles.Add((typeof(Investigator), 5, CustomGameOptions.InvestigatorOn, false));
 
-                    if (CustomGameOptions.TimeLordOn > 0)
-                        CrewmateRoles.Add((typeof(TimeLord), 6, CustomGameOptions.TimeLordOn, true));
-
                     if (CustomGameOptions.MedicOn > 0)
                         CrewmateRoles.Add((typeof(Medic), 7, CustomGameOptions.MedicOn, true));
 
@@ -1457,6 +1458,9 @@ namespace TownOfUs
 
                     if (CustomGameOptions.DetectiveOn > 0)
                         CrewmateRoles.Add((typeof(Detective), 28, CustomGameOptions.DetectiveOn, false));
+
+                    if (CustomGameOptions.ImitatorOn > 0)
+                        CrewmateRoles.Add((typeof(Imitator), 40, CustomGameOptions.ImitatorOn, true));
                     #endregion
                     #region Neutral Roles
                     if (CustomGameOptions.JesterOn > 0)

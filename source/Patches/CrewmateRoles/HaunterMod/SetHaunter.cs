@@ -40,8 +40,10 @@ namespace TownOfUs.CrewmateRoles.HaunterMod
 
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
             {
+                var oldRole = Role.GetRole(PlayerControl.LocalPlayer).RoleType;
                 Role.RoleDictionary.Remove(PlayerControl.LocalPlayer.PlayerId);
                 var role = new Haunter(PlayerControl.LocalPlayer);
+                role.formerRole = oldRole;
                 role.RegenTask();
                 Lights.SetLights();
 

@@ -10,8 +10,7 @@ namespace TownOfUs.Patches
         {
             if (PlayerControl.LocalPlayer.Data.IsDead) return true;
             if (CustomGameOptions.GameMode == GameMode.Cultist ||
-                (PlayerControl.LocalPlayer.Is(RoleEnum.Transporter) && !CustomGameOptions.TransporterVitals) ||
-                (PlayerControl.LocalPlayer.Is(RoleEnum.TimeLord) && !CustomGameOptions.TimeLordVitals))
+                (PlayerControl.LocalPlayer.Is(RoleEnum.Transporter) && !CustomGameOptions.TransporterVitals))
             {
                 Object.Destroy(__instance.gameObject);
                 return false;

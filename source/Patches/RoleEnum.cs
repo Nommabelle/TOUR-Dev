@@ -8,7 +8,6 @@ namespace TownOfUs
         Mayor, // 3
         Swapper, // 4
         Investigator, // 5
-        TimeLord, // 6
         Medic, // 7
         Seer, // 8
         Executioner, // 9
@@ -34,6 +33,7 @@ namespace TownOfUs
         Pestilence,
         Werewolf, // 27
         Detective, // 28
+        Imitator, // 40
 
         Miner, // 29
         Swooper, // 30

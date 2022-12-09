@@ -16,7 +16,6 @@ namespace TownOfUs
     public class KillButtonSprite
     {
         private static Sprite Fix => TownOfUs.EngineerFix;
-        private static Sprite Rewind => TownOfUs.Rewind;
         private static Sprite Medic => TownOfUs.MedicSprite;
         private static Sprite Seer => TownOfUs.SeerSprite;
         private static Sprite Douse => TownOfUs.DouseSprite;
@@ -43,12 +42,7 @@ namespace TownOfUs
             if (!Kill) Kill = __instance.KillButton.graphic.sprite;
 
             var flag = false;
-            if (PlayerControl.LocalPlayer.Is(RoleEnum.TimeLord))
-            {
-                __instance.KillButton.graphic.sprite = Rewind;
-                flag = true;
-            }
-            else if (PlayerControl.LocalPlayer.Is(RoleEnum.Seer) || PlayerControl.LocalPlayer.Is(RoleEnum.CultistSeer))
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Seer) || PlayerControl.LocalPlayer.Is(RoleEnum.CultistSeer))
             {
                 __instance.KillButton.graphic.sprite = Seer;
                 flag = true;

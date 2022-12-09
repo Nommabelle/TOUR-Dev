@@ -52,8 +52,6 @@ namespace TownOfUs
         SetSwaps,
         Protect,
         AttemptSound,
-        Rewind,
-        RewindRevive,
         Morph,
         Mine,
         Swoop,
@@ -84,6 +82,8 @@ namespace TownOfUs
         Revive,
         Convert,
         ChameleonSwoop,
+        Imitate,
+        StartImitate,
 
         BypassKill,
         SetMimic,

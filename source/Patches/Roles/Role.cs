@@ -81,6 +81,11 @@ namespace TownOfUs.Roles
             RoleHistory.Add(KeyValuePair.Create(_player.PlayerId, role));
         }
 
+        public void RemoveFromRoleHistory(RoleEnum role)
+        {
+            RoleHistory.Remove(KeyValuePair.Create(_player.PlayerId, role));
+        }
+
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;

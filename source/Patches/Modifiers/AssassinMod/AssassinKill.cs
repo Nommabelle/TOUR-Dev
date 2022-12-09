@@ -10,6 +10,7 @@ using TownOfUs.CrewmateRoles.VigilanteMod;
 using TownOfUs.ImpostorRoles.BlackmailerMod;
 using TownOfUs.Roles.Modifiers;
 using TownOfUs.Extensions;
+using TownOfUs.CrewmateRoles.ImitatorMod;
 
 namespace TownOfUs.Modifiers.AssassinMod
 {
@@ -91,6 +92,20 @@ namespace TownOfUs.Modifiers.AssassinMod
                     SwapVotes.Swap1 = null;
                     SwapVotes.Swap2 = null;
                     var buttons = Role.GetRole<Swapper>(player).Buttons;
+                    foreach (var button in buttons)
+                    {
+                        button.SetActive(false);
+                        button.GetComponent<PassiveButton>().OnClick = new Button.ButtonClickedEvent();
+                    }
+                }
+
+                if (player.Is(RoleEnum.Imitator))
+                {
+                    var imitator = Role.GetRole<Imitator>(PlayerControl.LocalPlayer);
+                    imitator.ListOfActives.Clear();
+                    imitator.Buttons.Clear();
+                    SetImitate.Imitate = null;
+                    var buttons = Role.GetRole<Imitator>(player).Buttons;
                     foreach (var button in buttons)
                     {
                         button.SetActive(false);

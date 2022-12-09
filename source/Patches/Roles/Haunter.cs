@@ -6,6 +6,7 @@ namespace TownOfUs.Roles
 {
     public class Haunter : Role
     {
+        public RoleEnum formerRole = new RoleEnum();
         public bool Caught;
         public bool Revealed;
         public bool CompletedTasks;

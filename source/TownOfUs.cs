@@ -37,7 +37,6 @@ namespace TownOfUs
         public static Sprite SwapperSwitch;
         public static Sprite SwapperSwitchDisabled;
         public static Sprite Footprint;
-        public static Sprite Rewind;
         public static Sprite NormalKill;
         public static Sprite MedicSprite;
         public static Sprite SeerSprite;
@@ -79,6 +78,8 @@ namespace TownOfUs
         public static Sprite MarkSprite;
         public static Sprite Revive2Sprite;
         public static Sprite WhisperSprite;
+        public static Sprite ImitateSelectSprite;
+        public static Sprite ImitateDeselectSprite;
         public static Sprite HackSprite;
         public static Sprite MimicSprite;
         public static Sprite LockSprite;
@@ -118,7 +119,6 @@ namespace TownOfUs
             SwapperSwitch = CreateSprite("TownOfUs.Resources.SwapperSwitch.png");
             SwapperSwitchDisabled = CreateSprite("TownOfUs.Resources.SwapperSwitchDisabled.png");
             Footprint = CreateSprite("TownOfUs.Resources.Footprint.png");
-            Rewind = CreateSprite("TownOfUs.Resources.Rewind.png");
             NormalKill = CreateSprite("TownOfUs.Resources.NormalKill.png");
             MedicSprite = CreateSprite("TownOfUs.Resources.Medic.png");
             SeerSprite = CreateSprite("TownOfUs.Resources.Seer.png");
@@ -160,6 +160,8 @@ namespace TownOfUs
             MarkSprite = CreateSprite("TownOfUs.Resources.Mark.png");
             Revive2Sprite = CreateSprite("TownOfUs.Resources.Revive2.png");
             WhisperSprite = CreateSprite("TownOfUs.Resources.Whisper.png");
+            ImitateSelectSprite = CreateSprite("TownOfUs.Resources.ImitateSelect.png");
+            ImitateDeselectSprite = CreateSprite("TownOfUs.Resources.ImitateDeselect.png");
             HackSprite = CreateSprite("TownOfUs.Resources.Hack.png");
             MimicSprite = CreateSprite("TownOfUs.Resources.Mimic.png");
             LockSprite = CreateSprite("TownOfUs.Resources.Lock.png");
