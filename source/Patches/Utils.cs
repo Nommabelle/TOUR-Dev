@@ -239,7 +239,7 @@ namespace TownOfUs
         )
         {
             if (float.IsNaN(maxDistance))
-                maxDistance = GameOptionsData.KillDistances[PlayerControl.GameOptions.KillDistance];
+                maxDistance = GameOptionsData.KillDistances[GameOptionsManager.Instance.normalGameHostOptions.KillDistance];
             var player = GetClosestPlayer(
                 PlayerControl.LocalPlayer,
                 targets ?? PlayerControl.AllPlayerControls.ToArray().ToList()
@@ -309,7 +309,7 @@ namespace TownOfUs
                     target.RpcSetScanner(false);
                     var importantTextTask = new GameObject("_Player").AddComponent<ImportantTextTask>();
                     importantTextTask.transform.SetParent(AmongUsClient.Instance.transform, false);
-                    if (!PlayerControl.GameOptions.GhostsDoTasks)
+                    if (!GameOptionsManager.Instance.normalGameHostOptions.GhostsDoTasks)
                     {
                         for (var i = 0; i < target.myTasks.Count; i++)
                         {
@@ -378,16 +378,16 @@ namespace TownOfUs
 
                 if (target.Is(ModifierEnum.Diseased) && killer.Is(ModifierEnum.Underdog))
                 {
-                    var lowerKC = (PlayerControl.GameOptions.KillCooldown - CustomGameOptions.UnderdogKillBonus) * CustomGameOptions.DiseasedMultiplier;
-                    var normalKC = PlayerControl.GameOptions.KillCooldown * CustomGameOptions.DiseasedMultiplier;
-                    var upperKC = (PlayerControl.GameOptions.KillCooldown + CustomGameOptions.UnderdogKillBonus) * CustomGameOptions.DiseasedMultiplier;
+                    var lowerKC = (GameOptionsManager.Instance.normalGameHostOptions.KillCooldown - CustomGameOptions.UnderdogKillBonus) * CustomGameOptions.DiseasedMultiplier;
+                    var normalKC = GameOptionsManager.Instance.normalGameHostOptions.KillCooldown * CustomGameOptions.DiseasedMultiplier;
+                    var upperKC = (GameOptionsManager.Instance.normalGameHostOptions.KillCooldown + CustomGameOptions.UnderdogKillBonus) * CustomGameOptions.DiseasedMultiplier;
                     killer.SetKillTimer(PerformKill.LastImp() ? lowerKC : (PerformKill.IncreasedKC() ? normalKC : upperKC));
                     return;
                 }
 
                 if (target.Is(ModifierEnum.Diseased) && killer.Data.IsImpostor())
                 {
-                    killer.SetKillTimer(PlayerControl.GameOptions.KillCooldown * CustomGameOptions.DiseasedMultiplier);
+                    killer.SetKillTimer(GameOptionsManager.Instance.normalGameHostOptions.KillCooldown * CustomGameOptions.DiseasedMultiplier);
                     return;
                 }
 
@@ -399,16 +399,16 @@ namespace TownOfUs
 
                 if (killer.Is(ModifierEnum.Underdog))
                 {
-                    var lowerKC = PlayerControl.GameOptions.KillCooldown - CustomGameOptions.UnderdogKillBonus;
-                    var normalKC = PlayerControl.GameOptions.KillCooldown;
-                    var upperKC = PlayerControl.GameOptions.KillCooldown + CustomGameOptions.UnderdogKillBonus;
+                    var lowerKC = GameOptionsManager.Instance.normalGameHostOptions.KillCooldown - CustomGameOptions.UnderdogKillBonus;
+                    var normalKC = GameOptionsManager.Instance.normalGameHostOptions.KillCooldown;
+                    var upperKC = GameOptionsManager.Instance.normalGameHostOptions.KillCooldown + CustomGameOptions.UnderdogKillBonus;
                     killer.SetKillTimer(PerformKill.LastImp() ? lowerKC : (PerformKill.IncreasedKC() ? normalKC : upperKC));
                     return;
                 }
 
                 if (killer.Data.IsImpostor())
                 {
-                    killer.SetKillTimer(PlayerControl.GameOptions.KillCooldown);
+                    killer.SetKillTimer(GameOptionsManager.Instance.normalGameHostOptions.KillCooldown);
                     return;
                 }
             }
@@ -570,7 +570,7 @@ namespace TownOfUs
 
             player.Data.Role.TeamType = RoleTeamTypes.Impostor;
             RoleManager.Instance.SetRole(player, RoleTypes.Impostor);
-            player.SetKillTimer(PlayerControl.GameOptions.KillCooldown);
+            player.SetKillTimer(GameOptionsManager.Instance.normalGameHostOptions.KillCooldown);
 
             foreach (var player2 in PlayerControl.AllPlayerControls)
             {

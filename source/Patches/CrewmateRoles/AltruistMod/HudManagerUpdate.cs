@@ -20,8 +20,8 @@ namespace TownOfUs.CrewmateRoles.AltruistMod
             var data = PlayerControl.LocalPlayer.Data;
             var isDead = data.IsDead;
             var truePosition = PlayerControl.LocalPlayer.GetTruePosition();
-            var maxDistance = GameOptionsData.KillDistances[PlayerControl.GameOptions.KillDistance];
-            var flag = (PlayerControl.GameOptions.GhostsDoTasks || !data.IsDead) &&
+            var maxDistance = GameOptionsData.KillDistances[GameOptionsManager.Instance.normalGameHostOptions.KillDistance];
+            var flag = (GameOptionsManager.Instance.normalGameHostOptions.GhostsDoTasks || !data.IsDead) &&
                        (!AmongUsClient.Instance || !AmongUsClient.Instance.IsGameOver) &&
                        PlayerControl.LocalPlayer.CanMove;
             var allocs = Physics2D.OverlapCircleAll(truePosition, maxDistance,

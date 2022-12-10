@@ -22,9 +22,9 @@ namespace TownOfUs.Patches
             var commonTask = __instance.CommonTasks.Count;
             var normalTask = __instance.NormalTasks.Count;
             var longTask = __instance.LongTasks.Count;
-            if (PlayerControl.GameOptions.NumCommonTasks > commonTask) PlayerControl.GameOptions.NumCommonTasks = commonTask;
-            if (PlayerControl.GameOptions.NumShortTasks > normalTask) PlayerControl.GameOptions.NumShortTasks = normalTask;
-            if (PlayerControl.GameOptions.NumLongTasks > longTask) PlayerControl.GameOptions.NumLongTasks = longTask;
+            if (GameOptionsManager.Instance.normalGameHostOptions.NumCommonTasks > commonTask) GameOptionsManager.Instance.normalGameHostOptions.NumCommonTasks = commonTask;
+            if (GameOptionsManager.Instance.normalGameHostOptions.NumShortTasks > normalTask) GameOptionsManager.Instance.normalGameHostOptions.NumShortTasks = normalTask;
+            if (GameOptionsManager.Instance.normalGameHostOptions.NumLongTasks > longTask) GameOptionsManager.Instance.normalGameHostOptions.NumLongTasks = longTask;
             return true;
         }
     }

@@ -23,7 +23,7 @@ namespace TownOfUs
                 (player._object.Is(RoleEnum.Jester) && CustomGameOptions.JesterImpVision) ||
                 (player._object.Is(RoleEnum.Arsonist) && CustomGameOptions.ArsoImpVision))
             {
-                __result = __instance.MaxLightRadius * PlayerControl.GameOptions.ImpostorLightMod;
+                __result = __instance.MaxLightRadius * GameOptionsManager.Instance.normalGameHostOptions.ImpostorLightMod;
                 return false;
             }
             else if (player._object.Is(RoleEnum.Werewolf))
@@ -31,7 +31,7 @@ namespace TownOfUs
                 var role = Role.GetRole<Werewolf>(PlayerControl.LocalPlayer);
                 if (role.Rampaged)
                 {
-                    __result = __instance.MaxLightRadius * PlayerControl.GameOptions.ImpostorLightMod;
+                    __result = __instance.MaxLightRadius * GameOptionsManager.Instance.normalGameHostOptions.ImpostorLightMod;
                     return false;
                 }
             }
@@ -39,7 +39,7 @@ namespace TownOfUs
 
             if (Patches.SubmergedCompatibility.isSubmerged())
             {
-                if (player._object.Is(ModifierEnum.Torch)) __result = Mathf.Lerp(__instance.MinLightRadius, __instance.MaxLightRadius, 1) * PlayerControl.GameOptions.CrewLightMod;
+                if (player._object.Is(ModifierEnum.Torch)) __result = Mathf.Lerp(__instance.MinLightRadius, __instance.MaxLightRadius, 1) * GameOptionsManager.Instance.normalGameHostOptions.CrewLightMod;
                 return false;
             }
 
@@ -48,7 +48,7 @@ namespace TownOfUs
             
             if (player._object.Is(ModifierEnum.Torch)) t = 1;
             __result = Mathf.Lerp(__instance.MinLightRadius, __instance.MaxLightRadius, t) *
-                       PlayerControl.GameOptions.CrewLightMod;
+                       GameOptionsManager.Instance.normalGameHostOptions.CrewLightMod;
             return false;
         }
     }
