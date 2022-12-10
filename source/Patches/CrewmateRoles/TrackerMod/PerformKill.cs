@@ -5,6 +5,7 @@ using TownOfUs.Roles;
 using UnityEngine;
 using TownOfUs.CrewmateRoles.MedicMod;
 using TownOfUs.Extensions;
+using AmongUs.GameOptions;
 
 namespace TownOfUs.CrewmateRoles.TrackerMod
 {
@@ -21,7 +22,7 @@ namespace TownOfUs.CrewmateRoles.TrackerMod
             var flag2 = role.TrackerTimer() == 0f;
             if (!flag2) return false;
             if (!__instance.enabled) return false;
-            var maxDistance = GameOptionsData.KillDistances[PlayerControl.GameOptions.KillDistance];
+            var maxDistance = GameOptionsData.KillDistances[GameOptionsManager.Instance.normalGameHostOptions.KillDistance];
             if (Vector2.Distance(role.ClosestPlayer.GetTruePosition(),
                 PlayerControl.LocalPlayer.GetTruePosition()) > maxDistance) return false;
             if (role.ClosestPlayer == null) return false;

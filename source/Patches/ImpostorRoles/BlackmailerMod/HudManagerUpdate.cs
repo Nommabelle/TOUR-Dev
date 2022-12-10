@@ -3,6 +3,7 @@ using TownOfUs.Roles;
 using UnityEngine;
 using System.Linq;
 using TownOfUs.Extensions;
+using AmongUs.GameOptions;
 
 namespace TownOfUs.ImpostorRoles.BlackmailerMod
 {
@@ -34,7 +35,7 @@ namespace TownOfUs.ImpostorRoles.BlackmailerMod
                 player => role.Blackmailed?.PlayerId != player.PlayerId
             ).ToList();
 
-            Utils.SetTarget(ref role.ClosestPlayer, role.BlackmailButton, GameOptionsData.KillDistances[PlayerControl.GameOptions.KillDistance], notBlackmailed);
+            Utils.SetTarget(ref role.ClosestPlayer, role.BlackmailButton, GameOptionsData.KillDistances[GameOptionsManager.Instance.normalGameHostOptions.KillDistance], notBlackmailed);
 
             role.BlackmailButton.SetCoolDown(role.BlackmailTimer(), CustomGameOptions.BlackmailCd);
 

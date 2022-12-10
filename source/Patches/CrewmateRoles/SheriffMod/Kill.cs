@@ -4,6 +4,7 @@ using Hazel;
 using TownOfUs.CrewmateRoles.MedicMod;
 using TownOfUs.Extensions;
 using TownOfUs.Roles;
+using AmongUs.GameOptions;
 
 namespace TownOfUs.CrewmateRoles.SheriffMod
 {
@@ -23,7 +24,7 @@ namespace TownOfUs.CrewmateRoles.SheriffMod
             if (!flag2) return false;
             if (!__instance.enabled || role.ClosestPlayer == null) return false;
             var distBetweenPlayers = Utils.GetDistBetweenPlayers(PlayerControl.LocalPlayer, role.ClosestPlayer);
-            var flag3 = distBetweenPlayers < GameOptionsData.KillDistances[PlayerControl.GameOptions.KillDistance];
+            var flag3 = distBetweenPlayers < GameOptionsData.KillDistances[GameOptionsManager.Instance.normalGameHostOptions.KillDistance];
             if (!flag3) return false;
 
             var flag4 = role.ClosestPlayer.Data.IsImpostor() ||

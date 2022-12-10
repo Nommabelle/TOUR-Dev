@@ -595,9 +595,12 @@ namespace TownOfUs.Roles
             }
         }
 
-        [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.CheckEndCriteria))]
+        [HarmonyPatch]
         public static class ShipStatus_KMPKPPGPNIH
         {
+            [HarmonyPatch(typeof(LogicGameFlow), nameof(LogicGameFlow.CheckEndCriteria))]
+            [HarmonyPatch(typeof(LogicGameFlowNormal), nameof(LogicGameFlow.CheckEndCriteria))]
+            [HarmonyPatch(typeof(LogicGameFlowHnS), nameof(LogicGameFlow.CheckEndCriteria))]
             public static bool Prefix(ShipStatus __instance)
             {
                 //System.Console.WriteLine("EABBNOODFGL");

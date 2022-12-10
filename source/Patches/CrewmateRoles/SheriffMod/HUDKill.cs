@@ -37,7 +37,7 @@ namespace TownOfUs.CrewmateRoles.SheriffMod
                 {
                     KillButton.gameObject.SetActive(!MeetingHud.Instance);
                  //   KillButton.isActive = !MeetingHud.Instance;
-                    KillButton.SetCoolDown(role.SheriffKillTimer(), PlayerControl.GameOptions.KillCooldown);
+                    KillButton.SetCoolDown(role.SheriffKillTimer(), CustomGameOptions.SheriffKillCd);
 
                     Utils.SetTarget(ref role.ClosestPlayer, KillButton);
                 }

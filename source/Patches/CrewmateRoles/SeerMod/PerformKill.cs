@@ -4,6 +4,7 @@ using Hazel;
 using TownOfUs.Roles;
 using UnityEngine;
 using TownOfUs.CrewmateRoles.MedicMod;
+using AmongUs.GameOptions;
 
 namespace TownOfUs.CrewmateRoles.SeerMod
 {
@@ -20,7 +21,7 @@ namespace TownOfUs.CrewmateRoles.SeerMod
             var flag2 = role.SeerTimer() == 0f;
             if (!flag2) return false;
             if (!__instance.enabled) return false;
-            var maxDistance = GameOptionsData.KillDistances[PlayerControl.GameOptions.KillDistance];
+            var maxDistance = GameOptionsData.KillDistances[GameOptionsManager.Instance.normalGameHostOptions.KillDistance];
             if (Vector2.Distance(role.ClosestPlayer.GetTruePosition(),
                 PlayerControl.LocalPlayer.GetTruePosition()) > maxDistance) return false;
             if (role.ClosestPlayer == null) return false;

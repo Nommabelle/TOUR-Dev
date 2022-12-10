@@ -8,6 +8,7 @@ using TownOfUs.Extensions;
 using UnityEngine;
 using Reactor.Utilities;
 using TownOfUs.Patches;
+using AmongUs.GameOptions;
 
 namespace TownOfUs.ImpostorRoles.TraitorMod
 {
@@ -105,7 +106,7 @@ namespace TownOfUs.ImpostorRoles.TraitorMod
         {
             player.Data.Role.TeamType = RoleTeamTypes.Impostor;
             RoleManager.Instance.SetRole(player, RoleTypes.Impostor);
-            player.SetKillTimer(PlayerControl.GameOptions.KillCooldown);
+            player.SetKillTimer(GameOptionsManager.Instance.normalGameHostOptions.KillCooldown);
 
             System.Console.WriteLine("PROOF I AM IMP VANILLA ROLE: "+player.Data.Role.IsImpostor);
 
@@ -182,7 +183,7 @@ namespace TownOfUs.ImpostorRoles.TraitorMod
         [HarmonyPatch(typeof(Object), nameof(Object.Destroy), new System.Type[] { typeof(GameObject) })]
         public static void Prefix(GameObject obj)
         {
-            if (!SubmergedCompatibility.Loaded || PlayerControl.GameOptions.MapId != 5) return;
+            if (!SubmergedCompatibility.Loaded || GameOptionsManager.Instance.normalGameHostOptions.MapId != 5) return;
             if (obj.name.Contains("ExileCutscene")) ExileControllerPostfix(ExileControllerPatch.lastExiled);
         }
     }

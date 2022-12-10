@@ -625,7 +625,7 @@ namespace TownOfUs
 
         public static void EndGame(GameOverReason reason = GameOverReason.ImpostorByVote, bool showAds = false)
         {
-            ShipStatus.RpcEndGame(reason, showAds);
+            GameManager.Instance.RpcEndGame(reason, showAds);
         }
 
         [HarmonyPatch(typeof(MedScanMinigame), nameof(MedScanMinigame.FixedUpdate))]

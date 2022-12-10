@@ -9,8 +9,8 @@ namespace TownOfUs.Patches
     public class ShipStatusPatch
     {
         [HarmonyPostfix]
-        [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.IsGameOverDueToDeath))]
-        public static void Postfix(ShipStatus __instance, ref bool __result)
+        [HarmonyPatch(typeof(GameManager), nameof(GameManager.ShouldCheckForGameEnd))]
+        public static void Postfix(GameManager __instance, ref bool __result)
         {
             __result = false;
         }
@@ -29,7 +29,7 @@ namespace TownOfUs.Patches
         }
     }
 
-    [HarmonyPatch(typeof(GameOptionsData), nameof(GameOptionsData.GetAdjustedNumImpostors))]
+    [HarmonyPatch(typeof(GameOptionsData), nameof(GameOptionsData.NumImpostors))]
     public class GetAdjustedImposters
     {
         public static bool Prefix(GameOptionsData __instance, ref int __result)

@@ -3,6 +3,7 @@ using HarmonyLib;
 using Hazel;
 using TownOfUs.Roles;
 using TownOfUs.CrewmateRoles.MedicMod;
+using AmongUs.GameOptions;
 
 namespace TownOfUs.NeutralRoles.ArsonistMod
 {
@@ -25,7 +26,7 @@ namespace TownOfUs.NeutralRoles.ArsonistMod
                     if (role.ClosestPlayerIgnite == null) return false;
                     var distBetweenPlayers2 = Utils.GetDistBetweenPlayers(PlayerControl.LocalPlayer, role.ClosestPlayerIgnite);
                     var flag3 = distBetweenPlayers2 <
-                                GameOptionsData.KillDistances[PlayerControl.GameOptions.KillDistance];
+                                GameOptionsData.KillDistances[GameOptionsManager.Instance.normalGameHostOptions.KillDistance];
                     if (!flag3) return false;
                     if (!role.DousedPlayers.Contains(role.ClosestPlayerIgnite.PlayerId)) return false;
 
@@ -74,7 +75,7 @@ namespace TownOfUs.NeutralRoles.ArsonistMod
             if (role.ClosestPlayerDouse == null) return false;
             var distBetweenPlayers = Utils.GetDistBetweenPlayers(PlayerControl.LocalPlayer, role.ClosestPlayerDouse);
             var flag2 = distBetweenPlayers <
-                        GameOptionsData.KillDistances[PlayerControl.GameOptions.KillDistance];
+                        GameOptionsData.KillDistances[GameOptionsManager.Instance.normalGameHostOptions.KillDistance];
             if (!flag2) return false;
             if (role.DousedPlayers.Contains(role.ClosestPlayerDouse.PlayerId)) return false;
             if (role.ClosestPlayerDouse.IsInfected() || role.Player.IsInfected())

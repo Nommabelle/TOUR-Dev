@@ -1189,7 +1189,7 @@ namespace TownOfUs
                             MeetingRoomManager.Instance.target = null;
                             AmongUsClient.Instance.DisconnectHandlers.AddUnique(MeetingRoomManager.Instance
                                 .Cast<IDisconnectHandler>());
-                            if (ShipStatus.Instance.CheckTaskCompletion()) return;
+                            if (GameManager.Instance.CheckTaskCompletion()) return;
 
                             DestroyableSingleton<HudManager>.Instance.OpenMeetingRoom(buttonBarry);
                             buttonBarry.RpcStartMeeting(null);

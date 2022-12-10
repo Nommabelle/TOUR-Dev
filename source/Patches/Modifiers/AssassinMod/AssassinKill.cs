@@ -60,7 +60,7 @@ namespace TownOfUs.Modifiers.AssassinMod
                 player.RpcSetScanner(false);
                 ImportantTextTask importantTextTask = new GameObject("_Player").AddComponent<ImportantTextTask>();
                 importantTextTask.transform.SetParent(AmongUsClient.Instance.transform, false);
-                if (!PlayerControl.GameOptions.GhostsDoTasks)
+                if (!GameOptionsManager.Instance.normalGameHostOptions.GhostsDoTasks)
                 {
                     for (int i = 0;i < player.myTasks.Count;i++)
                     {
@@ -125,7 +125,7 @@ namespace TownOfUs.Modifiers.AssassinMod
                     ShowHideButtons.HideButtons(assassin);
                 }
             }
-            player.Die(DeathReason.Kill);
+            player.Die(DeathReason.Kill, false);
             if (checkLover && player.IsLover() && CustomGameOptions.BothLoversDie)
             {
                 var otherLover = Modifier.GetModifier<Lover>(player).OtherLover.Player;

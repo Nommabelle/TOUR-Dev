@@ -3,6 +3,7 @@ using HarmonyLib;
 using Hazel;
 using TownOfUs.Roles;
 using TownOfUs.CrewmateRoles.MedicMod;
+using AmongUs.GameOptions;
 
 namespace TownOfUs.NeutralRoles.WerewolfMod
 {
@@ -35,7 +36,7 @@ namespace TownOfUs.NeutralRoles.WerewolfMod
             if (role.ClosestPlayer == null) return false;
             var distBetweenPlayers = Utils.GetDistBetweenPlayers(PlayerControl.LocalPlayer, role.ClosestPlayer);
             var flag3 = distBetweenPlayers <
-                        GameOptionsData.KillDistances[PlayerControl.GameOptions.KillDistance];
+                        GameOptionsData.KillDistances[GameOptionsManager.Instance.normalGameHostOptions.KillDistance];
             if (!flag3) return false;
 
             if (role.ClosestPlayer.Is(RoleEnum.Pestilence))

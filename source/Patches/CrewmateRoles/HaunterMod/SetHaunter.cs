@@ -80,14 +80,14 @@ namespace TownOfUs.CrewmateRoles.HaunterMod
         [HarmonyPatch(typeof(Object), nameof(Object.Destroy), new Type[] { typeof(GameObject) })]
         public static void Prefix(GameObject obj)
         {
-            if (!SubmergedCompatibility.Loaded || PlayerControl.GameOptions.MapId != 5) return;
+            if (!SubmergedCompatibility.Loaded || GameOptionsManager.Instance.normalGameHostOptions.MapId != 5) return;
             if (obj.name.Contains("ExileCutscene")) ExileControllerPostfix(ExileControllerPatch.lastExiled);
         }
 
         public static void RemoveTasks(PlayerControl player)
         {
-            var totalTasks = PlayerControl.GameOptions.NumCommonTasks + PlayerControl.GameOptions.NumLongTasks +
-                             PlayerControl.GameOptions.NumShortTasks;
+            var totalTasks = GameOptionsManager.Instance.normalGameHostOptions.NumCommonTasks + GameOptionsManager.Instance.normalGameHostOptions.NumLongTasks +
+                             GameOptionsManager.Instance.normalGameHostOptions.NumShortTasks;
 
 
             foreach (var task in player.myTasks)

@@ -28,7 +28,7 @@ namespace TownOfUs.Roles.Cultist
         {
             var utcNow = DateTime.UtcNow;
             var timeSpan = utcNow - LastInvestigated;
-            var num = PlayerControl.GameOptions.KillCooldown * 1000f;
+            var num = GameOptionsManager.Instance.normalGameHostOptions.KillCooldown * 1000f;
             var flag2 = num - (float) timeSpan.TotalMilliseconds < 0f;
             if (flag2) return 0;
             return (num - (float) timeSpan.TotalMilliseconds) / 1000f;

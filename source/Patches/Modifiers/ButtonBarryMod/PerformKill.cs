@@ -35,12 +35,12 @@ namespace TownOfUs.Modifiers.ButtonBarryMod
                 MeetingRoomManager.Instance.target = null;
                 AmongUsClient.Instance.DisconnectHandlers.AddUnique(
                     MeetingRoomManager.Instance.Cast<IDisconnectHandler>());
-                if (ShipStatus.Instance.CheckTaskCompletion()) return false;
+                if (GameManager.Instance.CheckTaskCompletion()) return false;
                 DestroyableSingleton<HudManager>.Instance.OpenMeetingRoom(PlayerControl.LocalPlayer);
                 PlayerControl.LocalPlayer.RpcStartMeeting(null);
             }
 
-                return false;
+            return false;
         }
     }
 }

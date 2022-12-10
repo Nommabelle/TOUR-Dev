@@ -41,7 +41,7 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
         [HarmonyPatch(typeof(Object), nameof(Object.Destroy), new Type[] { typeof(GameObject) })]
         public static void Prefix(GameObject obj)
         {
-            if (!SubmergedCompatibility.Loaded || PlayerControl.GameOptions.MapId != 5) return;
+            if (!SubmergedCompatibility.Loaded || GameOptionsManager.Instance.normalGameHostOptions.MapId != 5) return;
             if (obj.name.Contains("ExileCutscene")) ExileControllerPostfix(ExileControllerPatch.lastExiled);
         }
 
