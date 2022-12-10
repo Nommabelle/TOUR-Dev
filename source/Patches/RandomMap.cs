@@ -3,6 +3,7 @@ using Hazel;
 using System;
 using TownOfUs.Patches;
 using TownOfUs.CustomOption;
+using AmongUs.GameOptions;
 
 namespace TownOfUs
 {

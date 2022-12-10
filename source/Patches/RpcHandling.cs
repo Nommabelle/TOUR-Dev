@@ -30,6 +30,7 @@ using PerformKillButton = TownOfUs.NeutralRoles.AmnesiacMod.PerformKillButton;
 using Random = UnityEngine.Random; //using Il2CppSystem;
 using TownOfUs.Patches;
 using TownOfUs.CrewmateRoles.ImitatorMod;
+using AmongUs.GameOptions;
 
 namespace TownOfUs
 {

@@ -18,6 +18,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using PerformKill = TownOfUs.Modifiers.UnderdogMod.PerformKill;
 using Random = UnityEngine.Random;
+using AmongUs.GameOptions;
 
 namespace TownOfUs
 {

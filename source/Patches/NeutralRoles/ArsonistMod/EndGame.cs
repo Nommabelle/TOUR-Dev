@@ -4,7 +4,7 @@ using TownOfUs.Roles;
 
 namespace TownOfUs.NeutralRoles.ArsonistMod
 {
-    [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.RpcEndGame))]
+    [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.OnGameEndPatch))]
     public class EndGame
     {
         public static bool Prefix(ShipStatus __instance, [HarmonyArgument(0)] GameOverReason reason)

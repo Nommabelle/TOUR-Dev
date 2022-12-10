@@ -8,6 +8,7 @@ using UnityEngine;
 using System;
 using TownOfUs.Extensions;
 using TownOfUs.CrewmateRoles.ImitatorMod;
+using AmongUs.GameOptions;
 
 namespace TownOfUs.NeutralRoles.AmnesiacMod
 {

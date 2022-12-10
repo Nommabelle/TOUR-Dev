@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using TMPro;
-using TownOfUs.Extensions;
+using AmongUs.GameOptions;
 
 namespace TownOfUs.Roles
 {
@@ -73,7 +73,7 @@ namespace TownOfUs.Roles
             LostByRPC = true;
         }
 
-        protected override void IntroPrefix(IntroCutscene._ShowTeam_d__21 __instance)
+        protected override void IntroPrefix(IntroCutscene._ShowTeam_d__32 __instance)
         {
             var gaTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
             gaTeam.Add(PlayerControl.LocalPlayer);

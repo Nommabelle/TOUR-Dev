@@ -4,6 +4,7 @@ using System.Text;
 using HarmonyLib;
 using Reactor.Utilities.Extensions;
 using TownOfUs.CustomOption;
+using AmongUs.GameOptions;
 
 namespace TownOfUs
 {

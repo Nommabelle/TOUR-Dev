@@ -25,7 +25,7 @@ namespace TownOfUs.Roles
             Scale = 1.4f;
         }
 
-        protected override void IntroPrefix(IntroCutscene._ShowTeam_d__21 __instance)
+        protected override void IntroPrefix(IntroCutscene._ShowTeam_d__32 __instance)
         {
             var exeTeam = new List<PlayerControl>();
             exeTeam.Add(PlayerControl.LocalPlayer);
