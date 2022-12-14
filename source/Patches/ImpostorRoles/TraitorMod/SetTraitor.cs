@@ -9,6 +9,7 @@ using UnityEngine;
 using Reactor.Utilities;
 using TownOfUs.Patches;
 using AmongUs.GameOptions;
+using TownOfUs.CrewmateRoles.ImitatorMod;
 
 namespace TownOfUs.ImpostorRoles.TraitorMod
 {
@@ -87,6 +88,7 @@ namespace TownOfUs.ImpostorRoles.TraitorMod
                     var trapperRole = Role.GetRole<Trapper>(PlayerControl.LocalPlayer);
                     Object.Destroy(trapperRole.UsesText);
                 }
+                if (PlayerControl.LocalPlayer.Is(RoleEnum.Imitator)) StartImitate.ImitatingPlayer = null;
 
                 var oldRole = Role.GetRole(PlayerControl.LocalPlayer).RoleType;
                 Role.RoleDictionary.Remove(PlayerControl.LocalPlayer.PlayerId);

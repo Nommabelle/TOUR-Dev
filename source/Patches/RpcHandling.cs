@@ -903,6 +903,7 @@ namespace TownOfUs
                         break;
                     case CustomRPC.StartImitate:
                         var imitator2 = Utils.PlayerById(reader.ReadByte());
+                        if (imitator2.Is(RoleEnum.Traitor)) break;
                         var imitatorRole2 = Role.GetRole<Imitator>(imitator2);
                         StartImitate.Imitate(imitatorRole2);
                         break;
@@ -1300,6 +1301,7 @@ namespace TownOfUs
                         break;
                     case CustomRPC.TraitorSpawn:
                         var traitor = SetTraitor.WillBeTraitor;
+                        if (traitor.Is(RoleEnum.Imitator)) StartImitate.ImitatingPlayer = null;
                         var oldRole = Role.GetRole(traitor).RoleType;
                         Role.RoleDictionary.Remove(traitor.PlayerId);
                         var traitorRole = new Traitor(traitor);
