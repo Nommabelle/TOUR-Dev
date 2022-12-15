@@ -144,7 +144,6 @@ namespace TownOfUs.CustomOption
         [HarmonyPatch(typeof(GameSettingMenu), nameof(GameSettingMenu.Start))]
         private class OptionsMenuBehaviour_Start
         {
-
             public static void Postfix(GameSettingMenu __instance)
             {
                 var obj = __instance.RolesSettingsHightlight.gameObject.transform.parent.parent;
@@ -200,8 +199,6 @@ namespace TownOfUs.CustomOption
 
                 __instance.RegularGameSettings.GetComponentInChildren<Scrollbar>().parent = __instance.RegularGameSettings.GetComponentInChildren<Scroller>();
                 __instance.RolesSettings.GetComponentInChildren<Scrollbar>().parent = __instance.RolesSettings.GetComponentInChildren<Scroller>();
-
-
             }
 
             private static Sprite GetSettingSprite(int index)

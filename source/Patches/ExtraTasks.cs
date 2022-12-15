@@ -9,7 +9,7 @@ namespace TownOfUs.Patches
     public class ShipStatusPatch
     {
         [HarmonyPostfix]
-        [HarmonyPatch(typeof(GameManager), nameof(GameManager.ShouldCheckForGameEnd))]
+        [HarmonyPatch(typeof(GameManager), nameof(GameManager.CheckEndGameViaTasks))]
         public static void Postfix(GameManager __instance, ref bool __result)
         {
             __result = false;
@@ -29,10 +29,9 @@ namespace TownOfUs.Patches
         }
     }
 
-    [HarmonyPatch(typeof(GameOptionsData), nameof(GameOptionsData.NumImpostors))]
     public class GetAdjustedImposters
     {
-        public static bool Prefix(GameOptionsData __instance, ref int __result)
+        public static bool Prefix(GameOptionsData __instance)
         {
             if (CustomGameOptions.GameMode == GameMode.AllAny && CustomGameOptions.RandomNumberImps)
             {
@@ -90,12 +89,12 @@ namespace TownOfUs.Patches
                     else if (random < 90) impostors = 2;
                     else impostors = 4;
                 }
-                __result = impostors;
+                __instance.NumImpostors = impostors;
                 return false;
             }
             else if (CustomGameOptions.GameMode == GameMode.Cultist)
             {
-                __result = 1;
+                __instance.NumImpostors = 1;
                 return false;
             }
             return true;
