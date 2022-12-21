@@ -21,7 +21,8 @@ namespace TownOfUs
                 return typeof(GameOptionsData).GetMethods(typeof(string), typeof(int));
             }
 
-            private static void Postfix(ref string __result)
+            /// ***THIS CODE IS THE PROBLEM, REMOVING THIS CODE ALLOWS THE SETTINGS TO BE EDITABLE*** ///
+            /*private static void Postfix(ref string __result)
             {
                 var builder = new StringBuilder(AllOptions ? __result : "");
 
@@ -41,7 +42,7 @@ namespace TownOfUs
 
                 __result = builder.ToString();
                 __result = $"<size=1.25>{__result}</size>";
-            }
+            }*/
         }
 
         [HarmonyPatch(typeof(GameOptionsMenu), nameof(GameOptionsMenu.Update))]
