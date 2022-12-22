@@ -1392,6 +1392,8 @@ namespace TownOfUs
                     (byte) CustomRPC.Start, SendOption.Reliable, -1);
                 AmongUsClient.Instance.FinishRpcImmediately(startWriter);
 
+                if (GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.HideNSeek) return;
+
                 if (CustomGameOptions.GameMode == GameMode.Classic || CustomGameOptions.GameMode == GameMode.AllAny)
                 {
                     PhantomOn = Check(CustomGameOptions.PhantomOn);
@@ -1402,7 +1404,7 @@ namespace TownOfUs
                 {
                     PhantomOn = false;
                     HaunterOn = false;
-                    TraitorOn = true;
+                    TraitorOn = false;
                 }
 
                 if (CustomGameOptions.GameMode == GameMode.Classic || CustomGameOptions.GameMode == GameMode.AllAny)

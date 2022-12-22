@@ -352,6 +352,12 @@ namespace TownOfUs
 
                 if (!killer.AmOwner) return;
 
+                if (killer.Data.IsImpostor() && GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.HideNSeek)
+                {
+                    killer.SetKillTimer(GameOptionsManager.Instance.currentHideNSeekGameOptions.KillCooldown);
+                    return;
+                }
+
                 if (target.Is(ModifierEnum.Diseased) && killer.Is(RoleEnum.Werewolf))
                 {
                     var werewolf = Role.GetRole<Werewolf>(killer);

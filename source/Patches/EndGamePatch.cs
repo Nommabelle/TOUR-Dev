@@ -6,6 +6,7 @@ using System.Linq;
 using Reactor.Utilities.Extensions;
 using TownOfUs.Roles;
 using TownOfUs.Extensions;
+using AmongUs.GameOptions;
 
 namespace TownOfUs.Patches {
 
@@ -162,7 +163,10 @@ namespace TownOfUs.Patches {
 
     [HarmonyPatch(typeof(EndGameManager), nameof(EndGameManager.SetEverythingUp))]
     public class EndGameManagerSetUpPatch {
-        public static void Postfix(EndGameManager __instance) {
+        public static void Postfix(EndGameManager __instance)
+        {
+            if (GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.HideNSeek) return;
+
             GameObject bonusText = UnityEngine.Object.Instantiate(__instance.WinText.gameObject);
             bonusText.transform.position = new Vector3(__instance.WinText.transform.position.x, __instance.WinText.transform.position.y - 0.8f, __instance.WinText.transform.position.z);
             bonusText.transform.localScale = new Vector3(0.7f, 0.7f, 1f);

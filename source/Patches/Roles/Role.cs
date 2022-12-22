@@ -12,6 +12,7 @@ using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 using TownOfUs.Extensions;
 using TownOfUs.ImpostorRoles.TraitorMod;
+using AmongUs.GameOptions;
 
 namespace TownOfUs.Roles
 {
@@ -599,11 +600,12 @@ namespace TownOfUs.Roles
         public static class ShipStatus_KMPKPPGPNIH
         {
             [HarmonyPatch(typeof(LogicGameFlow), nameof(LogicGameFlow.CheckEndCriteria))]
-            [HarmonyPatch(typeof(LogicGameFlowNormal), nameof(LogicGameFlow.CheckEndCriteria))]
-            [HarmonyPatch(typeof(LogicGameFlowHnS), nameof(LogicGameFlow.CheckEndCriteria))]
+            [HarmonyPatch(typeof(LogicGameFlowNormal), nameof(LogicGameFlowNormal.CheckEndCriteria))]
+            [HarmonyPatch(typeof(LogicGameFlowHnS), nameof(LogicGameFlowHnS.CheckEndCriteria))]
             public static bool Prefix(ShipStatus __instance)
             {
                 //System.Console.WriteLine("EABBNOODFGL");
+                if (GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.HideNSeek) return true;
                 if (!AmongUsClient.Instance.AmHost) return false;
                 if (__instance.Systems.ContainsKey(SystemTypes.LifeSupp))
                 {

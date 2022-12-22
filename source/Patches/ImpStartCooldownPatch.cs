@@ -2,6 +2,7 @@ using HarmonyLib;
 using System;
 using UnityEngine;
 using TownOfUs.Extensions;
+using AmongUs.GameOptions;
 
 namespace TownOfUs
 {
@@ -16,7 +17,9 @@ namespace TownOfUs
                 && Math.Abs(__instance.killTimer - time) > 2 * Time.deltaTime
                 && GameStarted == false)
             {
-                time = CustomGameOptions.InitialCooldowns - 0.25f;
+                if (GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.HideNSeek)
+                    time = GameOptionsManager.Instance.currentHideNSeekGameOptions.KillCooldown - 0.25f;
+                else time = CustomGameOptions.InitialCooldowns - 0.25f;
                 GameStarted = true;
             }
         }

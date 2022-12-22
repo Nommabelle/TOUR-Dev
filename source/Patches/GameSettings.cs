@@ -13,7 +13,7 @@ namespace TownOfUs
     {
         public static bool AllOptions;
 
-        [HarmonyPatch]
+        [HarmonyPatch(typeof(IGameOptionsExtensions), nameof(IGameOptionsExtensions.ToHudString))]
         private static class GameOptionsDataPatch
         {
             public static IEnumerable<MethodBase> TargetMethods()
@@ -21,9 +21,10 @@ namespace TownOfUs
                 return typeof(GameOptionsData).GetMethods(typeof(string), typeof(int));
             }
 
-            /// ***THIS CODE IS THE PROBLEM, REMOVING THIS CODE ALLOWS THE SETTINGS TO BE EDITABLE*** ///
-            /*private static void Postfix(ref string __result)
+            private static void Postfix(ref string __result)
             {
+                if (GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.HideNSeek) return;
+
                 var builder = new StringBuilder(AllOptions ? __result : "");
 
                 foreach (var option in CustomOption.CustomOption.AllOptions)
@@ -42,7 +43,7 @@ namespace TownOfUs
 
                 __result = builder.ToString();
                 __result = $"<size=1.25>{__result}</size>";
-            }*/
+            }
         }
 
         [HarmonyPatch(typeof(GameOptionsMenu), nameof(GameOptionsMenu.Update))]
