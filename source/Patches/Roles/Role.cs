@@ -104,12 +104,7 @@ namespace TownOfUs.Roles
 
         internal virtual bool Criteria()
         {
-            Player.nameText().transform.localPosition = new Vector3(
-                0f,
-                Player.Data.DefaultOutfit.HatId == "hat_NoHat" ? 1.5f : 2.0f,
-                -0.5f
-            );
-            return (DeadCriteria() || ImpostorCriteria() || LoverCriteria() || SelfCriteria() || RoleCriteria() || GuardianAngelCriteria() || Local);
+            return DeadCriteria() || ImpostorCriteria() || LoverCriteria() || SelfCriteria() || RoleCriteria() || GuardianAngelCriteria() || Local;
         }
 
         internal virtual bool ColorCriteria()
@@ -271,11 +266,7 @@ namespace TownOfUs.Roles
 
             if (!revealRole) return PlayerName;
 
-            Player.nameText().transform.localPosition = new Vector3(
-                0f,
-                Player.CurrentOutfit.HatId == "hat_NoHat" ? 1.5f : 2.0f,
-                -0.5f
-            );
+            Player.nameText().transform.localPosition = new Vector3(0f, 0.15f, -0.5f);
 
             return PlayerName + "\n" + Name;
         }
@@ -778,9 +769,9 @@ namespace TownOfUs.Roles
 
                     var role = GetRole(player);
                     if (role != null)
+                    {
                         if (role.Criteria())
                         {
-
                             bool selfFlag = role.SelfCriteria();
                             bool deadFlag = role.DeadCriteria();
                             bool impostorFlag = role.ImpostorCriteria();
@@ -797,6 +788,7 @@ namespace TownOfUs.Roles
                             if (role.ColorCriteria())
                                 player.nameText().color = role.Color;
                         }
+                    }
 
                     if (player.Data != null && PlayerControl.LocalPlayer.Data.IsImpostor() && player.Data.IsImpostor()) continue;
                 }
