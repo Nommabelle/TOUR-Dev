@@ -598,22 +598,25 @@ namespace TownOfUs.Roles
                 //System.Console.WriteLine("EABBNOODFGL");
                 if (GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.HideNSeek) return true;
                 if (!AmongUsClient.Instance.AmHost) return false;
-                if (__instance.Systems.ContainsKey(SystemTypes.LifeSupp))
+                if (__instance.Systems != null)
                 {
-                    var lifeSuppSystemType = __instance.Systems[SystemTypes.LifeSupp].Cast<LifeSuppSystemType>();
-                    if (lifeSuppSystemType.Countdown < 0f) return true;
-                }
+                    if (__instance.Systems.ContainsKey(SystemTypes.LifeSupp))
+                    {
+                        var lifeSuppSystemType = __instance.Systems[SystemTypes.LifeSupp].Cast<LifeSuppSystemType>();
+                        if (lifeSuppSystemType.Countdown < 0f) return true;
+                    }
 
-                if (__instance.Systems.ContainsKey(SystemTypes.Laboratory))
-                {
-                    var reactorSystemType = __instance.Systems[SystemTypes.Laboratory].Cast<ReactorSystemType>();
-                    if (reactorSystemType.Countdown < 0f) return true;
-                }
+                    if (__instance.Systems.ContainsKey(SystemTypes.Laboratory))
+                    {
+                        var reactorSystemType = __instance.Systems[SystemTypes.Laboratory].Cast<ReactorSystemType>();
+                        if (reactorSystemType.Countdown < 0f) return true;
+                    }
 
-                if (__instance.Systems.ContainsKey(SystemTypes.Reactor))
-                {
-                    var reactorSystemType = __instance.Systems[SystemTypes.Reactor].Cast<ICriticalSabotage>();
-                    if (reactorSystemType.Countdown < 0f) return true;
+                    if (__instance.Systems.ContainsKey(SystemTypes.Reactor))
+                    {
+                        var reactorSystemType = __instance.Systems[SystemTypes.Reactor].Cast<ICriticalSabotage>();
+                        if (reactorSystemType.Countdown < 0f) return true;
+                    }
                 }
 
                 if (GameData.Instance.TotalTasks <= GameData.Instance.CompletedTasks) return true;
