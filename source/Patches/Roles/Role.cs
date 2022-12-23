@@ -718,6 +718,8 @@ namespace TownOfUs.Roles
             {
                 foreach (var player in __instance.playerStates)
                 {
+                    player.ColorBlindName.transform.localPosition = new Vector3(-0.93f, -0.2f, -0.1f);
+
                     var role = GetRole(player);
                     if (role != null && role.Criteria())
                     {
