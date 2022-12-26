@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using HarmonyLib;
+﻿using HarmonyLib;
 using TownOfUs.Roles;
 using UnityEngine;
 
@@ -32,12 +31,11 @@ namespace TownOfUs.NeutralRoles.WerewolfMod
             {
                 role.RampageButton = Object.Instantiate(__instance.KillButton, __instance.KillButton.transform.parent);
                 role.RampageButton.graphic.enabled = true;
-                role.RampageButton.GetComponent<AspectPosition>().DistanceFromEdge = TownOfUs.ButtonPosition;
                 role.RampageButton.gameObject.SetActive(false);
             }
 
-            role.RampageButton.GetComponent<AspectPosition>().Update();
             role.RampageButton.graphic.sprite = RampageSprite;
+            role.RampageButton.transform.localPosition = new Vector3(-2f, 0f, 0f);
 
             role.RampageButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
 

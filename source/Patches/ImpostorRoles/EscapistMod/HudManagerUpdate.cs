@@ -23,11 +23,9 @@ namespace TownOfUs.ImpostorRoles.EscapistMod
                 role.EscapeButton = Object.Instantiate(__instance.KillButton, __instance.KillButton.transform.parent);
                 role.EscapeButton.graphic.enabled = true;
                 role.EscapeButton.graphic.sprite = MarkSprite;
-                role.EscapeButton.GetComponent<AspectPosition>().DistanceFromEdge = TownOfUs.ButtonPosition;
                 role.EscapeButton.gameObject.SetActive(false);
 
             }
-            role.EscapeButton.GetComponent<AspectPosition>().Update();
 
             if (role.EscapeButton.graphic.sprite != MarkSprite && role.EscapeButton.graphic.sprite != EscapeSprite)
                 role.EscapeButton.graphic.sprite = MarkSprite;

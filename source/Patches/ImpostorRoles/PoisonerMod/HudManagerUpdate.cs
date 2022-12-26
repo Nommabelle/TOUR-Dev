@@ -2,7 +2,6 @@
 using TownOfUs.Roles;
 using UnityEngine;
 using System.Linq;
-using Hazel;
 using TownOfUs.Extensions;
 
 namespace TownOfUs.ImpostorRoles.PoisonerMod
@@ -23,7 +22,7 @@ namespace TownOfUs.ImpostorRoles.PoisonerMod
             var role = Role.GetRole<Poisoner>(PlayerControl.LocalPlayer);
             if (role.PoisonButton == null)
             {
-                role.PoisonButton = Object.Instantiate(__instance.KillButton, HudManager.Instance.transform);
+                role.PoisonButton = Object.Instantiate(__instance.KillButton, __instance.KillButton.transform.parent);
                 role.PoisonButton.graphic.enabled = true;
                 role.PoisonButton.graphic.sprite = PoisonSprite;
             }
@@ -31,9 +30,6 @@ namespace TownOfUs.ImpostorRoles.PoisonerMod
             role.PoisonButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
             __instance.KillButton.Hide();
 
-            var position = __instance.KillButton.transform.localPosition;
-            role.PoisonButton.transform.localPosition = new Vector3(position.x,
-                position.y, position.z);
             var notImp = PlayerControl.AllPlayerControls
                     .ToArray()
                     .Where(x => !x.Is(Faction.Impostors))

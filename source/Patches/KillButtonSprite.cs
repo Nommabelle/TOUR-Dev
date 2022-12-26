@@ -1,4 +1,6 @@
 ﻿using HarmonyLib;
+using TownOfUs.Extensions;
+using TownOfUs.Roles;
 using UnityEngine;
 
 namespace TownOfUs
@@ -129,6 +131,19 @@ namespace TownOfUs
                 __instance.KillButton.buttonLabelText.text = "Kill";
                 flag = PlayerControl.LocalPlayer.Is(RoleEnum.Sheriff) || PlayerControl.LocalPlayer.Is(RoleEnum.Pestilence) ||
                     PlayerControl.LocalPlayer.Is(RoleEnum.Werewolf) || PlayerControl.LocalPlayer.Is(RoleEnum.Juggernaut);
+            }
+            if (!PlayerControl.LocalPlayer.Data.IsImpostor())
+            {
+                __instance.KillButton.transform.localPosition = new Vector3(0f, 1f, 0f);
+            }
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Engineer) || PlayerControl.LocalPlayer.Is(RoleEnum.Glitch)
+                 || PlayerControl.LocalPlayer.Is(RoleEnum.Pestilence) || PlayerControl.LocalPlayer.Is(RoleEnum.Juggernaut))
+            {
+                __instance.ImpostorVentButton.transform.localPosition = new Vector3(-2f, 0f, 0f);
+            }
+            else if (PlayerControl.LocalPlayer.Is(RoleEnum.Werewolf))
+            {
+                __instance.ImpostorVentButton.transform.localPosition = new Vector3(-1f, 1f, 0f);
             }
 
             var keyInt = Input.GetKeyInt(KeyCode.Q);

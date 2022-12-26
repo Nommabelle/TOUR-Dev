@@ -21,11 +21,9 @@ namespace TownOfUs.ImpostorRoles.MinerMod
             {
                 role.MineButton = Object.Instantiate(__instance.KillButton, __instance.KillButton.transform.parent);
                 role.MineButton.graphic.enabled = true;
-                role.MineButton.GetComponent<AspectPosition>().DistanceFromEdge = TownOfUs.ButtonPosition;
                 role.MineButton.gameObject.SetActive(false);
             }
 
-            role.MineButton.GetComponent<AspectPosition>().Update();
             role.MineButton.graphic.sprite = MineSprite;
             role.MineButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
 

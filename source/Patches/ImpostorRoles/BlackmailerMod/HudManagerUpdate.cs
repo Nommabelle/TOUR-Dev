@@ -23,11 +23,9 @@ namespace TownOfUs.ImpostorRoles.BlackmailerMod
             {
                 role.BlackmailButton = Object.Instantiate(__instance.KillButton, __instance.KillButton.transform.parent);
                 role.BlackmailButton.graphic.enabled = true;
-                role.BlackmailButton.GetComponent<AspectPosition>().DistanceFromEdge = TownOfUs.ButtonPosition;
                 role.BlackmailButton.gameObject.SetActive(false);
             }
 
-            role.BlackmailButton.GetComponent<AspectPosition>().Update();
             role.BlackmailButton.graphic.sprite = Blackmail;
             role.BlackmailButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
 

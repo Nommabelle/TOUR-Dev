@@ -23,11 +23,9 @@ namespace TownOfUs.ImpostorRoles.MorphlingMod
                 role.MorphButton = Object.Instantiate(__instance.KillButton, __instance.KillButton.transform.parent);
                 role.MorphButton.graphic.enabled = true;
                 role.MorphButton.graphic.sprite = SampleSprite;
-                role.MorphButton.GetComponent<AspectPosition>().DistanceFromEdge = TownOfUs.ButtonPosition;
                 role.MorphButton.gameObject.SetActive(false);
 
             }
-            role.MorphButton.GetComponent<AspectPosition>().Update();
 
             if (role.MorphButton.graphic.sprite != SampleSprite && role.MorphButton.graphic.sprite != MorphSprite)
                 role.MorphButton.graphic.sprite = SampleSprite;

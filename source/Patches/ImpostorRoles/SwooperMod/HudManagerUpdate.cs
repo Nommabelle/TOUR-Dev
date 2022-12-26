@@ -20,10 +20,8 @@ namespace TownOfUs.ImpostorRoles.SwooperMod
             {
                 role.SwoopButton = Object.Instantiate(__instance.KillButton, __instance.KillButton.transform.parent);
                 role.SwoopButton.graphic.enabled = true;
-                role.SwoopButton.GetComponent<AspectPosition>().DistanceFromEdge = TownOfUs.ButtonPosition;
                 role.SwoopButton.gameObject.SetActive(false);
             }
-            role.SwoopButton.GetComponent<AspectPosition>().Update();
             role.SwoopButton.graphic.sprite = SwoopSprite;
             role.SwoopButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
 
