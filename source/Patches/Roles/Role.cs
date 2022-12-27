@@ -398,12 +398,9 @@ namespace TownOfUs.Roles
             {
                 public static void Postfix(IntroCutscene __instance)
                 {
-                    //System.Console.WriteLine("REACHED HERE - CREW");
                     var modifier = Modifier.GetModifier(PlayerControl.LocalPlayer);
                     if (modifier != null)
                         ModifierText = Object.Instantiate(__instance.RoleText, __instance.RoleText.transform.parent, false);
-                    //System.Console.WriteLine("MODIFIER TEXT PLEASE WORK");
-                    //                        Scale = ModifierText.scale;
                     else
                         ModifierText = null;
 
@@ -416,12 +413,9 @@ namespace TownOfUs.Roles
             {
                 public static void Postfix(IntroCutscene __instance)
                 {
-                    //System.Console.WriteLine("REACHED HERE - IMP");
                     var modifier = Modifier.GetModifier(PlayerControl.LocalPlayer);
                     if (modifier != null)
                         ModifierText = Object.Instantiate(__instance.RoleText, __instance.RoleText.transform.parent, false);
-                    //System.Console.WriteLine("MODIFIER TEXT PLEASE WORK");
-                    //                        Scale = ModifierText.scale;
                     else
                         ModifierText = null;
                     Lights.SetLights();
@@ -595,7 +589,6 @@ namespace TownOfUs.Roles
             [HarmonyPatch(typeof(LogicGameFlowHnS), nameof(LogicGameFlowHnS.CheckEndCriteria))]
             public static bool Prefix(ShipStatus __instance)
             {
-                //System.Console.WriteLine("EABBNOODFGL");
                 if (GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.HideNSeek) return true;
                 if (!AmongUsClient.Instance.AmHost) return false;
                 if (__instance.Systems != null)

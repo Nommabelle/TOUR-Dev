@@ -132,7 +132,7 @@ namespace TownOfUs
                 flag = PlayerControl.LocalPlayer.Is(RoleEnum.Sheriff) || PlayerControl.LocalPlayer.Is(RoleEnum.Pestilence) ||
                     PlayerControl.LocalPlayer.Is(RoleEnum.Werewolf) || PlayerControl.LocalPlayer.Is(RoleEnum.Juggernaut);
             }
-            if (!PlayerControl.LocalPlayer.Data.IsImpostor())
+            if (!PlayerControl.LocalPlayer.Is(Faction.Impostors))
             {
                 __instance.KillButton.transform.localPosition = new Vector3(0f, 1f, 0f);
             }
@@ -146,10 +146,33 @@ namespace TownOfUs
                 __instance.ImpostorVentButton.transform.localPosition = new Vector3(-1f, 1f, 0f);
             }
 
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
+            {
+                var haunter = Role.GetRole<Haunter>(PlayerControl.LocalPlayer);
+                if (!haunter.Caught) __instance.AbilityButton.Hide();
+            }
+            else if (PlayerControl.LocalPlayer.Is(RoleEnum.Phantom))
+            {
+                var phantom = Role.GetRole<Phantom>(PlayerControl.LocalPlayer);
+                if (!phantom.Caught) __instance.AbilityButton.Hide();
+            }
+            else if (!Utils.ShowDeadBodies) __instance.AbilityButton.Hide();
+            else if (MeetingHud.Instance) __instance.AbilityButton.Hide();
+            else if (PlayerControl.LocalPlayer.Data.IsDead) __instance.AbilityButton.Show();
+
             var keyInt = Input.GetKeyInt(KeyCode.Q);
             var controller = ConsoleJoystick.player.GetButtonDown(8);
             if (keyInt | controller && __instance.KillButton != null && flag && !PlayerControl.LocalPlayer.Data.IsDead)
                 __instance.KillButton.DoClick();
+        }
+
+        [HarmonyPatch(typeof(AbilityButton), nameof(AbilityButton.Update))]
+        class AbilityButtonUpdatePatch
+        {
+            static void Postfix()
+            {
+                HudManager.Instance.AbilityButton.Hide();
+            }
         }
     }
 }

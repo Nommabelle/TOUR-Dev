@@ -473,6 +473,18 @@ namespace TownOfUs.CustomOption
             }
         }
 
+        [HarmonyPatch(typeof(PlayerPhysics), nameof(PlayerPhysics.CoSpawnPlayer))]
+        private class PlayerJoinPatch
+        {
+            public static void Postfix()
+            {
+                if (PlayerControl.AllPlayerControls.Count < 2 || !AmongUsClient.Instance ||
+                    !PlayerControl.LocalPlayer || !AmongUsClient.Instance.AmHost) return;
+
+                Rpc.SendRpc();
+            }
+        }
+
         [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
         private class HudManagerUpdate
         {
