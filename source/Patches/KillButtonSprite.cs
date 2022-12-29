@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using TownOfUs.Extensions;
 using TownOfUs.Roles;
 using UnityEngine;
 
@@ -146,20 +145,6 @@ namespace TownOfUs
                 __instance.ImpostorVentButton.transform.localPosition = new Vector3(-1f, 1f, 0f);
             }
 
-            if (PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
-            {
-                var haunter = Role.GetRole<Haunter>(PlayerControl.LocalPlayer);
-                if (!haunter.Caught) __instance.AbilityButton.Hide();
-            }
-            else if (PlayerControl.LocalPlayer.Is(RoleEnum.Phantom))
-            {
-                var phantom = Role.GetRole<Phantom>(PlayerControl.LocalPlayer);
-                if (!phantom.Caught) __instance.AbilityButton.Hide();
-            }
-            else if (!Utils.ShowDeadBodies) __instance.AbilityButton.Hide();
-            else if (MeetingHud.Instance) __instance.AbilityButton.Hide();
-            else if (PlayerControl.LocalPlayer.Data.IsDead) __instance.AbilityButton.Show();
-
             var keyInt = Input.GetKeyInt(KeyCode.Q);
             var controller = ConsoleJoystick.player.GetButtonDown(8);
             if (keyInt | controller && __instance.KillButton != null && flag && !PlayerControl.LocalPlayer.Data.IsDead)
@@ -171,7 +156,21 @@ namespace TownOfUs
         {
             static void Postfix()
             {
-                HudManager.Instance.AbilityButton.Hide();
+                if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started) HudManager.Instance.AbilityButton.Hide();
+                if (!PlayerControl.LocalPlayer.Data.IsDead) HudManager.Instance.AbilityButton.Hide();
+                if (PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
+                {
+                    var haunter = Role.GetRole<Haunter>(PlayerControl.LocalPlayer);
+                    if (!haunter.Caught) HudManager.Instance.AbilityButton.Hide();
+                }
+                else if (PlayerControl.LocalPlayer.Is(RoleEnum.Phantom))
+                {
+                    var phantom = Role.GetRole<Phantom>(PlayerControl.LocalPlayer);
+                    if (!phantom.Caught) HudManager.Instance.AbilityButton.Hide();
+                }
+                else if (!Utils.ShowDeadBodies) HudManager.Instance.AbilityButton.Hide();
+                else if (MeetingHud.Instance) HudManager.Instance.AbilityButton.Hide();
+                else HudManager.Instance.AbilityButton.Show();
             }
         }
     }

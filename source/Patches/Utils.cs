@@ -422,7 +422,6 @@ namespace TownOfUs
                 if (target.Is(ModifierEnum.Bait))
                 {
                     BaitReport(killer, target);
-                    return;
                 }
 
                 if (killer.Is(ModifierEnum.Underdog))
