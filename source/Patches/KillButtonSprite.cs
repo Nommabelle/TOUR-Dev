@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using AmongUs.GameOptions;
+using HarmonyLib;
 using TownOfUs.Roles;
 using UnityEngine;
 
@@ -157,6 +158,7 @@ namespace TownOfUs
             static void Postfix()
             {
                 if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started) HudManager.Instance.AbilityButton.Hide();
+                if (GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.HideNSeek) HudManager.Instance.AbilityButton.Show();
                 if (!PlayerControl.LocalPlayer.Data.IsDead) HudManager.Instance.AbilityButton.Hide();
                 if (PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
                 {
