@@ -59,8 +59,8 @@ namespace TownOfUs
         public static Sprite AlertSprite;
         public static Sprite RememberSprite;
         public static Sprite TrackSprite;
-        public static Sprite PoisonSprite;
-        public static Sprite PoisonedSprite;
+        public static Sprite PlantSprite;
+        public static Sprite DetonateSprite;
         public static Sprite TransportSprite;
         public static Sprite MediateSprite;
         public static Sprite VestSprite;
@@ -141,8 +141,8 @@ namespace TownOfUs
             AlertSprite = CreateSprite("TownOfUs.Resources.Alert.png");
             RememberSprite = CreateSprite("TownOfUs.Resources.Remember.png");
             TrackSprite = CreateSprite("TownOfUs.Resources.Track.png");
-            PoisonSprite = CreateSprite("TownOfUs.Resources.Poison.png");
-            PoisonedSprite = CreateSprite("TownOfUs.Resources.Poisoned.png");
+            PlantSprite = CreateSprite("TownOfUs.Resources.Plant.png");
+            DetonateSprite = CreateSprite("TownOfUs.Resources.Detonate.png");
             TransportSprite = CreateSprite("TownOfUs.Resources.Transport.png");
             MediateSprite = CreateSprite("TownOfUs.Resources.Mediate.png");
             VestSprite = CreateSprite("TownOfUs.Resources.Vest.png");

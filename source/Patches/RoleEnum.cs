@@ -41,10 +41,10 @@ namespace TownOfUs
         Janitor, // 32
         Undertaker, // 33
         Grenadier, // 34
-        Poisoner, // 35
         Traitor,
         Blackmailer, // 36
         Escapist, // 37
+        Bomber, // 41
 
         Crewmate, // 38
         Impostor, // 39

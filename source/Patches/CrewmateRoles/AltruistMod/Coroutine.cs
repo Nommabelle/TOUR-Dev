@@ -55,12 +55,6 @@ namespace TownOfUs.CrewmateRoles.AltruistMod
 
             var player = Utils.PlayerById(parentId);
 
-            foreach (var poisoner in Role.GetRoles(RoleEnum.Poisoner))
-            {
-                var poisonerRole = (Poisoner)poisoner;
-                if (poisonerRole.PoisonedPlayer == player) poisonerRole.PoisonedPlayer = poisonerRole.Player;
-            }
-
             player.Revive();
             Murder.KilledPlayers.Remove(
                 Murder.KilledPlayers.FirstOrDefault(x => x.PlayerId == player.PlayerId));

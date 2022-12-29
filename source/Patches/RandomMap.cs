@@ -133,7 +133,6 @@ namespace TownOfUs
             Generate.GrenadeCooldown.Set((float)Generate.GrenadeCooldown.Value + change, false);
             Generate.MorphlingCooldown.Set((float)Generate.MorphlingCooldown.Value + change, false);
             Generate.SwoopCooldown.Set((float)Generate.SwoopCooldown.Value + change, false);
-            Generate.PoisonCooldown.Set((float)Generate.PoisonCooldown.Value + change, false);
             Generate.MineCooldown.Set((float)Generate.MineCooldown.Value + change, false);
             Generate.DragCooldown.Set((float)Generate.DragCooldown.Value + change, false);
             Generate.EscapeCooldown.Set((float)Generate.EscapeCooldown.Value + change, false);

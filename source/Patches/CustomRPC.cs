@@ -74,7 +74,6 @@ namespace TownOfUs
         Vest,
         GAProtect,
         Blackmail,
-        Poison,
         Infect,
         TurnPestilence,
         Disperse,
@@ -84,6 +83,7 @@ namespace TownOfUs
         ChameleonSwoop,
         Imitate,
         StartImitate,
+        Detonate,
 
         BypassKill,
         SetMimic,

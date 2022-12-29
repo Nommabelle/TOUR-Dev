@@ -691,9 +691,6 @@ namespace TownOfUs
                             case 34:
                                 new Grenadier(player);
                                 break;
-                            case 35:
-                                new Poisoner(player);
-                                break;
                             case 36:
                                 new Blackmailer(player);
                                 break;
@@ -708,6 +705,9 @@ namespace TownOfUs
                                 break;
                             case 40:
                                 new Imitator(player);
+                                break;
+                            case 41:
+                                new Bomber(player);
                                 break;
                             case 100:
                                 new Necromancer(player);
@@ -980,12 +980,6 @@ namespace TownOfUs
                         var morphRole = Role.GetRole<Morphling>(morphling);
                         morphRole.TimeRemaining = CustomGameOptions.MorphlingDuration;
                         morphRole.MorphedPlayer = morphTarget;
-                        break;
-                    case CustomRPC.Poison:
-                        var poisoner = Utils.PlayerById(reader.ReadByte());
-                        var poisoned = Utils.PlayerById(reader.ReadByte());
-                        var poisonerRole = Role.GetRole<Poisoner>(poisoner);
-                        poisonerRole.PoisonedPlayer = poisoned;
                         break;
                     case CustomRPC.SetTarget:
                         var exe = Utils.PlayerById(reader.ReadByte());
@@ -1316,6 +1310,11 @@ namespace TownOfUs
                         escapistRole.EscapePoint = escapePos;
                         Escapist.Escape(escapist);
                         break;
+                    case CustomRPC.Detonate:
+                        var playerToDie = Utils.PlayerById(reader.ReadByte());
+                        var bomber = Utils.PlayerById(reader.ReadByte());
+                        Bomber.DetonateKillEnd(playerToDie, bomber);
+                        break;
                     case CustomRPC.Revive:
                         var necromancer = Utils.PlayerById(reader.ReadByte());
                         var necromancerRole = Role.GetRole<Necromancer>(necromancer);
@@ -1520,11 +1519,11 @@ namespace TownOfUs
                     if (CustomGameOptions.GrenadierOn > 0)
                         ImpostorRoles.Add((typeof(Grenadier), 34, CustomGameOptions.GrenadierOn, true));
 
-                    if (CustomGameOptions.PoisonerOn > 0)
-                        ImpostorRoles.Add((typeof(Poisoner), 35, CustomGameOptions.PoisonerOn, true));
-
                     if (CustomGameOptions.EscapistOn > 0)
                         ImpostorRoles.Add((typeof(Escapist), 37, CustomGameOptions.EscapistOn, false));
+
+                    if (CustomGameOptions.BomberOn > 0)
+                        ImpostorRoles.Add((typeof(Bomber), 41, CustomGameOptions.BomberOn, true));
                     #endregion
                     #region Crewmate Modifiers
                     if (Check(CustomGameOptions.TorchOn))

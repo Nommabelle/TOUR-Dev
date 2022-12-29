@@ -50,7 +50,6 @@ namespace TownOfUs
         public static int VeteranOn => (int)Generate.VeteranOn.Get();
         public static int TrackerOn => (int)Generate.TrackerOn.Get();
         public static int TrapperOn => (int)Generate.TrapperOn.Get();
-        public static int PoisonerOn => (int)Generate.PoisonerOn.Get();
         public static int TraitorOn => (int)Generate.TraitorOn.Get();
         public static int TransporterOn => (int)Generate.TransporterOn.Get();
         public static int MediumOn => (int)Generate.MediumOn.Get();
@@ -63,6 +62,7 @@ namespace TownOfUs
         public static int DetectiveOn => (int)Generate.DetectiveOn.Get();
         public static int EscapistOn => (int)Generate.EscapistOn.Get();
         public static int ImitatorOn => (int)Generate.ImitatorOn.Get();
+        public static int BomberOn => (int)Generate.BomberOn.Get();
         public static int TorchOn => (int)Generate.TorchOn.Get();
         public static int DiseasedOn => (int)Generate.DiseasedOn.Get();
         public static int FlashOn => (int)Generate.FlashOn.Get();
@@ -216,9 +216,6 @@ namespace TownOfUs
         public static float TrackCd => Generate.TrackCooldown.Get();
         public static bool ResetOnNewRound => Generate.ResetOnNewRound.Get();
         public static int MaxTracks => (int)Generate.MaxTracks.Get();
-        public static float PoisonCd => Generate.PoisonCooldown.Get();
-        public static float PoisonDuration => Generate.PoisonDuration.Get();
-        public static bool PoisonerVent => Generate.PoisonerVent.Get();
         public static int LatestSpawn => (int)Generate.LatestSpawn.Get();
         public static bool NeutralKillingStopsTraitor => Generate.NeutralKillingStopsTraitor.Get();
         public static float TransportCooldown => Generate.TransportCooldown.Get();
@@ -270,6 +267,10 @@ namespace TownOfUs
         public static float DetectiveFactionDuration => Generate.DetectiveFactionDuration.Get();
         public static float EscapeCd => Generate.EscapeCooldown.Get();
         public static bool EscapistVent => Generate.EscapistVent.Get();
+        public static float DetonateDelay => Generate.DetonateDelay.Get();
+        public static int MaxKillsInDetonation => (int) Generate.MaxKillsInDetonation.Get();
+        public static float DetonateRadius => Generate.DetonateRadius.Get();
+        public static bool BomberVent => Generate.BomberVent.Get();
         public static bool VentImprovements => Generate.VentImprovements.Get();
         public static bool VitalsLab => Generate.VitalsLab.Get();
         public static bool ColdTempDeathValley => Generate.ColdTempDeathValley.Get();

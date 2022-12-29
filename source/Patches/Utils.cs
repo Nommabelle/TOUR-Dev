@@ -196,6 +196,28 @@ namespace TownOfUs
             });
         }
 
+        public static Il2CppSystem.Collections.Generic.List<PlayerControl> GetClosestPlayers(Vector2 truePosition, float radius)
+        {
+            Il2CppSystem.Collections.Generic.List<PlayerControl> playerControlList = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
+            float lightRadius = radius * ShipStatus.Instance.MaxLightRadius;
+            Il2CppSystem.Collections.Generic.List<GameData.PlayerInfo> allPlayers = GameData.Instance.AllPlayers;
+            for (int index = 0; index < allPlayers.Count; ++index)
+            {
+                GameData.PlayerInfo playerInfo = allPlayers[index];
+                if (!playerInfo.Disconnected)
+                {
+                    Vector2 vector2 = new Vector2(playerInfo.Object.GetTruePosition().x - truePosition.x, playerInfo.Object.GetTruePosition().y - truePosition.y);
+                    float magnitude = ((Vector2)vector2).magnitude;
+                    if (magnitude <= lightRadius)
+                    {
+                        PlayerControl playerControl = playerInfo.Object;
+                        playerControlList.Add(playerControl);
+                    }
+                }
+            }
+            return playerControlList;
+        }
+
         public static PlayerControl GetClosestPlayer(PlayerControl refPlayer, List<PlayerControl> AllPlayers)
         {
             var num = double.MaxValue;
@@ -333,7 +355,7 @@ namespace TownOfUs
                     target.myTasks.Insert(0, importantTextTask);
                 }
 
-                if (!killer.Is(RoleEnum.Poisoner) && !killer.Is(RoleEnum.Arsonist))
+                if (!killer.Is(RoleEnum.Arsonist))
                 {
                     killer.MyPhysics.StartCoroutine(killer.KillAnimations.Random().CoPerformKill(killer, target));
                 }
@@ -777,10 +799,6 @@ namespace TownOfUs
             foreach (Morphling role in Role.GetRoles(RoleEnum.Morphling))
             {
                 role.LastMorphed = DateTime.UtcNow;
-            }
-            foreach (Poisoner role in Role.GetRoles(RoleEnum.Poisoner))
-            {
-                role.LastPoisoned = DateTime.UtcNow;
             }
             foreach (Swooper role in Role.GetRoles(RoleEnum.Swooper))
             {

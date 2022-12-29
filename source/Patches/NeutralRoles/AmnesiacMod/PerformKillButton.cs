@@ -118,10 +118,6 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
 
             newRole = Role.GetRole(other);
             newRole.Player = amnesiac;
-            if (!(newRole.Player.Is(RoleEnum.Crewmate) || newRole.Player.Is(RoleEnum.Impostor)))
-            {
-                newRole.RegenTask();
-            }
 
             if (role == RoleEnum.Investigator) Footprint.DestroyAll(Role.GetRole<Investigator>(other));
 
@@ -130,6 +126,9 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
             Role.RoleDictionary.Remove(amnesiac.PlayerId);
             Role.RoleDictionary.Remove(other.PlayerId);
             Role.RoleDictionary.Add(amnesiac.PlayerId, newRole);
+
+            if (!(amnesiac.Is(RoleEnum.Crewmate) || amnesiac.Is(RoleEnum.Impostor))) newRole.RegenTask();
+
             if (other == StartImitate.ImitatingPlayer)
             {
                 StartImitate.ImitatingPlayer = amneRole.Player;
@@ -141,8 +140,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
             {
                 if (rememberNeut == false)
                 {
-                    var crewmate = new Crewmate(other);
-                    /*crewmate.RegenTask();*/
+                    new Crewmate(other);
                 }
                 else
                 {
@@ -163,8 +161,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
             }
             else if (rememberImp == true)
             {
-                var impostor = new Impostor(other);
-                /*impostor.RegenTask();*/
+                new Impostor(other);
                 amnesiac.Data.Role.TeamType = RoleTeamTypes.Impostor;
                 RoleManager.Instance.SetRole(amnesiac, RoleTypes.Impostor);
                 amnesiac.SetKillTimer(GameOptionsManager.Instance.normalGameHostOptions.KillCooldown);
@@ -181,20 +178,6 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                         (byte)CustomRPC.SetAssassin, SendOption.Reliable, -1);
                     writer.Write(amnesiac.PlayerId);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
-                }
-                if (amnesiac.Is(RoleEnum.Poisoner))
-                {
-                    if (PlayerControl.LocalPlayer == amnesiac)
-                    {
-                        var poisonerRole = Role.GetRole<Poisoner>(amnesiac);
-                        poisonerRole.LastPoisoned = DateTime.UtcNow;
-                        DestroyableSingleton<HudManager>.Instance.KillButton.graphic.enabled = false;
-                    }
-                    else if (PlayerControl.LocalPlayer == other)
-                    {
-                        DestroyableSingleton<HudManager>.Instance.KillButton.enabled = true;
-                        DestroyableSingleton<HudManager>.Instance.KillButton.graphic.enabled = true;
-                    }
                 }
             }
 

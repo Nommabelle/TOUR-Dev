@@ -23,10 +23,10 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 - [Altruist](#altruist)
 - [Medic](#medic)
 - [Engineer](#engineer)
+- [Imitator](#imitator)
 - [Mayor](#mayor)
 - [Medium](#medium)
 - [Swapper](#swapper)
-- [Time Lord](#time-lord)
 - [Transporter](#transporter)
 
 **Neutral Roles**
@@ -47,7 +47,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 - [Grenadier](#grenadier)
 - [Morphling](#morphling)
 - [Swooper](#swooper)
-- [Poisoner](#poisoner)
+- [Bomber](#bomber)
 - [Traitor](#traitor)
 - [Blackmailer](#blackmailer)
 - [Janitor](#janitor)
@@ -75,7 +75,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 # Releases
 | Among Us - Version| Mod Version | Link |
 |----------|-------------|-----------------|
-| 2022.10.25s & 2022.10.25e | v3.4.1 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.4.1/ToU.v3.4.1.zip) |
+| 2022.12.14s & 2022.12.14e | v4.0.0 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v4.0.0/ToU.v4.0.0.zip) |
 | 2022.10.25s & 2022.10.25e | v3.4.0 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.4.0/ToU.v3.4.0.zip) |
 | 2022.8.24s & 2022.8.24e & 2022.9.20s & 2022.9.20e | v3.3.2 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.3.2/ToU.v3.3.2.zip) |
 | 2022.8.24s & 2022.8.24e & 2022.9.20s & 2022.9.20e | v3.3.1 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.3.1/ToU.v3.3.1.zip) |
@@ -128,7 +128,13 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 <details>
   <summary> Changelog </summary>
   <details>
-  <summary> v3.4.1 </summary>
+  <summary> v4.0.0 </summary>
+  <ul> <li>Compatibility with the new Among Us version v2022.12.14</li> </ul>
+  <ul> <li>New Role: Imitator</li> </ul>
+  <ul> <li>New Role: Bomber (Poisoner rework)</li> </ul>
+  <ul> <li>Time Lord removed</li> </ul>
+  <ul> <li>New Game Mode: Cultist</li> </ul>
+  <ul> <li>New Game Mode Roles: Necromancer & Whisperer</li> </ul>
   <ul> <li>New Setting: Enable Hidden Roles</li> </ul>
   <ul> <li>New Settings for hidden roles</li> </ul>
   <ul> <li>Bug Fix: Executioner/Guardian Angel turned Amnesiac/Jester/Survivor no longer have red text after changing role</li> </ul>
@@ -138,6 +144,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <ul> <li>Bug Fix: Underdog kill timer is now in sync with normal kill cooldowns</li> </ul>
   <ul> <li>Bug Fix: Underdog now has the correct kill cooldown on game start</li> </ul>
   <ul> <li>Bug Fix: Underdog now can have a kill cooldown below 10secs</li> </ul>
+  <ul> <li>Adjusted the Trapper's trap & Grenadier's flash radius so they scale correctly</li> </ul>
   </details>
   <details>
   <summary> v3.4.0 </summary>
@@ -800,7 +807,7 @@ However, this is done so in a random order, not stating who entered the trap, no
 | Trap Cooldown | The cooldown on the Trapper's trap button | Time | 25s |
 | Traps Removed Each Round | Whether the Trapper's traps are removed after each meeting | Toggle | True |
 | Maximum Number of Traps Per Game | The number of traps they can place in a game | Number | 5 |
-| Trap Size | The size of each trap | Factor | 1x |
+| Trap Size | The size of each trap | Factor | 0.25x |
 | Minimum Number of Roles required to Trigger Trap | The number of players that must enter the trap for it to be triggered | Number | 3 |
 
 -----------------------
@@ -932,6 +939,19 @@ They can use vents to get across the map easily.
 | Engineer Fix Per | Whether the Engineer can fix 1 sabotage per round or per game | Round / Game | Round |
 
 -----------------------
+## Imitator
+### **Team: Crewmates**
+The Imitator is a Crewmate that can mimic dead crewamtes.\
+During meetings the Imitator can select who they are going to imitate the following round from the dead.\
+They can choose to use each dead players as many times as they wish.\
+It should be noted the Imitator can not imitate all crew roles.
+
+### Game Options
+| Name | Description | Type | Default |
+|----------|:-------------:|:------:|:------:|
+| Imitator | The percentage probability of the Imitator appearing | Percentage | 0% |
+
+-----------------------
 ## Mayor
 ### **Team: Crewmates**
 The Mayor is a Crewmate that can vote multiple times.\
@@ -974,24 +994,6 @@ All the votes for the first player will instead be counted towards the second pl
 |----------|:-------------:|:------:|:------:|
 | Swapper | The percentage probability of the Swapper appearing | Percentage | 0% |
 | Swapper Can Button | Whether the Swapper Can Press the Button | Toggle | True |
-
------------------------
-## Time Lord
-### **Team: Crewmates**
-The Time Lord is a Crewmate that can rewind time and reverse the positions of all players.\
-If enabled, any players killed during this time will be revived.\
-Nothing but movements and kills are affected.\
-If enabled, the Time Lord can't use Vitals to make things more balanced.
-
-### Game Options
-| Name | Description | Type | Default |
-|----------|:-------------:|:------:|:------:|
-| Time Lord | The percentage probability of the Time Lord appearing | Percentage | 0% |
-| Revive During Rewind | Whether the Time Lord revives dead players when rewinding | Toggle | False |
-| Rewind Duration | How far the rewind goes back in time | Time | 2s |
-| Rewind Cooldown | The cooldown of the Time Lord's Rewind button | Time | 25s |
-| Max Uses | The amount of times the Rewind ability can be used | Number | 5 |
-| Time Lord can use Vitals | Whether the Time Lord has the ability to use Vitals | Toggle | False |
 
 -----------------------
 ## Transporter
@@ -1253,19 +1255,21 @@ The Swooper is an Impostor that can temporarily turn invisible.
 | Swooper can Vent | Whether the Swooper can Vent | Toggle | False |
 
 -----------------------
-## Poisoner
+## Bomber
 ### **Team: Impostors**
 
-The Poisoner is an Impostor who has to poison another play instead of kill.\
-When they poison a player, the poisoned player dies either upon the start of the next meeting or after a set duration.
+The Bomber is an Impostor who has the ability to plant bombs instead of kill.\
+After a bomb is planted, the bomb will detonate a fixed time period as per settings.\
+Once the bomb detonates it will kill all crewmates (and Impostors!) inside the radius.
 
 ### Game Options
 | Name | Description | Type | Default |
 |----------|:-------------:|:------:|:------:|
-| Poisoner | The percentage probability of the Poisoner appearing | Percentage | 0% |
-| Poison Cooldown | The cooldown of the Poisoner's Poison button | Time | 25s |
-| Poison Kill Delay | The delay of the kill after being poisoned | Time | 5s |
-| Poisoner can Vent | Whether the Poisoner can Vent | Toggle | False |
+| Bomber | The percentage probability of the Bomber appearing | Percentage | 0% |
+| Detonate Delay | The delay of the detonation after bomb has been planted | Time | 5s |
+| Max Kills In Detonation | Maximum number of kills in the detonation | Time | 5s |
+| Detonate Radius | How wide the detonate radius is | Factor | 0.25x |
+| Bomber can Vent | Whether the Bomber can Vent | Toggle | False |
 
 -----------------------
 ## Traitor
@@ -1502,7 +1506,7 @@ When they are the only remaining Impostor, they will have their kill cooldown sh
 # Game Mode Settings
 | Name | Description | Type | Default |
 |----------|:-------------:|:------:|:------:|
-| Game Mode | What game mode the next game will be | Classic / All Any / Killing Only | Classic |
+| Game Mode | What game mode the next game will be | Classic / All Any / Killing Only / Cultist | Classic |
 
 -----------------------
 # Classic Game Mode Settings
@@ -1528,6 +1532,31 @@ When they are the only remaining Impostor, they will have their kill cooldown sh
 | Vigilante Count | How many Vigilantes will spawn | Number | 1 |
 | Add Arsonist | Whether Arsonist will be added to the role list | Toggle | True |
 | Add Plaguebearer | Whether Plaguebearer will be added to the role list | Toggle | True |
+
+-----------------------
+# Cultist Settings
+| Name | Description | Type | Default |
+|----------|:-------------:|:------:|:------:|
+| Mayor | The percentage probability of the Mayor appearing | Percentage | 0% |
+| Seer | The percentage probability of the Seer appearing | Percentage | 0% |
+| Sheriff | The percentage probability of the Sheriff appearing | Percentage | 0% |
+| Survivor | The percentage probability of the Survivor appearing | Percentage | 0% |
+| Number Of Special Roles | How many special roles will spawn | Number | 4 |
+| Max Chameleons | The maximum number of Chameleons that can spawn | Number | 3 |
+| Max Engineers | The maximum number of Engineers that can spawn | Number | 3 |
+| Max Investigators | The maximum number of Investigators that can spawn | Number | 3 |
+| Max Mystics | The maximum number of Mystics that can spawn | Number | 3 |
+| Max Spies | The maximum number of Spies that can spawn | Number | 3 |
+| Max Transporters | The maximum number of Transporters that can spawn | Number | 3 |
+| Max Vigilantes | The maximum number of Vigilantes that can spawn | Number | 3 |
+| Initial Whisper Cooldown | The initial cooldown of the Whisperer's Whisper button | Time | 25s |
+| Increased Cooldown Per Whisper | The amount of time the Whisperer's whisper cooldown increases by per Whisper | Time | 5s |
+| Whisper Radius | How wide the whisper radius is | Factor | 0.25x |
+| Conversion Percentage | The percentage someone is leant towards being converted (addition not chance) | Percentage | 25% |
+| Decreased Conversion Percentage Per Conversion | The percentage decrease of the conversion percentage with each conversion | Percentage | 5% |
+| Initial Revive Cooldown | The initial cooldown of the Necromancer's Revive button | Time | 25s |
+| Increased Cooldown Per Revive | The amount of time the Necromancer's revive cooldown increases by per Revive | Time | 25s |
+| Maximum Number Of Reveals | The maximum number of times the Seer can reveal someone | Number | 5 |
 
 -----------------------
 # Map Settings
