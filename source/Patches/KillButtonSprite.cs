@@ -1,5 +1,6 @@
 ﻿using AmongUs.GameOptions;
 using HarmonyLib;
+using TownOfUs.Extensions;
 using TownOfUs.Roles;
 using UnityEngine;
 
@@ -132,7 +133,8 @@ namespace TownOfUs
                 flag = PlayerControl.LocalPlayer.Is(RoleEnum.Sheriff) || PlayerControl.LocalPlayer.Is(RoleEnum.Pestilence) ||
                     PlayerControl.LocalPlayer.Is(RoleEnum.Werewolf) || PlayerControl.LocalPlayer.Is(RoleEnum.Juggernaut);
             }
-            if (!PlayerControl.LocalPlayer.Is(Faction.Impostors))
+            if (!PlayerControl.LocalPlayer.Is(Faction.Impostors) &&
+                GameOptionsManager.Instance.CurrentGameOptions.GameMode != GameModes.HideNSeek)
             {
                 __instance.KillButton.transform.localPosition = new Vector3(0f, 1f, 0f);
             }
@@ -158,9 +160,13 @@ namespace TownOfUs
             static void Postfix()
             {
                 if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started) HudManager.Instance.AbilityButton.Hide();
-                if (GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.HideNSeek) HudManager.Instance.AbilityButton.Show();
-                if (!PlayerControl.LocalPlayer.Data.IsDead) HudManager.Instance.AbilityButton.Hide();
-                if (PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
+                else if (GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.HideNSeek)
+                {
+                    if (PlayerControl.LocalPlayer.Data.IsImpostor()) HudManager.Instance.AbilityButton.Hide();
+                    else HudManager.Instance.AbilityButton.Show();
+                }
+                else if (!PlayerControl.LocalPlayer.Data.IsDead) HudManager.Instance.AbilityButton.Hide();
+                else if (PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
                 {
                     var haunter = Role.GetRole<Haunter>(PlayerControl.LocalPlayer);
                     if (!haunter.Caught) HudManager.Instance.AbilityButton.Hide();

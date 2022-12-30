@@ -3,6 +3,7 @@ using TownOfUs.CrewmateRoles.MedicMod;
 using Hazel;
 using TownOfUs.Extensions;
 using TownOfUs.Roles;
+using AmongUs.GameOptions;
 
 namespace TownOfUs
 {
@@ -17,6 +18,11 @@ namespace TownOfUs
             var target = __instance.currentTarget;
             if (target == null) return true;
             if (!__instance.isActiveAndEnabled || __instance.isCoolingDown) return true;
+            if (GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.HideNSeek)
+            {
+                if (!target.inVent) Utils.RpcMurderPlayer(PlayerControl.LocalPlayer, target);
+                return false;
+            }
             if (target.Is(RoleEnum.Pestilence))
             {
                 if (PlayerControl.LocalPlayer.IsShielded())

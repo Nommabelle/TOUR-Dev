@@ -9,6 +9,7 @@ using System;
 using TownOfUs.Extensions;
 using TownOfUs.CrewmateRoles.ImitatorMod;
 using AmongUs.GameOptions;
+using TownOfUs.Roles.Modifiers;
 
 namespace TownOfUs.NeutralRoles.AmnesiacMod
 {
@@ -156,6 +157,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                             writer.Write(amnesiac.PlayerId);
                             AmongUsClient.Instance.FinishRpcImmediately(writer);
                         }
+                        if (other.Is(AbilityEnum.Assassin)) Ability.AbilityDictionary.Remove(other.PlayerId);
                     }
                 }
             }
