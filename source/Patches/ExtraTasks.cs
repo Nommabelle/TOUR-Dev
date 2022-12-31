@@ -1,10 +1,12 @@
 using AmongUs.GameOptions;
 using HarmonyLib;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Random = UnityEngine.Random;
+using System.Linq;
+using TownOfUs.Roles;
 
 namespace TownOfUs.Patches
 {
-
     [HarmonyPatch(typeof(ShipStatus))]
     public class ShipStatusPatch
     {
@@ -29,9 +31,10 @@ namespace TownOfUs.Patches
         }
     }
 
+    [HarmonyPatch(typeof(IGameOptionsExtensions), nameof(IGameOptionsExtensions.GetAdjustedNumImpostors))]
     public class GetAdjustedImposters
     {
-        public static bool Prefix(GameOptionsData __instance)
+        public static bool Prefix(IGameOptions __instance, ref int __result)
         {
             if (CustomGameOptions.GameMode == GameMode.AllAny && CustomGameOptions.RandomNumberImps)
             {
@@ -89,12 +92,7 @@ namespace TownOfUs.Patches
                     else if (random < 90) impostors = 2;
                     else impostors = 4;
                 }
-                __instance.NumImpostors = impostors;
-                return false;
-            }
-            else if (CustomGameOptions.GameMode == GameMode.Cultist)
-            {
-                __instance.NumImpostors = 1;
+                __result = impostors;
                 return false;
             }
             return true;

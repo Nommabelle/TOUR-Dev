@@ -987,12 +987,12 @@
     },
     {
       "id": "hats0197",
-      "name": "Friday Night Funkin hat 1",
+      "name": "Friday Night Funkin hat ",
       "artist": "Ophidian"
     },
     {
       "id": "hats0198",
-      "name": "Friday Night Funkin hat 2",
+      "name": "Friday Night Funkin hat 2 ",
       "artist": "Ophidian"
     },
     {
@@ -1042,7 +1042,7 @@
     },
     {
       "id": "hats0208",
-      "name": "Kara hat 2",
+      "name": "Kara hat 2 ",
       "artist": "TheLastShaymin"
     },
     {
@@ -1287,7 +1287,7 @@
     },
     {
       "id": "hats0257",
-      "name": "Side Arms hat 2",
+      "name": "Side Arms hat 2 ",
       "artist": "Ghost_ejims"
     },
     {
@@ -1617,7 +1617,7 @@
     },
     {
       "id": "hats0323",
-      "name": "Side Arms hat 2 alt",
+      "name": "Side Arms hat 2 alt ",
       "artist": "Ghost_ejims"
     },
     {
@@ -2104,6 +2104,36 @@
       "id": "hats0420",
       "name": "Wonton hat ",
       "artist": "Ghost_ejims"
+    },
+    {
+      "id": "hats0421",
+      "name": "Heckinmoo hat ",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0422",
+      "name": "JarrelBun hat ",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0423",
+      "name": "Jessica hat ",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0424",
+      "name": "MartiMoo hat 2 ",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0425",
+      "name": "Oilers hat ",
+      "artist": "Ophidian"
+    },
+    {
+      "id": "hats0426",
+      "name": "TechnicalMoon hat ",
+      "artist": "Ophidian"
     },
     {
       "id": "misc0000",
