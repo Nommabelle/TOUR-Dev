@@ -36,6 +36,7 @@ namespace TownOfUs.Patches
     {
         public static bool Prefix(IGameOptions __instance, ref int __result)
         {
+            if (GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.HideNSeek) return true;
             if (CustomGameOptions.GameMode == GameMode.AllAny && CustomGameOptions.RandomNumberImps)
             {
                 var players = GameData.Instance.PlayerCount;
