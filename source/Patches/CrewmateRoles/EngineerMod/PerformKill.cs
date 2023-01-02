@@ -26,7 +26,7 @@ namespace TownOfUs.CrewmateRoles.EngineerMod
             if (!sabActive | dummyActive) return false;
             role.UsedThisRound = true;
 
-            switch (GameOptionsManager.Instance.normalGameHostOptions.MapId)
+            switch (GameOptionsManager.Instance.currentNormalGameOptions.MapId)
             {
                 case 0:
                 case 3:

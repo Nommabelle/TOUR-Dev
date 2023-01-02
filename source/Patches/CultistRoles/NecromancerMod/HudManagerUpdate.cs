@@ -34,8 +34,8 @@ namespace TownOfUs.CultistRoles.NecromancerMod
             var data = PlayerControl.LocalPlayer.Data;
             var isDead = data.IsDead;
             var truePosition = PlayerControl.LocalPlayer.GetTruePosition();
-            var maxDistance = GameOptionsData.KillDistances[GameOptionsManager.Instance.normalGameHostOptions.KillDistance];
-            var flag = (GameOptionsManager.Instance.normalGameHostOptions.GhostsDoTasks || !data.IsDead) &&
+            var maxDistance = GameOptionsData.KillDistances[GameOptionsManager.Instance.currentNormalGameOptions.KillDistance];
+            var flag = (GameOptionsManager.Instance.currentNormalGameOptions.GhostsDoTasks || !data.IsDead) &&
                        (!AmongUsClient.Instance || !AmongUsClient.Instance.IsGameOver) &&
                        PlayerControl.LocalPlayer.CanMove;
             var allocs = Physics2D.OverlapCircleAll(truePosition, maxDistance,
@@ -85,7 +85,7 @@ namespace TownOfUs.CultistRoles.NecromancerMod
             var player = Utils.PlayerById(role.CurrentTarget.ParentId);
             if (role.CurrentTarget && role.ReviveButton.enabled &&
                 !(player.Is(RoleEnum.Sheriff) || player.Is(RoleEnum.CultistSeer) || player.Is(RoleEnum.Survivor) || player.Is(RoleEnum.Mayor)) &&
-                !(PlayerControl.LocalPlayer.killTimer > GameOptionsManager.Instance.normalGameHostOptions.KillCooldown - 0.5f))
+                !(PlayerControl.LocalPlayer.killTimer > GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown - 0.5f))
             {
                 var component = role.CurrentTarget.bodyRenderer;
                 component.material.SetFloat("_Outline", 1f);

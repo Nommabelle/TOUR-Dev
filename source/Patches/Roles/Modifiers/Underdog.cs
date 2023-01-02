@@ -12,7 +12,7 @@ namespace TownOfUs.Roles.Modifiers
             ModifierType = ModifierEnum.Underdog;
         }
 
-        public float MaxTimer() => PerformKill.LastImp() ? GameOptionsManager.Instance.normalGameHostOptions.KillCooldown - CustomGameOptions.UnderdogKillBonus : (PerformKill.IncreasedKC() ? GameOptionsManager.Instance.normalGameHostOptions.KillCooldown : GameOptionsManager.Instance.normalGameHostOptions.KillCooldown + CustomGameOptions.UnderdogKillBonus);
+        public float MaxTimer() => PerformKill.LastImp() ? GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown - CustomGameOptions.UnderdogKillBonus : (PerformKill.IncreasedKC() ? GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown : GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown + CustomGameOptions.UnderdogKillBonus);
 
         public void SetKillTimer()
         {

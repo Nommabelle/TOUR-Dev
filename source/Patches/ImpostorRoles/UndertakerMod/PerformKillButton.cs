@@ -25,7 +25,7 @@ namespace TownOfUs.ImpostorRoles.UndertakerMod
                 {
                     if (__instance.isCoolingDown) return false;
                     if (!__instance.enabled) return false;
-                    var maxDistance = GameOptionsData.KillDistances[GameOptionsManager.Instance.normalGameHostOptions.KillDistance];
+                    var maxDistance = GameOptionsData.KillDistances[GameOptionsManager.Instance.currentNormalGameOptions.KillDistance];
                     if (Vector2.Distance(role.CurrentTarget.TruePosition,
                         PlayerControl.LocalPlayer.GetTruePosition()) > maxDistance) return false;
                     var playerId = role.CurrentTarget.ParentId;

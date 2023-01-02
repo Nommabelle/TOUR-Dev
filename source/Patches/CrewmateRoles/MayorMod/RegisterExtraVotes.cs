@@ -248,8 +248,8 @@ namespace TownOfUs.CrewmateRoles.MayorMod
                     var mayor = (Mayor)role;
                     var playerInfo = GameData.Instance.GetPlayerById(role.Player.PlayerId);
 
-                    var anonVotesOption = GameOptionsManager.Instance.normalGameHostOptions.AnonymousVotes;
-                    GameOptionsManager.Instance.normalGameHostOptions.AnonymousVotes = true;
+                    var anonVotesOption = GameOptionsManager.Instance.currentNormalGameOptions.AnonymousVotes;
+                    GameOptionsManager.Instance.currentNormalGameOptions.AnonymousVotes = true;
 
                     foreach (var extraVote in mayor.ExtraVotes)
                     {
@@ -277,7 +277,7 @@ namespace TownOfUs.CrewmateRoles.MayorMod
                         }
                     }
 
-                    GameOptionsManager.Instance.normalGameHostOptions.AnonymousVotes = anonVotesOption;
+                    GameOptionsManager.Instance.currentNormalGameOptions.AnonymousVotes = anonVotesOption;
                 }
 
                 return false;

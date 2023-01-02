@@ -14,7 +14,7 @@ namespace TownOfUs
             if (CustomGameOptions.ColourblindComms)
             {
                 if (ShipStatus.Instance != null)
-                    switch (GameOptionsManager.Instance.normalGameHostOptions.MapId)
+                    switch (GameOptionsManager.Instance.currentNormalGameOptions.MapId)
                     {
                         case 0:
                         case 2:

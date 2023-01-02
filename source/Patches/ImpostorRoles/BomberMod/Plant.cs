@@ -30,7 +30,7 @@ namespace TownOfUs.ImpostorRoles.BomberMod
                     role.PlantButton.graphic.sprite = DetonateSprite;
                     role.TimeRemaining = CustomGameOptions.DetonateDelay;
                     role.PlantButton.SetCoolDown(role.TimeRemaining, CustomGameOptions.DetonateDelay);
-                    PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.normalGameHostOptions.KillCooldown + CustomGameOptions.DetonateDelay);
+                    PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown + CustomGameOptions.DetonateDelay);
                     DestroyableSingleton<HudManager>.Instance.KillButton.SetTarget(null);
                     return false;
                 }

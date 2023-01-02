@@ -34,7 +34,7 @@ namespace TownOfUs.Roles
             Player.Visible = true;
             var color = new Color(1f, 1f, 1f, 0f);
 
-            var maxDistance = ShipStatus.Instance.MaxLightRadius * GameOptionsManager.Instance.normalGameHostOptions.CrewLightMod;
+            var maxDistance = ShipStatus.Instance.MaxLightRadius * GameOptionsManager.Instance.currentNormalGameOptions.CrewLightMod;
 
             if (PlayerControl.LocalPlayer == null)
                 return;

@@ -39,7 +39,7 @@ namespace TownOfUs
                 (player._object.Is(RoleEnum.Jester) && CustomGameOptions.JesterImpVision) ||
                 (player._object.Is(RoleEnum.Arsonist) && CustomGameOptions.ArsoImpVision))
             {
-                __result = __instance.MaxLightRadius * GameOptionsManager.Instance.normalGameHostOptions.ImpostorLightMod;
+                __result = __instance.MaxLightRadius * GameOptionsManager.Instance.currentNormalGameOptions.ImpostorLightMod;
                 return false;
             }
             else if (player._object.Is(RoleEnum.Werewolf))
@@ -47,24 +47,22 @@ namespace TownOfUs
                 var role = Role.GetRole<Werewolf>(PlayerControl.LocalPlayer);
                 if (role.Rampaged)
                 {
-                    __result = __instance.MaxLightRadius * GameOptionsManager.Instance.normalGameHostOptions.ImpostorLightMod;
+                    __result = __instance.MaxLightRadius * GameOptionsManager.Instance.currentNormalGameOptions.ImpostorLightMod;
                     return false;
                 }
             }
 
-
             if (Patches.SubmergedCompatibility.isSubmerged())
             {
-                if (player._object.Is(ModifierEnum.Torch)) __result = Mathf.Lerp(__instance.MinLightRadius, __instance.MaxLightRadius, 1) * GameOptionsManager.Instance.normalGameHostOptions.CrewLightMod;
+                if (player._object.Is(ModifierEnum.Torch)) __result = Mathf.Lerp(__instance.MinLightRadius, __instance.MaxLightRadius, 1) * GameOptionsManager.Instance.currentNormalGameOptions.CrewLightMod;
                 return false;
             }
 
-
             var t = switchSystem.Value / 255f;
-            
+
             if (player._object.Is(ModifierEnum.Torch)) t = 1;
             __result = Mathf.Lerp(__instance.MinLightRadius, __instance.MaxLightRadius, t) *
-                       GameOptionsManager.Instance.normalGameHostOptions.CrewLightMod;
+                       GameOptionsManager.Instance.currentNormalGameOptions.CrewLightMod;
             return false;
         }
     }

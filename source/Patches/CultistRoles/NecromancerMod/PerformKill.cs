@@ -32,7 +32,7 @@ namespace TownOfUs.CultistRoles.NecromancerMod
                 var flag2 = role.ReviveButton.isCoolingDown;
                 if (flag2) return false;
                 if (!__instance.enabled) return false;
-                var maxDistance = GameOptionsData.KillDistances[GameOptionsManager.Instance.normalGameHostOptions.KillDistance];
+                var maxDistance = GameOptionsData.KillDistances[GameOptionsManager.Instance.currentNormalGameOptions.KillDistance];
                 if (role == null)
                     return false;
                 if (role.CurrentTarget == null)
@@ -43,7 +43,7 @@ namespace TownOfUs.CultistRoles.NecromancerMod
                 var player = Utils.PlayerById(playerId);
 
                 if (player.Is(RoleEnum.Sheriff) || player.Is(RoleEnum.CultistSeer) || player.Is(RoleEnum.Survivor) || player.Is(RoleEnum.Mayor)) return false;
-                if (PlayerControl.LocalPlayer.killTimer > GameOptionsManager.Instance.normalGameHostOptions.KillCooldown - 0.5f) return false;
+                if (PlayerControl.LocalPlayer.killTimer > GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown - 0.5f) return false;
 
                 role.ReviveCount += 1;
                 role.LastRevived = DateTime.UtcNow;

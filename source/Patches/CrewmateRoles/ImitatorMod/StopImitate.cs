@@ -34,6 +34,14 @@ namespace TownOfUs.CrwemateRoles.ImitatorMod
                     {
                         var transporterRole = Role.GetRole<Transporter>(PlayerControl.LocalPlayer);
                         Object.Destroy(transporterRole.UsesText);
+                        if (transporterRole.TransportList != null)
+                        {
+                            transporterRole.TransportList.Toggle();
+                            transporterRole.TransportList.SetVisible(false);
+                            transporterRole.TransportList = null;
+                            transporterRole.PressedButton = false;
+                            transporterRole.TransportPlayer1 = null;
+                        }
                     }
 
                     if (PlayerControl.LocalPlayer.Is(RoleEnum.Veteran))

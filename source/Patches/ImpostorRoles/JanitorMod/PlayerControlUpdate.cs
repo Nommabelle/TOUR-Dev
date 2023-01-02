@@ -30,8 +30,8 @@ namespace TownOfUs.ImpostorRoles.JanitorMod
             var data = PlayerControl.LocalPlayer.Data;
             var isDead = data.IsDead;
             var truePosition = PlayerControl.LocalPlayer.GetTruePosition();
-            var maxDistance = GameOptionsData.KillDistances[GameOptionsManager.Instance.normalGameHostOptions.KillDistance];
-            var flag = (GameOptionsManager.Instance.normalGameHostOptions.GhostsDoTasks || !data.IsDead) &&
+            var maxDistance = GameOptionsData.KillDistances[GameOptionsManager.Instance.currentNormalGameOptions.KillDistance];
+            var flag = (GameOptionsManager.Instance.currentNormalGameOptions.GhostsDoTasks || !data.IsDead) &&
                        (!AmongUsClient.Instance || !AmongUsClient.Instance.IsGameOver) &&
                        PlayerControl.LocalPlayer.CanMove;
             var allocs = Physics2D.OverlapCircleAll(truePosition, maxDistance,
@@ -54,7 +54,7 @@ namespace TownOfUs.ImpostorRoles.JanitorMod
             }
 
             KillButtonTarget.SetTarget(killButton, closestBody, role);
-            role.CleanButton.SetCoolDown(PlayerControl.LocalPlayer.killTimer, GameOptionsManager.Instance.normalGameHostOptions.KillCooldown);
+            role.CleanButton.SetCoolDown(PlayerControl.LocalPlayer.killTimer, GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown);
         }
     }
 }

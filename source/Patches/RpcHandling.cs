@@ -1347,11 +1347,11 @@ namespace TownOfUs
                         break;
                     case CustomRPC.SetSettings:
                         readByte = reader.ReadByte();
-                        GameOptionsManager.Instance.normalGameHostOptions.MapId = readByte == byte.MaxValue ? (byte)0 : readByte;
-                        GameOptionsManager.Instance.normalGameHostOptions.RoleOptions.SetRoleRate(RoleTypes.Scientist, 0, 0);
-                        GameOptionsManager.Instance.normalGameHostOptions.RoleOptions.SetRoleRate(RoleTypes.Engineer, 0, 0);
-                        GameOptionsManager.Instance.normalGameHostOptions.RoleOptions.SetRoleRate(RoleTypes.GuardianAngel, 0, 0);
-                        GameOptionsManager.Instance.normalGameHostOptions.RoleOptions.SetRoleRate(RoleTypes.Shapeshifter, 0, 0);
+                        GameOptionsManager.Instance.currentNormalGameOptions.MapId = readByte == byte.MaxValue ? (byte)0 : readByte;
+                        GameOptionsManager.Instance.currentNormalGameOptions.RoleOptions.SetRoleRate(RoleTypes.Scientist, 0, 0);
+                        GameOptionsManager.Instance.currentNormalGameOptions.RoleOptions.SetRoleRate(RoleTypes.Engineer, 0, 0);
+                        GameOptionsManager.Instance.currentNormalGameOptions.RoleOptions.SetRoleRate(RoleTypes.GuardianAngel, 0, 0);
+                        GameOptionsManager.Instance.currentNormalGameOptions.RoleOptions.SetRoleRate(RoleTypes.Shapeshifter, 0, 0);
                         if (CustomGameOptions.AutoAdjustSettings) RandomMap.AdjustSettings(readByte);
                         break;
                 }
@@ -1564,7 +1564,7 @@ namespace TownOfUs
                         GlobalModifiers.Add((typeof(Radar), 10, CustomGameOptions.RadarOn));
                     #endregion
                     #region Impostor Modifiers
-                    if (Check(CustomGameOptions.DisperserOn) && GameOptionsManager.Instance.normalGameHostOptions.MapId != 4 && GameOptionsManager.Instance.normalGameHostOptions.MapId != 5)
+                    if (Check(CustomGameOptions.DisperserOn) && GameOptionsManager.Instance.currentNormalGameOptions.MapId != 4 && GameOptionsManager.Instance.currentNormalGameOptions.MapId != 5)
                         ImpostorModifiers.Add((typeof(Disperser), 11, CustomGameOptions.DisperserOn));
 
                     if (Check(CustomGameOptions.DoubleShotOn))

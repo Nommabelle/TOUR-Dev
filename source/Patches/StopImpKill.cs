@@ -34,7 +34,7 @@ namespace TownOfUs
                     writer.Write(PlayerControl.LocalPlayer.PlayerId);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
 
-                    if (CustomGameOptions.ShieldBreaks) PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.normalGameHostOptions.KillCooldown);
+                    if (CustomGameOptions.ShieldBreaks) PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown);
                     else PlayerControl.LocalPlayer.SetKillTimer(0.01f);
 
                     StopKill.BreakShield(medic, PlayerControl.LocalPlayer.PlayerId,
@@ -63,7 +63,7 @@ namespace TownOfUs
                     writer.Write(target.PlayerId);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
 
-                    if (CustomGameOptions.ShieldBreaks) PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.normalGameHostOptions.KillCooldown);
+                    if (CustomGameOptions.ShieldBreaks) PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown);
                     else PlayerControl.LocalPlayer.SetKillTimer(0.01f);
 
                     StopKill.BreakShield(medic, target.PlayerId,
@@ -82,14 +82,14 @@ namespace TownOfUs
                     writer.Write(PlayerControl.LocalPlayer.PlayerId);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
 
-                    if (CustomGameOptions.ShieldBreaks) PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.normalGameHostOptions.KillCooldown);
+                    if (CustomGameOptions.ShieldBreaks) PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown);
                     else PlayerControl.LocalPlayer.SetKillTimer(0.01f);
 
                     StopKill.BreakShield(medic, PlayerControl.LocalPlayer.PlayerId, CustomGameOptions.ShieldBreaks);
                     if (CustomGameOptions.KilledOnAlert && !target.IsProtected())
                     {
                         Utils.RpcMurderPlayer(PlayerControl.LocalPlayer, target);
-                        PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.normalGameHostOptions.KillCooldown);
+                        PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown);
                     }
                 }
                 else
@@ -100,7 +100,7 @@ namespace TownOfUs
                     }
                     if (CustomGameOptions.KilledOnAlert && !target.IsProtected())
                     {
-                        PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.normalGameHostOptions.KillCooldown);
+                        PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown);
                         Utils.RpcMurderPlayer(PlayerControl.LocalPlayer, target);
                     }
                     else
@@ -119,7 +119,7 @@ namespace TownOfUs
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
 
                 System.Console.WriteLine(CustomGameOptions.ShieldBreaks + "- shield break");
-                if (CustomGameOptions.ShieldBreaks) PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.normalGameHostOptions.KillCooldown);
+                if (CustomGameOptions.ShieldBreaks) PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown);
                 else PlayerControl.LocalPlayer.SetKillTimer(0.01f);
                 StopKill.BreakShield(target.GetMedic().Player.PlayerId, target.PlayerId, CustomGameOptions.ShieldBreaks);
                 return false;
@@ -134,7 +134,7 @@ namespace TownOfUs
                 PlayerControl.LocalPlayer.SetKillTimer(CustomGameOptions.ProtectKCReset + 0.01f);
                 return false;
             }
-            PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.normalGameHostOptions.KillCooldown);
+            PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown);
             Utils.RpcMurderPlayer(PlayerControl.LocalPlayer, target);
             return false;
         }
