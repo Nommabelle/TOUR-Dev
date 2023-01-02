@@ -62,12 +62,10 @@ namespace TownOfUs.CrewmateRoles.SeerMod
             var seer = Role.GetRole<Seer>(PlayerControl.LocalPlayer);
             if (MeetingHud.Instance != null) UpdateMeeting(MeetingHud.Instance, seer);
 
-
             foreach (var player in PlayerControl.AllPlayerControls)
             {
                 if (!seer.Investigated.Contains(player.PlayerId)) continue;
                 var roleType = Utils.GetRole(player);
-                player.nameText().transform.localPosition = new Vector3(0f, 2f, -0.5f);
                 switch (roleType)
                 {
                     default:
