@@ -28,7 +28,7 @@ namespace TownOfUs.Roles
             __instance.teamToShow = jestTeam;
         }
 
-        internal override bool EABBNOODFGL(ShipStatus __instance)
+        internal override bool EABBNOODFGL(LogicGameFlowNormal __instance)
         {
             if (!VotedOut || !Player.Data.IsDead && !Player.Data.Disconnected) return true;
             Utils.EndGame();

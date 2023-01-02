@@ -52,7 +52,7 @@ namespace TownOfUs.Roles.Modifiers
             return Equals(Player, other.Player) && ModifierType == other.ModifierType;
         }
 
-        internal virtual bool EABBNOODFGL(ShipStatus __instance)
+        internal virtual bool EABBNOODFGL(LogicGameFlowNormal __instance)
         {
             return true;
         }

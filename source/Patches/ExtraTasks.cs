@@ -1,9 +1,6 @@
 using AmongUs.GameOptions;
 using HarmonyLib;
-using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Random = UnityEngine.Random;
-using System.Linq;
-using TownOfUs.Roles;
 
 namespace TownOfUs.Patches
 {
@@ -11,8 +8,8 @@ namespace TownOfUs.Patches
     public class ShipStatusPatch
     {
         [HarmonyPostfix]
-        [HarmonyPatch(typeof(GameManager), nameof(GameManager.CheckEndGameViaTasks))]
-        public static void Postfix(GameManager __instance, ref bool __result)
+        [HarmonyPatch(typeof(LogicGameFlowNormal), nameof(LogicGameFlowNormal.IsGameOverDueToDeath))]
+        public static void Postfix(LogicGameFlowNormal __instance, ref bool __result)
         {
             __result = false;
         }

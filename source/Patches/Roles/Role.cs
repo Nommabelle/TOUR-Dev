@@ -163,7 +163,7 @@ namespace TownOfUs.Roles
             SurvOnlyWins = true;
         }
 
-        internal static bool NobodyEndCriteria(ShipStatus __instance)
+        internal static bool NobodyEndCriteria(LogicGameFlowNormal __instance)
         {
             bool CheckNoImpsNoCrews()
             {
@@ -222,7 +222,7 @@ namespace TownOfUs.Roles
             return true;
         }
 
-        internal virtual bool EABBNOODFGL(ShipStatus __instance)
+        internal virtual bool EABBNOODFGL(LogicGameFlowNormal __instance)
         {
             return true;
         }
@@ -584,30 +584,28 @@ namespace TownOfUs.Roles
         [HarmonyPatch]
         public static class ShipStatus_KMPKPPGPNIH
         {
-            [HarmonyPatch(typeof(LogicGameFlow), nameof(LogicGameFlow.CheckEndCriteria))]
             [HarmonyPatch(typeof(LogicGameFlowNormal), nameof(LogicGameFlowNormal.CheckEndCriteria))]
-            [HarmonyPatch(typeof(LogicGameFlowHnS), nameof(LogicGameFlowHnS.CheckEndCriteria))]
-            public static bool Prefix(ShipStatus __instance)
+            public static bool Prefix(LogicGameFlowNormal __instance)
             {
                 if (GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.HideNSeek) return true;
                 if (!AmongUsClient.Instance.AmHost) return false;
-                if (__instance.Systems != null)
+                if (ShipStatus.Instance.Systems != null)
                 {
-                    if (__instance.Systems.ContainsKey(SystemTypes.LifeSupp))
+                    if (ShipStatus.Instance.Systems.ContainsKey(SystemTypes.LifeSupp))
                     {
-                        var lifeSuppSystemType = __instance.Systems[SystemTypes.LifeSupp].Cast<LifeSuppSystemType>();
+                        var lifeSuppSystemType = ShipStatus.Instance.Systems[SystemTypes.LifeSupp].Cast<LifeSuppSystemType>();
                         if (lifeSuppSystemType.Countdown < 0f) return true;
                     }
 
-                    if (__instance.Systems.ContainsKey(SystemTypes.Laboratory))
+                    if (ShipStatus.Instance.Systems.ContainsKey(SystemTypes.Laboratory))
                     {
-                        var reactorSystemType = __instance.Systems[SystemTypes.Laboratory].Cast<ReactorSystemType>();
+                        var reactorSystemType = ShipStatus.Instance.Systems[SystemTypes.Laboratory].Cast<ReactorSystemType>();
                         if (reactorSystemType.Countdown < 0f) return true;
                     }
 
-                    if (__instance.Systems.ContainsKey(SystemTypes.Reactor))
+                    if (ShipStatus.Instance.Systems.ContainsKey(SystemTypes.Reactor))
                     {
-                        var reactorSystemType = __instance.Systems[SystemTypes.Reactor].Cast<ICriticalSabotage>();
+                        var reactorSystemType = ShipStatus.Instance.Systems[SystemTypes.Reactor].Cast<ICriticalSabotage>();
                         if (reactorSystemType.Countdown < 0f) return true;
                     }
                 }
