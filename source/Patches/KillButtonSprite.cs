@@ -159,26 +159,28 @@ namespace TownOfUs
         {
             static void Postfix()
             {
-                if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started) HudManager.Instance.AbilityButton.Hide();
+                if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started)
+                {
+                    HudManager.Instance.AbilityButton.gameObject.SetActive(false);
+                    return;
+                }
                 else if (GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.HideNSeek)
                 {
-                    if (PlayerControl.LocalPlayer.Data.IsImpostor()) HudManager.Instance.AbilityButton.Hide();
-                    else HudManager.Instance.AbilityButton.Show();
+                    HudManager.Instance.AbilityButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsImpostor());
+                    return;
                 }
-                else if (!PlayerControl.LocalPlayer.Data.IsDead) HudManager.Instance.AbilityButton.Hide();
-                else if (PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
+                var ghostRole = false;
+                if (PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
                 {
                     var haunter = Role.GetRole<Haunter>(PlayerControl.LocalPlayer);
-                    if (!haunter.Caught) HudManager.Instance.AbilityButton.Hide();
+                    if (!haunter.Caught) ghostRole = true;
                 }
                 else if (PlayerControl.LocalPlayer.Is(RoleEnum.Phantom))
                 {
                     var phantom = Role.GetRole<Phantom>(PlayerControl.LocalPlayer);
-                    if (!phantom.Caught) HudManager.Instance.AbilityButton.Hide();
+                    if (!phantom.Caught) ghostRole = true;
                 }
-                else if (!Utils.ShowDeadBodies) HudManager.Instance.AbilityButton.Hide();
-                else if (MeetingHud.Instance) HudManager.Instance.AbilityButton.Hide();
-                else HudManager.Instance.AbilityButton.Show();
+                HudManager.Instance.AbilityButton.gameObject.SetActive(!ghostRole && Utils.ShowDeadBodies && !MeetingHud.Instance);
             }
         }
     }
