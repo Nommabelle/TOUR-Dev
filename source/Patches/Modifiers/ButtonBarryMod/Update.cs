@@ -45,10 +45,20 @@ namespace TownOfUs.Modifiers.ButtonBarryMod
             role.ButtonButton.SetCoolDown(0f, 1f);
             var renderer = role.ButtonButton.graphic;
 
-            var position1 = __instance.UseButton.transform.position;
-            role.ButtonButton.transform.position = new Vector3(
-                Camera.main.ScreenToWorldPoint(new Vector3(0, 0)).x + 0.75f, position1.y,
-                position1.z);
+            if (__instance.UseButton != null)
+            {
+                var position1 = __instance.UseButton.transform.position;
+                role.ButtonButton.transform.position = new Vector3(
+                    Camera.main.ScreenToWorldPoint(new Vector3(0, 0)).x + 0.75f, position1.y,
+                    position1.z);
+            }
+            else
+            {
+                var position1 = __instance.PetButton.transform.position;
+                role.ButtonButton.transform.position = new Vector3(
+                    Camera.main.ScreenToWorldPoint(new Vector3(0, 0)).x + 0.75f, position1.y,
+                    position1.z);
+            }
 
             if (!role.ButtonUsed && PlayerControl.LocalPlayer.RemainingEmergencies > 0)
             {

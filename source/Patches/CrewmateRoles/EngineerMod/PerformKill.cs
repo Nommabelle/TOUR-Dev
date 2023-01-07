@@ -20,6 +20,7 @@ namespace TownOfUs.CrewmateRoles.EngineerMod
             var role = Role.GetRole<Engineer>(PlayerControl.LocalPlayer);
             if (role.UsedThisRound) return false;
             var system = ShipStatus.Instance.Systems[SystemTypes.Sabotage].Cast<SabotageSystemType>();
+            if (system == null) return false;
             var specials = system.specials.ToArray();
             var dummyActive = system.dummy.IsActive;
             var sabActive = specials.Any(s => s.IsActive);

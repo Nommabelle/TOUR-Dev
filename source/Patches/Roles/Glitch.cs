@@ -274,7 +274,7 @@ namespace TownOfUs.Roles
                             HudManager.Instance.KillButton.graphic.material.SetFloat("_Desat", 1f);
                         }
 
-                        if (HudManager.Instance.UseButton != null)
+                        if (HudManager.Instance.UseButton != null || HudManager.Instance.PetButton != null)
                         {
                             if (lockImg[1] == null)
                             {
@@ -282,14 +282,26 @@ namespace TownOfUs.Roles
                                 var lockImgR = lockImg[1].AddComponent<SpriteRenderer>();
                                 lockImgR.sprite = LockSprite;
                             }
-
-                            lockImg[1].transform.position =
+                            if (HudManager.Instance.UseButton != null)
+                            {
+                                lockImg[1].transform.position =
                                 new Vector3(HudManager.Instance.UseButton.transform.position.x,
                                     HudManager.Instance.UseButton.transform.position.y, -50f);
-                            lockImg[1].layer = 5;
-                            HudManager.Instance.UseButton.enabled = false;
-                            HudManager.Instance.UseButton.graphic.color = Palette.DisabledClear;
-                            HudManager.Instance.UseButton.graphic.material.SetFloat("_Desat", 1f);
+                                lockImg[1].layer = 5;
+                                HudManager.Instance.UseButton.enabled = false;
+                                HudManager.Instance.UseButton.graphic.color = Palette.DisabledClear;
+                                HudManager.Instance.UseButton.graphic.material.SetFloat("_Desat", 1f);
+                            }
+                            else
+                            {
+                                lockImg[1].transform.position = 
+                                    new Vector3(HudManager.Instance.PetButton.transform.position.x,
+                                    HudManager.Instance.PetButton.transform.position.y, -50f);
+                                lockImg[1].layer = 5;
+                                HudManager.Instance.PetButton.enabled = false;
+                                HudManager.Instance.PetButton.graphic.color = Palette.DisabledClear;
+                                HudManager.Instance.PetButton.graphic.material.SetFloat("_Desat", 1f);
+                            }
                         }
 
                         if (HudManager.Instance.ReportButton != null)
@@ -355,11 +367,20 @@ namespace TownOfUs.Roles
 
                         if (PlayerControl.LocalPlayer == hackPlayer)
                         {
-                            HudManager.Instance.UseButton.enabled = true;
+                            if (HudManager.Instance.UseButton != null)
+                            {
+                                HudManager.Instance.UseButton.enabled = true;
+                                HudManager.Instance.UseButton.graphic.color = Palette.EnabledColor;
+                                HudManager.Instance.UseButton.graphic.material.SetFloat("_Desat", 0f);
+                            }
+                            else
+                            {
+                                HudManager.Instance.PetButton.enabled = true;
+                                HudManager.Instance.PetButton.graphic.color = Palette.EnabledColor;
+                                HudManager.Instance.PetButton.graphic.material.SetFloat("_Desat", 0f);
+                            }
                             HudManager.Instance.ReportButton.enabled = true;
                             HudManager.Instance.KillButton.enabled = true;
-                            HudManager.Instance.UseButton.graphic.color = Palette.EnabledColor;
-                            HudManager.Instance.UseButton.graphic.material.SetFloat("_Desat", 0f);
                             var role = GetRole(PlayerControl.LocalPlayer);
                             if (role != null)
                                 if (role.ExtraButtons.Count > 0)
@@ -443,8 +464,8 @@ namespace TownOfUs.Roles
                 if (!__gInstance.Player.Data.IsImpostor() && Input.GetKeyDown(KeyCode.Q))
                     __instance.KillButton.DoClick();
 
-                __instance.KillButton.gameObject.SetActive(__instance.UseButton.isActiveAndEnabled && !MeetingHud.Instance &&
-                                                           !__gInstance.Player.Data.IsDead);
+                __instance.KillButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                    && !MeetingHud.Instance && !__gInstance.Player.Data.IsDead);
                 __instance.KillButton.SetCoolDown(
                     CustomGameOptions.GlitchKillCooldown -
                     (float)(DateTime.UtcNow - __gInstance.LastKill).TotalSeconds,
@@ -607,8 +628,8 @@ namespace TownOfUs.Roles
 
                 __gInstance.HackButton.graphic.sprite = HackSprite;
 
-                __gInstance.HackButton.gameObject.SetActive(__instance.UseButton.isActiveAndEnabled && !MeetingHud.Instance &&
-                                                            !__gInstance.Player.Data.IsDead);
+                __gInstance.HackButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                    && !MeetingHud.Instance && !__gInstance.Player.Data.IsDead);
                 __gInstance.HackButton.transform.position = new Vector3(__gInstance.MimicButton.transform.position.x,
                     __gInstance.HackButton.transform.position.y, __instance.ReportButton.transform.position.z);
                 __gInstance.HackButton.SetCoolDown(
@@ -683,11 +704,20 @@ namespace TownOfUs.Roles
 
                 __gInstance.MimicButton.graphic.sprite = MimicSprite;
 
-                __gInstance.MimicButton.gameObject.SetActive(__instance.UseButton.isActiveAndEnabled && !MeetingHud.Instance &&
-                                                             !__gInstance.Player.Data.IsDead);
-                __gInstance.MimicButton.transform.position = new Vector3(
-                    Camera.main.ScreenToWorldPoint(new Vector3(0, 0)).x + 0.75f,
-                    __instance.UseButton.transform.position.y, __instance.UseButton.transform.position.z);
+                __gInstance.MimicButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                    && !MeetingHud.Instance && !__gInstance.Player.Data.IsDead);
+                if (__instance.UseButton != null)
+                {
+                    __gInstance.MimicButton.transform.position = new Vector3(
+                        Camera.main.ScreenToWorldPoint(new Vector3(0, 0)).x + 0.75f,
+                        __instance.UseButton.transform.position.y, __instance.UseButton.transform.position.z);
+                }
+                else
+                {
+                    __gInstance.MimicButton.transform.position = new Vector3(
+                        Camera.main.ScreenToWorldPoint(new Vector3(0, 0)).x + 0.75f,
+                        __instance.PetButton.transform.position.y, __instance.PetButton.transform.position.z);
+                }
 
                 if (!__gInstance.MimicButton.isCoolingDown && !__gInstance.IsUsingMimic)
                 {
