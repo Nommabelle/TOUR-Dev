@@ -1,6 +1,7 @@
 using TownOfUs.Roles;
 using TownOfUs.Roles.Modifiers;
 using HarmonyLib;
+using AmongUs.GameOptions;
 
 namespace TownOfUs
 {
@@ -13,6 +14,7 @@ namespace TownOfUs
 
         public static bool Prefix(HauntMenuMinigame __instance)
         {
+            if (GameOptionsManager.Instance.currentHideNSeekGameOptions.GameMode == GameModes.HideNSeek) return true;
             var role = Role.GetRole(__instance.HauntTarget);
             var modifier = Modifier.GetModifier(__instance.HauntTarget);
 
