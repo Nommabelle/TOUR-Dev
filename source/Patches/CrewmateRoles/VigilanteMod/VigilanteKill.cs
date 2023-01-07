@@ -142,6 +142,8 @@ namespace TownOfUs.CrewmateRoles.VigilanteMod
                 meetingHud.ClearVote();
             }
 
+            player.Exiled();
+
             if (AmongUsClient.Instance.AmHost)
             {
                 foreach (var role in Role.GetRoles(RoleEnum.Mayor))
