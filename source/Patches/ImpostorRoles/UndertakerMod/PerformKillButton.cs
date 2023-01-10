@@ -48,8 +48,7 @@ namespace TownOfUs.ImpostorRoles.UndertakerMod
                     var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                         (byte) CustomRPC.Drop, SendOption.Reliable, -1);
                     writer.Write(PlayerControl.LocalPlayer.PlayerId);
-                    Vector3 position = PlayerControl.LocalPlayer.GetTruePosition();
-
+                    Vector3 position = PlayerControl.LocalPlayer.transform.position;
 
                     if (Patches.SubmergedCompatibility.isSubmerged())
                     {
@@ -74,7 +73,6 @@ namespace TownOfUs.ImpostorRoles.UndertakerMod
                     role.LastDragged = DateTime.UtcNow;
 
                     body.transform.position = position;
-
 
                     return false;
                 }

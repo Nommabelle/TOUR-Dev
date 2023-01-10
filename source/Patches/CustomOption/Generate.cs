@@ -273,6 +273,7 @@ namespace TownOfUs.CustomOption
 
         public static CustomHeaderOption Undertaker;
         public static CustomNumberOption DragCooldown;
+        public static CustomNumberOption UndertakerDragSpeed;
         public static CustomToggleOption UndertakerVent;
         public static CustomToggleOption UndertakerVentWithBody;
 
@@ -1073,6 +1074,8 @@ namespace TownOfUs.CustomOption
 
             Undertaker = new CustomHeaderOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Undertaker</color>");
             DragCooldown = new CustomNumberOption(num++, MultiMenu.imposter, "Drag Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
+            UndertakerDragSpeed =
+                new CustomNumberOption(num++, MultiMenu.imposter, "Undertaker Drag Speed", 0.75f, 0.25f, 1f, 0.05f, MultiplierFormat);
             UndertakerVent =
                 new CustomToggleOption(num++, MultiMenu.imposter, "Undertaker Can Vent", false);
             UndertakerVentWithBody =
@@ -1089,7 +1092,7 @@ namespace TownOfUs.CustomOption
             FlashSpeed = new CustomNumberOption(num++, MultiMenu.modifiers, "Flash Speed", 1.25f, 1.05f, 2.5f, 0.05f, MultiplierFormat);
 
             Giant = new CustomHeaderOption(num++, MultiMenu.modifiers, "<color=#FFB34DFF>Giant</color>");
-            GiantSlow = new CustomNumberOption(num++, MultiMenu.modifiers, "Giant Speed", 0.75f, 0.5f, 1f, 0.05f, MultiplierFormat);
+            GiantSlow = new CustomNumberOption(num++, MultiMenu.modifiers, "Giant Speed", 0.75f, 0.25f, 1f, 0.05f, MultiplierFormat);
 
             Lovers =
                 new CustomHeaderOption(num++, MultiMenu.modifiers, "<color=#FF66CCFF>Lovers</color>");
