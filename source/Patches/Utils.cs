@@ -372,6 +372,8 @@ namespace TownOfUs
 
                 Murder.KilledPlayers.Add(deadBody);
 
+                if (MeetingHud.Instance) target.Exiled();
+
                 if (!killer.AmOwner) return;
 
                 if (killer.Data.IsImpostor() && GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.HideNSeek)
