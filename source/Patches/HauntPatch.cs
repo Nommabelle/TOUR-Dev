@@ -14,7 +14,7 @@ namespace TownOfUs
 
         public static bool Prefix(HauntMenuMinigame __instance)
         {
-            if (GameOptionsManager.Instance.currentHideNSeekGameOptions.GameMode == GameModes.HideNSeek) return true;
+            if (GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.HideNSeek) return true;
             var role = Role.GetRole(__instance.HauntTarget);
             var modifier = Modifier.GetModifier(__instance.HauntTarget);
 

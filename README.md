@@ -75,7 +75,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 # Releases
 | Among Us - Version| Mod Version | Link |
 |----------|-------------|-----------------|
-| 2022.12.14s & 2022.12.14e | v4.0.0 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v4.0.0/ToU.v4.0.0.zip) |
+| 2022.12.14s & 2022.12.14e | v4.0.0 | Unavailable |
 | 2022.10.25s & 2022.10.25e | v3.4.0 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.4.0/ToU.v3.4.0.zip) |
 | 2022.8.24s & 2022.8.24e & 2022.9.20s & 2022.9.20e | v3.3.2 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.3.2/ToU.v3.3.2.zip) |
 | 2022.8.24s & 2022.8.24e & 2022.9.20s & 2022.9.20e | v3.3.1 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.3.1/ToU.v3.3.1.zip) |
@@ -130,13 +130,13 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <details>
   <summary> v4.0.0 </summary>
   <ul> <li>Compatibility with the new Among Us version v2022.12.14</li> </ul>
-  <ul> <li>New Role: Imitator</li> </ul>
+  <ul> <li>New Role: Imitator (Replacing Time Lord</li> </ul>
   <ul> <li>New Role: Bomber (Poisoner rework)</li> </ul>
-  <ul> <li>Time Lord removed</li> </ul>
   <ul> <li>New Game Mode: Cultist</li> </ul>
   <ul> <li>New Game Mode Roles: Necromancer & Whisperer</li> </ul>
   <ul> <li>New Setting: Enable Hidden Roles</li> </ul>
   <ul> <li>New Settings for hidden roles</li> </ul>
+  <ul> <li>New Setting: Undertaker Drag Speed</li> </ul>
   <ul> <li>Bug Fix: Executioner/Guardian Angel turned Amnesiac/Jester/Survivor no longer have red text after changing role</li> </ul>
   <ul> <li>Amnesiac remembering a role no longer makes their task list swap with the player they remembered</li> </ul>
   <ul> <li>Bug Fix: Amnesiac no longer sees themself with the remembered players' modifier</li> </ul>
@@ -144,6 +144,8 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <ul> <li>Bug Fix: Underdog kill timer is now in sync with normal kill cooldowns</li> </ul>
   <ul> <li>Bug Fix: Underdog now has the correct kill cooldown on game start</li> </ul>
   <ul> <li>Bug Fix: Underdog now can have a kill cooldown below 10secs</li> </ul>
+  <ul> <li>Bug Fix: Miner's mines are no longer invisible in certain places</li> </ul>
+  <ul> <li>Bug Fix: Undertaker no longer can make a body become invisible in certain places</li> </ul>
   <ul> <li>Adjusted the Trapper's trap & Grenadier's flash radius so they scale correctly</li> </ul>
   </details>
   <details>
@@ -1166,11 +1168,11 @@ The Glitch can Mimic someone, which results in them looking exactly like the oth
 | Name | Description | Type | Default |
 |----------|:-------------:|:------:|:------:|
 | The Glitch | The percentage probability of The Glitch appearing | Percentage | 0% |
-| Mimic Cooldown | The cooldown of The Glitch's Mimic button | Time | 30s |
+| Mimic Cooldown | The cooldown of The Glitch's Mimic button | Time | 25s |
 | Mimic Duration | How long The Glitch can Mimic a player | Time | 10s |
-| Hack Cooldown | The cooldown of The Glitch's Hack button | Time | 30s |
+| Hack Cooldown | The cooldown of The Glitch's Hack button | Time | 25s |
 | Hack Duration | How long The Glitch can Hack a player | Time | 10s |
-| Glitch Kill Cooldown | The cooldown of the Glitch's Kill button | Time | 30s |
+| Glitch Kill Cooldown | The cooldown of the Glitch's Kill button | Time | 25s |
 | Glitch Hack Distance | How far away The Glitch can Hack someone from | Short / Normal / Long | Short |
 | Glitch can Vent | Whether the Glitch can Vent | Toggle | False |
 
@@ -1334,6 +1336,7 @@ The Undertaker is an Impostor that can drag and drop bodies.
 |----------|:-------------:|:------:|:------:|
 | Undertaker | The percentage probability of the Undertaker appearing | Percentage | 0% |
 | Undertaker Drag Cooldown | The cooldown of the Undertaker Drag ability | Time | 25s |
+| Undertaker Speed While Dragging | How fast the Undertaker moves while dragging a body in comparison to normal | Factor | 0.75x |
 | Undertaker can Vent | Whether the Undertaker can Vent | Toggle | False |
 | Undertaker can Vent while Dragging | Whether the Undertaker can Vent when they are Dragging a Body | Toggle | False |
 
