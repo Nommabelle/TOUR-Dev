@@ -38,13 +38,20 @@ namespace TownOfUs.Roles
             LightDarkColors.Add(18, "darker"); //Watermelon
             LightDarkColors.Add(19, "darker"); //Chocolate
             LightDarkColors.Add(20, "lighter"); //Sky Blue
-            LightDarkColors.Add(21, "darker"); //Biege
+            LightDarkColors.Add(21, "lighter"); //Biege
             LightDarkColors.Add(22, "lighter"); //Hot Pink
             LightDarkColors.Add(23, "lighter"); //Turquoise
             LightDarkColors.Add(24, "lighter"); //Lilac
             LightDarkColors.Add(25, "darker"); //Olive
             LightDarkColors.Add(26, "lighter"); //Azure
-            LightDarkColors.Add(27, "lighter"); //Rainbow
+            LightDarkColors.Add(27, "darker"); // Plum
+            LightDarkColors.Add(28, "darker"); // Jungle
+            LightDarkColors.Add(29, "darker"); // Magenta
+            LightDarkColors.Add(30, "lighter"); // Chartreuse
+            LightDarkColors.Add(31, "darker"); // Macau
+            LightDarkColors.Add(32, "darker"); // Tawny
+            LightDarkColors.Add(33, "lighter"); // Gold
+            LightDarkColors.Add(34, "lighter"); //Rainbow
         }
 
         public PlayerControl ClosestPlayer;
