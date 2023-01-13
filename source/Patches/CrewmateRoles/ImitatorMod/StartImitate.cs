@@ -20,6 +20,7 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
         public static PlayerControl ImitatingPlayer;
         public static void ExileControllerPostfix(ExileController __instance)
         {
+            // Bug: Imitate Kill Button Text says 'Kill' if they immitate someone with an ability button in 2 consecutive rounds
             var exiled = __instance.exiled?.Object;
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Imitator)) return;
             if (PlayerControl.LocalPlayer.Data.IsDead || PlayerControl.LocalPlayer.Data.Disconnected) return;

@@ -656,6 +656,8 @@ namespace TownOfUs.Roles
 
             public static void HackButtonPress(Glitch __gInstance, KillButton __instance)
             {
+                // Bug: Hacking someone with a pet doesn't disable the ability to pet the pet
+                // Bug: Hacking someone doing fuel breaks all their buttons/abilities including the use and report buttons
                 if (__gInstance.HackTarget != null)
                 {
                     if (__gInstance.HackTarget.IsInfected() || __gInstance.Player.IsInfected())

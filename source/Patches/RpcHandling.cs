@@ -1344,6 +1344,7 @@ namespace TownOfUs
                     case CustomRPC.SetPos:
                         var setplayer = Utils.PlayerById(reader.ReadByte());
                         setplayer.transform.position = new Vector3(reader.ReadSingle(), reader.ReadSingle(), setplayer.transform.position.z);
+                        setplayer.MyPhysics.RpcEnterVent(reader.ReadInt32());
                         break;
                     case CustomRPC.SetSettings:
                         readByte = reader.ReadByte();
