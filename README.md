@@ -910,14 +910,14 @@ A report can contain the name of the killer or the color type (Darker/Lighter)
 - Chocolate - Darker
 - Sky Blue - Lighter
 - Beige - Lighter
-- Hot Pink - Lighter
+- Magenta - Darker
 - Turquoise - Lighter
 - Lilac - Lighter
 - Olive - Darker
 - Azure - Lighter
 - Plum - Darker
 - Jungle - Darker
-- Magenta - Darker
+- Mint - Lighter
 - Chartreuse - Lighter
 - Macau - Darker
 - Tawny - Darker

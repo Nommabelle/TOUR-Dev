@@ -58,14 +58,14 @@ namespace TownOfUs.CrewmateRoles.MedicMod
                 {19, "darker"},// chocolate
                 {20, "lighter"},// sky blue
                 {21, "lighter"},// beige
-                {22, "lighter"},// hot pink
+                {22, "darker"},// magenta
                 {23, "lighter"},// turquoise
                 {24, "lighter"},// lilac
                 {25, "darker"},// olive
                 {26, "lighter"},// azure
                 {27, "darker"},// plum
                 {28, "darker"},// jungle
-                {29, "darker"},// magenta
+                {29, "lighter"},// mint
                 {30, "lighter"},// chartreuse
                 {31, "darker"},// macau
                 {32, "darker"},// tawny
