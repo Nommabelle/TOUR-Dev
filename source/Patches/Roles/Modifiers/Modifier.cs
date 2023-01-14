@@ -25,7 +25,6 @@ namespace TownOfUs.Roles.Modifiers
         protected internal string GetColoredSymbol()
         {
             if (SymbolName == null) return null;
-            if (Color == null) return SymbolName;
 
             return $"{ColorString}{SymbolName}</color>";
         }
