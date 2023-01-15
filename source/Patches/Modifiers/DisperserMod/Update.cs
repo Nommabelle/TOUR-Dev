@@ -22,10 +22,6 @@ namespace TownOfUs.Modifiers.DisperserMod
             if (PlayerControl.LocalPlayer.Data == null) return;
             if (!PlayerControl.LocalPlayer.Is(ModifierEnum.Disperser)) return;
 
-            var data = PlayerControl.LocalPlayer.Data;
-            var isDead = data.IsDead;
-
-
             var role = Modifier.GetModifier<Disperser>(PlayerControl.LocalPlayer);
 
             if (role.DisperseButton == null)
@@ -38,8 +34,8 @@ namespace TownOfUs.Modifiers.DisperserMod
 
             role.DisperseButton.graphic.sprite = DisperseButton;
 
-
-            role.DisperseButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
+            role.DisperseButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
 
             role.DisperseButton.SetCoolDown(0f, 1f);
             var renderer = role.DisperseButton.graphic;

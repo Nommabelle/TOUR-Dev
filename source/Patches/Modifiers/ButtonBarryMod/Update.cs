@@ -23,10 +23,6 @@ namespace TownOfUs.Modifiers.ButtonBarryMod
             if (!PlayerControl.LocalPlayer.Is(ModifierEnum.ButtonBarry)) return;
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Glitch)) return;
 
-            var data = PlayerControl.LocalPlayer.Data;
-            var isDead = data.IsDead;
-
-
             var role = Modifier.GetModifier<ButtonBarry>(PlayerControl.LocalPlayer);
 
             if (role.ButtonButton == null)
@@ -39,8 +35,8 @@ namespace TownOfUs.Modifiers.ButtonBarryMod
 
             role.ButtonButton.graphic.sprite = Button;
 
-
-            role.ButtonButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
+            role.ButtonButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
 
             role.ButtonButton.SetCoolDown(0f, 1f);
             var renderer = role.ButtonButton.graphic;
