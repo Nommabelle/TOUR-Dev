@@ -82,18 +82,10 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 }
             }
 
-            if (isDead)
-            {
-                killButton.gameObject.SetActive(false);
-                // killButton.isActive = false;
-            }
-            else
-            {
-                killButton.gameObject.SetActive(!MeetingHud.Instance);
-                // killButton.isActive = !MeetingHud.Instance;
-                KillButtonTarget.SetTarget(killButton, closestBody, role);
-                __instance.KillButton.SetCoolDown(0f, 1f);
-            }
+            __instance.KillButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+            KillButtonTarget.SetTarget(killButton, closestBody, role);
+            __instance.KillButton.SetCoolDown(0f, 1f);
         }
     }
 }

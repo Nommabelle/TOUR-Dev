@@ -19,8 +19,6 @@ namespace TownOfUs.CrewmateRoles.TrapperMod
             if (PlayerControl.LocalPlayer == null) return;
             if (PlayerControl.LocalPlayer.Data == null) return;
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Trapper)) return;
-            var data = PlayerControl.LocalPlayer.Data;
-            var isDead = data.IsDead;
             var trapButton = __instance.KillButton;
 
             var role = Role.GetRole<Trapper>(PlayerControl.LocalPlayer);
@@ -42,19 +40,10 @@ namespace TownOfUs.CrewmateRoles.TrapperMod
                 role.UsesText.text = role.UsesLeft + "";
             }
 
-            if (isDead)
-            {
-                trapButton.gameObject.SetActive(false);
-            }
-            else
-            {
-                trapButton.gameObject.SetActive(!MeetingHud.Instance);
-                if (role.ButtonUsable)
-                {
-                    trapButton.SetCoolDown(role.TrapTimer(), CustomGameOptions.TrapCooldown);
-                }
-                
-            }
+            trapButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+            if (role.ButtonUsable) trapButton.SetCoolDown(role.TrapTimer(), CustomGameOptions.TrapCooldown);
+            else trapButton.SetCoolDown(0f, CustomGameOptions.TrapCooldown);
 
             var renderer = trapButton.graphic;
             if (!trapButton.isCoolingDown && trapButton.gameObject.active && role.ButtonUsable)

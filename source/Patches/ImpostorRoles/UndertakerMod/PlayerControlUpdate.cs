@@ -30,7 +30,8 @@ namespace TownOfUs.ImpostorRoles.UndertakerMod
             if (role.DragDropButton.graphic.sprite == TownOfUs.DropSprite && role.CurrentlyDragging == null)
                 role.DragDropButton.graphic.sprite = TownOfUs.DragSprite;
 
-            role.DragDropButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
+            role.DragDropButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
 
 
             if (role.DragDropButton.graphic.sprite == TownOfUs.DragSprite)

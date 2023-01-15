@@ -20,13 +20,12 @@ namespace TownOfUs.CultistRoles.WhispererMod
             {
                 role.WhisperButton = Object.Instantiate(__instance.KillButton, __instance.KillButton.transform.parent);
                 role.WhisperButton.graphic.enabled = true;
-                role.WhisperButton.GetComponent<AspectPosition>().DistanceFromEdge = TownOfUs.ButtonPosition;
                 role.WhisperButton.gameObject.SetActive(false);
             }
 
-            role.WhisperButton.GetComponent<AspectPosition>().Update();
             role.WhisperButton.graphic.sprite = WhisperSprite;
-            role.WhisperButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
+            role.WhisperButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
 
             role.WhisperButton.SetCoolDown(role.WhisperTimer(),
                 CustomGameOptions.WhisperCooldown + CustomGameOptions.IncreasedCooldownPerWhisper * role.WhisperCount);

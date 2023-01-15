@@ -41,21 +41,11 @@ namespace TownOfUs.NeutralRoles.SurvivorMod
                 role.UsesText.text = role.UsesLeft + "";
             }
 
-            if (isDead)
-            {
-                vestButton.gameObject.SetActive(false);
-            }
-            else if (role.Vesting)
-            {
-                vestButton.SetCoolDown(role.TimeRemaining, CustomGameOptions.VestDuration);
-                return;
-            }
-            else
-            {
-                vestButton.gameObject.SetActive(!MeetingHud.Instance);
-                if (role.ButtonUsable)
-                    vestButton.SetCoolDown(role.VestTimer(), CustomGameOptions.VestCd);
-            }
+            vestButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+            if (role.Vesting) vestButton.SetCoolDown(role.TimeRemaining, CustomGameOptions.VestDuration);
+            else if (role.ButtonUsable) vestButton.SetCoolDown(role.VestTimer(), CustomGameOptions.VestCd);
+            else vestButton.SetCoolDown(0f, CustomGameOptions.VestCd);
 
             var renderer = vestButton.graphic;
             if (role.Vesting || (!vestButton.isCoolingDown && role.ButtonUsable))

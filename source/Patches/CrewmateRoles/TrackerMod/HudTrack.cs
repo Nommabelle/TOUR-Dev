@@ -42,25 +42,18 @@ namespace TownOfUs.CrewmateRoles.TrackerMod
             {
                 role.UsesText.text = role.UsesLeft + "";
             }
-            if (isDead)
-            {
-                trackButton.gameObject.SetActive(false);
-                // trackButton.isActive = false;
-            }
-            else
-            {
-                trackButton.gameObject.SetActive(!MeetingHud.Instance);
-                // trackButton.isActive = !MeetingHud.Instance;
-                trackButton.SetCoolDown(role.TrackerTimer(), CustomGameOptions.TrackCd);
-                if (role.UsesLeft == 0) return;
+            trackButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+            if (role.ButtonUsable) trackButton.SetCoolDown(role.TrackerTimer(), CustomGameOptions.TrackCd);
+            else trackButton.SetCoolDown(0f, CustomGameOptions.TrackCd);
+            if (role.UsesLeft == 0) return;
 
-                var notTracked = PlayerControl.AllPlayerControls
-                    .ToArray()
-                    .Where(x => !role.IsTracking(x))
-                    .ToList();
+            var notTracked = PlayerControl.AllPlayerControls
+                .ToArray()
+                .Where(x => !role.IsTracking(x))
+                .ToList();
 
-                Utils.SetTarget(ref role.ClosestPlayer, trackButton, float.NaN, notTracked);
-            }
+            Utils.SetTarget(ref role.ClosestPlayer, trackButton, float.NaN, notTracked);
 
             var renderer = trackButton.graphic;
             if (role.ClosestPlayer != null && role.ButtonUsable)

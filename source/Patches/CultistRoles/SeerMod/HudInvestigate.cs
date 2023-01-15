@@ -43,20 +43,12 @@ namespace TownOfUs.CultistRoles.SeerMod
                 role.UsesText.text = role.UsesLeft + "";
             }
 
-            if (isDead)
-            {
-                investigateButton.gameObject.SetActive(false);
-            }
-            else
-            {
-                investigateButton.gameObject.SetActive(!MeetingHud.Instance);
-                if (role.ButtonUsable)
-                {
-                    investigateButton.SetCoolDown(role.SeerTimer(), CustomGameOptions.SeerCd);
-                }
+            investigateButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+            if (role.ButtonUsable) investigateButton.SetCoolDown(role.SeerTimer(), CustomGameOptions.SeerCd);
+            else investigateButton.SetCoolDown(0f, CustomGameOptions.SeerCd);
 
-                Utils.SetTarget(ref role.ClosestPlayer, investigateButton, float.NaN);
-            }
+            Utils.SetTarget(ref role.ClosestPlayer, investigateButton, float.NaN);
 
             var renderer = investigateButton.graphic;
             if (role.ClosestPlayer != null && role.ButtonUsable)

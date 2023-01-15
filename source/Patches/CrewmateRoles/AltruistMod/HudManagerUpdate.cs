@@ -46,16 +46,8 @@ namespace TownOfUs.CrewmateRoles.AltruistMod
                 closestDistance = distance;
             }
 
-            if (isDead)
-            {
-                killButton.gameObject.SetActive(false);
-             //   killButton.isActive = false;
-            }
-            else
-            {
-                killButton.gameObject.SetActive(!MeetingHud.Instance);
-          //      killButton.isActive = !MeetingHud.Instance;
-            }
+            killButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
 
             KillButtonTarget.SetTarget(killButton, closestBody, role);
             __instance.KillButton.SetCoolDown(0f, 1f);

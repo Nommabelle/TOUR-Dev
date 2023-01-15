@@ -18,24 +18,14 @@ namespace TownOfUs.CrewmateRoles.DetectiveMod
             if (PlayerControl.LocalPlayer == null) return;
             if (PlayerControl.LocalPlayer.Data == null) return;
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Detective)) return;
-            var data = PlayerControl.LocalPlayer.Data;
-            var isDead = data.IsDead;
-            var examineButton = __instance.KillButton;
 
+            var examineButton = __instance.KillButton;
             var role = Role.GetRole<Detective>(PlayerControl.LocalPlayer);
 
-            if (isDead)
-            {
-                examineButton.gameObject.SetActive(false);
-            }
-            else
-            {
-                examineButton.gameObject.SetActive(!MeetingHud.Instance);
-                // trackButton.isActive = !MeetingHud.Instance;
-                examineButton.SetCoolDown(role.ExamineTimer(), CustomGameOptions.ExamineCd);
-
-                Utils.SetTarget(ref role.ClosestPlayer, examineButton, float.NaN);
-            }
+            examineButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+            examineButton.SetCoolDown(role.ExamineTimer(), CustomGameOptions.ExamineCd);
+            Utils.SetTarget(ref role.ClosestPlayer, examineButton, float.NaN);
 
             var renderer = examineButton.graphic;
             if (role.ClosestPlayer != null)

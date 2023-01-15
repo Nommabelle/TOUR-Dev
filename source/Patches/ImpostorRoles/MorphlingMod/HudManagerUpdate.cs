@@ -30,7 +30,8 @@ namespace TownOfUs.ImpostorRoles.MorphlingMod
             if (role.MorphButton.graphic.sprite != SampleSprite && role.MorphButton.graphic.sprite != MorphSprite)
                 role.MorphButton.graphic.sprite = SampleSprite;
 
-            role.MorphButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
+            role.MorphButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
             if (role.MorphButton.graphic.sprite == SampleSprite)
             {
                 role.MorphButton.SetCoolDown(0f, 1f);

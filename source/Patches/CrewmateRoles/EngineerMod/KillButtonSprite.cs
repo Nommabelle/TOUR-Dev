@@ -19,8 +19,8 @@ namespace TownOfUs.CrewmateRoles.EngineerMod
             var role = Role.GetRole<Engineer>(PlayerControl.LocalPlayer);
 
             __instance.KillButton.SetCoolDown(0f, 10f);
-            __instance.KillButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead &&
-                (__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled) && !MeetingHud.Instance);
+            __instance.KillButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
             if (PlayerControl.LocalPlayer.Data.IsDead) return;
             if (!ShipStatus.Instance) return;
             var system = ShipStatus.Instance.Systems[SystemTypes.Sabotage].Cast<SabotageSystemType>();

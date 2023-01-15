@@ -17,7 +17,8 @@ namespace TownOfUs.NeutralRoles.PestilenceMod
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Pestilence)) return;
             var role = Role.GetRole<Pestilence>(PlayerControl.LocalPlayer);
 
-            __instance.KillButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
+            __instance.KillButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
 
             __instance.KillButton.SetCoolDown(role.KillTimer(), CustomGameOptions.PestKillCd);
 

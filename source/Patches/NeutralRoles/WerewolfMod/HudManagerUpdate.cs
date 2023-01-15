@@ -16,16 +16,10 @@ namespace TownOfUs.NeutralRoles.WerewolfMod
             if (PlayerControl.LocalPlayer.Data == null) return;
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Werewolf)) return;
             var role = Role.GetRole<Werewolf>(PlayerControl.LocalPlayer);
-            var isDead = PlayerControl.LocalPlayer.Data.IsDead;
 
-            __instance.KillButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
+            __instance.KillButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
             __instance.KillButton.SetCoolDown(role.KillTimer(), CustomGameOptions.RampageKillCd);
-
-            if (isDead)
-            {
-                role.RampageButton.gameObject.SetActive(false);
-                return;
-            }
 
             if (role.RampageButton == null)
             {
@@ -37,7 +31,8 @@ namespace TownOfUs.NeutralRoles.WerewolfMod
             role.RampageButton.graphic.sprite = RampageSprite;
             role.RampageButton.transform.localPosition = new Vector3(-2f, 0f, 0f);
 
-            role.RampageButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
+            role.RampageButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
 
             if (role.Rampaged)
             {

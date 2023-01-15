@@ -25,27 +25,19 @@ namespace TownOfUs.CrewmateRoles.SeerMod
 
             var role = Role.GetRole<Seer>(PlayerControl.LocalPlayer);
 
+            investigateButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+            investigateButton.SetCoolDown(role.SeerTimer(), CustomGameOptions.SeerCd);
 
-            if (isDead)
-            {
-                investigateButton.gameObject.SetActive(false);
-             //   investigateButton.isActive = false;
-            }
-            else
-            {
-                investigateButton.gameObject.SetActive(!MeetingHud.Instance);
-               // investigateButton.isActive = !MeetingHud.Instance;
-                investigateButton.SetCoolDown(role.SeerTimer(), CustomGameOptions.SeerCd);
+            var notInvestigated = PlayerControl.AllPlayerControls
+                .ToArray()
+                .Where(x => !role.Investigated.Contains(x.PlayerId))
+                .ToList();
 
-                var notInvestigated = PlayerControl.AllPlayerControls
-                    .ToArray()
-                    .Where(x => !role.Investigated.Contains(x.PlayerId))
-                    .ToList();
-
-                Utils.SetTarget(ref role.ClosestPlayer, investigateButton, float.NaN, notInvestigated);
-            }
+            Utils.SetTarget(ref role.ClosestPlayer, investigateButton, float.NaN, notInvestigated);
 
             var renderer = investigateButton.graphic;
+
             if (role.ClosestPlayer != null)
             {
                 renderer.color = Palette.EnabledColor;

@@ -19,8 +19,6 @@ namespace TownOfUs.CrewmateRoles.VeteranMod
             if (PlayerControl.LocalPlayer == null) return;
             if (PlayerControl.LocalPlayer.Data == null) return;
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Veteran)) return;
-            var data = PlayerControl.LocalPlayer.Data;
-            var isDead = data.IsDead;
             var alertButton = __instance.KillButton;
 
             var role = Role.GetRole<Veteran>(PlayerControl.LocalPlayer);
@@ -42,22 +40,11 @@ namespace TownOfUs.CrewmateRoles.VeteranMod
                 role.UsesText.text = role.UsesLeft + "";
             }
 
-            if (isDead)
-            {
-                alertButton.gameObject.SetActive(false);
-                // alertButton.isActive = false;
-            }
-            else if (role.OnAlert)
-            {
-                alertButton.SetCoolDown(role.TimeRemaining, CustomGameOptions.AlertDuration);
-            }
-            else
-            {
-                alertButton.gameObject.SetActive(!MeetingHud.Instance);
-                // alertButton.isActive = !MeetingHud.Instance;
-                if (role.ButtonUsable)
-                    alertButton.SetCoolDown(role.AlertTimer(), CustomGameOptions.AlertCd);
-            }
+            alertButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+            if (role.OnAlert) alertButton.SetCoolDown(role.TimeRemaining, CustomGameOptions.AlertDuration);
+            else if (role.ButtonUsable) alertButton.SetCoolDown(role.AlertTimer(), CustomGameOptions.AlertCd);
+            else alertButton.SetCoolDown(0f, CustomGameOptions.AlertCd);
 
             var renderer = alertButton.graphic;
             if (role.OnAlert || (!alertButton.isCoolingDown && role.ButtonUsable))

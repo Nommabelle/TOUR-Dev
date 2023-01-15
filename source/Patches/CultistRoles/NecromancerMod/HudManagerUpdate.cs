@@ -23,13 +23,13 @@ namespace TownOfUs.CultistRoles.NecromancerMod
             {
                 role.ReviveButton = Object.Instantiate(__instance.KillButton, __instance.KillButton.transform.parent);
                 role.ReviveButton.graphic.enabled = true;
-                role.ReviveButton.GetComponent<AspectPosition>().DistanceFromEdge = TownOfUs.ButtonPosition;
                 role.ReviveButton.gameObject.SetActive(false);
             }
 
-            role.ReviveButton.GetComponent<AspectPosition>().Update();
             role.ReviveButton.graphic.sprite = ReviveSprite;
-            role.ReviveButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
+
+            role.ReviveButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
 
             var data = PlayerControl.LocalPlayer.Data;
             var isDead = data.IsDead;
@@ -57,15 +57,6 @@ namespace TownOfUs.CultistRoles.NecromancerMod
                 if (!(distance < closestDistance)) continue;
                 closestBody = component;
                 closestDistance = distance;
-            }
-
-            if (isDead)
-            {
-                role.ReviveButton.gameObject.SetActive(false);
-            }
-            else
-            {
-                role.ReviveButton.gameObject.SetActive(!MeetingHud.Instance);
             }
 
             role.ReviveButton.SetCoolDown(role.ReviveTimer(),

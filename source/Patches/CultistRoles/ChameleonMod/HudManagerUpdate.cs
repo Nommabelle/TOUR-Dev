@@ -18,25 +18,14 @@ namespace TownOfUs.CultistRoles.ChameleonMod
             if (PlayerControl.LocalPlayer == null) return;
             if (PlayerControl.LocalPlayer.Data == null) return;
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Chameleon)) return;
-            var data = PlayerControl.LocalPlayer.Data;
-            var isDead = data.IsDead;
             var swoopButton = __instance.KillButton;
 
             var role = Role.GetRole<Chameleon>(PlayerControl.LocalPlayer);
 
-            if (isDead)
-            {
-                swoopButton.gameObject.SetActive(false);
-            }
-            else if (role.IsSwooped)
-            {
-                swoopButton.SetCoolDown(role.TimeRemaining, CustomGameOptions.SwoopDuration);
-            }
-            else
-            {
-                swoopButton.gameObject.SetActive(!MeetingHud.Instance);
-                swoopButton.SetCoolDown(role.SwoopTimer(), CustomGameOptions.SwoopCd);
-            }
+            swoopButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+            if (role.IsSwooped) swoopButton.SetCoolDown(role.TimeRemaining, CustomGameOptions.SwoopDuration);
+            else swoopButton.SetCoolDown(role.SwoopTimer(), CustomGameOptions.SwoopCd);
 
             var renderer = swoopButton.graphic;
             if (role.IsSwooped || !swoopButton.isCoolingDown)

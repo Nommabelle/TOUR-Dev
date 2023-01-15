@@ -19,8 +19,6 @@ namespace TownOfUs.NeutralRoles.GuardianAngelMod
             if (PlayerControl.LocalPlayer == null) return;
             if (PlayerControl.LocalPlayer.Data == null) return;
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.GuardianAngel)) return;
-            var data = PlayerControl.LocalPlayer.Data;
-            var isDead = data.IsDead;
             var protectButton = __instance.KillButton;
 
             var role = Role.GetRole<GuardianAngel>(PlayerControl.LocalPlayer);
@@ -42,21 +40,11 @@ namespace TownOfUs.NeutralRoles.GuardianAngelMod
                 role.UsesText.text = role.UsesLeft + "";
             }
 
-            if (isDead)
-            {
-                protectButton.gameObject.SetActive(false);
-            }
-            else if (role.Protecting)
-            {
-                protectButton.SetCoolDown(role.TimeRemaining, CustomGameOptions.ProtectDuration);
-                return;
-            }
-            else
-            {
-                protectButton.gameObject.SetActive(!MeetingHud.Instance);
-                if (role.ButtonUsable)
-                    protectButton.SetCoolDown(role.ProtectTimer(), CustomGameOptions.ProtectCd);
-            }
+            protectButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+            if (role.Protecting) protectButton.SetCoolDown(role.TimeRemaining, CustomGameOptions.ProtectDuration);
+            else if (role.ButtonUsable) protectButton.SetCoolDown(role.ProtectTimer(), CustomGameOptions.ProtectCd);
+            else protectButton.SetCoolDown(0f, CustomGameOptions.ProtectCd);
 
             var renderer = protectButton.graphic;
             if (role.Protecting || (!protectButton.isCoolingDown && role.ButtonUsable))

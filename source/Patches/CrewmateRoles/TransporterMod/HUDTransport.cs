@@ -19,11 +19,12 @@ namespace TownOfUs.CrewmateRoles.TransporterMod
 
             var role = Role.GetRole<Transporter>(PlayerControl.LocalPlayer);
 
-            transportButton.gameObject.SetActive(!MeetingHud.Instance && !data.IsDead);
+            transportButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
             if (data.IsDead) return;
 
-            if (role.ButtonUsable)
-                transportButton.SetCoolDown(role.TransportTimer(), CustomGameOptions.TransportCooldown);
+            if (role.ButtonUsable) transportButton.SetCoolDown(role.TransportTimer(), CustomGameOptions.TransportCooldown);
+            else transportButton.SetCoolDown(0f, CustomGameOptions.TransportCooldown);
 
             if (role.UsesText == null && role.UsesLeft > 0)
             {

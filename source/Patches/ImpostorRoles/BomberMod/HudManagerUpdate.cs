@@ -25,7 +25,8 @@ namespace TownOfUs.ImpostorRoles.BomberMod
                 role.PlantButton.graphic.sprite = PlantSprite;
             }
 
-            role.PlantButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
+            role.PlantButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
 
             if (role.Detonating)
             {

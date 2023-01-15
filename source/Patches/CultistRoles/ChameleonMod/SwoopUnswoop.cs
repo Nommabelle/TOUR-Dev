@@ -6,7 +6,7 @@ namespace TownOfUs.CultistRoles.ChameleonMod
 {
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
     [HarmonyPriority(Priority.Last)]
-    public class AlertUnalert
+    public class SwoopUnSwoop
     {
         [HarmonyPriority(Priority.Last)]
         public static void Postfix(HudManager __instance)

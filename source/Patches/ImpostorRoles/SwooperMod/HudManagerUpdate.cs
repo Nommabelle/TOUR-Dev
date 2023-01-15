@@ -23,7 +23,8 @@ namespace TownOfUs.ImpostorRoles.SwooperMod
                 role.SwoopButton.gameObject.SetActive(false);
             }
             role.SwoopButton.graphic.sprite = SwoopSprite;
-            role.SwoopButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
+            role.SwoopButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
 
             if (role.IsSwooped)
             {

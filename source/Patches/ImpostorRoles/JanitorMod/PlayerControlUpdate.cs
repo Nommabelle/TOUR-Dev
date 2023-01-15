@@ -23,7 +23,8 @@ namespace TownOfUs.ImpostorRoles.JanitorMod
                 role.CleanButton.gameObject.SetActive(false);
             }
 
-            role.CleanButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
+            role.CleanButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
             role.CleanButton.graphic.sprite = TownOfUs.JanitorClean;
 
 

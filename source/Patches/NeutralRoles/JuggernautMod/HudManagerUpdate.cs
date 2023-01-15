@@ -17,7 +17,8 @@ namespace TownOfUs.NeutralRoles.JuggernautMod
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Juggernaut)) return;
             var role = Role.GetRole<Juggernaut>(PlayerControl.LocalPlayer);
 
-            __instance.KillButton.gameObject.SetActive(!PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance);
+            __instance.KillButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
 
             __instance.KillButton.SetCoolDown(role.KillTimer(), CustomGameOptions.JuggKCd - CustomGameOptions.ReducedKCdPerKill * role.JuggKills);
 

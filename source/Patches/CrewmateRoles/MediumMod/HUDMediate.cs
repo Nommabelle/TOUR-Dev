@@ -27,7 +27,8 @@ namespace TownOfUs.CrewmateRoles.MediumMod
                 var mediateButton = __instance.KillButton;
 
                 var role = Role.GetRole<Medium>(PlayerControl.LocalPlayer);
-                mediateButton.gameObject.SetActive(!MeetingHud.Instance && !data.IsDead);
+                mediateButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
                 if (data.IsDead) return;
 
                 foreach (var player in PlayerControl.AllPlayerControls)
@@ -46,8 +47,6 @@ namespace TownOfUs.CrewmateRoles.MediumMod
                                 VisorId = "",
                                 PlayerName = " "
                             });
-                            //player.nameText().text = "";
-                            //PlayerControl.SetPlayerMaterialColors(Color.grey, player.MyRend);
                             PlayerMaterial.SetColors(Color.grey, player.myRend());
                         }
                     }
