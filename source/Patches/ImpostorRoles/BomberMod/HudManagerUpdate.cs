@@ -23,6 +23,7 @@ namespace TownOfUs.ImpostorRoles.BomberMod
                 role.PlantButton = Object.Instantiate(__instance.KillButton, __instance.KillButton.transform.parent);
                 role.PlantButton.graphic.enabled = true;
                 role.PlantButton.graphic.sprite = PlantSprite;
+                role.PlantButton.gameObject.SetActive(false);
             }
 
             role.PlantButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)

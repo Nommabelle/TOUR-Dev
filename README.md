@@ -130,7 +130,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <details>
   <summary> v4.0.0 </summary>
   <ul> <li>Compatibility with the new Among Us version v2022.12.14</li> </ul>
-  <ul> <li>New Role: Imitator (Replacing Time Lord</li> </ul>
+  <ul> <li>New Role: Imitator (Replacing Time Lord)</li> </ul>
   <ul> <li>New Role: Bomber (Poisoner rework)</li> </ul>
   <ul> <li>New Game Mode: Cultist</li> </ul>
   <ul> <li>New Game Mode Roles: Necromancer & Whisperer</li> </ul>

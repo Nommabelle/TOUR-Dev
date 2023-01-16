@@ -27,18 +27,10 @@ namespace TownOfUs.CrewmateRoles.SheriffMod
             if (flag8)
             {
                 var role = Role.GetRole<Sheriff>(PlayerControl.LocalPlayer);
-                var isDead = PlayerControl.LocalPlayer.Data.IsDead;
-                if (isDead)
-                {
-                    KillButton.gameObject.SetActive(false);
-                }
-                else
-                {
-                    KillButton.gameObject.SetActive(!MeetingHud.Instance);
-                    KillButton.SetCoolDown(role.SheriffKillTimer(), CustomGameOptions.SheriffKillCd);
-
-                    Utils.SetTarget(ref role.ClosestPlayer, KillButton);
-                }
+                KillButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                        && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+                KillButton.SetCoolDown(role.SheriffKillTimer(), CustomGameOptions.SheriffKillCd);
+                Utils.SetTarget(ref role.ClosestPlayer, KillButton);
             }
             else
             {
