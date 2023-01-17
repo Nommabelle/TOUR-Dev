@@ -20,8 +20,6 @@ namespace TownOfUs.CultistRoles.SeerMod
             if (PlayerControl.LocalPlayer == null) return;
             if (PlayerControl.LocalPlayer.Data == null) return;
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.CultistSeer)) return;
-            var data = PlayerControl.LocalPlayer.Data;
-            var isDead = data.IsDead;
             var investigateButton = __instance.KillButton;
 
             var role = Role.GetRole<CultistSeer>(PlayerControl.LocalPlayer);
@@ -29,7 +27,7 @@ namespace TownOfUs.CultistRoles.SeerMod
             if (role.UsesText == null && role.UsesLeft > 0)
             {
                 role.UsesText = Object.Instantiate(investigateButton.cooldownTimerText, investigateButton.transform);
-                role.UsesText.gameObject.SetActive(true);
+                role.UsesText.gameObject.SetActive(false);
                 role.UsesText.transform.localPosition = new Vector3(
                     role.UsesText.transform.localPosition.x + 0.26f,
                     role.UsesText.transform.localPosition.y + 0.29f,
@@ -44,6 +42,9 @@ namespace TownOfUs.CultistRoles.SeerMod
             }
 
             investigateButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead
+                    && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started);
+            role.UsesText.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
                     && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead
                     && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started);
             if (role.ButtonUsable) investigateButton.SetCoolDown(role.SeerTimer(), CustomGameOptions.SeerCd);

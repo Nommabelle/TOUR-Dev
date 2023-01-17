@@ -26,7 +26,7 @@ namespace TownOfUs.CrewmateRoles.TrapperMod
             if (role.UsesText == null && role.UsesLeft > 0)
             {
                 role.UsesText = Object.Instantiate(trapButton.cooldownTimerText, trapButton.transform);
-                role.UsesText.gameObject.SetActive(true);
+                role.UsesText.gameObject.SetActive(false);
                 role.UsesText.transform.localPosition = new Vector3(
                     role.UsesText.transform.localPosition.x + 0.26f,
                     role.UsesText.transform.localPosition.y + 0.29f,
@@ -41,6 +41,9 @@ namespace TownOfUs.CrewmateRoles.TrapperMod
             }
 
             trapButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead
+                    && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started);
+            role.UsesText.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
                     && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead
                     && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started);
             if (role.ButtonUsable) trapButton.SetCoolDown(role.TrapTimer(), CustomGameOptions.TrapCooldown);

@@ -19,8 +19,6 @@ namespace TownOfUs.CrewmateRoles.SeerMod
             if (PlayerControl.LocalPlayer == null) return;
             if (PlayerControl.LocalPlayer.Data == null) return;
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Seer)) return;
-            var data = PlayerControl.LocalPlayer.Data;
-            var isDead = data.IsDead;
             var investigateButton = __instance.KillButton;
 
             var role = Role.GetRole<Seer>(PlayerControl.LocalPlayer);
