@@ -71,17 +71,15 @@ namespace TownOfUs.CrewmateRoles.TrapperMod
         {
             var TrapPref = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             TrapPref.name = "Trap";
-            TrapPref.transform.localScale = new Vector3(CustomGameOptions.TrapSize * ShipStatus.Instance.MaxLightRadius, 
-                CustomGameOptions.TrapSize * ShipStatus.Instance.MaxLightRadius, CustomGameOptions.TrapSize * ShipStatus.Instance.MaxLightRadius);
+            TrapPref.transform.localScale = new Vector3(CustomGameOptions.TrapSize * ShipStatus.Instance.MaxLightRadius * 2f, 
+                CustomGameOptions.TrapSize * ShipStatus.Instance.MaxLightRadius * 2f, CustomGameOptions.TrapSize * ShipStatus.Instance.MaxLightRadius * 2f);
             GameObject.Destroy(TrapPref.GetComponent<SphereCollider>());
-            TrapPref.GetComponent<MeshRenderer>().material = Roles.Trapper.trapMaterial;
+            TrapPref.GetComponent<MeshRenderer>().material = Trapper.trapMaterial;
             TrapPref.transform.position = location;
             var TrapScript = new Trap();
             TrapScript.transform = TrapPref.transform;
             Coroutines.Start(TrapScript.FrameTimer());
             return TrapScript;
         }
-
-        
     }
 }

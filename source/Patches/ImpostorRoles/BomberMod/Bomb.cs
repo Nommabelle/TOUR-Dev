@@ -22,8 +22,8 @@ namespace TownOfUs.ImpostorRoles.BomberMod
         {
             var BombPref = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             BombPref.name = "Bomb";
-            BombPref.transform.localScale = new Vector3(CustomGameOptions.DetonateRadius * ShipStatus.Instance.MaxLightRadius, 
-                CustomGameOptions.DetonateRadius * ShipStatus.Instance.MaxLightRadius, CustomGameOptions.DetonateRadius * ShipStatus.Instance.MaxLightRadius);
+            BombPref.transform.localScale = new Vector3(CustomGameOptions.DetonateRadius * ShipStatus.Instance.MaxLightRadius * 2f, 
+                CustomGameOptions.DetonateRadius * ShipStatus.Instance.MaxLightRadius * 2f, CustomGameOptions.DetonateRadius * ShipStatus.Instance.MaxLightRadius * 2f);
             GameObject.Destroy(BombPref.GetComponent<SphereCollider>());
             BombPref.GetComponent<MeshRenderer>().material = Roles.Bomber.bombMaterial;
             BombPref.transform.position = location;
