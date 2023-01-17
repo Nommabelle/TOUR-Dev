@@ -6,6 +6,8 @@ using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Reactor.Utilities.Extensions;
 using TownOfUs.CrewmateRoles.MedicMod;
 using System;
+using TownOfUs.ImpostorRoles.BomberMod;
+using System.Reflection;
 
 namespace TownOfUs.Roles
 {
@@ -17,6 +19,9 @@ namespace TownOfUs.Roles
         public bool Enabled = false;
         public bool Detonated = true;
         public Vector3 DetonatePoint;
+        public Bomb Bomb = new Bomb();
+        public static AssetBundle bundle = loadBundle();
+        public static Material bombMaterial = bundle.LoadAsset<Material>("bomb").DontUnload();
 
         public Bomber(PlayerControl player) : base(player)
         {
@@ -44,7 +49,12 @@ namespace TownOfUs.Roles
             Enabled = true;
             TimeRemaining -= Time.deltaTime;
             if (MeetingHud.Instance) Detonated = true;
-            if (TimeRemaining <= 0 && !Detonated) DetonateKillStart();
+            if (TimeRemaining <= 0 && !Detonated)
+            {
+                var bomber = GetRole<Bomber>(PlayerControl.LocalPlayer);
+                bomber.Bomb.ClearBomb();
+                DetonateKillStart();
+            }
         }
         public void DetonateKillStart()
         {
@@ -141,6 +151,10 @@ namespace TownOfUs.Roles
                 };
 
                 Murder.KilledPlayers.Add(deadBody);
+
+                if (killer != PlayerControl.LocalPlayer) return;
+
+                if (target.Is(ModifierEnum.Bait)) Utils.BaitReport(killer, target);
             }
         }
         public static Il2CppSystem.Collections.Generic.List<PlayerControl> Shuffle(Il2CppSystem.Collections.Generic.List<PlayerControl> playersToDie)
@@ -155,6 +169,14 @@ namespace TownOfUs.Roles
                 playersToDie[r] = tmp;
             }
             return playersToDie;
+        }
+
+        public static AssetBundle loadBundle()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var stream = assembly.GetManifestResourceStream("TownOfUs.Resources.bombershader");
+            var assets = stream.ReadFully();
+            return AssetBundle.LoadFromMemory(assets);
         }
     }
 }

@@ -465,7 +465,8 @@ namespace TownOfUs.Roles
                     __instance.KillButton.DoClick();
 
                 __instance.KillButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
-                    && !MeetingHud.Instance && !__gInstance.Player.Data.IsDead);
+                    && !MeetingHud.Instance && !__gInstance.Player.Data.IsDead
+                    && AmongUsClient.Instance.GameState == InnerNetClient.GameStates.Started);
                 __instance.KillButton.SetCoolDown(
                     CustomGameOptions.GlitchKillCooldown -
                     (float)(DateTime.UtcNow - __gInstance.LastKill).TotalSeconds,
@@ -629,7 +630,8 @@ namespace TownOfUs.Roles
                 __gInstance.HackButton.graphic.sprite = HackSprite;
 
                 __gInstance.HackButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
-                    && !MeetingHud.Instance && !__gInstance.Player.Data.IsDead);
+                    && !MeetingHud.Instance && !__gInstance.Player.Data.IsDead
+                    && AmongUsClient.Instance.GameState == InnerNetClient.GameStates.Started);
                 __gInstance.HackButton.transform.position = new Vector3(__gInstance.MimicButton.transform.position.x,
                     __gInstance.HackButton.transform.position.y, __instance.ReportButton.transform.position.z);
                 __gInstance.HackButton.SetCoolDown(
@@ -707,7 +709,8 @@ namespace TownOfUs.Roles
                 __gInstance.MimicButton.graphic.sprite = MimicSprite;
 
                 __gInstance.MimicButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
-                    && !MeetingHud.Instance && !__gInstance.Player.Data.IsDead);
+                    && !MeetingHud.Instance && !__gInstance.Player.Data.IsDead
+                    && AmongUsClient.Instance.GameState == InnerNetClient.GameStates.Started);
                 if (__instance.UseButton != null)
                 {
                     __gInstance.MimicButton.transform.position = new Vector3(

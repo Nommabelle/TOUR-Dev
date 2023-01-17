@@ -44,7 +44,8 @@ namespace TownOfUs.CultistRoles.SeerMod
             }
 
             investigateButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
-                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead
+                    && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started);
             if (role.ButtonUsable) investigateButton.SetCoolDown(role.SeerTimer(), CustomGameOptions.SeerCd);
             else investigateButton.SetCoolDown(0f, CustomGameOptions.SeerCd);
 

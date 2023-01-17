@@ -26,20 +26,19 @@ namespace TownOfUs.ImpostorRoles.BomberMod
                 if (role.PlantButton.graphic.sprite == PlantSprite)
                 {
                     role.Detonated = false;
-                    role.DetonatePoint = PlayerControl.LocalPlayer.transform.position;
+                    var pos = PlayerControl.LocalPlayer.transform.position;
+                    pos.z += 0.001f;
+                    role.DetonatePoint = pos;
                     role.PlantButton.graphic.sprite = DetonateSprite;
                     role.TimeRemaining = CustomGameOptions.DetonateDelay;
                     role.PlantButton.SetCoolDown(role.TimeRemaining, CustomGameOptions.DetonateDelay);
                     PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown + CustomGameOptions.DetonateDelay);
                     DestroyableSingleton<HudManager>.Instance.KillButton.SetTarget(null);
+                    role.Bomb = BombExtentions.CreateBomb(pos);
                     return false;
                 }
-                else
-                {
-                    return false;
-                }
+                else return false;
             }
-
             return true;
         }
     }

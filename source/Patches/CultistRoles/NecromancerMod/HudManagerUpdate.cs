@@ -17,6 +17,7 @@ namespace TownOfUs.CultistRoles.NecromancerMod
             if (PlayerControl.AllPlayerControls.Count <= 1) return;
             if (PlayerControl.LocalPlayer == null) return;
             if (PlayerControl.LocalPlayer.Data == null) return;
+            if (PlayerControl.LocalPlayer.Data.IsDead) return;
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Necromancer)) return;
             var role = Role.GetRole<Necromancer>(PlayerControl.LocalPlayer);
             if (role.ReviveButton == null)
@@ -29,7 +30,8 @@ namespace TownOfUs.CultistRoles.NecromancerMod
             role.ReviveButton.graphic.sprite = ReviveSprite;
 
             role.ReviveButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
-                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead
+                    && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started);
 
             var data = PlayerControl.LocalPlayer.Data;
             var isDead = data.IsDead;

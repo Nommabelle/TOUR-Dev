@@ -18,7 +18,8 @@ namespace TownOfUs.NeutralRoles.WerewolfMod
             var role = Role.GetRole<Werewolf>(PlayerControl.LocalPlayer);
 
             __instance.KillButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
-                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead
+                    && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started);
             __instance.KillButton.SetCoolDown(role.KillTimer(), CustomGameOptions.RampageKillCd);
 
             if (role.RampageButton == null)
@@ -32,7 +33,8 @@ namespace TownOfUs.NeutralRoles.WerewolfMod
             role.RampageButton.transform.localPosition = new Vector3(-2f, 0f, 0f);
 
             role.RampageButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
-                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead
+                    && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started);
 
             if (role.Rampaged)
             {

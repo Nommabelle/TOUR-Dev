@@ -23,7 +23,8 @@ namespace TownOfUs.CrewmateRoles.DetectiveMod
             var role = Role.GetRole<Detective>(PlayerControl.LocalPlayer);
 
             examineButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
-                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead
+                    && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started);
             examineButton.SetCoolDown(role.ExamineTimer(), CustomGameOptions.ExamineCd);
             Utils.SetTarget(ref role.ClosestPlayer, examineButton, float.NaN);
 

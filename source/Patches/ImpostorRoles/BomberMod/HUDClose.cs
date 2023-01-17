@@ -14,6 +14,7 @@ namespace TownOfUs.ImpostorRoles.BomberMod
             {
                 var role = Role.GetRole<Bomber>(PlayerControl.LocalPlayer);
                 role.PlantButton.graphic.sprite = TownOfUs.PlantSprite;
+                role.Bomb.ClearBomb();
             }
         }
     }

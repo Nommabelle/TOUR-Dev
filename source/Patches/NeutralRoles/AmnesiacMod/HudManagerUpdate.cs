@@ -18,6 +18,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
             if (PlayerControl.AllPlayerControls.Count <= 1) return;
             if (PlayerControl.LocalPlayer == null) return;
             if (PlayerControl.LocalPlayer.Data == null) return;
+            if (PlayerControl.LocalPlayer.Data.IsDead) return;
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Amnesiac)) return;
 
             var role = Role.GetRole<Amnesiac>(PlayerControl.LocalPlayer);
@@ -83,7 +84,8 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
             }
 
             __instance.KillButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
-                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead
+                    && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started);
             KillButtonTarget.SetTarget(killButton, closestBody, role);
             __instance.KillButton.SetCoolDown(0f, 1f);
         }

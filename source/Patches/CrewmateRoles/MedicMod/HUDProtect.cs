@@ -23,7 +23,8 @@ namespace TownOfUs.CrewmateRoles.MedicMod
             var role = Role.GetRole<Medic>(PlayerControl.LocalPlayer);
 
             protectButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
-                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead
+                    && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started);
             protectButton.SetCoolDown(0f, 1f);
             if (role.UsedAbility) return;
             Utils.SetTarget(ref role.ClosestPlayer, protectButton);

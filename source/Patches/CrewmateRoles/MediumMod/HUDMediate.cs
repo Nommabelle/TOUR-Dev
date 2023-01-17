@@ -28,7 +28,8 @@ namespace TownOfUs.CrewmateRoles.MediumMod
 
                 var role = Role.GetRole<Medium>(PlayerControl.LocalPlayer);
                 mediateButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
-                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead
+                    && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started);
                 if (data.IsDead) return;
 
                 foreach (var player in PlayerControl.AllPlayerControls)

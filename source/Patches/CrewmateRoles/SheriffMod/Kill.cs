@@ -132,6 +132,7 @@ namespace TownOfUs.CrewmateRoles.SheriffMod
                 if (CustomGameOptions.SheriffKillOther)
                     Utils.RpcMurderPlayer(PlayerControl.LocalPlayer, role.ClosestPlayer);
                 Utils.RpcMurderPlayer(PlayerControl.LocalPlayer, PlayerControl.LocalPlayer);
+                role.LastKilled = DateTime.UtcNow;
             }
             else
             {

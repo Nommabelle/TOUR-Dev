@@ -13,6 +13,7 @@ namespace TownOfUs.CrewmateRoles.AltruistMod
             if (PlayerControl.AllPlayerControls.Count <= 1) return;
             if (PlayerControl.LocalPlayer == null) return;
             if (PlayerControl.LocalPlayer.Data == null) return;
+            if (PlayerControl.LocalPlayer.Data.IsDead) return;
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Altruist)) return;
 
             var role = Role.GetRole<Altruist>(PlayerControl.LocalPlayer);
@@ -47,7 +48,8 @@ namespace TownOfUs.CrewmateRoles.AltruistMod
             }
 
             killButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
-                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead
+                    && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started);
 
             KillButtonTarget.SetTarget(killButton, closestBody, role);
             __instance.KillButton.SetCoolDown(0f, 1f);

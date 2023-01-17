@@ -19,13 +19,6 @@ namespace TownOfUs.CrewmateRoles.TransporterMod
 
             var role = Role.GetRole<Transporter>(PlayerControl.LocalPlayer);
 
-            transportButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
-                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
-            if (data.IsDead) return;
-
-            if (role.ButtonUsable) transportButton.SetCoolDown(role.TransportTimer(), CustomGameOptions.TransportCooldown);
-            else transportButton.SetCoolDown(0f, CustomGameOptions.TransportCooldown);
-
             if (role.UsesText == null && role.UsesLeft > 0)
             {
                 role.UsesText = Object.Instantiate(transportButton.cooldownTimerText, transportButton.transform);
@@ -42,6 +35,14 @@ namespace TownOfUs.CrewmateRoles.TransporterMod
             {
                 role.UsesText.text = role.UsesLeft + "";
             }
+
+            transportButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
+                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead
+                    && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started);
+            if (data.IsDead) return;
+
+            if (role.ButtonUsable) transportButton.SetCoolDown(role.TransportTimer(), CustomGameOptions.TransportCooldown);
+            else transportButton.SetCoolDown(0f, CustomGameOptions.TransportCooldown);
 
             var renderer = transportButton.graphic;
             if (!transportButton.isCoolingDown && role.ButtonUsable)

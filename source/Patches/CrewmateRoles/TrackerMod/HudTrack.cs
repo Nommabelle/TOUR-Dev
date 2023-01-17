@@ -43,7 +43,8 @@ namespace TownOfUs.CrewmateRoles.TrackerMod
                 role.UsesText.text = role.UsesLeft + "";
             }
             trackButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
-                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead
+                    && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started);
             if (role.ButtonUsable) trackButton.SetCoolDown(role.TrackerTimer(), CustomGameOptions.TrackCd);
             else trackButton.SetCoolDown(0f, CustomGameOptions.TrackCd);
             if (role.UsesLeft == 0) return;

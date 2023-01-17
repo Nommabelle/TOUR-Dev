@@ -35,7 +35,8 @@ namespace TownOfUs.Modifiers.DisperserMod
             role.DisperseButton.graphic.sprite = DisperseButton;
 
             role.DisperseButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
-                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead
+                    && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started);
 
             role.DisperseButton.SetCoolDown(0f, 1f);
             var renderer = role.DisperseButton.graphic;

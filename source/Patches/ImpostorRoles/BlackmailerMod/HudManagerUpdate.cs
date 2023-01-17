@@ -28,7 +28,8 @@ namespace TownOfUs.ImpostorRoles.BlackmailerMod
 
             role.BlackmailButton.graphic.sprite = Blackmail;
             role.BlackmailButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
-                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead
+                    && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started);
 
             var notBlackmailed = PlayerControl.AllPlayerControls.ToArray().Where(
                 player => role.Blackmailed?.PlayerId != player.PlayerId

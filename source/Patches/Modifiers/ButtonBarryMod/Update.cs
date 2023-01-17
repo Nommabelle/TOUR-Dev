@@ -36,7 +36,8 @@ namespace TownOfUs.Modifiers.ButtonBarryMod
             role.ButtonButton.graphic.sprite = Button;
 
             role.ButtonButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
-                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead
+                    && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started);
 
             role.ButtonButton.SetCoolDown(0f, 1f);
             var renderer = role.ButtonButton.graphic;

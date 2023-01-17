@@ -26,7 +26,8 @@ namespace TownOfUs.CrewmateRoles.SeerMod
             var role = Role.GetRole<Seer>(PlayerControl.LocalPlayer);
 
             investigateButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
-                && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead);
+                    && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead
+                    && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started);
             investigateButton.SetCoolDown(role.SeerTimer(), CustomGameOptions.SeerCd);
 
             var notInvestigated = PlayerControl.AllPlayerControls
