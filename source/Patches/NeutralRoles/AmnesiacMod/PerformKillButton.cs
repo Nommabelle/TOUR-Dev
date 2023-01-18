@@ -402,16 +402,16 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
 
             var killsList = (newRole.Kills, newRole.CorrectKills, newRole.IncorrectKills, newRole.CorrectAssassinKills, newRole.IncorrectAssassinKills);
             var otherRole = Role.GetRole(other);
+            newRole.Kills = otherRole.Kills;
+            newRole.CorrectKills = otherRole.CorrectKills;
+            newRole.IncorrectKills = otherRole.IncorrectKills;
+            newRole.CorrectAssassinKills = otherRole.CorrectAssassinKills;
+            newRole.IncorrectAssassinKills = otherRole.IncorrectAssassinKills;
             otherRole.Kills = killsList.Kills;
             otherRole.CorrectKills = killsList.CorrectKills;
             otherRole.IncorrectKills = killsList.IncorrectKills;
             otherRole.CorrectAssassinKills = killsList.CorrectAssassinKills;
             otherRole.IncorrectAssassinKills = killsList.IncorrectAssassinKills;
-            newRole.Kills = 0;
-            newRole.CorrectKills = 0;
-            newRole.IncorrectKills = 0;
-            newRole.CorrectAssassinKills = 0;
-            newRole.IncorrectAssassinKills = 0;
 
             if (amnesiac.Is(Faction.Impostors) && (!amnesiac.Is(RoleEnum.Traitor) || CustomGameOptions.SnitchSeesTraitor))
             {
