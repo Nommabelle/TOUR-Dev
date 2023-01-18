@@ -10,6 +10,7 @@ using TownOfUs.Extensions;
 using TownOfUs.CrewmateRoles.ImitatorMod;
 using AmongUs.GameOptions;
 using TownOfUs.Roles.Modifiers;
+using TownOfUs.ImpostorRoles.BomberMod;
 
 namespace TownOfUs.NeutralRoles.AmnesiacMod
 {
@@ -393,6 +394,12 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 trapperRole.UsesLeft = CustomGameOptions.MaxTraps;
                 trapperRole.trappedPlayers.Clear();
                 trapperRole.traps.ClearTraps();
+            }
+
+            else if (role == RoleEnum.Bomber)
+            {
+                var bomberRole = Role.GetRole<Bomber>(amnesiac);
+                bomberRole.Bomb.ClearBomb();
             }
 
             else if (!(amnesiac.Is(RoleEnum.Altruist) || amnesiac.Is(RoleEnum.Amnesiac) || amnesiac.Is(Faction.Impostors)))
