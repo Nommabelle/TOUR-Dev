@@ -18,7 +18,6 @@ namespace TownOfUs.Patches
                     player.transform.localScale = player.GetAppearance().SizeFactor;
                 else
                     player.transform.localScale = new Vector3(0.7f, 0.7f, 1.0f);
-
             }
 
             var playerBindings = PlayerControl.AllPlayerControls.ToArray().ToDictionary(player => player.PlayerId);
