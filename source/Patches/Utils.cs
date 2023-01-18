@@ -297,6 +297,30 @@ namespace TownOfUs
                 if (killer == PlayerControl.LocalPlayer)
                     SoundManager.Instance.PlaySound(PlayerControl.LocalPlayer.KillSfx, false, 0.8f);
 
+                Role.GetRole(killer).Kills += 1;
+
+                if (killer.Is(RoleEnum.Sheriff))
+                {
+                    var sheriff = Role.GetRole<Sheriff>(killer);
+                    if (target.Is(Faction.Impostors) ||
+                        target.Is(RoleEnum.Glitch) && CustomGameOptions.SheriffKillsGlitch ||
+                        target.Is(RoleEnum.Arsonist) && CustomGameOptions.SheriffKillsArsonist ||
+                        target.Is(RoleEnum.Plaguebearer) && CustomGameOptions.SheriffKillsPlaguebearer ||
+                        target.Is(RoleEnum.Pestilence) && CustomGameOptions.SheriffKillsPlaguebearer ||
+                        target.Is(RoleEnum.Werewolf) && CustomGameOptions.SheriffKillsWerewolf ||
+                        target.Is(RoleEnum.Juggernaut) && CustomGameOptions.SheriffKillsJuggernaut ||
+                        target.Is(RoleEnum.Executioner) && CustomGameOptions.SheriffKillsExecutioner ||
+                        target.Is(RoleEnum.Jester) && CustomGameOptions.SheriffKillsJester) sheriff.CorrectKills += 1;
+                    else if (killer == target) sheriff.IncorrectKills += 1;
+                }
+
+                if (killer.Is(RoleEnum.Veteran))
+                {
+                    var veteran = Role.GetRole<Veteran>(killer);
+                    if (target.Is(Faction.Impostors) || target.Is(Faction.Neutral)) veteran.CorrectKills += 1;
+                    else veteran.IncorrectKills += 1;
+                }
+
                 target.gameObject.layer = LayerMask.NameToLayer("Ghost");
                 target.Visible = false;
 

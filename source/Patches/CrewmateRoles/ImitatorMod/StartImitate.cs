@@ -54,6 +54,8 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
                 var haunter = Role.GetRole<Haunter>(imitator.ImitatePlayer);
                 imitatorRole = haunter.formerRole;
             }
+            var role = Role.GetRole(ImitatingPlayer);
+            var killsList = (role.Kills, role.CorrectKills, role.IncorrectKills, role.CorrectAssassinKills, role.IncorrectAssassinKills);
             Role.RoleDictionary.Remove(ImitatingPlayer.PlayerId);
             if (imitatorRole == RoleEnum.Detective) new Detective(ImitatingPlayer);
             if (imitatorRole == RoleEnum.Investigator) new Investigator(ImitatingPlayer);
@@ -69,6 +71,11 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
             if (imitatorRole == RoleEnum.Transporter) new Transporter(ImitatingPlayer);
             var newRole = Role.GetRole(ImitatingPlayer);
             newRole.RemoveFromRoleHistory(newRole.RoleType);
+            newRole.Kills = killsList.Kills;
+            newRole.CorrectKills = killsList.CorrectKills;
+            newRole.IncorrectKills = killsList.IncorrectKills;
+            newRole.CorrectAssassinKills = killsList.CorrectAssassinKills;
+            newRole.IncorrectAssassinKills = killsList.IncorrectAssassinKills;
         }
     }
 }

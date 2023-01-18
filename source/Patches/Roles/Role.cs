@@ -60,6 +60,11 @@ namespace TownOfUs.Roles
         public bool LostByRPC { get; protected set; }
         protected internal int TasksLeft => Player.Data.Tasks.ToArray().Count(x => !x.Complete);
         protected internal int TotalTasks => Player.Data.Tasks.Count;
+        protected internal int Kills { get; set; } = 0;
+        protected internal int CorrectKills { get; set; } = 0;
+        protected internal int IncorrectKills { get; set; } = 0;
+        protected internal int CorrectAssassinKills { get; set; } = 0;
+        protected internal int IncorrectAssassinKills { get; set; } = 0;
 
         public bool Local => PlayerControl.LocalPlayer.PlayerId == Player.PlayerId;
 

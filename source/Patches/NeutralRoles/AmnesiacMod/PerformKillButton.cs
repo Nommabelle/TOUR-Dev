@@ -400,6 +400,19 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(false);
             }
 
+            var killsList = (newRole.Kills, newRole.CorrectKills, newRole.IncorrectKills, newRole.CorrectAssassinKills, newRole.IncorrectAssassinKills);
+            var otherRole = Role.GetRole(other);
+            otherRole.Kills = killsList.Kills;
+            otherRole.CorrectKills = killsList.CorrectKills;
+            otherRole.IncorrectKills = killsList.IncorrectKills;
+            otherRole.CorrectAssassinKills = killsList.CorrectAssassinKills;
+            otherRole.IncorrectAssassinKills = killsList.IncorrectAssassinKills;
+            newRole.Kills = 0;
+            newRole.CorrectKills = 0;
+            newRole.IncorrectKills = 0;
+            newRole.CorrectAssassinKills = 0;
+            newRole.IncorrectAssassinKills = 0;
+
             if (amnesiac.Is(Faction.Impostors) && (!amnesiac.Is(RoleEnum.Traitor) || CustomGameOptions.SnitchSeesTraitor))
             {
                 foreach (var snitch in Role.GetRoles(RoleEnum.Snitch))

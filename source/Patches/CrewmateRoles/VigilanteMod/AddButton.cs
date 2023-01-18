@@ -172,7 +172,7 @@ namespace TownOfUs.CrewmateRoles.VigilanteMod
 
                 if (!toDie.Is(RoleEnum.Pestilence))
                 {
-                    VigilanteKill.RpcMurderPlayer(toDie);
+                    VigilanteKill.RpcMurderPlayer(toDie, PlayerControl.LocalPlayer);
                     role.RemainingKills--;
                     ShowHideButtonsVigi.HideSingle(role, targetId, toDie == role.Player);
                     if (toDie.IsLover() && CustomGameOptions.BothLoversDie)

@@ -13,20 +13,22 @@ namespace TownOfUs.CrewmateRoles.VigilanteMod
 {
     public class VigilanteKill
     {
-        public static void RpcMurderPlayer(PlayerControl player)
+        public static void RpcMurderPlayer(PlayerControl player, PlayerControl vigilante)
 
         {
             PlayerVoteArea voteArea = MeetingHud.Instance.playerStates.First(
                 x => x.TargetPlayerId == player.PlayerId
             );
-            RpcMurderPlayer(voteArea, player);
+            RpcMurderPlayer(voteArea, player, vigilante);
         }
-        public static void RpcMurderPlayer(PlayerVoteArea voteArea, PlayerControl player)
+        public static void RpcMurderPlayer(PlayerVoteArea voteArea, PlayerControl player, PlayerControl vigilante)
         {
             MurderPlayer(voteArea, player);
+            VigiKillCount(player, vigilante);
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                 (byte)CustomRPC.VigilanteKill, SendOption.Reliable, -1);
             writer.Write(player.PlayerId);
+            writer.Write(vigilante.PlayerId);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
 
@@ -36,6 +38,12 @@ namespace TownOfUs.CrewmateRoles.VigilanteMod
                 x => x.TargetPlayerId == player.PlayerId
             );
             MurderPlayer(voteArea, player, checkLover);
+        }
+        public static void VigiKillCount(PlayerControl player, PlayerControl vigilante)
+        {
+            var vigi = Role.GetRole<Vigilante>(vigilante);
+            if (player == vigilante) vigi.IncorrectAssassinKills += 1;
+            else vigi.CorrectAssassinKills += 1;
         }
         public static void MurderPlayer(
             PlayerVoteArea voteArea,

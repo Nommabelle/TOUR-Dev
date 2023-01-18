@@ -936,11 +936,15 @@ namespace TownOfUs
                         break;
                     case CustomRPC.AssassinKill:
                         var toDie = Utils.PlayerById(reader.ReadByte());
+                        var assassin = Utils.PlayerById(reader.ReadByte());
                         AssassinKill.MurderPlayer(toDie);
+                        AssassinKill.AssassinKillCount(toDie, assassin);
                         break;
                     case CustomRPC.VigilanteKill:
                         var toDie2 = Utils.PlayerById(reader.ReadByte());
+                        var vigi = Utils.PlayerById(reader.ReadByte());
                         VigilanteKill.MurderPlayer(toDie2);
+                        VigilanteKill.VigiKillCount(toDie2, vigi);
                         break;
                     case CustomRPC.SetMimic:
                         var glitchPlayer = Utils.PlayerById(reader.ReadByte());

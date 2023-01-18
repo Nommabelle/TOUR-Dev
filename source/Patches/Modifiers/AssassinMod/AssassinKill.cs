@@ -16,19 +16,21 @@ namespace TownOfUs.Modifiers.AssassinMod
 {
     public class AssassinKill
     {
-        public static void RpcMurderPlayer(PlayerControl player)
+        public static void RpcMurderPlayer(PlayerControl player, PlayerControl assassin)
         {
             PlayerVoteArea voteArea = MeetingHud.Instance.playerStates.First(
                 x => x.TargetPlayerId == player.PlayerId
             );
-            RpcMurderPlayer(voteArea, player);
+            RpcMurderPlayer(voteArea, player, assassin);
         }
-        public static void RpcMurderPlayer(PlayerVoteArea voteArea, PlayerControl player)
+        public static void RpcMurderPlayer(PlayerVoteArea voteArea, PlayerControl player, PlayerControl assassin)
         {
             MurderPlayer(voteArea, player);
+            AssassinKillCount(player, assassin);
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                 (byte)CustomRPC.AssassinKill, SendOption.Reliable, -1);
             writer.Write(player.PlayerId);
+            writer.Write(assassin.PlayerId);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
 
@@ -38,6 +40,12 @@ namespace TownOfUs.Modifiers.AssassinMod
                 x => x.TargetPlayerId == player.PlayerId
             );
             MurderPlayer(voteArea, player, checkLover);
+        }
+        public static void AssassinKillCount(PlayerControl player, PlayerControl assassin)
+        {
+            var assassinPlayer = Role.GetRole(assassin);
+            if (player == assassin) assassinPlayer.IncorrectAssassinKills += 1;
+            else assassinPlayer.CorrectAssassinKills += 1;
         }
         public static void MurderPlayer(
             PlayerVoteArea voteArea,

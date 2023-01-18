@@ -60,10 +60,17 @@ namespace TownOfUs.CrwemateRoles.ImitatorMod
                     if (!PlayerControl.LocalPlayer.Is(RoleEnum.Investigator) && !PlayerControl.LocalPlayer.Is(RoleEnum.Mystic)
                         && !PlayerControl.LocalPlayer.Is(RoleEnum.Spy)) DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(false);
                 }
+                var role = Role.GetRole(StartImitate.ImitatingPlayer);
+                var killsList = (role.Kills, role.CorrectKills, role.IncorrectKills, role.CorrectAssassinKills, role.IncorrectAssassinKills);
                 Role.RoleDictionary.Remove(StartImitate.ImitatingPlayer.PlayerId);
                 new Imitator(StartImitate.ImitatingPlayer);
                 var newRole = Role.GetRole(StartImitate.ImitatingPlayer);
                 newRole.RemoveFromRoleHistory(newRole.RoleType);
+                newRole.Kills = killsList.Kills;
+                newRole.CorrectKills = killsList.CorrectKills;
+                newRole.IncorrectKills = killsList.IncorrectKills;
+                newRole.CorrectAssassinKills = killsList.CorrectAssassinKills;
+                newRole.IncorrectAssassinKills = killsList.IncorrectAssassinKills;
                 Role.GetRole<Imitator>(StartImitate.ImitatingPlayer).ImitatePlayer = null;
                 StartImitate.ImitatingPlayer = null;
             }

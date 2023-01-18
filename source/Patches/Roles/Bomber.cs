@@ -84,6 +84,8 @@ namespace TownOfUs.Roles
                 if (killer == PlayerControl.LocalPlayer)
                     SoundManager.Instance.PlaySound(PlayerControl.LocalPlayer.KillSfx, false, 0.8f);
 
+                GetRole(killer).Kills += 1;
+
                 target.gameObject.layer = LayerMask.NameToLayer("Ghost");
                 target.Visible = false;
 
