@@ -16,6 +16,7 @@ namespace TownOfUs.ImpostorRoles.BomberMod
             if (!PlayerControl.LocalPlayer.CanMove) return false;
             if (PlayerControl.LocalPlayer.Data.IsDead) return false;
             var role = Role.GetRole<Bomber>(PlayerControl.LocalPlayer);
+            if (role.StartTimer() > 0) return false;
 
             if (__instance == role.PlantButton)
             {

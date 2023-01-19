@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace TownOfUs.Roles
 {
@@ -7,12 +8,14 @@ namespace TownOfUs.Roles
     {
         public readonly List<GameObject> Buttons = new List<GameObject>();
         public Dictionary<int, string> LightDarkColors = new Dictionary<int, string>();
+        public DateTime StartingCooldown { get; set; }
         public Medic(PlayerControl player) : base(player)
         {
             Name = "Medic";
             ImpostorText = () => "Create A Shield To Protect A Crewmate";
             TaskText = () => "Protect a crewmate with a shield";
             Color = Patches.Colors.Medic;
+            StartingCooldown = DateTime.UtcNow;
             RoleType = RoleEnum.Medic;
             AddToRoleHistory(RoleType);
             ShieldedPlayer = null;
@@ -52,6 +55,15 @@ namespace TownOfUs.Roles
             LightDarkColors.Add(32, "darker"); // Tawny
             LightDarkColors.Add(33, "lighter"); // Gold
             LightDarkColors.Add(34, "lighter"); // Rainbow
+        }
+        public float StartTimer()
+        {
+            var utcNow = DateTime.UtcNow;
+            var timeSpan = utcNow - StartingCooldown;
+            var num = 10000f;
+            var flag2 = num - (float)timeSpan.TotalMilliseconds < 0f;
+            if (flag2) return 0;
+            return (num - (float)timeSpan.TotalMilliseconds) / 1000f;
         }
 
         public PlayerControl ClosestPlayer;

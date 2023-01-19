@@ -22,6 +22,7 @@ namespace TownOfUs.Roles
         public Bomb Bomb = new Bomb();
         public static AssetBundle bundle = loadBundle();
         public static Material bombMaterial = bundle.LoadAsset<Material>("bomb").DontUnload();
+        public DateTime StartingCooldown { get; set; }
 
         public Bomber(PlayerControl player) : base(player)
         {
@@ -29,6 +30,7 @@ namespace TownOfUs.Roles
             ImpostorText = () => "Plant Bombs To Kill Multiple Crewmates At Once";
             TaskText = () => "Plant bombs to kill crewmates";
             Color = Palette.ImpostorRed;
+            StartingCooldown = DateTime.UtcNow;
             RoleType = RoleEnum.Bomber;
             AddToRoleHistory(RoleType);
             Faction = Faction.Impostors;
@@ -42,6 +44,15 @@ namespace TownOfUs.Roles
                 ExtraButtons.Clear();
                 ExtraButtons.Add(value);
             }
+        }
+        public float StartTimer()
+        {
+            var utcNow = DateTime.UtcNow;
+            var timeSpan = utcNow - StartingCooldown;
+            var num = 10000f;
+            var flag2 = num - (float)timeSpan.TotalMilliseconds < 0f;
+            if (flag2) return 0;
+            return (num - (float)timeSpan.TotalMilliseconds) / 1000f;
         }
         public bool Detonating => TimeRemaining > 0f;
         public void DetonateTimer()

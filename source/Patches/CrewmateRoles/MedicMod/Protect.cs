@@ -16,6 +16,7 @@ namespace TownOfUs.CrewmateRoles.MedicMod
             if (!PlayerControl.LocalPlayer.CanMove) return false;
             if (PlayerControl.LocalPlayer.Data.IsDead) return false;
             if (role.UsedAbility || role.ClosestPlayer == null) return false;
+            if (role.StartTimer() > 0) return false;
             if (role.ClosestPlayer.IsInfected() || role.Player.IsInfected())
             {
                 foreach (var pb in Role.GetRoles(RoleEnum.Plaguebearer)) ((Plaguebearer)pb).RpcSpreadInfection(role.ClosestPlayer, role.Player);

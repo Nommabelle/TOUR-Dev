@@ -39,7 +39,7 @@ namespace TownOfUs.Modifiers.ButtonBarryMod
                     && !MeetingHud.Instance && !PlayerControl.LocalPlayer.Data.IsDead
                     && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started);
 
-            role.ButtonButton.SetCoolDown(0f, 1f);
+            role.ButtonButton.SetCoolDown(role.StartTimer(), 10f);
             var renderer = role.ButtonButton.graphic;
 
             if (__instance.UseButton != null)
