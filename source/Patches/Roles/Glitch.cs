@@ -490,128 +490,27 @@ namespace TownOfUs.Roles
                 if (__gInstance.KillTarget != null)
                 {
                     if (__gInstance.Player.inVent) return;
-                    if (__gInstance.KillTarget.Is(RoleEnum.Pestilence))
+                    var interact = Utils.Interact(__gInstance.Player, __gInstance.KillTarget, true);
+                    if (interact[4] == true) return;
+                    else if (interact[0] == true)
                     {
-                        if (__gInstance.Player.IsShielded())
-                        {
-                            var medic = __gInstance.Player.GetMedic().Player.PlayerId;
-                            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                                (byte)CustomRPC.AttemptSound, SendOption.Reliable, -1);
-                            writer.Write(medic);
-                            writer.Write(__gInstance.Player.PlayerId);
-                            AmongUsClient.Instance.FinishRpcImmediately(writer);
-
-                            if (CustomGameOptions.ShieldBreaks) __gInstance.LastKill = DateTime.UtcNow;
-
-                            StopKill.BreakShield(medic, __gInstance.Player.PlayerId,
-                                CustomGameOptions.ShieldBreaks);
-                        }
-                        if (__gInstance.Player.IsProtected())
-                        {
-                            __gInstance.LastKill.AddSeconds(CustomGameOptions.ProtectKCReset);
-                            return;
-                        }
-                        Utils.RpcMurderPlayer(__gInstance.KillTarget, __gInstance.Player);
+                        __gInstance.LastKill = DateTime.UtcNow;
                         return;
                     }
-                    if (__gInstance.KillTarget.IsInfected() || __gInstance.Player.IsInfected())
+                    else if (interact[1] == true)
                     {
-                        foreach (var pb in Role.GetRoles(RoleEnum.Plaguebearer)) ((Plaguebearer)pb).RpcSpreadInfection(__gInstance.KillTarget, __gInstance.Player);
-                    }
-                    if (__gInstance.KillTarget.IsOnAlert())
-                    {
-                        if (__gInstance.KillTarget.IsShielded())
-                        {
-                            var medic = __gInstance.KillTarget.GetMedic().Player.PlayerId;
-                            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                                (byte)CustomRPC.AttemptSound, SendOption.Reliable, -1);
-                            writer.Write(medic);
-                            writer.Write(__gInstance.KillTarget.PlayerId);
-                            AmongUsClient.Instance.FinishRpcImmediately(writer);
-
-                            if (CustomGameOptions.ShieldBreaks) __gInstance.LastKill = DateTime.UtcNow;
-
-                            StopKill.BreakShield(medic, __gInstance.KillTarget.PlayerId,
-                                CustomGameOptions.ShieldBreaks);
-                            if (!__gInstance.Player.IsProtected())
-                                Utils.RpcMurderPlayer(__gInstance.KillTarget, __gInstance.Player);
-                        }
-                        else if (__gInstance.Player.IsShielded())
-                        {
-                            var medic = __gInstance.Player.GetMedic().Player.PlayerId;
-                            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                                (byte)CustomRPC.AttemptSound, SendOption.Reliable, -1);
-                            writer.Write(medic);
-                            writer.Write(__gInstance.Player.PlayerId);
-                            AmongUsClient.Instance.FinishRpcImmediately(writer);
-
-                            if (CustomGameOptions.ShieldBreaks) __gInstance.LastKill = DateTime.UtcNow;
-
-                            StopKill.BreakShield(medic, __gInstance.Player.PlayerId,
-                                CustomGameOptions.ShieldBreaks);
-                            if (CustomGameOptions.KilledOnAlert && !__gInstance.KillTarget.IsProtected())
-                            {
-                                Utils.RpcMurderPlayer(__gInstance.Player, __gInstance.KillTarget);
-                                __gInstance.Player.SetKillTimer(CustomGameOptions.GlitchKillCooldown);
-                            }
-                        }
-                        else if (__gInstance.KillTarget.IsProtected())
-                        {
-                            Utils.RpcMurderPlayer(__gInstance.KillTarget, __gInstance.Player);
-                        }
-                        else if (CustomGameOptions.KilledOnAlert && __gInstance.Player.IsProtected())
-                        {
-                            Utils.RpcMurderPlayer(__gInstance.Player, __gInstance.KillTarget);
-                            __gInstance.Player.SetKillTimer(CustomGameOptions.GlitchKillCooldown);
-                        }
-                        else if (!CustomGameOptions.KilledOnAlert && __gInstance.Player.IsProtected())
-                        {
-                            __gInstance.Player.SetKillTimer(CustomGameOptions.ProtectKCReset);
-                        }
-                        else
-                        {
-                            Utils.RpcMurderPlayer(__gInstance.KillTarget, __gInstance.Player);
-                            if (CustomGameOptions.KilledOnAlert)
-                            {
-                                Utils.RpcMurderPlayer(__gInstance.Player, __gInstance.KillTarget);
-                                __gInstance.Player.SetKillTimer(CustomGameOptions.GlitchKillCooldown);
-                            }
-                        }
-
+                        __gInstance.LastKill = DateTime.UtcNow;
+                        __gInstance.LastKill = __gInstance.LastKill.AddSeconds(CustomGameOptions.ProtectKCReset - CustomGameOptions.GlitchKillCooldown);
                         return;
                     }
-                    else if (__gInstance.KillTarget.IsShielded())
+                    else if (interact[2] == true)
                     {
-                        var medic = __gInstance.KillTarget.GetMedic().Player.PlayerId;
-                        var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                            (byte)CustomRPC.AttemptSound, SendOption.Reliable, -1);
-                        writer.Write(medic);
-                        writer.Write(__gInstance.KillTarget.PlayerId);
-                        AmongUsClient.Instance.FinishRpcImmediately(writer);
-
-                        if (CustomGameOptions.ShieldBreaks) __gInstance.LastKill = DateTime.UtcNow;
-
-                        StopKill.BreakShield(medic, __gInstance.KillTarget.PlayerId,
-                            CustomGameOptions.ShieldBreaks);
-
+                        __gInstance.LastKill = DateTime.UtcNow;
+                        __gInstance.LastKill = __gInstance.LastKill.AddSeconds(CustomGameOptions.VestKCReset - CustomGameOptions.GlitchKillCooldown);
                         return;
                     }
-                    else if (__gInstance.KillTarget.IsVesting())
-                    {
-                        __gInstance.LastKill.AddSeconds(CustomGameOptions.VestKCReset);
-
-                        return;
-                    }
-                    else if (__gInstance.KillTarget.IsProtected())
-                    {
-                        __gInstance.LastKill.AddSeconds(CustomGameOptions.ProtectKCReset);
-
-                        return;
-                    }
-
-                    __gInstance.LastKill = DateTime.UtcNow;
-                    __gInstance.Player.SetKillTimer(CustomGameOptions.GlitchKillCooldown);
-                    Utils.RpcMurderPlayer(__gInstance.Player, __gInstance.KillTarget);
+                    else if (interact[3] == true) return;
+                    return;
                 }
             }
         }
@@ -662,35 +561,24 @@ namespace TownOfUs.Roles
                 // Bug: Hacking someone doing fuel breaks all their buttons/abilities including the use and report buttons
                 if (__gInstance.HackTarget != null)
                 {
-                    if (__gInstance.HackTarget.IsInfected() || __gInstance.Player.IsInfected())
+                    var interact = Utils.Interact(__gInstance.Player, __gInstance.HackTarget);
+                    if (interact[4] == true)
                     {
-                        foreach (var pb in Role.GetRoles(RoleEnum.Plaguebearer)) ((Plaguebearer)pb).RpcSpreadInfection(__gInstance.HackTarget, __gInstance.Player);
+                        __gInstance.RpcSetHacked(__gInstance.HackTarget);
                     }
-                    if (__gInstance.HackTarget.IsOnAlert() || __gInstance.HackTarget.Is(RoleEnum.Pestilence))
+                    if (interact[0] == true)
                     {
-                        if (__gInstance.Player.IsShielded())
-                        {
-                            var writer2 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                                (byte)CustomRPC.AttemptSound, SendOption.Reliable, -1);
-                            writer2.Write(PlayerControl.LocalPlayer.GetMedic().Player.PlayerId);
-                            writer2.Write(PlayerControl.LocalPlayer.PlayerId);
-                            AmongUsClient.Instance.FinishRpcImmediately(writer2);
-
-                            System.Console.WriteLine(CustomGameOptions.ShieldBreaks + "- shield break");
-                            if (CustomGameOptions.ShieldBreaks)
-                                __gInstance.LastHack = DateTime.UtcNow;
-                            StopKill.BreakShield(PlayerControl.LocalPlayer.GetMedic().Player.PlayerId, PlayerControl.LocalPlayer.PlayerId, CustomGameOptions.ShieldBreaks);
-                        }
-                        else
-                        {
-                            Utils.RpcMurderPlayer(__gInstance.HackTarget, __gInstance.Player);
-                        }
+                        __gInstance.LastHack = DateTime.UtcNow;
                         return;
                     }
-
-                    __gInstance.LastHack = DateTime.UtcNow;
-                    //System.Console.WriteLine("Hacking " + __gInstance.HackTarget.Data.PlayerName + "...");
-                    __gInstance.RpcSetHacked(__gInstance.HackTarget);
+                    else if (interact[1] == true)
+                    {
+                        __gInstance.LastHack = DateTime.UtcNow;
+                        __gInstance.LastHack.AddSeconds(CustomGameOptions.ProtectKCReset  - CustomGameOptions.HackCooldown);
+                        return;
+                    }
+                    else if (interact[3] == true) return;
+                    return;
                 }
             }
         }

@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using TMPro;
 using AmongUs.GameOptions;
+using TownOfUs.Extensions;
 
 namespace TownOfUs.Roles
 {
@@ -58,6 +59,12 @@ namespace TownOfUs.Roles
 
         public void UnProtect()
         {
+            var ga = GetRole<GuardianAngel>(Player);
+            if (!ga.target.IsShielded())
+            {
+                ga.target.myRend().material.SetColor("_VisorColor", Palette.VisorColor);
+                ga.target.myRend().material.SetFloat("_Outline", 0f);
+            }
             Enabled = false;
             LastProtected = DateTime.UtcNow;
         }

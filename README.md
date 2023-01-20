@@ -146,6 +146,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <ul> <li>Bug Fix: Underdog now can have a kill cooldown below 10secs</li> </ul>
   <ul> <li>Bug Fix: Miner's mines are no longer invisible in certain places</li> </ul>
   <ul> <li>Bug Fix: Undertaker no longer can make a body become invisible in certain places</li> </ul>
+  <ul> <li>Bug Fix: Neutral Killers now get correct cooldowns when attacking a vesting Survivor or a Guardian Angel shield</li> </ul>
   <ul> <li>Adjusted the Trapper's trap & Grenadier's flash radius so they scale correctly</li> </ul>
   </details>
   <details>

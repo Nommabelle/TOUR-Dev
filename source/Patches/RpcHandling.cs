@@ -1584,7 +1584,7 @@ namespace TownOfUs
                 }
 
                 if (CustomGameOptions.GameMode == GameMode.KillingOnly) GenEachRoleKilling(infected.ToList());
-                if (CustomGameOptions.GameMode == GameMode.Cultist) GenEachRoleCultist(infected.ToList());
+                else if (CustomGameOptions.GameMode == GameMode.Cultist) GenEachRoleCultist(infected.ToList());
                 else GenEachRole(infected.ToList());
             }
         }

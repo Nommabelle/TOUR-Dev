@@ -23,119 +23,28 @@ namespace TownOfUs
                 if (!target.inVent) Utils.RpcMurderPlayer(PlayerControl.LocalPlayer, target);
                 return false;
             }
-            if (target.Is(RoleEnum.Pestilence))
+            var interact = Utils.Interact(PlayerControl.LocalPlayer, target, true);
+            if (interact[4] == true) return false;
+            else if (interact[0] == true)
             {
-                if (PlayerControl.LocalPlayer.IsShielded())
-                {
-                    var medic = PlayerControl.LocalPlayer.GetMedic().Player.PlayerId;
-                    var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                        (byte)CustomRPC.AttemptSound, SendOption.Reliable, -1);
-                    writer.Write(medic);
-                    writer.Write(PlayerControl.LocalPlayer.PlayerId);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer);
-
-                    if (CustomGameOptions.ShieldBreaks) PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown);
-                    else PlayerControl.LocalPlayer.SetKillTimer(0.01f);
-
-                    StopKill.BreakShield(medic, PlayerControl.LocalPlayer.PlayerId,
-                        CustomGameOptions.ShieldBreaks);
-                }
-                if (PlayerControl.LocalPlayer.IsProtected())
-                {
-                    PlayerControl.LocalPlayer.SetKillTimer(CustomGameOptions.ProtectKCReset + 0.01f);
-                    return false;
-                }
-                Utils.RpcMurderPlayer(target, PlayerControl.LocalPlayer);
+                PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown);
                 return false;
             }
-            if (target.IsInfected() || PlayerControl.LocalPlayer.IsInfected())
-            {
-                foreach (var pb in Role.GetRoles(RoleEnum.Plaguebearer)) ((Plaguebearer)pb).RpcSpreadInfection(target, PlayerControl.LocalPlayer);
-            }
-            if (target.IsOnAlert())
-            {
-                if (target.IsShielded())
-                {
-                    var medic = target.GetMedic().Player.PlayerId;
-                    var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                        (byte)CustomRPC.AttemptSound, SendOption.Reliable, -1);
-                    writer.Write(medic);
-                    writer.Write(target.PlayerId);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer);
-
-                    if (CustomGameOptions.ShieldBreaks) PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown);
-                    else PlayerControl.LocalPlayer.SetKillTimer(0.01f);
-
-                    StopKill.BreakShield(medic, target.PlayerId,
-                        CustomGameOptions.ShieldBreaks);
-                    if (!PlayerControl.LocalPlayer.IsProtected())
-                    {
-                        Utils.RpcMurderPlayer(target, PlayerControl.LocalPlayer);
-                    }
-                }
-                else if (PlayerControl.LocalPlayer.IsShielded())
-                {
-                    var medic = PlayerControl.LocalPlayer.GetMedic().Player.PlayerId;
-                    var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                        (byte)CustomRPC.AttemptSound, SendOption.Reliable, -1);
-                    writer.Write(medic);
-                    writer.Write(PlayerControl.LocalPlayer.PlayerId);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer);
-
-                    if (CustomGameOptions.ShieldBreaks) PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown);
-                    else PlayerControl.LocalPlayer.SetKillTimer(0.01f);
-
-                    StopKill.BreakShield(medic, PlayerControl.LocalPlayer.PlayerId, CustomGameOptions.ShieldBreaks);
-                    if (CustomGameOptions.KilledOnAlert && !target.IsProtected())
-                    {
-                        Utils.RpcMurderPlayer(PlayerControl.LocalPlayer, target);
-                        PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown);
-                    }
-                }
-                else
-                {
-                    if (!PlayerControl.LocalPlayer.IsProtected())
-                    {
-                        Utils.RpcMurderPlayer(target, PlayerControl.LocalPlayer);
-                    }
-                    if (CustomGameOptions.KilledOnAlert && !target.IsProtected())
-                    {
-                        PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown);
-                        Utils.RpcMurderPlayer(PlayerControl.LocalPlayer, target);
-                    }
-                    else
-                    {
-                        PlayerControl.LocalPlayer.SetKillTimer(CustomGameOptions.ProtectKCReset + 0.01f);
-                    }
-                }
-                return false;
-            }
-            else if (target.IsShielded())
-            {
-                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.AttemptSound, SendOption.Reliable, -1);
-                writer.Write(target.GetMedic().Player.PlayerId);
-                writer.Write(target.PlayerId);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
-
-                System.Console.WriteLine(CustomGameOptions.ShieldBreaks + "- shield break");
-                if (CustomGameOptions.ShieldBreaks) PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown);
-                else PlayerControl.LocalPlayer.SetKillTimer(0.01f);
-                StopKill.BreakShield(target.GetMedic().Player.PlayerId, target.PlayerId, CustomGameOptions.ShieldBreaks);
-                return false;
-            }
-            else if (target.IsVesting())
-            {
-                PlayerControl.LocalPlayer.SetKillTimer(CustomGameOptions.VestKCReset + 0.01f);
-                return false;
-            }
-            else if (target.IsProtected())
+            else if (interact[1] == true)
             {
                 PlayerControl.LocalPlayer.SetKillTimer(CustomGameOptions.ProtectKCReset + 0.01f);
                 return false;
             }
-            PlayerControl.LocalPlayer.SetKillTimer(GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown);
-            Utils.RpcMurderPlayer(PlayerControl.LocalPlayer, target);
+            else if (interact[2] == true)
+            {
+                PlayerControl.LocalPlayer.SetKillTimer(CustomGameOptions.VestKCReset + 0.01f);
+                return false;
+            }
+            else if (interact[3] == true)
+            {
+                PlayerControl.LocalPlayer.SetKillTimer(0.01f);
+                return false;
+            }
             return false;
         }
     }
