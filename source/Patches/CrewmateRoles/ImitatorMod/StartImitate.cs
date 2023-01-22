@@ -47,6 +47,7 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
 
         public static void Imitate(Imitator imitator)
         {
+            if (imitator.ImitatePlayer == null) return;
             ImitatingPlayer = imitator.Player;
             var imitatorRole = Role.GetRole(imitator.ImitatePlayer).RoleType;
             if (imitatorRole == RoleEnum.Haunter)

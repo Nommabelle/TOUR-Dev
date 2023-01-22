@@ -81,7 +81,7 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
 
             if (PlayerControl.LocalPlayer.Data.IsDead) return;
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Imitator)) return;
-            var imitatorrole = Role.GetRole<Imitator>(PlayerControl.LocalPlayer);
+            var imitatorRole = Role.GetRole<Imitator>(PlayerControl.LocalPlayer);
             for (var i = 0; i < __instance.playerStates.Length; i++)
             {
                 foreach (var player in PlayerControl.AllPlayerControls)
@@ -95,14 +95,14 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
                             var haunter = Role.GetRole<Haunter>(player);
                             imitatedRole = haunter.formerRole;
                         }
-                        if (__instance.playerStates[i].AmDead && (imitatedRole == RoleEnum.Detective ||
+                        if (player.Data.IsDead && !player.Data.Disconnected && (imitatedRole == RoleEnum.Detective ||
                             imitatedRole == RoleEnum.Investigator || imitatedRole == RoleEnum.Mystic ||
                             imitatedRole == RoleEnum.Seer || imitatedRole == RoleEnum.Spy ||
                             imitatedRole == RoleEnum.Tracker || imitatedRole == RoleEnum.Sheriff ||
                             imitatedRole == RoleEnum.Veteran || imitatedRole == RoleEnum.Altruist ||
                             imitatedRole == RoleEnum.Engineer || imitatedRole == RoleEnum.Medium ||
                             imitatedRole == RoleEnum.Transporter)) imitatable = true;
-                        GenButton(imitatorrole, i, imitatable);
+                        GenButton(imitatorRole, i, imitatable);
                     }
                 }
             }

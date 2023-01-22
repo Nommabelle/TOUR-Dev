@@ -9,6 +9,7 @@ using TownOfUs.Roles;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using TownOfUs.Roles.Modifiers;
+using AmongUs.GameOptions;
 
 namespace TownOfUs.CrewmateRoles.AltruistMod
 {
@@ -56,6 +57,8 @@ namespace TownOfUs.CrewmateRoles.AltruistMod
             var player = Utils.PlayerById(parentId);
 
             player.Revive();
+            if (player.Is(Faction.Impostors)) RoleManager.Instance.SetRole(player, RoleTypes.Impostor);
+            else RoleManager.Instance.SetRole(player, RoleTypes.Crewmate);
             Murder.KilledPlayers.Remove(
                 Murder.KilledPlayers.FirstOrDefault(x => x.PlayerId == player.PlayerId));
             revived.Add(player);

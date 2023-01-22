@@ -72,7 +72,8 @@ namespace TownOfUs.Roles
         public void ImpTargetWin()
         {
             Player.Data.Role.TeamType = RoleTeamTypes.Impostor;
-            RoleManager.Instance.SetRole(Player, RoleTypes.Impostor);
+            if (Player.Data.IsDead) RoleManager.Instance.SetRole(Player, RoleTypes.ImpostorGhost);
+            else RoleManager.Instance.SetRole(Player, RoleTypes.Impostor);
         }
 
         public void ImpTargetLose()

@@ -109,7 +109,6 @@ namespace TownOfUs.CrewmateRoles.SwapperMod
                 swapper.Buttons.Clear();
             }
 
-
             if (PlayerControl.LocalPlayer.Data.IsDead) return;
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Swapper)) return;
             var swapperrole = Role.GetRole<Swapper>(PlayerControl.LocalPlayer);

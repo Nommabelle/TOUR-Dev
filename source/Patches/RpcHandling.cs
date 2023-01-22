@@ -1299,7 +1299,7 @@ namespace TownOfUs
                         break;
                     case CustomRPC.TraitorSpawn:
                         var traitor = SetTraitor.WillBeTraitor;
-                        if (traitor.Is(RoleEnum.Imitator)) StartImitate.ImitatingPlayer = null;
+                        if (traitor == StartImitate.ImitatingPlayer) StartImitate.ImitatingPlayer = null;
                         var oldRole = Role.GetRole(traitor).RoleType;
                         Role.RoleDictionary.Remove(traitor.PlayerId);
                         var traitorRole = new Traitor(traitor);
