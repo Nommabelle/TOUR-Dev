@@ -3,11 +3,8 @@ using HarmonyLib;
 using Hazel;
 using TownOfUs.Roles;
 using UnityEngine;
-using UnityEngine.UI;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
-using System.Linq;
-using TownOfUs.Extensions;
 using TownOfUs.Patches;
 
 namespace TownOfUs.CrewmateRoles.HaunterMod
@@ -68,8 +65,7 @@ namespace TownOfUs.CrewmateRoles.HaunterMod
                     (byte)CustomRPC.SetPos, SendOption.Reliable, -1);
             writer2.Write(PlayerControl.LocalPlayer.PlayerId);
             writer2.Write(startingVent.transform.position.x);
-            writer2.Write(startingVent.transform.position.y);
-            writer2.Write(startingVent.Id);
+            writer2.Write(startingVent.transform.position.y + 0.3636f);
             AmongUsClient.Instance.FinishRpcImmediately(writer2);
 
             PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
@@ -112,36 +108,6 @@ namespace TownOfUs.CrewmateRoles.HaunterMod
                     var taskInfo = player.Data.FindTaskById(task.Id);
                     taskInfo.Complete = false;
                 }
-        }
-
-        // Bug: Code runs however Haunter is still not clickable
-        public static void AddCollider(Haunter role)
-        {
-            var player = role.Player;
-            var collider2d = player.gameObject.AddComponent<BoxCollider2D>();
-            collider2d.isTrigger = true;
-            var button = player.gameObject.AddComponent<PassiveButton>();
-            button.OnClick = new Button.ButtonClickedEvent();
-            button.OnMouseOut = new Button.ButtonClickedEvent();
-            button.OnMouseOver = new Button.ButtonClickedEvent();
-
-            button.OnClick.AddListener((Action) (() =>
-            {
-                if (MeetingHud.Instance) return;
-                if (PlayerControl.LocalPlayer.Data.IsDead) return;
-                if (CustomGameOptions.HaunterCanBeClickedBy == HaunterCanBeClickedBy.ImpsOnly && !PlayerControl.LocalPlayer.Data.IsImpostor()) return;
-                if (CustomGameOptions.HaunterCanBeClickedBy == HaunterCanBeClickedBy.NonCrew && !(PlayerControl.LocalPlayer.Data.IsImpostor() || PlayerControl.LocalPlayer.Is(Faction.Neutral))) return;
-                var taskinfos = player.Data.Tasks.ToArray();
-                var tasksLeft = taskinfos.Count(x => !x.Complete);
-                if (tasksLeft <= CustomGameOptions.HaunterTasksRemainingClicked)
-                {
-                    role.Caught = true;
-                    var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                        (byte)CustomRPC.CatchHaunter, SendOption.Reliable, -1);
-                    writer.Write(role.Player.PlayerId);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer);
-                }
-            }));
         }
     }
 }

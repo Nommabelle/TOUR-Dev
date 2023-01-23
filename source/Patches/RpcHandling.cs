@@ -1252,7 +1252,6 @@ namespace TownOfUs
                         phantomRole.RegenTask();
                         phantom.gameObject.layer = LayerMask.NameToLayer("Players");
                         SetPhantom.RemoveTasks(phantom);
-                        SetPhantom.AddCollider(phantomRole);
                         if (!PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
                         {
                             PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
@@ -1262,6 +1261,7 @@ namespace TownOfUs
                     case CustomRPC.CatchPhantom:
                         var phantomPlayer = Utils.PlayerById(reader.ReadByte());
                         Role.GetRole<Phantom>(phantomPlayer).Caught = true;
+                        if (PlayerControl.LocalPlayer == phantomPlayer) HudManager.Instance.AbilityButton.gameObject.SetActive(true);
                         break;
                     case CustomRPC.PhantomWin:
                         Role.GetRole<Phantom>(Utils.PlayerById(reader.ReadByte())).CompletedTasks = true;
@@ -1279,7 +1279,6 @@ namespace TownOfUs
                         haunterRole.RegenTask();
                         haunter.gameObject.layer = LayerMask.NameToLayer("Players");
                         SetHaunter.RemoveTasks(haunter);
-                        SetHaunter.AddCollider(haunterRole);
                         if (!PlayerControl.LocalPlayer.Is(RoleEnum.Phantom))
                         {
                             PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
@@ -1289,6 +1288,7 @@ namespace TownOfUs
                     case CustomRPC.CatchHaunter:
                         var haunterPlayer = Utils.PlayerById(reader.ReadByte());
                         Role.GetRole<Haunter>(haunterPlayer).Caught = true;
+                        if (PlayerControl.LocalPlayer == haunterPlayer) HudManager.Instance.AbilityButton.gameObject.SetActive(true);
                         break;
                     case CustomRPC.HaunterFinished:
                         HighlightImpostors.UpdateMeeting(MeetingHud.Instance);
@@ -1347,8 +1347,7 @@ namespace TownOfUs
                         break;
                     case CustomRPC.SetPos:
                         var setplayer = Utils.PlayerById(reader.ReadByte());
-                        setplayer.transform.position = new Vector3(reader.ReadSingle(), reader.ReadSingle(), setplayer.transform.position.z);
-                        setplayer.MyPhysics.RpcEnterVent(reader.ReadInt32());
+                        setplayer.transform.position = new Vector2(reader.ReadSingle(), reader.ReadSingle());
                         break;
                     case CustomRPC.SetSettings:
                         readByte = reader.ReadByte();

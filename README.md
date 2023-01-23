@@ -75,7 +75,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 # Releases
 | Among Us - Version| Mod Version | Link |
 |----------|-------------|-----------------|
-| 2022.12.14s & 2022.12.14e | v4.0.0 | Unavailable |
+| 2022.12.14s & 2022.12.14e | v4.0.0 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v4.0.0/ToU.v4.0.0.zip) |
 | 2022.10.25s & 2022.10.25e | v3.4.0 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.4.0/ToU.v3.4.0.zip) |
 | 2022.8.24s & 2022.8.24e & 2022.9.20s & 2022.9.20e | v3.3.2 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.3.2/ToU.v3.3.2.zip) |
 | 2022.8.24s & 2022.8.24e & 2022.9.20s & 2022.9.20e | v3.3.1 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v3.3.1/ToU.v3.3.1.zip) |
@@ -133,7 +133,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <ul> <li>New Role: Imitator (Replacing Time Lord)</li> </ul>
   <ul> <li>New Role: Bomber (Poisoner rework)</li> </ul>
   <ul> <li>New Game Mode: Cultist</li> </ul>
-  <ul> <li>New Game Mode Roles: Necromancer & Whisperer</li> </ul>
+  <ul> <li>New Game Mode Roles: Necromancer & Whisperer as well as Crewmate/Impostor variants of already existing roles</li> </ul>
   <ul> <li>New Setting: Enable Hidden Roles</li> </ul>
   <ul> <li>New Settings for hidden roles</li> </ul>
   <ul> <li>New Setting: Undertaker Drag Speed</li> </ul>
