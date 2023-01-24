@@ -736,7 +736,7 @@ On top of this, the Mystic briefly gets an arrow pointing in the direction of th
 ## Seer
 ### **Team: Crewmates**
 The Seer is a Crewmate that can reveal the alliance of other players.\
-Based on settings, the Seer can find out whether a player is Good or Evil role.\
+Based on settings, the Seer can find out whether a player is a Good or an Evil role.\
 A player's name will change color to their team.
 ### Game Options
 | Name | Description | Type | Default |
