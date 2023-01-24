@@ -1,6 +1,7 @@
 ﻿using System;
 using HarmonyLib;
-using Reactor.Extensions;
+using Reactor.Utilities;
+using Reactor.Utilities.Extensions;
 using TMPro;
 using TownOfUs.Extensions;
 using TownOfUs.Roles;
@@ -23,12 +24,23 @@ namespace TownOfUs.Modifiers.AssassinMod
         {
             if (voteArea.AmDead) return true;
             var player = Utils.PlayerById(voteArea.TargetPlayerId);
-            if (
-                player == null ||
-                player.Data.IsImpostor() ||
-                player.Data.IsDead ||
-                player.Data.Disconnected
-            ) return true;
+            if (PlayerControl.LocalPlayer.Is(Faction.Neutral))
+            {
+                if (
+                    player == null ||
+                    player.Data.IsDead ||
+                    player.Data.Disconnected
+                ) return true;
+            }
+            else
+            {
+                if (
+                    player == null ||
+                    player.Data.IsImpostor() ||
+                    player.Data.IsDead ||
+                    player.Data.Disconnected
+                ) return true;
+            }
             var role = Role.GetRole(player);
             return role != null && role.Criteria();
         }
@@ -156,15 +168,39 @@ namespace TownOfUs.Modifiers.AssassinMod
                     if (playerModifier != null)
                         toDie = (playerRole.Name == currentGuess || playerModifier.Name == currentGuess) ? playerRole.Player : role.Player;
 
-                if (!toDie.Is(RoleEnum.Pestilence))
+                if (!toDie.Is(RoleEnum.Pestilence) || PlayerControl.LocalPlayer.Is(RoleEnum.Pestilence))
                 {
-                    AssassinKill.RpcMurderPlayer(toDie);
-                    role.RemainingKills--;
-                    ShowHideButtons.HideSingle(role, targetId, toDie == role.Player);
-                    if (toDie.IsLover() && CustomGameOptions.BothLoversDie)
+                    if (PlayerControl.LocalPlayer.Is(ModifierEnum.DoubleShot) && toDie == PlayerControl.LocalPlayer)
                     {
-                        var lover = ((Lover)playerModifier).OtherLover.Player;
-                        if (!lover.Is(RoleEnum.Pestilence)) ShowHideButtons.HideSingle(role, lover.PlayerId, false);
+                        var modifier = Modifier.GetModifier<DoubleShot>(PlayerControl.LocalPlayer);
+                        if (modifier.LifeUsed == false)
+                        {
+                            modifier.LifeUsed = true;
+                            Coroutines.Start(Utils.FlashCoroutine(Color.red, 1f));
+                            ShowHideButtons.HideSingle(role, targetId, false, true);
+                        }
+                        else
+                        {
+                            AssassinKill.RpcMurderPlayer(toDie, PlayerControl.LocalPlayer);
+                            role.RemainingKills--;
+                            ShowHideButtons.HideSingle(role, targetId, toDie == role.Player);
+                            if (toDie.IsLover() && CustomGameOptions.BothLoversDie)
+                            {
+                                var lover = ((Lover)playerModifier).OtherLover.Player;
+                                if (!lover.Is(RoleEnum.Pestilence)) ShowHideButtons.HideSingle(role, lover.PlayerId, false);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        AssassinKill.RpcMurderPlayer(toDie, PlayerControl.LocalPlayer);
+                        role.RemainingKills--;
+                        ShowHideButtons.HideSingle(role, targetId, toDie == role.Player);
+                        if (toDie.IsLover() && CustomGameOptions.BothLoversDie)
+                        {
+                            var lover = ((Lover)playerModifier).OtherLover.Player;
+                            if (!lover.Is(RoleEnum.Pestilence)) ShowHideButtons.HideSingle(role, lover.PlayerId, false);
+                        }
                     }
                 }
             }

@@ -5,16 +5,18 @@ using System.Net.Sockets;
 using System.Reflection;
 using BepInEx;
 using BepInEx.Configuration;
-using BepInEx.IL2CPP;
+using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
 using Reactor;
-using Reactor.Extensions;
+using Reactor.Utilities.Extensions;
+using Reactor.Networking.Attributes;
 using TownOfUs.CustomOption;
 using TownOfUs.Patches;
-using TownOfUs.Patches.CustomHats;
 using TownOfUs.RainbowMod;
-using UnhollowerBaseLib;
-using UnhollowerRuntimeLib;
+using TownOfUs.Extensions;
+using Il2CppInterop.Runtime;
+using Il2CppInterop.Runtime.Injection;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -23,10 +25,11 @@ namespace TownOfUs
     [BepInPlugin(Id, "Town Of Us", VersionString)]
     [BepInDependency(ReactorPlugin.Id)]
     [BepInDependency(SubmergedCompatibility.SUBMERGED_GUID, BepInDependency.DependencyFlags.SoftDependency)]
+    [ReactorModFlags(Reactor.Networking.ModFlags.RequireOnAllClients)]
     public class TownOfUs : BasePlugin
     {
         public const string Id = "com.slushiegoose.townofus";
-        public const string VersionString = "3.3.1";
+        public const string VersionString = "4.0.0";
         public static System.Version Version = System.Version.Parse(VersionString);
         
         public static Sprite JanitorClean;
@@ -34,7 +37,6 @@ namespace TownOfUs
         public static Sprite SwapperSwitch;
         public static Sprite SwapperSwitchDisabled;
         public static Sprite Footprint;
-        public static Sprite Rewind;
         public static Sprite NormalKill;
         public static Sprite MedicSprite;
         public static Sprite SeerSprite;
@@ -47,6 +49,7 @@ namespace TownOfUs
         public static Sprite IgniteSprite;
         public static Sprite ReviveSprite;
         public static Sprite ButtonSprite;
+        public static Sprite DisperseSprite;
         public static Sprite CycleBackSprite;
         public static Sprite CycleForwardSprite;
         public static Sprite GuessSprite;
@@ -56,8 +59,8 @@ namespace TownOfUs
         public static Sprite AlertSprite;
         public static Sprite RememberSprite;
         public static Sprite TrackSprite;
-        public static Sprite PoisonSprite;
-        public static Sprite PoisonedSprite;
+        public static Sprite PlantSprite;
+        public static Sprite DetonateSprite;
         public static Sprite TransportSprite;
         public static Sprite MediateSprite;
         public static Sprite VestSprite;
@@ -71,6 +74,12 @@ namespace TownOfUs
         public static Sprite RampageSprite;
         public static Sprite TrapSprite;
         public static Sprite ExamineSprite;
+        public static Sprite EscapeSprite;
+        public static Sprite MarkSprite;
+        public static Sprite Revive2Sprite;
+        public static Sprite WhisperSprite;
+        public static Sprite ImitateSelectSprite;
+        public static Sprite ImitateDeselectSprite;
         public static Sprite HackSprite;
         public static Sprite MimicSprite;
         public static Sprite LockSprite;
@@ -110,7 +119,6 @@ namespace TownOfUs
             SwapperSwitch = CreateSprite("TownOfUs.Resources.SwapperSwitch.png");
             SwapperSwitchDisabled = CreateSprite("TownOfUs.Resources.SwapperSwitchDisabled.png");
             Footprint = CreateSprite("TownOfUs.Resources.Footprint.png");
-            Rewind = CreateSprite("TownOfUs.Resources.Rewind.png");
             NormalKill = CreateSprite("TownOfUs.Resources.NormalKill.png");
             MedicSprite = CreateSprite("TownOfUs.Resources.Medic.png");
             SeerSprite = CreateSprite("TownOfUs.Resources.Seer.png");
@@ -123,6 +131,7 @@ namespace TownOfUs
             IgniteSprite = CreateSprite("TownOfUs.Resources.Ignite.png");
             ReviveSprite = CreateSprite("TownOfUs.Resources.Revive.png");
             ButtonSprite = CreateSprite("TownOfUs.Resources.Button.png");
+            DisperseSprite = CreateSprite("TownOfUs.Resources.Disperse.png");
             DragSprite = CreateSprite("TownOfUs.Resources.Drag.png");
             DropSprite = CreateSprite("TownOfUs.Resources.Drop.png");
             CycleBackSprite = CreateSprite("TownOfUs.Resources.CycleBack.png");
@@ -132,8 +141,8 @@ namespace TownOfUs
             AlertSprite = CreateSprite("TownOfUs.Resources.Alert.png");
             RememberSprite = CreateSprite("TownOfUs.Resources.Remember.png");
             TrackSprite = CreateSprite("TownOfUs.Resources.Track.png");
-            PoisonSprite = CreateSprite("TownOfUs.Resources.Poison.png");
-            PoisonedSprite = CreateSprite("TownOfUs.Resources.Poisoned.png");
+            PlantSprite = CreateSprite("TownOfUs.Resources.Plant.png");
+            DetonateSprite = CreateSprite("TownOfUs.Resources.Detonate.png");
             TransportSprite = CreateSprite("TownOfUs.Resources.Transport.png");
             MediateSprite = CreateSprite("TownOfUs.Resources.Mediate.png");
             VestSprite = CreateSprite("TownOfUs.Resources.Vest.png");
@@ -147,6 +156,12 @@ namespace TownOfUs
             RampageSprite = CreateSprite("TownOfUs.Resources.Rampage.png");
             TrapSprite = CreateSprite("TownOfUs.Resources.Trap.png");
             ExamineSprite = CreateSprite("TownOfUs.Resources.Examine.png");
+            EscapeSprite = CreateSprite("TownOfUs.Resources.Recall.png");
+            MarkSprite = CreateSprite("TownOfUs.Resources.Mark.png");
+            Revive2Sprite = CreateSprite("TownOfUs.Resources.Revive2.png");
+            WhisperSprite = CreateSprite("TownOfUs.Resources.Whisper.png");
+            ImitateSelectSprite = CreateSprite("TownOfUs.Resources.ImitateSelect.png");
+            ImitateDeselectSprite = CreateSprite("TownOfUs.Resources.ImitateDeselect.png");
             HackSprite = CreateSprite("TownOfUs.Resources.Hack.png");
             MimicSprite = CreateSprite("TownOfUs.Resources.Mimic.png");
             LockSprite = CreateSprite("TownOfUs.Resources.Lock.png");
@@ -185,7 +200,8 @@ namespace TownOfUs
 
             SceneManager.add_sceneLoaded((Action<Scene, LoadSceneMode>) ((scene, loadSceneMode) =>
             {
-                ModManager.Instance.ShowModStamp();
+                try { ModManager.Instance.ShowModStamp(); }
+                catch { }
             }));
 
             _harmony.PatchAll();
@@ -198,7 +214,7 @@ namespace TownOfUs
             var pivot = new Vector2(0.5f, 0.5f);
 
             var assembly = Assembly.GetExecutingAssembly();
-            var tex = GUIExtensions.CreateEmptyTexture();
+            var tex = AmongUsExtensions.CreateEmptyTexture();
             var imageStream = assembly.GetManifestResourceStream(name);
             var img = imageStream.ReadFully();
             LoadImage(tex, img, true);

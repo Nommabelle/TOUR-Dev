@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using HarmonyLib;
 using Hazel;
-using Reactor;
+using Reactor.Utilities;
 using TownOfUs.Roles;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,7 +35,7 @@ namespace TownOfUs.CrewmateRoles.SwapperMod
             var passive = newButton.GetComponent<PassiveButton>();
 
             renderer.sprite = DisabledSprite;
-            newButton.transform.position = confirmButton.transform.position - new Vector3(0.5f, 0f, 0f);
+            newButton.transform.position = confirmButton.transform.position - new Vector3(0.75f, 0f, 0f);
             newButton.transform.localScale *= 0.8f;
             newButton.layer = 5;
             newButton.transform.parent = confirmButton.transform.parent.parent;
@@ -80,7 +80,6 @@ namespace TownOfUs.CrewmateRoles.SwapperMod
                     }
                 }
 
-
                 if (SwapVotes.Swap1 == null || SwapVotes.Swap2 == null)
                 {
                     var writer2 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
@@ -109,7 +108,6 @@ namespace TownOfUs.CrewmateRoles.SwapperMod
                 swapper.ListOfActives.Clear();
                 swapper.Buttons.Clear();
             }
-
 
             if (PlayerControl.LocalPlayer.Data.IsDead) return;
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Swapper)) return;

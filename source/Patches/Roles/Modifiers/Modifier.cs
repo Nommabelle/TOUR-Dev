@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hazel;
-using Reactor.Extensions;
+using Reactor.Utilities.Extensions;
 using TownOfUs.Extensions;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace TownOfUs.Roles.Modifiers
 {
@@ -27,7 +25,6 @@ namespace TownOfUs.Roles.Modifiers
         protected internal string GetColoredSymbol()
         {
             if (SymbolName == null) return null;
-            if (Color == null) return SymbolName;
 
             return $"{ColorString}{SymbolName}</color>";
         }
@@ -54,7 +51,7 @@ namespace TownOfUs.Roles.Modifiers
             return Equals(Player, other.Player) && ModifierType == other.ModifierType;
         }
 
-        internal virtual bool EABBNOODFGL(ShipStatus __instance)
+        internal virtual bool EABBNOODFGL(LogicGameFlowNormal __instance)
         {
             return true;
         }
@@ -90,6 +87,11 @@ namespace TownOfUs.Roles.Modifiers
         {
             return (from entry in ModifierDictionary where entry.Key == player.PlayerId select entry.Value)
                 .FirstOrDefault();
+        }
+
+        public static IEnumerable<Modifier> GetModifiers(ModifierEnum modifiertype)
+        {
+            return AllModifiers.Where(x => x.ModifierType == modifiertype);
         }
 
         public virtual List<PlayerControl> GetTeammates()

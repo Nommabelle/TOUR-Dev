@@ -1,33 +1,36 @@
 ﻿using System.Linq;
 using Hazel;
-using Reactor;
 using TownOfUs.Roles;
 using UnityEngine;
 using UnityEngine.UI;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using TownOfUs.CrewmateRoles.MedicMod;
 using TownOfUs.CrewmateRoles.SwapperMod;
 using TownOfUs.CrewmateRoles.VigilanteMod;
 using TownOfUs.ImpostorRoles.BlackmailerMod;
 using TownOfUs.Roles.Modifiers;
 using TownOfUs.Extensions;
+using TownOfUs.CrewmateRoles.ImitatorMod;
 
 namespace TownOfUs.Modifiers.AssassinMod
 {
     public class AssassinKill
     {
-        public static void RpcMurderPlayer(PlayerControl player)
+        public static void RpcMurderPlayer(PlayerControl player, PlayerControl assassin)
         {
             PlayerVoteArea voteArea = MeetingHud.Instance.playerStates.First(
                 x => x.TargetPlayerId == player.PlayerId
             );
-            RpcMurderPlayer(voteArea, player);
+            RpcMurderPlayer(voteArea, player, assassin);
         }
-        public static void RpcMurderPlayer(PlayerVoteArea voteArea, PlayerControl player)
+        public static void RpcMurderPlayer(PlayerVoteArea voteArea, PlayerControl player, PlayerControl assassin)
         {
             MurderPlayer(voteArea, player);
+            AssassinKillCount(player, assassin);
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                 (byte)CustomRPC.AssassinKill, SendOption.Reliable, -1);
             writer.Write(player.PlayerId);
+            writer.Write(assassin.PlayerId);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
 
@@ -37,6 +40,12 @@ namespace TownOfUs.Modifiers.AssassinMod
                 x => x.TargetPlayerId == player.PlayerId
             );
             MurderPlayer(voteArea, player, checkLover);
+        }
+        public static void AssassinKillCount(PlayerControl player, PlayerControl assassin)
+        {
+            var assassinPlayer = Role.GetRole(assassin);
+            if (player == assassin) assassinPlayer.IncorrectAssassinKills += 1;
+            else assassinPlayer.CorrectAssassinKills += 1;
         }
         public static void MurderPlayer(
             PlayerVoteArea voteArea,
@@ -59,7 +68,7 @@ namespace TownOfUs.Modifiers.AssassinMod
                 player.RpcSetScanner(false);
                 ImportantTextTask importantTextTask = new GameObject("_Player").AddComponent<ImportantTextTask>();
                 importantTextTask.transform.SetParent(AmongUsClient.Instance.transform, false);
-                if (!PlayerControl.GameOptions.GhostsDoTasks)
+                if (!GameOptionsManager.Instance.currentNormalGameOptions.GhostsDoTasks)
                 {
                     for (int i = 0;i < player.myTasks.Count;i++)
                     {
@@ -71,14 +80,14 @@ namespace TownOfUs.Modifiers.AssassinMod
                     player.myTasks.Clear();
                     importantTextTask.Text = DestroyableSingleton<TranslationController>.Instance.GetString(
                         StringNames.GhostIgnoreTasks,
-                        new UnhollowerBaseLib.Il2CppReferenceArray<Il2CppSystem.Object>(0)
+                        new Il2CppReferenceArray<Il2CppSystem.Object>(0)
                     );
                 }
                 else
                 {
                     importantTextTask.Text = DestroyableSingleton<TranslationController>.Instance.GetString(
                         StringNames.GhostDoTasks,
-                        new UnhollowerBaseLib.Il2CppReferenceArray<Il2CppSystem.Object>(0));
+                        new Il2CppReferenceArray<Il2CppSystem.Object>(0));
                 }
 
                 player.myTasks.Insert(0, importantTextTask);
@@ -98,13 +107,33 @@ namespace TownOfUs.Modifiers.AssassinMod
                     }
                 }
 
+                if (player.Is(RoleEnum.Imitator))
+                {
+                    var imitator = Role.GetRole<Imitator>(PlayerControl.LocalPlayer);
+                    imitator.ListOfActives.Clear();
+                    imitator.Buttons.Clear();
+                    SetImitate.Imitate = null;
+                    var buttons = Role.GetRole<Imitator>(player).Buttons;
+                    foreach (var button in buttons)
+                    {
+                        button.SetActive(false);
+                        button.GetComponent<PassiveButton>().OnClick = new Button.ButtonClickedEvent();
+                    }
+                }
+
                 if (player.Is(RoleEnum.Vigilante))
                 {
                     var retributionist = Role.GetRole<Vigilante>(PlayerControl.LocalPlayer);
                     ShowHideButtonsVigi.HideButtonsVigi(retributionist);
                 }
+
+                if (player.Is(AbilityEnum.Assassin))
+                {
+                    var assassin = Ability.GetAbility<Assassin>(PlayerControl.LocalPlayer);
+                    ShowHideButtons.HideButtons(assassin);
+                }
             }
-            player.Die(DeathReason.Kill);
+            player.Die(DeathReason.Kill, false);
             if (checkLover && player.IsLover() && CustomGameOptions.BothLoversDie)
             {
                 var otherLover = Modifier.GetModifier<Lover>(player).OtherLover.Player;
@@ -183,6 +212,8 @@ namespace TownOfUs.Modifiers.AssassinMod
                 if (!voteAreaPlayer.AmOwner) continue;
                 meetingHud.ClearVote();
             }
+
+            player.Exiled();
 
             if (AmongUsClient.Instance.AmHost)
             {

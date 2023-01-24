@@ -4,20 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using BepInEx;
-using BepInEx.IL2CPP;
+using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
-using UnhollowerRuntimeLib;
+using Il2CppInterop.Runtime;
+using Il2CppInterop.Runtime.Injection;
 using UnityEngine;
-using Reactor;
+using Reactor.Utilities;
 using TownOfUs.Roles;
 using Hazel;
 
 namespace TownOfUs.Patches
 {
-    [HarmonyPatch(typeof(IntroCutscene._ShowRole_d__24), nameof(IntroCutscene._ShowRole_d__24.MoveNext))]
+    [HarmonyPatch(typeof(IntroCutscene._ShowRole_d__35), nameof(IntroCutscene._ShowRole_d__35.MoveNext))]
     public static class SubmergedStartPatch
     {
-        public static void Postfix(IntroCutscene._ShowRole_d__24 __instance)
+        public static void Postfix(IntroCutscene._ShowRole_d__35 __instance)
         {
             if (SubmergedCompatibility.isSubmerged())
             {
@@ -172,7 +173,7 @@ namespace TownOfUs.Patches
             Assembly = Plugin!.GetType().Assembly;
             Types = AccessTools.GetTypesFromAssembly(Assembly);
 
-            InjectedTypes = (Dictionary<string, Type>)AccessTools.PropertyGetter(Types.FirstOrDefault(t => t.Name == "RegisterInIl2CppAttribute"), "RegisteredTypes")
+            InjectedTypes = (Dictionary<string, Type>)AccessTools.PropertyGetter(Types.FirstOrDefault(t => t.Name == "ComponentExtensions"), "RegisteredTypes")
                 .Invoke(null, Array.Empty<object>());
 
             SubmarineStatusType = Types.First(t => t.Name == "SubmarineStatus");
@@ -264,13 +265,8 @@ namespace TownOfUs.Patches
 
         public static void ExileRoleChangePostfix()
         {
-            NeutralRoles.PhantomMod.SetPhantom.ExileControllerPostfix(ExileController.Instance);
-            ImpostorRoles.TraitorMod.SetTraitor.ExileControllerPostfix(ExileController.Instance);
-            CrewmateRoles.HaunterMod.SetHaunter.ExileControllerPostfix(ExileController.Instance);
-
             Coroutines.Start(waitMeeting(resetTimers));
             Coroutines.Start(waitMeeting(GhostRoleBegin));
-            
         }
 
         public static IEnumerator waitStart(Action next)

@@ -1,10 +1,9 @@
 ﻿using System.Linq;
 using Hazel;
-using Reactor;
 using TownOfUs.Roles;
 using TownOfUs.Roles.Modifiers;
 using UnityEngine;
-using UnityEngine.UI;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using TownOfUs.CrewmateRoles.MedicMod;
 using TownOfUs.Modifiers.AssassinMod;
 using TownOfUs.ImpostorRoles.BlackmailerMod;
@@ -14,20 +13,22 @@ namespace TownOfUs.CrewmateRoles.VigilanteMod
 {
     public class VigilanteKill
     {
-        public static void RpcMurderPlayer(PlayerControl player)
+        public static void RpcMurderPlayer(PlayerControl player, PlayerControl vigilante)
 
         {
             PlayerVoteArea voteArea = MeetingHud.Instance.playerStates.First(
                 x => x.TargetPlayerId == player.PlayerId
             );
-            RpcMurderPlayer(voteArea, player);
+            RpcMurderPlayer(voteArea, player, vigilante);
         }
-        public static void RpcMurderPlayer(PlayerVoteArea voteArea, PlayerControl player)
+        public static void RpcMurderPlayer(PlayerVoteArea voteArea, PlayerControl player, PlayerControl vigilante)
         {
             MurderPlayer(voteArea, player);
+            VigiKillCount(player, vigilante);
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                 (byte)CustomRPC.VigilanteKill, SendOption.Reliable, -1);
             writer.Write(player.PlayerId);
+            writer.Write(vigilante.PlayerId);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
 
@@ -37,6 +38,12 @@ namespace TownOfUs.CrewmateRoles.VigilanteMod
                 x => x.TargetPlayerId == player.PlayerId
             );
             MurderPlayer(voteArea, player, checkLover);
+        }
+        public static void VigiKillCount(PlayerControl player, PlayerControl vigilante)
+        {
+            var vigi = Role.GetRole<Vigilante>(vigilante);
+            if (player == vigilante) vigi.IncorrectAssassinKills += 1;
+            else vigi.CorrectAssassinKills += 1;
         }
         public static void MurderPlayer(
             PlayerVoteArea voteArea,
@@ -59,7 +66,7 @@ namespace TownOfUs.CrewmateRoles.VigilanteMod
                 player.RpcSetScanner(false);
                 ImportantTextTask importantTextTask = new GameObject("_Player").AddComponent<ImportantTextTask>();
                 importantTextTask.transform.SetParent(AmongUsClient.Instance.transform, false);
-                if (!PlayerControl.GameOptions.GhostsDoTasks)
+                if (!GameOptionsManager.Instance.currentNormalGameOptions.GhostsDoTasks)
                 {
                     for (int i = 0;i < player.myTasks.Count;i++)
                     {
@@ -71,14 +78,14 @@ namespace TownOfUs.CrewmateRoles.VigilanteMod
                     player.myTasks.Clear();
                     importantTextTask.Text = DestroyableSingleton<TranslationController>.Instance.GetString(
                         StringNames.GhostIgnoreTasks,
-                        new UnhollowerBaseLib.Il2CppReferenceArray<Il2CppSystem.Object>(0)
+                        new Il2CppReferenceArray<Il2CppSystem.Object>(0)
                     );
                 }
                 else
                 {
                     importantTextTask.Text = DestroyableSingleton<TranslationController>.Instance.GetString(
                         StringNames.GhostDoTasks,
-                        new UnhollowerBaseLib.Il2CppReferenceArray<Il2CppSystem.Object>(0));
+                        new Il2CppReferenceArray<Il2CppSystem.Object>(0));
                 }
 
                 player.myTasks.Insert(0, importantTextTask);
@@ -89,7 +96,7 @@ namespace TownOfUs.CrewmateRoles.VigilanteMod
                     ShowHideButtons.HideButtons(assassin);
                 }
             }
-            player.Die(DeathReason.Kill);
+            player.Die(DeathReason.Kill, false);
             if (checkLover && player.IsLover() && CustomGameOptions.BothLoversDie)
             {
                 var otherLover = Modifier.GetModifier<Lover>(player).OtherLover.Player;
@@ -142,6 +149,8 @@ namespace TownOfUs.CrewmateRoles.VigilanteMod
                 if (!voteAreaPlayer.AmOwner) continue;
                 meetingHud.ClearVote();
             }
+
+            player.Exiled();
 
             if (AmongUsClient.Instance.AmHost)
             {
