@@ -37,10 +37,15 @@ namespace TownOfUs.CrewmateRoles.HaunterMod
 
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
             {
-                var oldRole = Role.GetRole(PlayerControl.LocalPlayer).RoleType;
+                var oldRole = Role.GetRole(PlayerControl.LocalPlayer);
+                var killsList = (oldRole.CorrectKills, oldRole.IncorrectKills, oldRole.CorrectAssassinKills, oldRole.IncorrectAssassinKills);
                 Role.RoleDictionary.Remove(PlayerControl.LocalPlayer.PlayerId);
                 var role = new Haunter(PlayerControl.LocalPlayer);
-                role.formerRole = oldRole;
+                role.formerRole = oldRole.RoleType;
+                role.CorrectKills = killsList.CorrectKills;
+                role.IncorrectKills = killsList.IncorrectKills;
+                role.CorrectAssassinKills = killsList.CorrectAssassinKills;
+                role.IncorrectAssassinKills = killsList.IncorrectAssassinKills;
                 role.RegenTask();
                 Lights.SetLights();
 

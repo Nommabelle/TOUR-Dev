@@ -31,8 +31,15 @@ namespace TownOfUs.NeutralRoles.PhantomMod
 
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Phantom))
             {
+                var oldRole = Role.GetRole(PlayerControl.LocalPlayer);
+                var killsList = (oldRole.Kills, oldRole.CorrectKills, oldRole.IncorrectKills, oldRole.CorrectAssassinKills, oldRole.IncorrectAssassinKills);
                 Role.RoleDictionary.Remove(PlayerControl.LocalPlayer.PlayerId);
                 var role = new Phantom(PlayerControl.LocalPlayer);
+                role.Kills = killsList.Kills;
+                role.CorrectKills = killsList.CorrectKills;
+                role.IncorrectKills = killsList.IncorrectKills;
+                role.CorrectAssassinKills = killsList.CorrectAssassinKills;
+                role.IncorrectAssassinKills = killsList.IncorrectAssassinKills;
                 role.RegenTask();
                 Lights.SetLights();
 

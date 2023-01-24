@@ -1247,8 +1247,15 @@ namespace TownOfUs
                         break;
                     case CustomRPC.PhantomDied:
                         var phantom = Utils.PlayerById(reader.ReadByte());
+                        var phantomOldRole = Role.GetRole(phantom);
+                        var killsList2 = (phantomOldRole.Kills, phantomOldRole.CorrectKills, phantomOldRole.IncorrectKills, phantomOldRole.CorrectAssassinKills, phantomOldRole.IncorrectAssassinKills);
                         Role.RoleDictionary.Remove(phantom.PlayerId);
                         var phantomRole = new Phantom(phantom);
+                        phantomRole.Kills = killsList2.Kills;
+                        phantomRole.CorrectKills = killsList2.CorrectKills;
+                        phantomRole.IncorrectKills = killsList2.IncorrectKills;
+                        phantomRole.CorrectAssassinKills = killsList2.CorrectAssassinKills;
+                        phantomRole.IncorrectAssassinKills = killsList2.IncorrectAssassinKills;
                         phantomRole.RegenTask();
                         phantom.gameObject.layer = LayerMask.NameToLayer("Players");
                         SetPhantom.RemoveTasks(phantom);
@@ -1272,10 +1279,15 @@ namespace TownOfUs
                         break;
                     case CustomRPC.HaunterDied:
                         var haunter = Utils.PlayerById(reader.ReadByte());
-                        var originalRole = Role.GetRole(haunter).RoleType;
+                        var originalRole = Role.GetRole(haunter);
+                        var killsList3 = (originalRole.CorrectKills, originalRole.IncorrectKills, originalRole.CorrectAssassinKills, originalRole.IncorrectAssassinKills);
                         Role.RoleDictionary.Remove(haunter.PlayerId);
                         var haunterRole = new Haunter(haunter);
-                        haunterRole.formerRole = originalRole;
+                        haunterRole.formerRole = originalRole.RoleType;
+                        haunterRole.CorrectKills = killsList3.CorrectKills;
+                        haunterRole.IncorrectKills = killsList3.IncorrectKills;
+                        haunterRole.CorrectAssassinKills = killsList3.CorrectAssassinKills;
+                        haunterRole.IncorrectAssassinKills = killsList3.IncorrectAssassinKills;
                         haunterRole.RegenTask();
                         haunter.gameObject.layer = LayerMask.NameToLayer("Players");
                         SetHaunter.RemoveTasks(haunter);
@@ -1300,10 +1312,15 @@ namespace TownOfUs
                     case CustomRPC.TraitorSpawn:
                         var traitor = SetTraitor.WillBeTraitor;
                         if (traitor == StartImitate.ImitatingPlayer) StartImitate.ImitatingPlayer = null;
-                        var oldRole = Role.GetRole(traitor).RoleType;
+                        var oldRole = Role.GetRole(traitor);
+                        var killsList = (oldRole.CorrectKills, oldRole.IncorrectKills, oldRole.CorrectAssassinKills, oldRole.IncorrectAssassinKills);
                         Role.RoleDictionary.Remove(traitor.PlayerId);
                         var traitorRole = new Traitor(traitor);
-                        traitorRole.formerRole = oldRole;
+                        traitorRole.formerRole = oldRole.RoleType;
+                        traitorRole.CorrectKills = killsList.CorrectKills;
+                        traitorRole.IncorrectKills = killsList.IncorrectKills;
+                        traitorRole.CorrectAssassinKills = killsList.CorrectAssassinKills;
+                        traitorRole.IncorrectAssassinKills = killsList.IncorrectAssassinKills;
                         traitorRole.RegenTask();
                         SetTraitor.TurnImp(traitor);
                         break;
