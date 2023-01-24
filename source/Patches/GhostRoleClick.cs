@@ -10,8 +10,7 @@ namespace TownOfUs
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.OnClick))]
     public class ClickGhostRole
     {
-        [HarmonyPrefix]
-        public static void Prefix(ref PlayerControl __instance)
+        public static void Prefix(PlayerControl __instance)
         {
             if (MeetingHud.Instance) return;
             if (PlayerControl.LocalPlayer.Data.IsDead) return;

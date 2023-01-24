@@ -456,7 +456,7 @@ namespace TownOfUs
                 if (killer == PlayerControl.LocalPlayer)
                     SoundManager.Instance.PlaySound(PlayerControl.LocalPlayer.KillSfx, false, 0.8f);
 
-                Role.GetRole(killer).Kills += 1;
+                if (!killer.Is(Faction.Crewmates) && killer != target) Role.GetRole(killer).Kills += 1;
 
                 if (killer.Is(RoleEnum.Sheriff))
                 {
@@ -477,7 +477,7 @@ namespace TownOfUs
                 {
                     var veteran = Role.GetRole<Veteran>(killer);
                     if (target.Is(Faction.Impostors) || target.Is(Faction.Neutral)) veteran.CorrectKills += 1;
-                    else veteran.IncorrectKills += 1;
+                    else if (killer != target) veteran.IncorrectKills += 1;
                 }
 
                 target.gameObject.layer = LayerMask.NameToLayer("Ghost");

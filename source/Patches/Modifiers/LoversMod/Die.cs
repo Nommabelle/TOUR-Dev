@@ -1,6 +1,7 @@
 using HarmonyLib;
 using TownOfUs.CrewmateRoles.AltruistMod;
 using TownOfUs.Roles.Modifiers;
+using TownOfUs.Roles;
 
 namespace TownOfUs.Modifiers.LoversMod
 {
@@ -21,7 +22,15 @@ namespace TownOfUs.Modifiers.LoversMod
                 KillButtonTarget.DontRevive = __instance.PlayerId;
                 otherLover.Exiled();
             }
-            else if (AmongUsClient.Instance.AmHost && !otherLover.Is(RoleEnum.Pestilence)) Utils.RpcMurderPlayer(otherLover, otherLover);
+            else if (!otherLover.Is(RoleEnum.Pestilence))
+            {
+                Utils.MurderPlayer(otherLover, otherLover);
+                if (otherLover.Is(RoleEnum.Sheriff))
+                {
+                    var sheriff = Role.GetRole<Sheriff>(otherLover);
+                    sheriff.IncorrectKills -= 1;
+                }
+            }
 
             return true;
         }

@@ -162,8 +162,7 @@ namespace TownOfUs.Patches {
                     if ((player.TotalTasks - player.TasksLeft)/player.TotalTasks == 1) playerRole += " | Tasks: <color=#" + Color.green.ToHtmlStringRGBA() + $">{player.TotalTasks - player.TasksLeft}/{player.TotalTasks}</color>";
                     else playerRole += $" | Tasks: {player.TotalTasks - player.TasksLeft}/{player.TotalTasks}";
                 }
-                if (player.Kills > 0 && !playerControl.Is(RoleEnum.Sheriff) && !playerControl.Is(RoleEnum.Veteran)
-                    && !playerControl.Is(RoleEnum.Imitator) && !playerControl.Is(RoleEnum.Altruist))
+                if (player.Kills > 0 && !playerControl.Is(Faction.Crewmates))
                 {
                     playerRole += " |<color=#" + Patches.Colors.Impostor.ToHtmlStringRGBA() + $"> Kills: {player.Kills}</color>";
                 }
