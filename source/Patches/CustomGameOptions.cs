@@ -1,4 +1,3 @@
-using TownOfUs.CrewmateRoles.EngineerMod;
 using TownOfUs.CrewmateRoles.MedicMod;
 using TownOfUs.CustomOption;
 using TownOfUs.NeutralRoles.ExecutionerMod;
@@ -165,7 +164,7 @@ namespace TownOfUs
         public static bool AddArsonist => Generate.AddArsonist.Get();
         public static bool AddPlaguebearer => Generate.AddPlaguebearer.Get();
         public static bool ParallelMedScans => Generate.ParallelMedScans.Get();
-        public static EngineerFixPer EngineerFixPer => (EngineerFixPer)Generate.EngineerPer.Get();
+        public static int MaxFixes => (int)Generate.MaxFixes.Get();
         public static float ReviveDuration => Generate.ReviveDuration.Get();
         public static bool AltruistTargetBody => Generate.AltruistTargetBody.Get();
         public static bool SheriffBodyReport => Generate.SheriffBodyReport.Get();
@@ -266,6 +265,7 @@ namespace TownOfUs
         public static bool DetectiveReportOn => Generate.DetectiveReportOn.Get();
         public static float DetectiveRoleDuration => Generate.DetectiveRoleDuration.Get();
         public static float DetectiveFactionDuration => Generate.DetectiveFactionDuration.Get();
+        public static bool ExamineReportOn => Generate.ExamineReportOn.Get();
         public static float EscapeCd => Generate.EscapeCooldown.Get();
         public static bool EscapistVent => Generate.EscapistVent.Get();
         public static float DetonateDelay => Generate.DetonateDelay.Get();

@@ -182,7 +182,7 @@ namespace TownOfUs.CustomOption
         public static CustomToggleOption SheriffBodyReport;
 
         public static CustomHeaderOption Engineer;
-        public static CustomStringOption EngineerPer;
+        public static CustomNumberOption MaxFixes;
 
         public static CustomHeaderOption Investigator;
         public static CustomNumberOption FootprintSize;
@@ -395,6 +395,7 @@ namespace TownOfUs.CustomOption
         public static CustomToggleOption DetectiveReportOn;
         public static CustomNumberOption DetectiveRoleDuration;
         public static CustomNumberOption DetectiveFactionDuration;
+        public static CustomToggleOption ExamineReportOn;
 
         public static CustomHeaderOption Escapist;
         public static CustomNumberOption EscapeCooldown;
@@ -731,6 +732,7 @@ namespace TownOfUs.CustomOption
             DetectiveFactionDuration =
                 new CustomNumberOption(num++, MultiMenu.crewmate, "Time Where Detective Will Have Faction", 30f, 0f, 60f, 2.5f,
                     CooldownFormat);
+            ExamineReportOn = new CustomToggleOption(num++, MultiMenu.crewmate, "Show Examine Reports", true);
 
             Haunter =
                 new CustomHeaderOption(num++, MultiMenu.crewmate, "<color=#d3d3d3FF>Haunter</color>");
@@ -869,8 +871,8 @@ namespace TownOfUs.CustomOption
 
             Engineer =
                 new CustomHeaderOption(num++, MultiMenu.crewmate, "<color=#FFA60AFF>Engineer</color>");
-            EngineerPer =
-                new CustomStringOption(num++, MultiMenu.crewmate, "Engineer Fix Per", new[] { "Round", "Game" });
+            MaxFixes =
+                new CustomNumberOption(num++, MultiMenu.crewmate, "Maximum Number Of Fixes", 5, 1, 15, 1);
 
             Mayor =
                 new CustomHeaderOption(num++, MultiMenu.crewmate, "<color=#704FA8FF>Mayor</color>");
