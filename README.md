@@ -131,11 +131,13 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <summary> Changelog </summary>
   <details>
   <summary> v4.0.2 </summary>
-  <ul> <li>Fixed the issue where Cultist wasn't setting the number of Impostors to 1 automatically</li> </ul>
+  <ul> <li>Bug Fix: Cultist no longer doesn't automatically set the Impostors to 1 for the game mode</li> </ul>
+  <ul> <li>Bug Fix: Dead people no longer interfere with how many people die to a bomb</li> </ul>
   <ul> <li>Added a new Examine Report to Detective</li> </ul>
   <ul> <li>Engineer Fix Per Round/Game changed to Uses throughout the game</li> </ul>
   <ul> <li>Made Medic & Trapper imitatable for the Imitator</li> </ul>
   <ul> <li>Added indications so the dead can see who the Guardian Angel and Executioner targets are</li> </ul>
+  <ul> <li>Removed option for Snitch to be hidden on Game Start</li> </ul>
   </details>
   <details>
   <summary> v4.0.1 </summary>
@@ -780,13 +782,11 @@ A player's name will change color to their team.
 
 The Snitch is a Crewmate that can get arrows pointing towards the Impostors, once all their tasks are finished.\
 The names of the Impostors will also show up as red on their screen.\
-Based on the game settings, the Snitch may not know who they are until they have one task left.\
 However, when they only have a single task left, the Impostors get an arrow pointing towards the Snitch.
 ### Game Options
 | Name | Description | Type | Default |
 |----------|:-------------:|:------:|:------:|
 | Snitch | The percentage probability of the Snitch appearing | Percentage | 0% |
-| Snitch knows who they are on Game Start | Whether the Snitch knows their role at the start of a game | Toggle | False |
 | Snitch Sees Neutral Roles | Whether the Snitch also Reveals Neutral Roles | Toggle | False |
 | Tasks Remaining When Revealed | The number of tasks remaining when the Snitch is revealed to Impostors | Number | 1 |
 | Snitch Sees Impostors in Meetings | Whether the Snitch sees the Impostor's names red in Meetings | Toggle | True |
@@ -1664,7 +1664,6 @@ If they guess wrong, they die instead.
 | Assassin Kill | The number of kill the Assassin can do with his ability | Number | 1 |
 | Assassin Guess Crewmate | Whether the Assassin can Guess "Crewmate" | Toggle | False |
 | Assassin Multiple Kill  | Whether the Assassin can kill more than once per meeting | Toggle | False |
-| Assassinate Snitch via Crewmate Guess  | Whether the Assassin can kill the Snitch by Guessing Crewmate | Toggle | False |
 | Assassin Guess Neutral Benign  | Whether the Assassin can Guess Neutral Benign roles | Toggle | False |
 | Assassin Guess Neutral Evil  | Whether the Assassin can Guess Neutral Evil roles | Toggle | False |
 | Assassin Guess Neutral Killing  | Whether the Assassin can Guess Neutral Killing roles | Toggle | False |

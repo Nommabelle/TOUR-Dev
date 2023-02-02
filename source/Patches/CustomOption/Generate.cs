@@ -247,7 +247,6 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption PhantomTasksRemaining;
 
         public static CustomHeaderOption Snitch;
-        public static CustomToggleOption SnitchOnLaunch;
         public static CustomToggleOption SnitchSeesNeutrals;
         public static CustomNumberOption SnitchTasksRemaining;
         public static CustomToggleOption SnitchSeesImpInMeeting;
@@ -286,7 +285,6 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption AssassinKills;
         public static CustomToggleOption AssassinMultiKill;
         public static CustomToggleOption AssassinCrewmateGuess;
-        public static CustomToggleOption AssassinSnitchViaCrewmate;
         public static CustomToggleOption AssassinGuessNeutralBenign;
         public static CustomToggleOption AssassinGuessNeutralEvil;
         public static CustomToggleOption AssassinGuessNeutralKilling;
@@ -708,7 +706,6 @@ namespace TownOfUs.CustomOption
             AssassinKills = new CustomNumberOption(num++, MultiMenu.imposter, "Number Of Assassin Kills", 1, 1, 15, 1);
             AssassinMultiKill = new CustomToggleOption(num++, MultiMenu.imposter, "Assassin Can Kill More Than Once Per Meeting", false);
             AssassinCrewmateGuess = new CustomToggleOption(num++, MultiMenu.imposter, "Assassin Can Guess \"Crewmate\"", false);
-            AssassinSnitchViaCrewmate = new CustomToggleOption(num++, MultiMenu.imposter, "Assassinate Snitch Via \"Crewmate\" Guess", false);
             AssassinGuessNeutralBenign = new CustomToggleOption(num++, MultiMenu.imposter, "Assassin Can Guess Neutral Benign Roles", false);
             AssassinGuessNeutralEvil = new CustomToggleOption(num++, MultiMenu.imposter, "Assassin Can Guess Neutral Evil Roles", false);
             AssassinGuessNeutralKilling = new CustomToggleOption(num++, MultiMenu.imposter, "Assassin Can Guess Neutral Killing Roles", false);
@@ -773,8 +770,6 @@ namespace TownOfUs.CustomOption
                 new CustomToggleOption(num++, MultiMenu.crewmate, "Traitor Does Not Swap Colours", false);
 
             Snitch = new CustomHeaderOption(num++, MultiMenu.crewmate, "<color=#D4AF37FF>Snitch</color>");
-            SnitchOnLaunch =
-                new CustomToggleOption(num++, MultiMenu.crewmate, "Snitch Knows Who They Are On Game Start", false);
             SnitchSeesNeutrals = new CustomToggleOption(num++, MultiMenu.crewmate, "Snitch Sees Neutral Roles", false);
             SnitchTasksRemaining =
                  new CustomNumberOption(num++, MultiMenu.crewmate, "Tasks Remaining When Revealed", 1, 1, 5, 1);

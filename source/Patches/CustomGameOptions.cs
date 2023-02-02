@@ -132,7 +132,6 @@ namespace TownOfUs
         public static bool ColourblindComms => Generate.ColourblindComms.Get();
         public static OnTargetDead OnTargetDead => (OnTargetDead)Generate.OnTargetDead.Get();
         public static bool ExecutionerButton => Generate.ExecutionerButton.Get();
-        public static bool SnitchOnLaunch => Generate.SnitchOnLaunch.Get();
         public static bool SnitchSeesNeutrals => Generate.SnitchSeesNeutrals.Get();
         public static int SnitchTasksRemaining => (int)Generate.SnitchTasksRemaining.Get();
         public static bool SnitchSeesImpInMeeting => Generate.SnitchSeesImpInMeeting.Get();
@@ -186,7 +185,6 @@ namespace TownOfUs
         public static bool AmneTurnNeutAssassin => Generate.AmneTurnNeutAssassin.Get();
         public static bool TraitorCanAssassin => Generate.TraitorCanAssassin.Get();
         public static bool AssassinMultiKill => Generate.AssassinMultiKill.Get();
-        public static bool AssassinSnitchViaCrewmate => Generate.AssassinSnitchViaCrewmate.Get();
         public static bool AssassinateAfterVoting => Generate.AssassinateAfterVoting.Get();
         public static float UnderdogKillBonus => Generate.UnderdogKillBonus.Get();
         public static bool UnderdogIncreasedKC => Generate.UnderdogIncreasedKC.Get();
