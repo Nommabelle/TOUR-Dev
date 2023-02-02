@@ -244,7 +244,7 @@ namespace TownOfUs.Roles
             {
                 var ga = (GuardianAngel) role;
                 if (Player == ga.target && ((Player == PlayerControl.LocalPlayer && CustomGameOptions.GATargetKnows)
-                    || PlayerControl.LocalPlayer.Data.IsDead))
+                    || (PlayerControl.LocalPlayer.Data.IsDead && !ga.Player.Data.IsDead)))
                 {
                     PlayerName += "<color=#B3FFFFFF> ★</color>";
                 }
@@ -253,7 +253,7 @@ namespace TownOfUs.Roles
             foreach (var role in GetRoles(RoleEnum.Executioner))
             {
                 var exe = (Executioner) role;
-                if (Player == exe.target && PlayerControl.LocalPlayer.Data.IsDead)
+                if (Player == exe.target && PlayerControl.LocalPlayer.Data.IsDead && !exe.Player.Data.IsDead)
                 {
                     PlayerName += "<color=#8C4005FF> X</color>";
                 }
