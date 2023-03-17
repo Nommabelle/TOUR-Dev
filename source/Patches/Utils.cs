@@ -442,7 +442,7 @@ namespace TownOfUs
 
         public static void RpcMurderPlayer(PlayerControl killer, PlayerControl target)
         {
-            MurderPlayer(killer, target);
+            MurderPlayer(killer, target, true);
             var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                 (byte)CustomRPC.BypassKill, SendOption.Reliable, -1);
             writer.Write(killer.PlayerId);
@@ -450,7 +450,17 @@ namespace TownOfUs
             AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
 
-        public static void MurderPlayer(PlayerControl killer, PlayerControl target)
+        public static void RpcMultiMurderPlayer(PlayerControl killer, PlayerControl target)
+        {
+            MurderPlayer(killer, target, false);
+            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                (byte)CustomRPC.BypassMultiKill, SendOption.Reliable, -1);
+            writer.Write(killer.PlayerId);
+            writer.Write(target.PlayerId);
+            AmongUsClient.Instance.FinishRpcImmediately(writer);
+        }
+
+        public static void MurderPlayer(PlayerControl killer, PlayerControl target, bool jumpToBody)
         {
             var data = target.Data;
             if (data != null && !data.IsDead)
@@ -541,14 +551,12 @@ namespace TownOfUs
                     target.myTasks.Insert(0, importantTextTask);
                 }
 
-                if (!killer.Is(RoleEnum.Arsonist))
+                if (jumpToBody)
                 {
                     killer.MyPhysics.StartCoroutine(killer.KillAnimations.Random().CoPerformKill(killer, target));
                 }
-                else
-                {
-                    killer.MyPhysics.StartCoroutine(killer.KillAnimations.Random().CoPerformKill(target, target));
-                }
+                else killer.MyPhysics.StartCoroutine(killer.KillAnimations.Random().CoPerformKill(target, target));
+
                 var deadBody = new DeadPlayer
                 {
                     PlayerId = target.PlayerId,
@@ -561,6 +569,13 @@ namespace TownOfUs
                 if (MeetingHud.Instance) target.Exiled();
 
                 if (!killer.AmOwner) return;
+
+                if (target.Is(ModifierEnum.Bait))
+                {
+                    BaitReport(killer, target);
+                }
+
+                if (!jumpToBody) return;
 
                 if (killer.Data.IsImpostor() && GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.HideNSeek)
                 {
@@ -605,11 +620,6 @@ namespace TownOfUs
                 {
                     killer.SetKillTimer(GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown * CustomGameOptions.DiseasedMultiplier);
                     return;
-                }
-
-                if (target.Is(ModifierEnum.Bait))
-                {
-                    BaitReport(killer, target);
                 }
 
                 if (killer.Is(ModifierEnum.Underdog))

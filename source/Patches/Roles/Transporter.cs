@@ -357,7 +357,7 @@ namespace TownOfUs.Roles
                 var TempFacing = TP1.myRend().flipX;
                 TP1.NetTransform.SnapTo(new Vector2(TP2.GetTruePosition().x, TP2.GetTruePosition().y + 0.3636f));
                 TP1.myRend().flipX = TP2.myRend().flipX;
-                if (die) Utils.MurderPlayer(TP1, TP2);
+                if (die) Utils.MurderPlayer(TP1, TP2, true);
                 else
                 {
                     TP2.NetTransform.SnapTo(new Vector2(TempPosition.x, TempPosition.y + 0.3636f));
