@@ -207,6 +207,9 @@ namespace TownOfUs.CustomOption
         public static CustomToggleOption NeutKillingRed;
         public static CustomToggleOption TraitorColourSwap;
 
+        public static CustomHeaderOption Spy;
+        public static CustomStringOption WhoSeesDead;
+
         public static CustomHeaderOption Swapper;
         public static CustomToggleOption SwapperButton;
 
@@ -775,6 +778,11 @@ namespace TownOfUs.CustomOption
                  new CustomNumberOption(num++, MultiMenu.crewmate, "Tasks Remaining When Revealed", 1, 1, 5, 1);
             SnitchSeesImpInMeeting = new CustomToggleOption(num++, MultiMenu.crewmate, "Snitch Sees Impostors In Meetings", true);
             SnitchSeesTraitor = new CustomToggleOption(num++, MultiMenu.crewmate, "Snitch Sees Traitor", true);
+
+            Spy =
+                new CustomHeaderOption(num++, MultiMenu.crewmate, "<color=#CCA3CCFF>Spy</color>");
+            WhoSeesDead = new CustomStringOption(num++, MultiMenu.crewmate, "Who Sees Dead Bodies On Admin",
+                new[] { "Nobody", "Spy", "Everyone But Spy", "Everyone" });
 
             Tracker =
                 new CustomHeaderOption(num++, MultiMenu.crewmate, "<color=#009900FF>Tracker</color>");
