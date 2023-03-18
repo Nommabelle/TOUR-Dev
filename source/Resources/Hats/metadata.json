@@ -2256,21 +2256,6 @@
       "artist": "Ophidian"
     },
     {
-      "id": "hats0451",
-      "name": "Cat Helmet hat",
-      "artist": "Little Doo Doo"
-    },
-    {
-      "id": "hats0452",
-      "name": "Cat Helmet With Apron hat",
-      "artist": "Little Doo Doo"
-    },
-    {
-      "id": "hats0453",
-      "name": "Zeta Mark V hat",
-      "artist": "Little Doo Doo"
-    },
-    {
       "id": "misc0000",
       "name": "ZeroXFusionz hat",
       "artist": "TheLastShaymin"
@@ -2738,6 +2723,21 @@
     {
       "id": "standard0047",
       "name": "Pumpkin hat",
+      "artist": "Little Doo Doo"
+    },
+    {
+      "id": "standard0048",
+      "name": "Cat Helmet hat",
+      "artist": "Little Doo Doo"
+    },
+    {
+      "id": "standard0049",
+      "name": "Cat Helmet With Apron hat",
+      "artist": "Little Doo Doo"
+    },
+    {
+      "id": "standard0050",
+      "name": "Zeta Mark V hat",
       "artist": "Little Doo Doo"
     }
   ]
