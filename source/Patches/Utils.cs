@@ -901,6 +901,10 @@ namespace TownOfUs
             {
                 var medium = Role.GetRole<Medium>(PlayerControl.LocalPlayer);
                 medium.LastMediated = DateTime.UtcNow;
+            }
+            foreach (var role in Role.GetRoles(RoleEnum.Medium))
+            {
+                var medium = (Medium)role;
                 medium.MediatedPlayers.Values.DestroyAll();
                 medium.MediatedPlayers.Clear();
             }
@@ -1020,6 +1024,10 @@ namespace TownOfUs
                 {
                     blackmailer.Blackmailed?.myRend().material.SetFloat("_Outline", 0f);
                 }
+            }
+            foreach (var role in Role.GetRoles(RoleEnum.Blackmailer))
+            {
+                var blackmailer = (Blackmailer)role;
                 blackmailer.Blackmailed = null;
             }
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Bomber))
