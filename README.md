@@ -140,7 +140,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <ul> <li>Bug Fix: Swapper swap bugs... all of them... I think</li> </ul>
   <ul> <li>Optimisation: As Imitator you no longer need to deselect someone to select another player</li> </ul>
   <ul> <li>Medic Shields and Guardian Angel Protects now stop a Bomb detonation and Arsonist Ignites</li> </ul>
-  <ul> <li>Game Settings menu has received a revamp, thanks goes to [AlchlcDvl](https://github.com/AlchlcDvl)</li> </ul>
+  <ul> <li>Game Settings menu has received a revamp, thanks goes to [AlchlcDvl](https://github.com/AlchlcDvl) </li> </ul>
   </details>
   <details>
   <summary> v4.0.2 </summary>
