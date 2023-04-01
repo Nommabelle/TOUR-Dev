@@ -11,8 +11,8 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 using TownOfUs.Extensions;
-using TownOfUs.ImpostorRoles.TraitorMod;
 using AmongUs.GameOptions;
+using TownOfUs.Patches;
 
 namespace TownOfUs.Roles
 {
@@ -155,7 +155,7 @@ namespace TownOfUs.Roles
             return PlayerControl.LocalPlayer.Is(RoleEnum.GuardianAngel) && CustomGameOptions.GAKnowsTargetRole && Player == GetRole<GuardianAngel>(PlayerControl.LocalPlayer).target;
         }
 
-        protected virtual void IntroPrefix(IntroCutscene._ShowTeam_d__32 __instance)
+        protected virtual void IntroPrefix(IntroCutscene._ShowTeam_d__36 __instance)
         {
         }
 
@@ -437,17 +437,17 @@ namespace TownOfUs.Roles
                 }
             }
 
-            [HarmonyPatch(typeof(IntroCutscene._ShowTeam_d__32), nameof(IntroCutscene._ShowTeam_d__32.MoveNext))]
+            [HarmonyPatch(typeof(IntroCutscene._ShowTeam_d__36), nameof(IntroCutscene._ShowTeam_d__36.MoveNext))]
             public static class IntroCutscene_ShowTeam__d_MoveNext
             {
-                public static void Prefix(IntroCutscene._ShowTeam_d__32 __instance)
+                public static void Prefix(IntroCutscene._ShowTeam_d__36 __instance)
                 {
                     var role = GetRole(PlayerControl.LocalPlayer);
 
                     if (role != null) role.IntroPrefix(__instance);
                 }
 
-                public static void Postfix(IntroCutscene._ShowRole_d__35 __instance)
+                public static void Postfix(IntroCutscene._ShowRole_d__39 __instance)
                 {
                     var role = GetRole(PlayerControl.LocalPlayer);
                     // var alpha = __instance.__4__this.RoleText.color.a;
@@ -489,10 +489,10 @@ namespace TownOfUs.Roles
                 }
             }
 
-            [HarmonyPatch(typeof(IntroCutscene._ShowRole_d__35), nameof(IntroCutscene._ShowRole_d__35.MoveNext))]
+            [HarmonyPatch(typeof(IntroCutscene._ShowRole_d__39), nameof(IntroCutscene._ShowRole_d__39.MoveNext))]
             public static class IntroCutscene_ShowRole_d__24
             {
-                public static void Postfix(IntroCutscene._ShowRole_d__35 __instance)
+                public static void Postfix(IntroCutscene._ShowRole_d__39 __instance)
                 {
                     var role = GetRole(PlayerControl.LocalPlayer);
                     if (role != null && !role.Hidden)
@@ -528,10 +528,10 @@ namespace TownOfUs.Roles
                 }
             }
 
-            [HarmonyPatch(typeof(IntroCutscene._CoBegin_d__29), nameof(IntroCutscene._CoBegin_d__29.MoveNext))]
+            [HarmonyPatch(typeof(IntroCutscene._CoBegin_d__33), nameof(IntroCutscene._CoBegin_d__33.MoveNext))]
             public static class IntroCutscene_CoBegin_d__29
             {
-                public static void Postfix(IntroCutscene._CoBegin_d__29 __instance)
+                public static void Postfix(IntroCutscene._CoBegin_d__33 __instance)
                 {
                     var role = GetRole(PlayerControl.LocalPlayer);
                     if (role != null && !role.Hidden)
@@ -568,10 +568,10 @@ namespace TownOfUs.Roles
             }
         }
 
-        [HarmonyPatch(typeof(PlayerControl._CoSetTasks_d__113), nameof(PlayerControl._CoSetTasks_d__113.MoveNext))]
+        [HarmonyPatch(typeof(PlayerControl._CoSetTasks_d__114), nameof(PlayerControl._CoSetTasks_d__114.MoveNext))]
         public static class PlayerControl_SetTasks
         {
-            public static void Postfix(PlayerControl._CoSetTasks_d__113 __instance)
+            public static void Postfix(PlayerControl._CoSetTasks_d__114 __instance)
             {
                 if (__instance == null) return;
                 var player = __instance.__4__this;
@@ -635,11 +635,7 @@ namespace TownOfUs.Roles
                     bool modifierIsEnd = true;
                     var alives = PlayerControl.AllPlayerControls.ToArray().Where(x => !x.Data.IsDead && !x.Data.Disconnected).ToList();
                     var impsAlive = PlayerControl.AllPlayerControls.ToArray().Where(x => !x.Data.IsDead && !x.Data.Disconnected && x.Data.IsImpostor()).ToList();
-                    var traitorIsEnd = true;
-                    if (SetTraitor.WillBeTraitor != null)
-                    {
-                        traitorIsEnd = SetTraitor.WillBeTraitor.Data.IsDead || SetTraitor.WillBeTraitor.Data.Disconnected || alives.Count < CustomGameOptions.LatestSpawn || impsAlive.Count * 2 >= alives.Count;
-                    }
+                    var traitorIsEnd = !ExilePatch.TraitorCanSpawn;
                     if (modifier != null)
                         modifierIsEnd = modifier.EABBNOODFGL(__instance);
                     if (!roleIsEnd || !modifierIsEnd || !traitorIsEnd) result = false;

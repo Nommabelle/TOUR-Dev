@@ -15,10 +15,10 @@ using Hazel;
 
 namespace TownOfUs.Patches
 {
-    [HarmonyPatch(typeof(IntroCutscene._ShowRole_d__35), nameof(IntroCutscene._ShowRole_d__35.MoveNext))]
+    [HarmonyPatch(typeof(IntroCutscene._ShowRole_d__39), nameof(IntroCutscene._ShowRole_d__39.MoveNext))]
     public static class SubmergedStartPatch
     {
-        public static void Postfix(IntroCutscene._ShowRole_d__35 __instance)
+        public static void Postfix(IntroCutscene._ShowRole_d__39 __instance)
         {
             if (SubmergedCompatibility.isSubmerged())
             {
@@ -324,6 +324,7 @@ namespace TownOfUs.Patches
                     writer2.Write(PlayerControl.LocalPlayer.PlayerId);
                     writer2.Write(startingVent.transform.position.x);
                     writer2.Write(startingVent.transform.position.y);
+                    writer2.Write(startingVent.Id);
                     AmongUsClient.Instance.FinishRpcImmediately(writer2);
 
                     PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
@@ -348,6 +349,7 @@ namespace TownOfUs.Patches
                     writer2.Write(PlayerControl.LocalPlayer.PlayerId);
                     writer2.Write(startingVent.transform.position.x);
                     writer2.Write(startingVent.transform.position.y);
+                    writer2.Write(startingVent.Id);
                     AmongUsClient.Instance.FinishRpcImmediately(writer2);
 
                     PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));

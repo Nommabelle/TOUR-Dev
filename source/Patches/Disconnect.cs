@@ -1,4 +1,5 @@
 using HarmonyLib;
+using TownOfUs.Roles.Modifiers;
 
 namespace TownOfUs.Patches
 {
@@ -18,6 +19,15 @@ namespace TownOfUs.Patches
                         if (player2.Is(Faction.Impostors)) Utils.MurderPlayer(player2, player2, true);
                     }
                 }
+            }
+            else
+            {
+                ExilePatch.CheckTraitorSpawn(player);
+                /*if (player.IsLover())
+                {
+                    var otherLover = Modifier.GetModifier<Lover>(player).OtherLover;
+                    Utils.MurderPlayer(otherLover.Player, otherLover.Player, true);
+                }*/
             }
         }
     }

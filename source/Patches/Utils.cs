@@ -143,6 +143,15 @@ namespace TownOfUs
             return null;
         }
 
+        public static bool IsExeTarget(this PlayerControl player)
+        {
+            return Role.GetRoles(RoleEnum.Executioner).Any(role =>
+            {
+                var exeTarget = ((Executioner)role).target;
+                return exeTarget != null && player.PlayerId == exeTarget.PlayerId;
+            });
+        }
+
         public static bool IsShielded(this PlayerControl player)
         {
             return Role.GetRoles(RoleEnum.Medic).Any(role =>
@@ -467,6 +476,8 @@ namespace TownOfUs
             {
                 if (killer == PlayerControl.LocalPlayer)
                     SoundManager.Instance.PlaySound(PlayerControl.LocalPlayer.KillSfx, false, 0.8f);
+
+                ExilePatch.CheckTraitorSpawn(target);
 
                 if (!killer.Is(Faction.Crewmates) && killer != target
                     && GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.Normal) Role.GetRole(killer).Kills += 1;

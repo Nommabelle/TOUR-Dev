@@ -438,7 +438,6 @@ namespace TownOfUs.CustomOption
             Patches.ExportButton = new Export(num++);
             Patches.ImportButton = new Import(num++);
 
-
             CrewInvestigativeRoles = new CustomHeaderOption(num++, MultiMenu.crewmate, "Crewmate Investigative Roles");
             DetectiveOn = new CustomNumberOption(num++, MultiMenu.crewmate, "<color=#4D4DFFFF>Detective</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
