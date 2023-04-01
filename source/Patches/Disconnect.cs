@@ -26,7 +26,13 @@ namespace TownOfUs.Patches
                 /*if (player.IsLover())
                 {
                     var otherLover = Modifier.GetModifier<Lover>(player).OtherLover;
-                    Utils.MurderPlayer(otherLover.Player, otherLover.Player, true);
+                    if (!otherLover.Is(RoleEnum.Pestilence) && !otherLover.Data.IsDead
+                         && !otherLover.Data.Disconnected) MurderPlayer(otherLover, otherLover, true);
+                    if (otherLover.Is(RoleEnum.Sheriff))
+                    {
+                        var sheriff = Role.GetRole<Sheriff>(otherLover);
+                        sheriff.IncorrectKills -= 1;
+                    }
                 }*/
             }
         }

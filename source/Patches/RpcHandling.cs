@@ -190,23 +190,6 @@ namespace TownOfUs
             SortModifiers(ImpostorModifiers, impostors.Count);
             SortModifiers(ButtonModifiers, crewmates.Count + impostors.Count);
 
-            if (Check(CustomGameOptions.VanillaGame))
-            {
-                CrewmateRoles.Clear();
-                NeutralNonKillingRoles.Clear();
-                NeutralKillingRoles.Clear();
-                CrewmateModifiers.Clear();
-                GlobalModifiers.Clear();
-                ImpostorModifiers.Clear();
-                ButtonModifiers.Clear();
-                AssassinModifiers.Clear();
-                AssassinAbility.Clear();
-                ImpostorRoles.Clear();
-                crewAndNeutralRoles.Clear();
-                crewRoles.Clear();
-                impRoles.Clear();
-            }
-
             if (CustomGameOptions.GameMode == GameMode.AllAny)
             {
                 foreach (var (type, id, _, unique) in crewRoles)

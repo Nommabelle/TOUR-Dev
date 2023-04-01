@@ -32,6 +32,12 @@ namespace TownOfUs.Patches
             SetPhantom(exiled);
             SetTraitor(exiled);
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Arsonist)) ArsonistLastKiller(exiled);
+            if (exiled.IsLover() && CustomGameOptions.BothLoversDie)
+            {
+                var otherLover = Modifier.GetModifier<Lover>(exiled).OtherLover.Player;
+                if (!otherLover.Is(RoleEnum.Pestilence) && !otherLover.Data.IsDead
+                     && !otherLover.Data.Disconnected) otherLover.Exiled();
+            }
         }
 
         public static void Postfix(ExileController __instance) => ExileControllerPostfix(__instance);
@@ -74,64 +80,61 @@ namespace TownOfUs.Patches
         public static void SetHaunter(PlayerControl exiled)
         {
             if (!HaunterOn) return;
-            if (AmongUsClient.Instance.AmHost)
+            if (AmongUsClient.Instance.AmHost && WillBeHaunter == null)
             {
-                if (WillBeHaunter == null)
-                {
-                    var toChooseFrom = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(Faction.Crewmates) && !x.Is(ModifierEnum.Lover) && (x.Data.IsDead || x == exiled) && !x.Data.Disconnected).ToList();
-                    if (toChooseFrom.Count == 0) return;
+                var toChooseFrom = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(Faction.Crewmates) && !x.Is(ModifierEnum.Lover) && (x.Data.IsDead || x == exiled) && !x.Data.Disconnected).ToList();
+                if (toChooseFrom.Count == 0) return;
 
-                    var rand = UnityEngine.Random.RandomRangeInt(0, toChooseFrom.Count);
-                    var pc = toChooseFrom[rand];
+                var rand = UnityEngine.Random.RandomRangeInt(0, toChooseFrom.Count);
+                var pc = toChooseFrom[rand];
 
-                    WillBeHaunter = pc;
+                WillBeHaunter = pc;
 
-                    var oldRole = Role.GetRole(WillBeHaunter);
-                    var killsList = (oldRole.CorrectKills, oldRole.IncorrectKills, oldRole.CorrectAssassinKills, oldRole.IncorrectAssassinKills);
-                    Role.RoleDictionary.Remove(WillBeHaunter.PlayerId);
-                    var role = new Haunter(WillBeHaunter);
-                    role.formerRole = oldRole.RoleType;
-                    role.CorrectKills = killsList.CorrectKills;
-                    role.IncorrectKills = killsList.IncorrectKills;
-                    role.CorrectAssassinKills = killsList.CorrectAssassinKills;
-                    role.IncorrectAssassinKills = killsList.IncorrectAssassinKills;
-                    role.RegenTask();
-                    Lights.SetLights();
+                var oldRole = Role.GetRole(WillBeHaunter);
+                var killsList = (oldRole.CorrectKills, oldRole.IncorrectKills, oldRole.CorrectAssassinKills, oldRole.IncorrectAssassinKills);
+                Role.RoleDictionary.Remove(WillBeHaunter.PlayerId);
+                var role = new Haunter(WillBeHaunter);
+                role.formerRole = oldRole.RoleType;
+                role.CorrectKills = killsList.CorrectKills;
+                role.IncorrectKills = killsList.IncorrectKills;
+                role.CorrectAssassinKills = killsList.CorrectAssassinKills;
+                role.IncorrectAssassinKills = killsList.IncorrectAssassinKills;
+                role.RegenTask();
+                Lights.SetLights();
 
-                    RemoveTasks(WillBeHaunter);
-                    if (PlayerControl.LocalPlayer == WillBeHaunter) PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
+                RemoveTasks(WillBeHaunter);
+                if (PlayerControl.LocalPlayer == WillBeHaunter) PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
 
-                    WillBeHaunter.gameObject.layer = LayerMask.NameToLayer("Players");
+                WillBeHaunter.gameObject.layer = LayerMask.NameToLayer("Players");
 
-                    var startingVent = ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
-                    WillBeHaunter.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
-                    if (PlayerControl.LocalPlayer == WillBeHaunter) PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
+                var startingVent = ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
+                WillBeHaunter.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
+                if (PlayerControl.LocalPlayer == WillBeHaunter) PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
 
-                    var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                        (byte)CustomRPC.SetHaunter, SendOption.Reliable, -1);
-                    writer.Write(pc.PlayerId);
-                    writer.Write(startingVent.transform.position.x);
-                    writer.Write(startingVent.transform.position.y + 0.3636f);
-                    writer.Write(startingVent.Id);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer);
-                }
-                else
-                {
-                    if (Role.GetRole<Haunter>(WillBeHaunter).Caught) return;
-                    var startingVent =
-                        ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
+                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                    (byte)CustomRPC.SetHaunter, SendOption.Reliable, -1);
+                writer.Write(pc.PlayerId);
+                writer.Write(startingVent.transform.position.x);
+                writer.Write(startingVent.transform.position.y + 0.3636f);
+                writer.Write(startingVent.Id);
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
+            }
+            else if (WillBeHaunter != null && WillBeHaunter == PlayerControl.LocalPlayer)
+            {
+                if (Role.GetRole<Haunter>(WillBeHaunter).Caught) return;
+                var startingVent =
+                    ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
 
-                    var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                            (byte)CustomRPC.SetPos, SendOption.Reliable, -1);
-                    writer.Write(WillBeHaunter.PlayerId);
-                    writer.Write(startingVent.transform.position.x);
-                    writer.Write(startingVent.transform.position.y + 0.3636f);
-                    writer.Write(startingVent.Id);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                        (byte)CustomRPC.SetPos, SendOption.Reliable, -1);
+                writer.Write(WillBeHaunter.PlayerId);
+                writer.Write(startingVent.transform.position.x);
+                writer.Write(startingVent.transform.position.y + 0.3636f);
+                writer.Write(startingVent.Id);
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
 
-                    WillBeHaunter.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
-                    if (PlayerControl.LocalPlayer == WillBeHaunter) PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
-                }
+                WillBeHaunter.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
+                PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
             }
         }
 
@@ -140,62 +143,59 @@ namespace TownOfUs.Patches
         public static void SetPhantom(PlayerControl exiled)
         {
             if (!PhantomOn) return;
-            if (AmongUsClient.Instance.AmHost)
+            if (AmongUsClient.Instance.AmHost && WillBePhantom == null)
             {
-                if (WillBePhantom == null)
-                {
-                    var toChooseFrom = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(Faction.Neutral) && !x.Is(ModifierEnum.Lover) && (x.Data.IsDead || x == exiled) && !x.Data.Disconnected).ToList();
-                    if (toChooseFrom.Count == 0) return;
+                var toChooseFrom = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(Faction.Neutral) && !x.Is(ModifierEnum.Lover) && (x.Data.IsDead || x == exiled) && !x.Data.Disconnected).ToList();
+                if (toChooseFrom.Count == 0) return;
 
-                    var rand = UnityEngine.Random.RandomRangeInt(0, toChooseFrom.Count);
-                    var pc = toChooseFrom[rand];
+                var rand = UnityEngine.Random.RandomRangeInt(0, toChooseFrom.Count);
+                var pc = toChooseFrom[rand];
 
-                    WillBePhantom = pc;
+                WillBePhantom = pc;
 
-                    var oldRole = Role.GetRole(WillBePhantom);
-                    var killsList = (oldRole.Kills, oldRole.CorrectAssassinKills, oldRole.IncorrectAssassinKills);
-                    Role.RoleDictionary.Remove(WillBePhantom.PlayerId);
-                    var role = new Phantom(WillBePhantom);
-                    role.Kills = killsList.Kills;
-                    role.CorrectAssassinKills = killsList.CorrectAssassinKills;
-                    role.IncorrectAssassinKills = killsList.IncorrectAssassinKills;
-                    role.RegenTask();
-                    Lights.SetLights();
+                var oldRole = Role.GetRole(WillBePhantom);
+                var killsList = (oldRole.Kills, oldRole.CorrectAssassinKills, oldRole.IncorrectAssassinKills);
+                Role.RoleDictionary.Remove(WillBePhantom.PlayerId);
+                var role = new Phantom(WillBePhantom);
+                role.Kills = killsList.Kills;
+                role.CorrectAssassinKills = killsList.CorrectAssassinKills;
+                role.IncorrectAssassinKills = killsList.IncorrectAssassinKills;
+                role.RegenTask();
+                Lights.SetLights();
 
-                    RemoveTasks(WillBePhantom);
-                    if (PlayerControl.LocalPlayer == WillBePhantom) PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
+                RemoveTasks(WillBePhantom);
+                if (PlayerControl.LocalPlayer == WillBePhantom) PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
 
-                    WillBePhantom.gameObject.layer = LayerMask.NameToLayer("Players");
+                WillBePhantom.gameObject.layer = LayerMask.NameToLayer("Players");
 
-                    var startingVent = ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
-                    WillBePhantom.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
-                    if (PlayerControl.LocalPlayer == WillBePhantom) PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
+                var startingVent = ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
+                WillBePhantom.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
+                if (PlayerControl.LocalPlayer == WillBePhantom) PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
 
-                    var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                        (byte)CustomRPC.SetPhantom, SendOption.Reliable, -1);
-                    writer.Write(pc.PlayerId);
-                    writer.Write(startingVent.transform.position.x);
-                    writer.Write(startingVent.transform.position.y + 0.3636f);
-                    writer.Write(startingVent.Id);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer);
-                }
-                else
-                {
-                    if (Role.GetRole<Phantom>(WillBePhantom).Caught) return;
-                    var startingVent =
-                        ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
+                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                    (byte)CustomRPC.SetPhantom, SendOption.Reliable, -1);
+                writer.Write(pc.PlayerId);
+                writer.Write(startingVent.transform.position.x);
+                writer.Write(startingVent.transform.position.y + 0.3636f);
+                writer.Write(startingVent.Id);
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
+            }
+            else if (WillBePhantom != null && WillBePhantom == PlayerControl.LocalPlayer)
+            {
+                if (Role.GetRole<Phantom>(WillBePhantom).Caught) return;
+                var startingVent =
+                    ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
 
-                    var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                            (byte)CustomRPC.SetPos, SendOption.Reliable, -1);
-                    writer.Write(WillBeHaunter.PlayerId);
-                    writer.Write(startingVent.transform.position.x);
-                    writer.Write(startingVent.transform.position.y + 0.3636f);
-                    writer.Write(startingVent.Id);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                        (byte)CustomRPC.SetPos, SendOption.Reliable, -1);
+                writer.Write(WillBePhantom.PlayerId);
+                writer.Write(startingVent.transform.position.x);
+                writer.Write(startingVent.transform.position.y + 0.3636f);
+                writer.Write(startingVent.Id);
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
 
-                    WillBePhantom.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
-                    if (PlayerControl.LocalPlayer == WillBePhantom) PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
-                }
+                WillBePhantom.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
+                PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
             }
         }
 

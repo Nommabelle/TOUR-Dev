@@ -579,6 +579,18 @@ namespace TownOfUs
 
                 if (MeetingHud.Instance) target.Exiled();
 
+                if (target.IsLover() && CustomGameOptions.BothLoversDie)
+                {
+                    var otherLover = Modifier.GetModifier<Lover>(target).OtherLover.Player;
+                    if (!otherLover.Is(RoleEnum.Pestilence) && !otherLover.Data.IsDead
+                         && !otherLover.Data.Disconnected) MurderPlayer(otherLover, otherLover, true);
+                    if (otherLover.Is(RoleEnum.Sheriff))
+                    {
+                        var sheriff = Role.GetRole<Sheriff>(otherLover);
+                        sheriff.IncorrectKills -= 1;
+                    }
+                }
+
                 if (!killer.AmOwner) return;
 
                 if (target.Is(ModifierEnum.Bait))
