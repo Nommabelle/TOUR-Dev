@@ -18,7 +18,7 @@ namespace TownOfUs.Roles
             Color = Patches.Colors.Jester;
             RoleType = RoleEnum.Jester;
             AddToRoleHistory(RoleType);
-            Faction = Faction.Neutral;
+            Faction = Faction.NeutralOther;
         }
 
         protected override void IntroPrefix(IntroCutscene._ShowTeam_d__36 __instance)
@@ -28,7 +28,7 @@ namespace TownOfUs.Roles
             __instance.teamToShow = jestTeam;
         }
 
-        internal override bool EABBNOODFGL(LogicGameFlowNormal __instance)
+        internal override bool NeutralWin(LogicGameFlowNormal __instance)
         {
             if (!VotedOut || !Player.Data.IsDead && !Player.Data.Disconnected) return true;
             Utils.EndGame();

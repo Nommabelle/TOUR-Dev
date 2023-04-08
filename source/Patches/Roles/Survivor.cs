@@ -26,7 +26,7 @@ namespace TownOfUs.Roles
             Color = Patches.Colors.Survivor;
             LastVested = DateTime.UtcNow;
             RoleType = RoleEnum.Survivor;
-            Faction = Faction.Neutral;
+            Faction = Faction.NeutralOther;
             AddToRoleHistory(RoleType);
 
             UsesLeft = CustomGameOptions.MaxVests;

@@ -27,7 +27,7 @@ namespace TownOfUs.Roles
             LastKilled = DateTime.UtcNow;
             RoleType = RoleEnum.Werewolf;
             AddToRoleHistory(RoleType);
-            Faction = Faction.Neutral;
+            Faction = Faction.NeutralKilling;
         }
 
         public KillButton RampageButton
@@ -41,7 +41,7 @@ namespace TownOfUs.Roles
             }
         }
 
-        internal override bool EABBNOODFGL(LogicGameFlowNormal __instance)
+        internal override bool NeutralWin(LogicGameFlowNormal __instance)
         {
             if (Player.Data.IsDead || Player.Data.Disconnected) return true;
 

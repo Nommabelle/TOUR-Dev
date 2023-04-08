@@ -212,7 +212,7 @@ namespace TownOfUs.CrewmateRoles.VigilanteMod
                     }
                 }
 
-                AddHauntPatch.AssassinatedPlayers.Add(player);
+                ExilePatch.AssassinatedPlayers.Add(player);
                 meetingHud.CheckForEndVoting();
             }
         }

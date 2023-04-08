@@ -227,8 +227,7 @@ namespace TownOfUs
             canHaveModifier.Shuffle();
             canHaveAbility.RemoveAll(player => !player.Is(Faction.Impostors));
             canHaveAbility.Shuffle();
-            canHaveAbility2.RemoveAll(player => !player.Is(Faction.Neutral) || player.Is(RoleEnum.Amnesiac) || player.Is(RoleEnum.GuardianAngel)
-            || player.Is(RoleEnum.Survivor) || player.Is(RoleEnum.Executioner) || player.Is(RoleEnum.Jester));
+            canHaveAbility2.RemoveAll(player => !player.Is(Faction.NeutralKilling));
             canHaveAbility2.Shuffle();
             var impAssassins = CustomGameOptions.NumberOfImpostorAssassins;
             var neutAssassins = CustomGameOptions.NumberOfNeutralAssassins;
@@ -288,7 +287,7 @@ namespace TownOfUs
                 Role.GenModifier<Modifier>(type, canHaveModifier, id);
             }
 
-            canHaveModifier.RemoveAll(player => player.Is(Faction.Neutral) || player.Is(Faction.Impostors));
+            canHaveModifier.RemoveAll(player => player.Is(Faction.NeutralKilling) || player.Is(Faction.Impostors));
             canHaveModifier.Shuffle();
 
             while (canHaveModifier.Count > 0 && CrewmateModifiers.Count > 0)
@@ -314,7 +313,7 @@ namespace TownOfUs
                 }
             }
 
-            var gaTargets = PlayerControl.AllPlayerControls.ToArray().Where(x => !x.Is(Faction.Neutral) && !x.Is(ModifierEnum.Lover)).ToList();
+            var gaTargets = PlayerControl.AllPlayerControls.ToArray().Where(x => !x.Is(Faction.NeutralOther) && !x.Is(Faction.NeutralKilling) && !x.Is(ModifierEnum.Lover)).ToList();
             foreach (var role in Role.GetRoles(RoleEnum.GuardianAngel))
             {
                 var ga = (GuardianAngel)role;
@@ -764,6 +763,7 @@ namespace TownOfUs
                         StartImitate.ImitatingPlayer = null;
                         KillButtonTarget.DontRevive = byte.MaxValue;
                         ReviveHudManagerUpdate.DontRevive = byte.MaxValue;
+                        ExilePatch.AssassinatedPlayers.Clear();
                         break;
 
                     case CustomRPC.JanitorClean:
@@ -1290,6 +1290,7 @@ namespace TownOfUs
                 ExileControllerPatch.lastExiled = null;
                 PatchKillTimer.GameStarted = false;
                 StartImitate.ImitatingPlayer = null;
+                ExilePatch.AssassinatedPlayers.Clear();
                 CrewmateRoles.Clear();
                 NeutralNonKillingRoles.Clear();
                 NeutralKillingRoles.Clear();

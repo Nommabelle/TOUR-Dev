@@ -500,7 +500,7 @@ namespace TownOfUs
                 if (killer.Is(RoleEnum.Veteran))
                 {
                     var veteran = Role.GetRole<Veteran>(killer);
-                    if (target.Is(Faction.Impostors) || target.Is(Faction.Neutral)) veteran.CorrectKills += 1;
+                    if (target.Is(Faction.Impostors) || target.Is(Faction.NeutralKilling)) veteran.CorrectKills += 1;
                     else if (killer != target) veteran.IncorrectKills += 1;
                 }
 

@@ -16,7 +16,7 @@ namespace TownOfUs.Roles
             AddToRoleHistory(RoleType);
             ImpostorText = () => "Your Power Grows With Every Kill";
             TaskText = () => "With each kill your kill cooldown decreases\nFake Tasks:";
-            Faction = Faction.Neutral;
+            Faction = Faction.NeutralKilling;
         }
 
         public PlayerControl ClosestPlayer;
@@ -24,7 +24,7 @@ namespace TownOfUs.Roles
         public bool JuggernautWins { get; set; }
         public int JuggKills { get; set; } = 0;
 
-        internal override bool EABBNOODFGL(LogicGameFlowNormal __instance)
+        internal override bool NeutralWin(LogicGameFlowNormal __instance)
         {
             if (Player.Data.IsDead || Player.Data.Disconnected) return true;
 

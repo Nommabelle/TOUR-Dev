@@ -21,7 +21,7 @@ namespace TownOfUs.Roles
             Color = Patches.Colors.Executioner;
             RoleType = RoleEnum.Executioner;
             AddToRoleHistory(RoleType);
-            Faction = Faction.Neutral;
+            Faction = Faction.NeutralOther;
             Scale = 1.4f;
         }
 
@@ -32,7 +32,7 @@ namespace TownOfUs.Roles
             __instance.teamToShow = exeTeam;
         }
 
-        internal override bool EABBNOODFGL(LogicGameFlowNormal __instance)
+        internal override bool NeutralWin(LogicGameFlowNormal __instance)
         {
             if (Player.Data.IsDead) return true;
             if (!TargetVotedOut || !target.Data.IsDead) return true;

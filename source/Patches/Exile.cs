@@ -11,6 +11,7 @@ using TownOfUs.CrewmateRoles.SnitchMod;
 using AmongUs.GameOptions;
 using Reactor.Utilities;
 using TownOfUs.Roles.Modifiers;
+using System.Collections.Generic;
 
 namespace TownOfUs.Patches
 {
@@ -23,9 +24,22 @@ namespace TownOfUs.Patches
     [HarmonyPatch(typeof(ExileController), nameof(ExileController.WrapUp))]
     public class ExilePatch
     {
+        public static List<PlayerControl> AssassinatedPlayers = new List<PlayerControl>();
         public static void ExileControllerPostfix(ExileController __instance)
         {
+            foreach (var player in AssassinatedPlayers)
+            {
+                player.Exiled();
+            }
+            AssassinatedPlayers.Clear();
             var exiled = __instance.exiled?.Object;
+            if (exiled != null)
+            {
+                foreach (var role in Role.GetRoles(RoleEnum.Jester))
+                    if (exiled.PlayerId == ((Jester)role).Player.PlayerId) ((Jester)role).Wins();
+                foreach (var role in Role.GetRoles(RoleEnum.Executioner))
+                    if (exiled.PlayerId == ((Executioner)role).target.PlayerId) ((Executioner)role).Wins();
+            }
             if (CustomGameOptions.GameMode == GameMode.Cultist) CultistExile(exiled);
             CheckTraitorSpawn(exiled);
             SetHaunter(exiled);
@@ -145,7 +159,7 @@ namespace TownOfUs.Patches
             if (!PhantomOn) return;
             if (AmongUsClient.Instance.AmHost && WillBePhantom == null)
             {
-                var toChooseFrom = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(Faction.Neutral) && !x.Is(ModifierEnum.Lover) && (x.Data.IsDead || x == exiled) && !x.Data.Disconnected).ToList();
+                var toChooseFrom = PlayerControl.AllPlayerControls.ToArray().Where(x => (x.Is(Faction.NeutralOther) || x.Is(Faction.NeutralKilling)) && !x.Is(ModifierEnum.Lover) && (x.Data.IsDead || x == exiled) && !x.Data.Disconnected).ToList();
                 if (toChooseFrom.Count == 0) return;
 
                 var rand = UnityEngine.Random.RandomRangeInt(0, toChooseFrom.Count);
@@ -239,7 +253,7 @@ namespace TownOfUs.Patches
 
         public static void SpawnTraitor(PlayerControl player)
         {
-            if (!PlayerControl.LocalPlayer.Is(RoleEnum.Traitor))
+            if (PlayerControl.LocalPlayer == player)
             {
                 if (PlayerControl.LocalPlayer.Is(RoleEnum.Snitch))
                 {
@@ -291,6 +305,8 @@ namespace TownOfUs.Patches
                     UnityEngine.Object.Destroy(trapperRole.UsesText);
                 }
 
+                DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(true);
+                Coroutines.Start(Utils.FlashCoroutine(Color.red, 1f));
             }
             player.Data.Role.TeamType = RoleTeamTypes.Impostor;
             RoleManager.Instance.SetRole(player, RoleTypes.Impostor);
@@ -305,12 +321,6 @@ namespace TownOfUs.Patches
             }
 
             if (CustomGameOptions.TraitorCanAssassin) new Assassin(player);
-
-            if (PlayerControl.LocalPlayer.PlayerId == player.PlayerId)
-            {
-                DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(true);
-                Coroutines.Start(Utils.FlashCoroutine(Color.red, 3f));
-            }
 
             foreach (var snitch in Role.GetRoles(RoleEnum.Snitch))
             {
@@ -362,12 +372,15 @@ namespace TownOfUs.Patches
         {
             if (CustomGameOptions.GameMode == GameMode.Cultist || CustomGameOptions.GameMode == GameMode.KillingOnly) return;
             if (!TraitorOn) return;
+            foreach (var traitor in PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(RoleEnum.Traitor)))
+            {
+                TraitorCanSpawn = false;
+                return;
+            }
             var alivePlayers = PlayerControl.AllPlayerControls.ToArray().Where(x => !x.Data.IsDead && !x.Data.Disconnected && x != deadPlayer).ToList();
             foreach (var player in alivePlayers)
             {
-                if (player.Data.IsImpostor() || ((player.Is(RoleEnum.Glitch) || player.Is(RoleEnum.Juggernaut)
-                    || player.Is(RoleEnum.Arsonist) || player.Is(RoleEnum.Plaguebearer) || player.Is(RoleEnum.Pestilence)
-                    || player.Is(RoleEnum.Werewolf)) && CustomGameOptions.NeutralKillingStopsTraitor))
+                if (player.Data.IsImpostor() || (player.Is(Faction.NeutralKilling) && CustomGameOptions.NeutralKillingStopsTraitor))
                 {
                     TraitorCanSpawn = false;
                     return;
@@ -423,11 +436,7 @@ namespace TownOfUs.Patches
                     .Where(x => !x.Data.IsDead && !x.Data.Disconnected && x != deadPlayer).ToList();
             foreach (var player in alives)
             {
-                if (player.Data.IsImpostor() || player.Is(RoleEnum.Glitch) || player.Is(RoleEnum.Juggernaut)
-                    || player.Is(RoleEnum.Plaguebearer) || player.Is(RoleEnum.Pestilence) || player.Is(RoleEnum.Werewolf))
-                {
-                    return;
-                }
+                if (player.Data.IsImpostor() || player.Is(Faction.NeutralKilling)) return;
             }
             var role = Role.GetRole<Arsonist>(PlayerControl.LocalPlayer);
             role.LastKiller = true;

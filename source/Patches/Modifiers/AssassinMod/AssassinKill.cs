@@ -252,7 +252,7 @@ namespace TownOfUs.Modifiers.AssassinMod
                     }
                 }
 
-                AddHauntPatch.AssassinatedPlayers.Add(player);
+                ExilePatch.AssassinatedPlayers.Add(player);
                 meetingHud.CheckForEndVoting();
             }
         }

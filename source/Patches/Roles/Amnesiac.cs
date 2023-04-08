@@ -17,7 +17,7 @@ namespace TownOfUs.Roles
             Color = Patches.Colors.Amnesiac;
             RoleType = RoleEnum.Amnesiac;
             AddToRoleHistory(RoleType);
-            Faction = Faction.Neutral;
+            Faction = Faction.NeutralOther;
         }
 
         public DeadBody CurrentTarget;
