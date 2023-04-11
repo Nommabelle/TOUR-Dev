@@ -1168,9 +1168,23 @@ namespace TownOfUs
                         Lights.SetLights();
                         ExilePatch.WillBePhantom.gameObject.layer = LayerMask.NameToLayer("Players");
                         ExilePatch.RemoveTasks(ExilePatch.WillBePhantom);
-                        if (PlayerControl.LocalPlayer.Is(RoleEnum.Phantom)) PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
-                        ExilePatch.WillBePhantom.transform.position = new Vector2(reader.ReadSingle(), reader.ReadSingle());
-                        if (PlayerControl.LocalPlayer == ExilePatch.WillBePhantom) PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(reader.ReadInt32());
+                        if (!PlayerControl.LocalPlayer.Is(RoleEnum.Haunter)) PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
+                        if (PlayerControl.LocalPlayer.Is(RoleEnum.Phantom))
+                        {
+                            PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
+                            var startingVent =
+                                ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
+
+                            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                                    (byte)CustomRPC.SetPos, SendOption.Reliable, -1);
+                            writer.Write(PlayerControl.LocalPlayer.PlayerId);
+                            writer.Write(startingVent.transform.position.x);
+                            writer.Write(startingVent.transform.position.y + 0.3636f);
+                            AmongUsClient.Instance.FinishRpcImmediately(writer);
+
+                            PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
+                            PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
+                        }
                         break;
                     case CustomRPC.CatchPhantom:
                         var phantomPlayer = Utils.PlayerById(reader.ReadByte());
@@ -1196,9 +1210,22 @@ namespace TownOfUs
                         Lights.SetLights();
                         ExilePatch.WillBeHaunter.gameObject.layer = LayerMask.NameToLayer("Players");
                         ExilePatch.RemoveTasks(ExilePatch.WillBeHaunter);
-                        if (PlayerControl.LocalPlayer.Is(RoleEnum.Haunter)) PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
-                        ExilePatch.WillBeHaunter.transform.position = new Vector2(reader.ReadSingle(), reader.ReadSingle());
-                        if (PlayerControl.LocalPlayer == ExilePatch.WillBeHaunter) PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(reader.ReadInt32());
+                        if (!PlayerControl.LocalPlayer.Is(RoleEnum.Phantom)) PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
+                        if (PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
+                        {
+                            var startingVent =
+                                ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
+
+                            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                                    (byte)CustomRPC.SetPos, SendOption.Reliable, -1);
+                            writer.Write(PlayerControl.LocalPlayer.PlayerId);
+                            writer.Write(startingVent.transform.position.x);
+                            writer.Write(startingVent.transform.position.y + 0.3636f);
+                            AmongUsClient.Instance.FinishRpcImmediately(writer);
+
+                            PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
+                            PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
+                        }
                         break;
                     case CustomRPC.CatchHaunter:
                         var haunterPlayer = Utils.PlayerById(reader.ReadByte());
@@ -1261,7 +1288,6 @@ namespace TownOfUs
                     case CustomRPC.SetPos:
                         var setplayer = Utils.PlayerById(reader.ReadByte());
                         setplayer.transform.position = new Vector2(reader.ReadSingle(), reader.ReadSingle());
-                        if (PlayerControl.LocalPlayer == setplayer) PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(reader.ReadInt32());
                         break;
                     case CustomRPC.SetSettings:
                         readByte = reader.ReadByte();

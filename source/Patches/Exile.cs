@@ -116,22 +116,30 @@ namespace TownOfUs.Patches
                 role.RegenTask();
                 Lights.SetLights();
 
-                RemoveTasks(WillBeHaunter);
-                if (PlayerControl.LocalPlayer == WillBeHaunter) PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
-
                 WillBeHaunter.gameObject.layer = LayerMask.NameToLayer("Players");
-
-                var startingVent = ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
-                WillBeHaunter.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
-                if (PlayerControl.LocalPlayer == WillBeHaunter) PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
+                RemoveTasks(WillBeHaunter);
+                if (!PlayerControl.LocalPlayer.Is(RoleEnum.Phantom)) PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
 
                 var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                     (byte)CustomRPC.SetHaunter, SendOption.Reliable, -1);
                 writer.Write(pc.PlayerId);
-                writer.Write(startingVent.transform.position.x);
-                writer.Write(startingVent.transform.position.y + 0.3636f);
-                writer.Write(startingVent.Id);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
+
+                if (PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
+                {
+                    var startingVent =
+                        ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
+
+                    var writer2 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                            (byte)CustomRPC.SetPos, SendOption.Reliable, -1);
+                    writer2.Write(PlayerControl.LocalPlayer.PlayerId);
+                    writer2.Write(startingVent.transform.position.x);
+                    writer2.Write(startingVent.transform.position.y + 0.3636f);
+                    AmongUsClient.Instance.FinishRpcImmediately(writer2);
+
+                    PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
+                    PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
+                }
             }
             else if (WillBeHaunter != null && WillBeHaunter == PlayerControl.LocalPlayer)
             {
@@ -144,7 +152,6 @@ namespace TownOfUs.Patches
                 writer.Write(WillBeHaunter.PlayerId);
                 writer.Write(startingVent.transform.position.x);
                 writer.Write(startingVent.transform.position.y + 0.3636f);
-                writer.Write(startingVent.Id);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
 
                 WillBeHaunter.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
@@ -177,22 +184,30 @@ namespace TownOfUs.Patches
                 role.RegenTask();
                 Lights.SetLights();
 
-                RemoveTasks(WillBePhantom);
-                if (PlayerControl.LocalPlayer == WillBePhantom) PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
-
                 WillBePhantom.gameObject.layer = LayerMask.NameToLayer("Players");
-
-                var startingVent = ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
-                WillBePhantom.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
-                if (PlayerControl.LocalPlayer == WillBePhantom) PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
+                RemoveTasks(WillBePhantom);
+                if (!PlayerControl.LocalPlayer.Is(RoleEnum.Haunter)) PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
 
                 var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                     (byte)CustomRPC.SetPhantom, SendOption.Reliable, -1);
                 writer.Write(pc.PlayerId);
-                writer.Write(startingVent.transform.position.x);
-                writer.Write(startingVent.transform.position.y + 0.3636f);
-                writer.Write(startingVent.Id);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
+
+                if (PlayerControl.LocalPlayer.Is(RoleEnum.Phantom))
+                {
+                    var startingVent =
+                        ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
+
+                    var writer2 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                            (byte)CustomRPC.SetPos, SendOption.Reliable, -1);
+                    writer2.Write(PlayerControl.LocalPlayer.PlayerId);
+                    writer2.Write(startingVent.transform.position.x);
+                    writer2.Write(startingVent.transform.position.y + 0.3636f);
+                    AmongUsClient.Instance.FinishRpcImmediately(writer2);
+
+                    PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
+                    PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
+                }
             }
             else if (WillBePhantom != null && WillBePhantom == PlayerControl.LocalPlayer)
             {
@@ -205,7 +220,6 @@ namespace TownOfUs.Patches
                 writer.Write(WillBePhantom.PlayerId);
                 writer.Write(startingVent.transform.position.x);
                 writer.Write(startingVent.transform.position.y + 0.3636f);
-                writer.Write(startingVent.Id);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
 
                 WillBePhantom.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
