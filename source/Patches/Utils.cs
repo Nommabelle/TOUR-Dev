@@ -504,6 +504,30 @@ namespace TownOfUs
                     else if (killer != target) veteran.IncorrectKills += 1;
                 }
 
+                if (AmongUsClient.Instance.AmHost && ExilePatch.HaunterOn && ExilePatch.WillBeHaunter == null)
+                {
+                    if (target.Is(Faction.Crewmates) && !target.Is(ModifierEnum.Lover))
+                    {
+                        ExilePatch.WillBeHaunter = target;
+                        var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                            (byte)CustomRPC.SetHaunter, SendOption.Reliable, -1);
+                        writer.Write(target.PlayerId);
+                        AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    }
+                }
+
+                if (AmongUsClient.Instance.AmHost && ExilePatch.PhantomOn && ExilePatch.WillBePhantom == null)
+                {
+                    if ((target.Is(Faction.NeutralOther) || target.Is(Faction.NeutralKilling)) && !target.Is(ModifierEnum.Lover))
+                    {
+                        ExilePatch.WillBePhantom = target;
+                        var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                            (byte)CustomRPC.SetPhantom, SendOption.Reliable, -1);
+                        writer.Write(target.PlayerId);
+                        AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    }
+                }
+
                 target.gameObject.layer = LayerMask.NameToLayer("Ghost");
                 target.Visible = false;
 

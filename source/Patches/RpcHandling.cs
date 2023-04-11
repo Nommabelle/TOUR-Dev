@@ -1157,34 +1157,6 @@ namespace TownOfUs
                     case CustomRPC.SetPhantom:
                         readByte = reader.ReadByte();
                         ExilePatch.WillBePhantom = Utils.PlayerById(readByte);
-                        var phantom = Role.GetRole(ExilePatch.WillBePhantom);
-                        var killsList = (phantom.Kills, phantom.CorrectAssassinKills, phantom.IncorrectAssassinKills);
-                        Role.RoleDictionary.Remove(ExilePatch.WillBePhantom.PlayerId);
-                        var phantomRole = new Phantom(ExilePatch.WillBePhantom);
-                        phantomRole.Kills = killsList.Kills;
-                        phantomRole.CorrectAssassinKills = killsList.CorrectAssassinKills;
-                        phantomRole.IncorrectAssassinKills = killsList.IncorrectAssassinKills;
-                        phantomRole.RegenTask();
-                        Lights.SetLights();
-                        ExilePatch.WillBePhantom.gameObject.layer = LayerMask.NameToLayer("Players");
-                        ExilePatch.RemoveTasks(ExilePatch.WillBePhantom);
-                        if (!PlayerControl.LocalPlayer.Is(RoleEnum.Haunter)) PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
-                        if (PlayerControl.LocalPlayer.Is(RoleEnum.Phantom))
-                        {
-                            PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
-                            var startingVent =
-                                ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
-
-                            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                                    (byte)CustomRPC.SetPos, SendOption.Reliable, -1);
-                            writer.Write(PlayerControl.LocalPlayer.PlayerId);
-                            writer.Write(startingVent.transform.position.x);
-                            writer.Write(startingVent.transform.position.y + 0.3636f);
-                            AmongUsClient.Instance.FinishRpcImmediately(writer);
-
-                            PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
-                            PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
-                        }
                         break;
                     case CustomRPC.CatchPhantom:
                         var phantomPlayer = Utils.PlayerById(reader.ReadByte());
@@ -1197,35 +1169,6 @@ namespace TownOfUs
                     case CustomRPC.SetHaunter:
                         readByte = reader.ReadByte();
                         ExilePatch.WillBeHaunter = Utils.PlayerById(readByte);
-                        var haunter = Role.GetRole(ExilePatch.WillBeHaunter);
-                        var killsList2 = (haunter.CorrectKills, haunter.IncorrectKills, haunter.CorrectAssassinKills, haunter.IncorrectAssassinKills);
-                        Role.RoleDictionary.Remove(ExilePatch.WillBeHaunter.PlayerId);
-                        var haunterRole = new Haunter(ExilePatch.WillBeHaunter);
-                        haunterRole.formerRole = haunter.RoleType;
-                        haunterRole.CorrectKills = killsList2.CorrectKills;
-                        haunterRole.IncorrectKills = killsList2.IncorrectKills;
-                        haunterRole.CorrectAssassinKills = killsList2.CorrectAssassinKills;
-                        haunterRole.IncorrectAssassinKills = killsList2.IncorrectAssassinKills;
-                        haunterRole.RegenTask();
-                        Lights.SetLights();
-                        ExilePatch.WillBeHaunter.gameObject.layer = LayerMask.NameToLayer("Players");
-                        ExilePatch.RemoveTasks(ExilePatch.WillBeHaunter);
-                        if (!PlayerControl.LocalPlayer.Is(RoleEnum.Phantom)) PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
-                        if (PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
-                        {
-                            var startingVent =
-                                ShipStatus.Instance.AllVents[UnityEngine.Random.RandomRangeInt(0, ShipStatus.Instance.AllVents.Count)];
-
-                            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                                    (byte)CustomRPC.SetPos, SendOption.Reliable, -1);
-                            writer.Write(PlayerControl.LocalPlayer.PlayerId);
-                            writer.Write(startingVent.transform.position.x);
-                            writer.Write(startingVent.transform.position.y + 0.3636f);
-                            AmongUsClient.Instance.FinishRpcImmediately(writer);
-
-                            PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
-                            PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(startingVent.Id);
-                        }
                         break;
                     case CustomRPC.CatchHaunter:
                         var haunterPlayer = Utils.PlayerById(reader.ReadByte());
