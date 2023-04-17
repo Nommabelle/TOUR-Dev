@@ -324,7 +324,6 @@ namespace TownOfUs.Patches
                     writer2.Write(PlayerControl.LocalPlayer.PlayerId);
                     writer2.Write(startingVent.transform.position.x);
                     writer2.Write(startingVent.transform.position.y);
-                    writer2.Write(startingVent.Id);
                     AmongUsClient.Instance.FinishRpcImmediately(writer2);
 
                     PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
@@ -349,7 +348,6 @@ namespace TownOfUs.Patches
                     writer2.Write(PlayerControl.LocalPlayer.PlayerId);
                     writer2.Write(startingVent.transform.position.x);
                     writer2.Write(startingVent.transform.position.y);
-                    writer2.Write(startingVent.Id);
                     AmongUsClient.Instance.FinishRpcImmediately(writer2);
 
                     PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(startingVent.transform.position.x, startingVent.transform.position.y + 0.3636f));
