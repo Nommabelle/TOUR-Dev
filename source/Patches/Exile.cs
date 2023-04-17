@@ -94,6 +94,7 @@ namespace TownOfUs.Patches
         public static void SetHaunter(PlayerControl exiled)
         {
             if (!HaunterOn) return;
+            if (WillBeHaunter == null && exiled.Is(Faction.Crewmates) && !exiled.IsLover()) WillBeHaunter = exiled;
             if (WillBeHaunter != null && !WillBeHaunter.Is(RoleEnum.Haunter))
             {
                 var oldRole = Role.GetRole(WillBeHaunter);
@@ -135,6 +136,7 @@ namespace TownOfUs.Patches
         public static void SetPhantom(PlayerControl exiled)
         {
             if (!PhantomOn) return;
+            if (WillBePhantom == null && (exiled.Is(Faction.NeutralOther) || exiled.Is(Faction.NeutralKilling)) && !exiled.IsLover()) WillBePhantom = exiled;
             if (WillBePhantom != null && !WillBePhantom.Is(RoleEnum.Phantom))
             {
                 var oldRole = Role.GetRole(WillBePhantom);
