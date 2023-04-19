@@ -28,25 +28,7 @@ namespace TownOfUs.Patches
         public static void ExileControllerPostfix(ExileController __instance)
         {
             if (PlayerControl.LocalPlayer.Data.Disconnected) return;
-            foreach (var player in AssassinatedPlayers)
-            {
-                if (!player.Data.Disconnected) player.Exiled();
-            }
-            AssassinatedPlayers.Clear();
             var exiled = __instance.exiled?.Object;
-            if (exiled != null)
-            {
-                foreach (var role in Role.GetRoles(RoleEnum.Jester))
-                {
-                    if (exiled.PlayerId == ((Jester)role).Player.PlayerId) ((Jester)role).Wins();
-                    return;
-                }
-                foreach (var role in Role.GetRoles(RoleEnum.Executioner))
-                {
-                    if (exiled.PlayerId == ((Executioner)role).target.PlayerId) ((Executioner)role).Wins();
-                    return;
-                }
-            }
             if (CustomGameOptions.GameMode == GameMode.Cultist) CultistExile(exiled);
             CheckTraitorSpawn(exiled);
             SetHaunter(exiled);
@@ -59,6 +41,15 @@ namespace TownOfUs.Patches
                 if (!otherLover.Is(RoleEnum.Pestilence) && !otherLover.Data.IsDead
                      && !otherLover.Data.Disconnected) otherLover.Exiled();
             }
+            foreach (var player in AssassinatedPlayers)
+            {
+                try
+                {
+                    player.Exiled();
+                }
+                catch { }
+            }
+            AssassinatedPlayers.Clear();
         }
 
         public static void Postfix(ExileController __instance) => ExileControllerPostfix(__instance);
@@ -142,6 +133,7 @@ namespace TownOfUs.Patches
         public static void SetPhantom(PlayerControl exiled)
         {
             if (!PhantomOn) return;
+            if (exiled == WillBePhantom && WillBePhantom.Is(RoleEnum.Jester)) return;
             if (WillBePhantom == null && (exiled.Is(Faction.NeutralOther) || exiled.Is(Faction.NeutralKilling)) && !exiled.IsLover()) WillBePhantom = exiled;
             if (WillBePhantom != null && !WillBePhantom.Is(RoleEnum.Phantom))
             {
