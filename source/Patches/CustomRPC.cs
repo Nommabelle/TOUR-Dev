@@ -8,15 +8,17 @@ namespace TownOfUs
         SetAssassin,
         SetTarget,
         SetGATarget,
-        SetDelayRoles,
 
         SetPhantom,
+        PhantomDied,
         CatchPhantom,
 
         SetHaunter,
+        HaunterDied,
         CatchHaunter,
 
         SetTraitor,
+        TraitorSpawn,
 
         LoveWin,
         GlitchWin,

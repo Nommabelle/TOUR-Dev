@@ -1,10 +1,10 @@
 using HarmonyLib;
 using TownOfUs.Roles;
 
-namespace TownOfUs.Patches
+namespace TownOfUs.NeutralRoles.ExecutionerMod
 {
     [HarmonyPatch(typeof(ExileController), nameof(ExileController.Begin))]
-    internal class ExileBegin
+    internal class MeetingExiledEnd
     {
         private static void Postfix(ExileController __instance)
         {
@@ -15,10 +15,6 @@ namespace TownOfUs.Patches
             foreach (var role in Role.GetRoles(RoleEnum.Executioner))
                 if (player.PlayerId == ((Executioner)role).target.PlayerId)
                     ((Executioner)role).Wins();
-
-            foreach (var role in Role.GetRoles(RoleEnum.Jester))
-                if (player.PlayerId == ((Jester)role).Player.PlayerId)
-                    ((Jester)role).Wins();
         }
     }
 }
