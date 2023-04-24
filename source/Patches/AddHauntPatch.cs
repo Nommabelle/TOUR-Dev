@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Object = UnityEngine.Object;
+using TownOfUs.NeutralRoles.PhantomMod;
+using TownOfUs.CrewmateRoles.HaunterMod;
 
 namespace TownOfUs.Patches
 {
@@ -24,7 +26,7 @@ namespace TownOfUs.Patches
             {
                 try
                 {
-                    player.Exiled();
+                    if (SetPhantom.WillBePhantom != player && SetHaunter.WillBeHaunter != player) player.Exiled();
                 }
                 catch { }
             }

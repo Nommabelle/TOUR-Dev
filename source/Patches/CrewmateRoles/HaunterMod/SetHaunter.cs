@@ -23,37 +23,44 @@ namespace TownOfUs.CrewmateRoles.HaunterMod
 
         public static void ExileControllerPostfix(ExileController __instance)
         {
+            if (WillBeHaunter == null) return;
             var exiled = __instance.exiled?.Object;
-            if (WillBeHaunter != null && !WillBeHaunter.Data.IsDead && exiled.Is(Faction.Crewmates) && !exiled.IsLover()) WillBeHaunter = exiled;
-            if (!PlayerControl.LocalPlayer.Data.IsDead && exiled != PlayerControl.LocalPlayer) return;
-            if (exiled == PlayerControl.LocalPlayer && PlayerControl.LocalPlayer.Is(RoleEnum.Jester)) return;
-            if (PlayerControl.LocalPlayer != WillBeHaunter) return;
+            if (!WillBeHaunter.Data.IsDead && exiled.Is(Faction.Crewmates) && !exiled.IsLover()) WillBeHaunter = exiled;
+            if (WillBeHaunter.Data.Disconnected) return;
+            if (!WillBeHaunter.Data.IsDead && WillBeHaunter != exiled) return;
 
-            if (!PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
+            if (!WillBeHaunter.Is(RoleEnum.Haunter))
             {
-                var oldRole = Role.GetRole(PlayerControl.LocalPlayer);
+                var oldRole = Role.GetRole(WillBeHaunter);
                 var killsList = (oldRole.CorrectKills, oldRole.IncorrectKills, oldRole.CorrectAssassinKills, oldRole.IncorrectAssassinKills);
-                Role.RoleDictionary.Remove(PlayerControl.LocalPlayer.PlayerId);
-                var role = new Haunter(PlayerControl.LocalPlayer);
-                role.formerRole = oldRole.RoleType;
-                role.CorrectKills = killsList.CorrectKills;
-                role.IncorrectKills = killsList.IncorrectKills;
-                role.CorrectAssassinKills = killsList.CorrectAssassinKills;
-                role.IncorrectAssassinKills = killsList.IncorrectAssassinKills;
-                role.RegenTask();
+                Role.RoleDictionary.Remove(WillBeHaunter.PlayerId);
+                if (PlayerControl.LocalPlayer == WillBeHaunter)
+                {
+                    var role = new Haunter(PlayerControl.LocalPlayer);
+                    role.formerRole = oldRole.RoleType;
+                    role.CorrectKills = killsList.CorrectKills;
+                    role.IncorrectKills = killsList.IncorrectKills;
+                    role.CorrectAssassinKills = killsList.CorrectAssassinKills;
+                    role.IncorrectAssassinKills = killsList.IncorrectAssassinKills;
+                    role.RegenTask();
+                }
+                else
+                {
+                    var role = new Haunter(WillBeHaunter);
+                    role.formerRole = oldRole.RoleType;
+                    role.CorrectKills = killsList.CorrectKills;
+                    role.IncorrectKills = killsList.IncorrectKills;
+                    role.CorrectAssassinKills = killsList.CorrectAssassinKills;
+                    role.IncorrectAssassinKills = killsList.IncorrectAssassinKills;
+                }
 
-                Utils.RemoveTasks(PlayerControl.LocalPlayer);
-                PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
+                Utils.RemoveTasks(WillBeHaunter);
+                if (!PlayerControl.LocalPlayer.Is(RoleEnum.Phantom)) WillBeHaunter.MyPhysics.ResetMoveState();
 
-                System.Console.WriteLine("Become Haunter - Haunter");
-
-                PlayerControl.LocalPlayer.gameObject.layer = LayerMask.NameToLayer("Players");
-
-                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.HaunterDied, SendOption.Reliable, -1);
-                writer.Write(PlayerControl.LocalPlayer.PlayerId);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                WillBeHaunter.gameObject.layer = LayerMask.NameToLayer("Players");
             }
+
+            if (PlayerControl.LocalPlayer != WillBeHaunter) return;
 
             if (Role.GetRole<Haunter>(PlayerControl.LocalPlayer).Caught) return;
             var startingVent =

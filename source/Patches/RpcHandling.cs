@@ -1217,29 +1217,11 @@ namespace TownOfUs
                         readByte = reader.ReadByte();
                         SetPhantom.WillBePhantom = readByte == byte.MaxValue ? null : Utils.PlayerById(readByte);
                         break;
-                    case CustomRPC.PhantomDied:
-                        var phantom = Utils.PlayerById(reader.ReadByte());
-                        var phantomOldRole = Role.GetRole(phantom);
-                        var killsList2 = (phantomOldRole.Kills, phantomOldRole.CorrectKills, phantomOldRole.IncorrectKills, phantomOldRole.CorrectAssassinKills, phantomOldRole.IncorrectAssassinKills);
-                        Role.RoleDictionary.Remove(phantom.PlayerId);
-                        var phantomRole = new Phantom(phantom);
-                        phantomRole.Kills = killsList2.Kills;
-                        phantomRole.CorrectKills = killsList2.CorrectKills;
-                        phantomRole.IncorrectKills = killsList2.IncorrectKills;
-                        phantomRole.CorrectAssassinKills = killsList2.CorrectAssassinKills;
-                        phantomRole.IncorrectAssassinKills = killsList2.IncorrectAssassinKills;
-                        phantomRole.RegenTask();
-                        phantom.gameObject.layer = LayerMask.NameToLayer("Players");
-                        Utils.RemoveTasks(phantom);
-                        if (!PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
-                        {
-                            PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
-                        }
-                        break;
                     case CustomRPC.CatchPhantom:
                         var phantomPlayer = Utils.PlayerById(reader.ReadByte());
                         Role.GetRole<Phantom>(phantomPlayer).Caught = true;
                         if (PlayerControl.LocalPlayer == phantomPlayer) HudManager.Instance.AbilityButton.gameObject.SetActive(true);
+                        phantomPlayer.Exiled();
                         break;
                     case CustomRPC.PhantomWin:
                         Role.GetRole<Phantom>(Utils.PlayerById(reader.ReadByte())).CompletedTasks = true;
@@ -1248,29 +1230,11 @@ namespace TownOfUs
                         readByte = reader.ReadByte();
                         SetHaunter.WillBeHaunter = readByte == byte.MaxValue ? null : Utils.PlayerById(readByte);
                         break;
-                    case CustomRPC.HaunterDied:
-                        var haunter = Utils.PlayerById(reader.ReadByte());
-                        var originalRole = Role.GetRole(haunter);
-                        var killsList3 = (originalRole.CorrectKills, originalRole.IncorrectKills, originalRole.CorrectAssassinKills, originalRole.IncorrectAssassinKills);
-                        Role.RoleDictionary.Remove(haunter.PlayerId);
-                        var haunterRole = new Haunter(haunter);
-                        haunterRole.formerRole = originalRole.RoleType;
-                        haunterRole.CorrectKills = killsList3.CorrectKills;
-                        haunterRole.IncorrectKills = killsList3.IncorrectKills;
-                        haunterRole.CorrectAssassinKills = killsList3.CorrectAssassinKills;
-                        haunterRole.IncorrectAssassinKills = killsList3.IncorrectAssassinKills;
-                        haunterRole.RegenTask();
-                        haunter.gameObject.layer = LayerMask.NameToLayer("Players");
-                        Utils.RemoveTasks(haunter);
-                        if (!PlayerControl.LocalPlayer.Is(RoleEnum.Phantom))
-                        {
-                            PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
-                        }
-                        break;
                     case CustomRPC.CatchHaunter:
                         var haunterPlayer = Utils.PlayerById(reader.ReadByte());
                         Role.GetRole<Haunter>(haunterPlayer).Caught = true;
                         if (PlayerControl.LocalPlayer == haunterPlayer) HudManager.Instance.AbilityButton.gameObject.SetActive(true);
+                        haunterPlayer.Exiled();
                         break;
                     case CustomRPC.HaunterFinished:
                         HighlightImpostors.UpdateMeeting(MeetingHud.Instance);

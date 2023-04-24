@@ -10,11 +10,9 @@ namespace TownOfUs
         SetGATarget,
 
         SetPhantom,
-        PhantomDied,
         CatchPhantom,
 
         SetHaunter,
-        HaunterDied,
         CatchHaunter,
 
         SetTraitor,

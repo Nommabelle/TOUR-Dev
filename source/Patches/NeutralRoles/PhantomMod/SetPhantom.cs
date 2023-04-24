@@ -23,37 +23,41 @@ namespace TownOfUs.NeutralRoles.PhantomMod
 
         public static void ExileControllerPostfix(ExileController __instance)
         {
+            if (WillBePhantom == null) return;
             var exiled = __instance.exiled?.Object;
-            if (WillBePhantom != null && !WillBePhantom.Data.IsDead && (exiled.Is(Faction.NeutralKilling) || exiled.Is(Faction.NeutralOther)) && !exiled.IsLover()) WillBePhantom = exiled;
-            if (!PlayerControl.LocalPlayer.Data.IsDead && exiled != PlayerControl.LocalPlayer) return;
-            if (exiled == PlayerControl.LocalPlayer && PlayerControl.LocalPlayer.Is(RoleEnum.Jester)) return;
-            if (PlayerControl.LocalPlayer != WillBePhantom) return;
+            if (!WillBePhantom.Data.IsDead && (exiled.Is(Faction.NeutralKilling) || exiled.Is(Faction.NeutralOther)) && !exiled.IsLover()) WillBePhantom = exiled;
+            if (exiled == WillBePhantom && exiled.Is(RoleEnum.Jester)) return;
+            if (WillBePhantom.Data.Disconnected) return;
+            if (!WillBePhantom.Data.IsDead && WillBePhantom != exiled) return;
 
-            if (!PlayerControl.LocalPlayer.Is(RoleEnum.Phantom))
+            if (!WillBePhantom.Is(RoleEnum.Phantom))
             {
-                var oldRole = Role.GetRole(PlayerControl.LocalPlayer);
-                var killsList = (oldRole.Kills, oldRole.CorrectKills, oldRole.IncorrectKills, oldRole.CorrectAssassinKills, oldRole.IncorrectAssassinKills);
-                Role.RoleDictionary.Remove(PlayerControl.LocalPlayer.PlayerId);
-                var role = new Phantom(PlayerControl.LocalPlayer);
-                role.Kills = killsList.Kills;
-                role.CorrectKills = killsList.CorrectKills;
-                role.IncorrectKills = killsList.IncorrectKills;
-                role.CorrectAssassinKills = killsList.CorrectAssassinKills;
-                role.IncorrectAssassinKills = killsList.IncorrectAssassinKills;
-                role.RegenTask();
+                var oldRole = Role.GetRole(WillBePhantom);
+                var killsList = (oldRole.Kills, oldRole.CorrectAssassinKills, oldRole.IncorrectAssassinKills);
+                Role.RoleDictionary.Remove(WillBePhantom.PlayerId);
+                if (PlayerControl.LocalPlayer == WillBePhantom)
+                {
+                    var role = new Phantom(PlayerControl.LocalPlayer);
+                    role.Kills = killsList.Kills;
+                    role.CorrectAssassinKills = killsList.CorrectAssassinKills;
+                    role.IncorrectAssassinKills = killsList.IncorrectAssassinKills;
+                    role.RegenTask();
+                }
+                else
+                {
+                    var role = new Phantom(WillBePhantom);
+                    role.Kills = killsList.Kills;
+                    role.CorrectAssassinKills = killsList.CorrectAssassinKills;
+                    role.IncorrectAssassinKills = killsList.IncorrectAssassinKills;
+                }
 
-                Utils.RemoveTasks(PlayerControl.LocalPlayer);
-                PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
+                Utils.RemoveTasks(WillBePhantom);
+                if (!PlayerControl.LocalPlayer.Is(RoleEnum.Haunter)) WillBePhantom.MyPhysics.ResetMoveState();
 
-                System.Console.WriteLine("Become Phantom - Phantom");
-
-                PlayerControl.LocalPlayer.gameObject.layer = LayerMask.NameToLayer("Players");
-
-                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.PhantomDied, SendOption.Reliable, -1);
-                writer.Write(PlayerControl.LocalPlayer.PlayerId);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                WillBePhantom.gameObject.layer = LayerMask.NameToLayer("Players");
             }
+
+            if (PlayerControl.LocalPlayer != WillBePhantom) return;
 
             if (Role.GetRole<Phantom>(PlayerControl.LocalPlayer).Caught) return;
             var startingVent =
