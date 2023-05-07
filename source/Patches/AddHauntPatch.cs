@@ -26,7 +26,8 @@ namespace TownOfUs.Patches
             {
                 try
                 {
-                    if (SetPhantom.WillBePhantom != player && SetHaunter.WillBeHaunter != player) player.Exiled();
+                    if (SetPhantom.WillBePhantom != player && SetHaunter.WillBeHaunter != player
+                        && !player.Data.Disconnected) player.Exiled();
                 }
                 catch { }
             }
