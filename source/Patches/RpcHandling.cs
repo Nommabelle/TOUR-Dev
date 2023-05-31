@@ -832,6 +832,7 @@ namespace TownOfUs
                         KillButtonTarget.DontRevive = byte.MaxValue;
                         ReviveHudManagerUpdate.DontRevive = byte.MaxValue;
                         AddHauntPatch.AssassinatedPlayers.Clear();
+                        HudUpdate.Zooming = false;
                         break;
 
                     case CustomRPC.JanitorClean:
@@ -1337,6 +1338,7 @@ namespace TownOfUs
                 Murder.KilledPlayers.Clear();
                 KillButtonTarget.DontRevive = byte.MaxValue;
                 ReviveHudManagerUpdate.DontRevive = byte.MaxValue;
+                HudUpdate.Zooming = false;
 
                 var startWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                     (byte) CustomRPC.Start, SendOption.Reliable, -1);

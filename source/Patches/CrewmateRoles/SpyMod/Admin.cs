@@ -39,6 +39,7 @@ namespace TownOfUs.CrewmateRoles.SpyMod
         public static void UpdateBlips(MapCountOverlay __instance, bool isSpy)
         {
             var rooms = ShipStatus.Instance.FastRooms;
+            var colorMapDuplicate = new List<int>();
             foreach (var area in __instance.CountAreas)
             {
                 if (!rooms.ContainsKey(area.RoomType)) continue;
@@ -58,6 +59,7 @@ namespace TownOfUs.CrewmateRoles.SpyMod
                     {
                         var playerId = collider.GetComponent<DeadBody>().ParentId;
                         colorMap.Add(GameData.Instance.GetPlayerById(playerId).DefaultOutfit.ColorId);
+                        colorMapDuplicate.Add(GameData.Instance.GetPlayerById(playerId).DefaultOutfit.ColorId);
                         continue;
                     }
                     else
@@ -65,8 +67,11 @@ namespace TownOfUs.CrewmateRoles.SpyMod
                         PlayerControl component = collider.GetComponent<PlayerControl>();
                         if (component && component.Data != null && !component.Data.Disconnected && !component.Data.IsDead && (__instance.showLivePlayerPosition || !component.AmOwner))
                         {
-                            if (component.cosmetics.currentBodySprite.BodySprite.material != null &&
-                                !colorMap.Contains(data.DefaultOutfit.ColorId)) colorMap.Add(data.DefaultOutfit.ColorId);
+                            if (!colorMapDuplicate.Contains(data.DefaultOutfit.ColorId))
+                            {
+                                colorMap.Add(data.DefaultOutfit.ColorId);
+                                colorMapDuplicate.Add(data.DefaultOutfit.ColorId);
+                            }
                         }
                     }
                 }
