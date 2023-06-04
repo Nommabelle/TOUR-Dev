@@ -69,6 +69,7 @@ namespace TownOfUs
         public static int EscapistOn => (int)Generate.EscapistOn.Get();
         public static int ImitatorOn => (int)Generate.ImitatorOn.Get();
         public static int BomberOn => (int)Generate.BomberOn.Get();
+        public static int DoomsayerOn => (int)Generate.DoomsayerOn.Get();
         public static int TorchOn => (int)Generate.TorchOn.Get();
         public static int DiseasedOn => (int)Generate.DiseasedOn.Get();
         public static int FlashOn => (int)Generate.FlashOn.Get();
@@ -276,6 +277,12 @@ namespace TownOfUs
         public static int MaxKillsInDetonation => (int) Generate.MaxKillsInDetonation.Get();
         public static float DetonateRadius => Generate.DetonateRadius.Get();
         public static bool BomberVent => Generate.BomberVent.Get();
+        public static bool DoomsayerGuessNeutralBenign => Generate.DoomsayerGuessNeutralBenign.Get();
+        public static bool DoomsayerGuessNeutralEvil => Generate.DoomsayerGuessNeutralEvil.Get();
+        public static bool DoomsayerGuessNeutralKilling => Generate.DoomsayerGuessNeutralKilling.Get();
+        public static bool DoomsayerGuessImpostors => Generate.DoomsayerGuessImpostors.Get();
+        public static bool DoomsayerAfterVoting => Generate.DoomsayerAfterVoting.Get();
+        public static int DoomsayerGuessesToWin => (int)Generate.DoomsayerGuessesToWin.Get();
         public static AdminDeadPlayers WhoSeesDead => (AdminDeadPlayers)Generate.WhoSeesDead.Get();
         public static bool VentImprovements => Generate.VentImprovements.Get();
         public static bool VitalsLab => Generate.VitalsLab.Get();

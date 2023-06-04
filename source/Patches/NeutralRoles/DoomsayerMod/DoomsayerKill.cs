@@ -1,38 +1,37 @@
 ﻿using System.Linq;
 using Hazel;
 using TownOfUs.Roles;
+using TownOfUs.Roles.Modifiers;
 using UnityEngine;
 using UnityEngine.UI;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using TownOfUs.CrewmateRoles.MedicMod;
-using TownOfUs.CrewmateRoles.SwapperMod;
-using TownOfUs.CrewmateRoles.VigilanteMod;
-using TownOfUs.NeutralRoles.DoomsayerMod;
+using TownOfUs.Modifiers.AssassinMod;
 using TownOfUs.ImpostorRoles.BlackmailerMod;
-using TownOfUs.Roles.Modifiers;
 using TownOfUs.Extensions;
-using TownOfUs.CrewmateRoles.ImitatorMod;
+using TownOfUs.CrewmateRoles.VigilanteMod;
+using TownOfUs.CrewmateRoles.SwapperMod;
 using TownOfUs.Patches;
 
-namespace TownOfUs.Modifiers.AssassinMod
+namespace TownOfUs.NeutralRoles.DoomsayerMod
 {
-    public class AssassinKill
+    public class DoomsayerKill
     {
-        public static void RpcMurderPlayer(PlayerControl player, PlayerControl assassin)
+        public static void RpcMurderPlayer(PlayerControl player, PlayerControl doomsayer)
         {
             PlayerVoteArea voteArea = MeetingHud.Instance.playerStates.First(
                 x => x.TargetPlayerId == player.PlayerId
             );
-            RpcMurderPlayer(voteArea, player, assassin);
+            RpcMurderPlayer(voteArea, player, doomsayer);
         }
-        public static void RpcMurderPlayer(PlayerVoteArea voteArea, PlayerControl player, PlayerControl assassin)
+        public static void RpcMurderPlayer(PlayerVoteArea voteArea, PlayerControl player, PlayerControl doomsayer)
         {
+            DoomKillCount(player, doomsayer);
             MurderPlayer(voteArea, player);
-            AssassinKillCount(player, assassin);
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                (byte)CustomRPC.AssassinKill, SendOption.Reliable, -1);
+                (byte)CustomRPC.DoomsayerKill, SendOption.Reliable, -1);
             writer.Write(player.PlayerId);
-            writer.Write(assassin.PlayerId);
+            writer.Write(doomsayer.PlayerId);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
 
@@ -43,11 +42,12 @@ namespace TownOfUs.Modifiers.AssassinMod
             );
             MurderPlayer(voteArea, player, checkLover);
         }
-        public static void AssassinKillCount(PlayerControl player, PlayerControl assassin)
+        public static void DoomKillCount(PlayerControl player, PlayerControl doomsayer)
         {
-            var assassinPlayer = Role.GetRole(assassin);
-            if (player == assassin) assassinPlayer.IncorrectAssassinKills += 1;
-            else assassinPlayer.CorrectAssassinKills += 1;
+            var doom = Role.GetRole<Doomsayer>(doomsayer);
+            doom.CorrectAssassinKills += 1;
+            doom.GuessedCorrectly += 1;
+            if (doom.GuessedCorrectly == CustomGameOptions.DoomsayerGuessesToWin) doom.WonByGuessing = true;
         }
         public static void MurderPlayer(
             PlayerVoteArea voteArea,
@@ -94,56 +94,22 @@ namespace TownOfUs.Modifiers.AssassinMod
 
                 player.myTasks.Insert(0, importantTextTask);
 
-                if (player.Is(RoleEnum.Swapper))
-                {
-                    var swapper = Role.GetRole<Swapper>(PlayerControl.LocalPlayer);
-                    swapper.ListOfActives.Clear();
-                    swapper.Buttons.Clear();
-                    SwapVotes.Swap1 = null;
-                    SwapVotes.Swap2 = null;
-                    var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                            (byte)CustomRPC.SetSwaps, SendOption.Reliable, -1);
-                    writer.Write(sbyte.MaxValue);
-                    writer.Write(sbyte.MaxValue);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer);
-                    var buttons = Role.GetRole<Swapper>(player).Buttons;
-                    foreach (var button in buttons)
-                    {
-                        button.SetActive(false);
-                        button.GetComponent<PassiveButton>().OnClick = new Button.ButtonClickedEvent();
-                    }
-                }
-
-                if (player.Is(RoleEnum.Imitator))
-                {
-                    var imitator = Role.GetRole<Imitator>(PlayerControl.LocalPlayer);
-                    imitator.ListOfActives.Clear();
-                    imitator.Buttons.Clear();
-                    SetImitate.Imitate = null;
-                    var buttons = Role.GetRole<Imitator>(player).Buttons;
-                    foreach (var button in buttons)
-                    {
-                        button.SetActive(false);
-                        button.GetComponent<PassiveButton>().OnClick = new Button.ButtonClickedEvent();
-                    }
-                }
-
-                if (player.Is(RoleEnum.Vigilante))
-                {
-                    var retributionist = Role.GetRole<Vigilante>(PlayerControl.LocalPlayer);
-                    ShowHideButtonsVigi.HideButtonsVigi(retributionist);
-                }
-
                 if (player.Is(AbilityEnum.Assassin))
                 {
                     var assassin = Ability.GetAbility<Assassin>(PlayerControl.LocalPlayer);
                     ShowHideButtons.HideButtons(assassin);
                 }
 
+                if (player.Is(RoleEnum.Vigilante))
+                {
+                    var vigilante = Role.GetRole<Vigilante>(PlayerControl.LocalPlayer);
+                    ShowHideButtonsVigi.HideButtonsVigi(vigilante);
+                }
+
                 if (player.Is(RoleEnum.Doomsayer))
                 {
-                    var doomsayer = Role.GetRole<Doomsayer>(PlayerControl.LocalPlayer);
-                    ShowHideButtonsDoom.HideButtonsDoom(doomsayer);
+                    var doom = Role.GetRole<Doomsayer>(PlayerControl.LocalPlayer);
+                    ShowHideButtonsDoom.HideButtonsDoom(doom);
                 }
             }
             player.Die(DeathReason.Kill, false);
@@ -257,7 +223,7 @@ namespace TownOfUs.Modifiers.AssassinMod
                                 mayor.VoteBank += votesRegained;
 
                             var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                                (byte) CustomRPC.AddMayorVoteBank, SendOption.Reliable, -1);
+                                (byte)CustomRPC.AddMayorVoteBank, SendOption.Reliable, -1);
                             writer.Write(mayor.Player.PlayerId);
                             writer.Write(votesRegained);
                             AmongUsClient.Instance.FinishRpcImmediately(writer);

@@ -209,6 +209,16 @@ namespace TownOfUs
                         foreach (var win in winners) TempData.winners.Add(win);
                     }
                 }
+                else if (type == RoleEnum.Doomsayer)
+                {
+                    var doom = (Doomsayer)role;
+                    if (doom.WonByGuessing)
+                    {
+                        var winners = Utils.potentialWinners.Where(x => x.PlayerName == doom.PlayerName).ToList();
+                        TempData.winners = new List<WinningPlayerData>();
+                        foreach (var win in winners) TempData.winners.Add(win);
+                    }
+                }
             }
 
             foreach (var modifier in Modifier.AllModifiers)

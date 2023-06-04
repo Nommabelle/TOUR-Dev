@@ -10,6 +10,7 @@ using TownOfUs.CrewmateRoles.AltruistMod;
 using TownOfUs.CrewmateRoles.MedicMod;
 using TownOfUs.CrewmateRoles.SwapperMod;
 using TownOfUs.CrewmateRoles.VigilanteMod;
+using TownOfUs.NeutralRoles.DoomsayerMod;
 using TownOfUs.CultistRoles.NecromancerMod;
 using TownOfUs.CustomOption;
 using TownOfUs.Extensions;
@@ -689,6 +690,9 @@ namespace TownOfUs
                             case 41:
                                 new Bomber(player);
                                 break;
+                            case 42:
+                                new Doomsayer(player);
+                                break;
                             case 100:
                                 new Necromancer(player);
                                 break;
@@ -764,7 +768,13 @@ namespace TownOfUs
                     case CustomRPC.JesterLose:
                         foreach (var role in Role.AllRoles)
                             if (role.RoleType == RoleEnum.Jester)
-                                ((Jester) role).Loses();
+                                ((Jester)role).Loses();
+                        break;
+
+                    case CustomRPC.DoomsayerLose:
+                        foreach (var role in Role.AllRoles)
+                            if (role.RoleType == RoleEnum.Doomsayer)
+                                ((Doomsayer)role).Loses();
                         break;
 
                     case CustomRPC.PhantomLose:
@@ -772,8 +782,6 @@ namespace TownOfUs
                             if (role.RoleType == RoleEnum.Phantom)
                                 ((Phantom) role).Loses();
                         break;
-
-
                     case CustomRPC.GlitchLose:
                         foreach (var role in Role.AllRoles)
                             if (role.RoleType == RoleEnum.Glitch)
@@ -932,6 +940,12 @@ namespace TownOfUs
                         var vigi = Utils.PlayerById(reader.ReadByte());
                         VigilanteKill.MurderPlayer(toDie2);
                         VigilanteKill.VigiKillCount(toDie2, vigi);
+                        break;
+                    case CustomRPC.DoomsayerKill:
+                        var toDie3 = Utils.PlayerById(reader.ReadByte());
+                        var doom = Utils.PlayerById(reader.ReadByte());
+                        DoomsayerKill.DoomKillCount(toDie3, doom);
+                        DoomsayerKill.MurderPlayer(toDie3);
                         break;
                     case CustomRPC.SetMimic:
                         var glitchPlayer = Utils.PlayerById(reader.ReadByte());
@@ -1428,6 +1442,9 @@ namespace TownOfUs
 
                     if (CustomGameOptions.ExecutionerOn > 0)
                         NeutralNonKillingRoles.Add((typeof(Executioner), 9, CustomGameOptions.ExecutionerOn, false));
+
+                    if (CustomGameOptions.DoomsayerOn > 0)
+                        NeutralNonKillingRoles.Add((typeof(Doomsayer), 42, CustomGameOptions.DoomsayerOn, false));
 
                     if (CustomGameOptions.SurvivorOn > 0)
                         NeutralNonKillingRoles.Add((typeof(Survivor), 23, CustomGameOptions.SurvivorOn, false));

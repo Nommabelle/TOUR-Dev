@@ -42,6 +42,7 @@ namespace TownOfUs
         WerewolfWin,
         WerewolfLose,
         SurvivorOnlyWin,
+        DoomsayerLose,
 
         JanitorClean,
         FixLights,
@@ -59,6 +60,7 @@ namespace TownOfUs
         Drop,
         AssassinKill,
         VigilanteKill,
+        DoomsayerKill,
         HaunterFinished,
         FlashGrenade,
         Alert,

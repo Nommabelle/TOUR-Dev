@@ -38,6 +38,7 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption SurvivorOn;
 
         public static CustomHeaderOption NeutralEvilRoles;
+        public static CustomNumberOption DoomsayerOn;
         public static CustomNumberOption ExecutionerOn;
         public static CustomNumberOption JesterOn;
         public static CustomNumberOption PhantomOn;
@@ -407,6 +408,14 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption DetonateRadius;
         public static CustomToggleOption BomberVent;
 
+        public static CustomHeaderOption Doomsayer;
+        public static CustomToggleOption DoomsayerGuessNeutralBenign;
+        public static CustomToggleOption DoomsayerGuessNeutralEvil;
+        public static CustomToggleOption DoomsayerGuessNeutralKilling;
+        public static CustomToggleOption DoomsayerGuessImpostors;
+        public static CustomToggleOption DoomsayerAfterVoting;
+        public static CustomNumberOption DoomsayerGuessesToWin;
+
         public static CustomHeaderOption Giant;
         public static CustomNumberOption GiantSlow;
 
@@ -495,6 +504,8 @@ namespace TownOfUs.CustomOption
                 PercentFormat);
 
             NeutralEvilRoles = new CustomHeaderOption(num++, MultiMenu.neutral, "Neutral Evil Roles");
+            DoomsayerOn = new CustomNumberOption(num++, MultiMenu.neutral, "<color=#33CCCCFF>Doomsayer</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
             ExecutionerOn = new CustomNumberOption(num++, MultiMenu.neutral, "<color=#8C4005FF>Executioner</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             JesterOn = new CustomNumberOption(num++, MultiMenu.neutral, "<color=#FFBFCCFF>Jester</color>", 0f, 0f, 100f, 10f,
@@ -941,6 +952,14 @@ namespace TownOfUs.CustomOption
                 new CustomNumberOption(num++, MultiMenu.neutral, "Kill Cooldown Reset On Attack", 2.5f, 0f, 15f, 0.5f, CooldownFormat);
             MaxVests =
                 new CustomNumberOption(num++, MultiMenu.neutral, "Maximum Number Of Vests", 5, 1, 15, 1);
+
+            Doomsayer = new CustomHeaderOption(num++, MultiMenu.neutral, "<color=#33CCCCFF>Doomsayer</color>");
+            DoomsayerGuessNeutralBenign = new CustomToggleOption(num++, MultiMenu.neutral, "Doomsayer Can Guess Neutral Benign Roles", false);
+            DoomsayerGuessNeutralEvil = new CustomToggleOption(num++, MultiMenu.neutral, "Doomsayer Can Guess Neutral Evil Roles", false);
+            DoomsayerGuessNeutralKilling = new CustomToggleOption(num++, MultiMenu.neutral, "Doomsayer Can Guess Neutral Killing Roles", false);
+            DoomsayerGuessImpostors = new CustomToggleOption(num++, MultiMenu.neutral, "Doomsayer Can Guess Impostor Roles", false);
+            DoomsayerAfterVoting = new CustomToggleOption(num++, MultiMenu.neutral, "Doomsayer Can Guess After Voting", false);
+            DoomsayerGuessesToWin = new CustomNumberOption(num++, MultiMenu.neutral, "Number Of Doomsayer Kills To Win", 3, 1, 5, 1);
 
             Executioner =
                 new CustomHeaderOption(num++, MultiMenu.neutral, "<color=#8C4005FF>Executioner</color>");

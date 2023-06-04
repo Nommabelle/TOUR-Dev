@@ -136,7 +136,6 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <details>
   <summary> v4.0.6 </summary>
   <ul> <li>Bug Fix: Reverted alot of the changes from the last few patches...</li> </ul>
-  <ul> <li>I just don't have the time to fix whatever errors they are causing so this is a temporary solution</li> </ul>
   </details>
   <details>
   <summary> v4.0.5 </summary>

@@ -9,7 +9,7 @@ using TownOfUs.CrewmateRoles.MedicMod;
 using TownOfUs.Modifiers.AssassinMod;
 using TownOfUs.ImpostorRoles.BlackmailerMod;
 using TownOfUs.Extensions;
-using TownOfUs.CrewmateRoles.ImitatorMod;
+using TownOfUs.NeutralRoles.DoomsayerMod;
 using TownOfUs.CrewmateRoles.SwapperMod;
 using TownOfUs.Patches;
 
@@ -98,6 +98,12 @@ namespace TownOfUs.CrewmateRoles.VigilanteMod
                     var assassin = Ability.GetAbility<Assassin>(PlayerControl.LocalPlayer);
                     ShowHideButtons.HideButtons(assassin);
                 }
+
+                if (player.Is(RoleEnum.Doomsayer))
+                {
+                    var doomsayer = Role.GetRole<Doomsayer>(PlayerControl.LocalPlayer);
+                    ShowHideButtonsDoom.HideButtonsDoom(doomsayer);
+                }
             }
             player.Die(DeathReason.Kill, false);
             if (checkLover && player.IsLover() && CustomGameOptions.BothLoversDie)
@@ -155,6 +161,12 @@ namespace TownOfUs.CrewmateRoles.VigilanteMod
             {
                 var assassin = Ability.GetAbility<Assassin>(PlayerControl.LocalPlayer);
                 ShowHideButtons.HideTarget(assassin, voteArea.TargetPlayerId);
+            }
+
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Doomsayer) && !PlayerControl.LocalPlayer.Data.IsDead)
+            {
+                var doom = Role.GetRole<Doomsayer>(PlayerControl.LocalPlayer);
+                ShowHideButtonsDoom.HideTarget(doom, voteArea.TargetPlayerId);
             }
 
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Swapper) && !PlayerControl.LocalPlayer.Data.IsDead)

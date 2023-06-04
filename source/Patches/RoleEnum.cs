@@ -34,6 +34,7 @@ namespace TownOfUs
         Werewolf, // 27
         Detective, // 28
         Imitator, // 40
+        Doomsayer, // 42
 
         Miner, // 29
         Swooper, // 30

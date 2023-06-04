@@ -100,7 +100,6 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
 
                     break;
 
-
                 case RoleEnum.Jester:
                 case RoleEnum.Executioner:
                 case RoleEnum.Arsonist:
@@ -112,6 +111,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 case RoleEnum.Plaguebearer:
                 case RoleEnum.Pestilence:
                 case RoleEnum.Werewolf:
+                case RoleEnum.Doomsayer:
 
                     rememberImp = false;
 
@@ -371,6 +371,12 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 var wwRole = Role.GetRole<Werewolf>(amnesiac);
                 wwRole.LastRampaged = DateTime.UtcNow;
                 wwRole.LastKilled = DateTime.UtcNow;
+            }
+
+            else if (role == RoleEnum.Doomsayer)
+            {
+                var doomRole = Role.GetRole<Doomsayer>(amnesiac);
+                doomRole.GuessedCorrectly = 0;
             }
 
             else if (role == RoleEnum.Plaguebearer)
