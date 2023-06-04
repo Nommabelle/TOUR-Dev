@@ -1,5 +1,6 @@
 ﻿using System;
 using HarmonyLib;
+using Reactor.Utilities;
 using Reactor.Utilities.Extensions;
 using TMPro;
 using TownOfUs.Roles;
@@ -160,6 +161,7 @@ namespace TownOfUs.NeutralRoles.DoomsayerMod
                 else
                 {
                     ShowHideButtonsDoom.HideButtonsDoom(role);
+                    Coroutines.Start(Utils.FlashCoroutine(Color.red));
                 }
             }
 

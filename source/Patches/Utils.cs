@@ -996,8 +996,13 @@ namespace TownOfUs
             {
                 var detective = Role.GetRole<Detective>(PlayerControl.LocalPlayer);
                 detective.LastExamined = DateTime.UtcNow;
-                detective.LastExamined = detective.LastExamined.AddSeconds(CustomGameOptions.InitialExamineCd - CustomGameOptions.ExamineCd);
-                detective.LastExaminedPlayer = null;
+                if (detective.DetectedKiller.Data.IsDead || detective.DetectedKiller.Data.Disconnected)
+                {
+                    detective.DetectedKiller = null;
+                    detective.ExamineMode = false;
+                    detective.ClosestPlayer = null;
+                }
+                detective.CurrentTarget = null;
             }
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Chameleon))
             {

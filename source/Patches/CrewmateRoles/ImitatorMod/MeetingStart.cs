@@ -1,6 +1,5 @@
 ﻿using HarmonyLib;
 using TownOfUs.Roles;
-using TownOfUs.CrewmateRoles.DetectiveMod;
 using System;
 using System.Linq;
 
@@ -14,18 +13,7 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
             if (PlayerControl.LocalPlayer.Data.IsDead) return;
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Imitator)) return;
             var imitatorRole = Role.GetRole<Imitator>(PlayerControl.LocalPlayer);
-            if (imitatorRole.LastExaminedPlayer != null)
-            {
-                if (CustomGameOptions.ExamineReportOn)
-                {
-                    var playerResults = BodyReport.PlayerReportFeedback(imitatorRole.LastExaminedPlayer);
-
-                    if (!string.IsNullOrWhiteSpace(playerResults)) DestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, playerResults);
-                }
-
-                imitatorRole.LastExaminedPlayer = null;
-            }
-            else if (imitatorRole.trappedPlayers != null)
+            if (imitatorRole.trappedPlayers != null)
             {
                 if (imitatorRole.trappedPlayers.Count == 0)
                 {

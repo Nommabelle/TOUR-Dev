@@ -22,7 +22,6 @@ namespace TownOfUs.Patches
                 var detective = Role.GetRole<Detective>(PlayerControl.LocalPlayer);
                 detective.LastExamined = DateTime.UtcNow;
                 detective.LastExamined = detective.LastExamined.AddSeconds(CustomGameOptions.InitialCooldowns - CustomGameOptions.ExamineCd);
-                detective.LastExaminedPlayer = null;
             }
 
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Medium))

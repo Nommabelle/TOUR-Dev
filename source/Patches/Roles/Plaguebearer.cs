@@ -85,7 +85,7 @@ namespace TownOfUs.Roles
         public void RpcSpreadInfection(PlayerControl source, PlayerControl target)
         {
             new WaitForSeconds(1f);
-            if (InfectedPlayers.Contains(source.PlayerId))
+            if (InfectedPlayers.Contains(source.PlayerId) && !InfectedPlayers.Contains(target.PlayerId))
             {
                 InfectedPlayers.Add(target.PlayerId);
                 var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
@@ -94,7 +94,7 @@ namespace TownOfUs.Roles
                 writer.Write(target.PlayerId);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
             }
-            else if (InfectedPlayers.Contains(target.PlayerId))
+            else if (InfectedPlayers.Contains(target.PlayerId) && !InfectedPlayers.Contains(source.PlayerId))
             {
                 InfectedPlayers.Add(source.PlayerId);
                 var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,

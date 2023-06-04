@@ -10,7 +10,6 @@ namespace TownOfUs.Roles
         public readonly List<bool> ListOfActives = new List<bool>();
         public PlayerControl ImitatePlayer = null;
 
-        public PlayerControl LastExaminedPlayer = null;
         public List<RoleEnum> trappedPlayers = null;
 
 

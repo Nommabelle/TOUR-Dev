@@ -264,13 +264,10 @@ namespace TownOfUs
         public static float MinAmountOfTimeInTrap => Generate.MinAmountOfTimeInTrap.Get();
         public static float TrapSize => Generate.TrapSize.Get();
         public static int MinAmountOfPlayersInTrap => (int) Generate.MinAmountOfPlayersInTrap.Get();
-        public static float InitialExamineCd => Generate.InitialExamineCooldown.Get();
         public static float ExamineCd => Generate.ExamineCooldown.Get();
-        public static float RecentKill => Generate.RecentKill.Get();
         public static bool DetectiveReportOn => Generate.DetectiveReportOn.Get();
         public static float DetectiveRoleDuration => Generate.DetectiveRoleDuration.Get();
         public static float DetectiveFactionDuration => Generate.DetectiveFactionDuration.Get();
-        public static bool ExamineReportOn => Generate.ExamineReportOn.Get();
         public static float EscapeCd => Generate.EscapeCooldown.Get();
         public static bool EscapistVent => Generate.EscapistVent.Get();
         public static float DetonateDelay => Generate.DetonateDelay.Get();

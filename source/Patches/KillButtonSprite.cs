@@ -32,7 +32,7 @@ namespace TownOfUs
         private static Sprite Protect => TownOfUs.ProtectSprite;
         private static Sprite Infect => TownOfUs.InfectSprite;
         private static Sprite Trap => TownOfUs.TrapSprite;
-        private static Sprite Examine => TownOfUs.ExamineSprite;
+        private static Sprite Inspect => TownOfUs.InspectSprite;
         private static Sprite Swoop => TownOfUs.SwoopSprite;
 
         private static Sprite Kill;
@@ -117,7 +117,7 @@ namespace TownOfUs
             }
             else if (PlayerControl.LocalPlayer.Is(RoleEnum.Detective))
             {
-                __instance.KillButton.graphic.sprite = Examine;
+                __instance.KillButton.graphic.sprite = Inspect;
                 flag = true;
             }
             else if (PlayerControl.LocalPlayer.Is(RoleEnum.Chameleon))

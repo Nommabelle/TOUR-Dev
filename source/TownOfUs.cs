@@ -73,6 +73,7 @@ namespace TownOfUs
         public static Sprite InfectSprite;
         public static Sprite RampageSprite;
         public static Sprite TrapSprite;
+        public static Sprite InspectSprite;
         public static Sprite ExamineSprite;
         public static Sprite EscapeSprite;
         public static Sprite MarkSprite;
@@ -156,6 +157,7 @@ namespace TownOfUs
             InfectSprite = CreateSprite("TownOfUs.Resources.Infect.png");
             RampageSprite = CreateSprite("TownOfUs.Resources.Rampage.png");
             TrapSprite = CreateSprite("TownOfUs.Resources.Trap.png");
+            InspectSprite = CreateSprite("TownOfUs.Resources.Inspect.png");
             ExamineSprite = CreateSprite("TownOfUs.Resources.Examine.png");
             EscapeSprite = CreateSprite("TownOfUs.Resources.Recall.png");
             MarkSprite = CreateSprite("TownOfUs.Resources.Mark.png");

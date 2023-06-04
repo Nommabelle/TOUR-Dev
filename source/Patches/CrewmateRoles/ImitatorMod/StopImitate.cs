@@ -19,7 +19,6 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
             }
             if (StartImitate.ImitatingPlayer != null && !StartImitate.ImitatingPlayer.Is(RoleEnum.Traitor))
             {
-                PlayerControl lastExaminedPlayer = null;
                 List<RoleEnum> trappedPlayers = null;
 
                 if (PlayerControl.LocalPlayer == StartImitate.ImitatingPlayer)
@@ -85,7 +84,7 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
                     if (PlayerControl.LocalPlayer.Is(RoleEnum.Detective))
                     {
                         var detecRole = Role.GetRole<Detective>(PlayerControl.LocalPlayer);
-                        lastExaminedPlayer = detecRole.LastExaminedPlayer;
+                        detecRole.ExamineButton.gameObject.SetActive(false);
                     }
 
                     if (!PlayerControl.LocalPlayer.Is(RoleEnum.Investigator) && !PlayerControl.LocalPlayer.Is(RoleEnum.Mystic)
@@ -96,7 +95,6 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
                 Role.RoleDictionary.Remove(StartImitate.ImitatingPlayer.PlayerId);
                 var imitator = new Imitator(StartImitate.ImitatingPlayer);
                 imitator.trappedPlayers = trappedPlayers;
-                imitator.LastExaminedPlayer = lastExaminedPlayer;
                 var newRole = Role.GetRole(StartImitate.ImitatingPlayer);
                 newRole.RemoveFromRoleHistory(newRole.RoleType);
                 newRole.Kills = killsList.Kills;
