@@ -1014,7 +1014,7 @@ namespace TownOfUs
                         var minerRole = Role.GetRole<Miner>(miner);
                         var pos = reader.ReadVector2();
                         var zAxis = reader.ReadSingle();
-                        PerformKill.SpawnVent(ventId, minerRole, pos, zAxis);
+                        PlaceVent.SpawnVent(ventId, minerRole, pos, zAxis);
                         break;
                     case CustomRPC.Swoop:
                         var swooper = Utils.PlayerById(reader.ReadByte());

@@ -11,7 +11,7 @@ using Reactor.Networking.Extensions;
 namespace TownOfUs.ImpostorRoles.MinerMod
 {
     [HarmonyPatch(typeof(KillButton), nameof(KillButton.DoClick))]
-    public class PerformKill
+    public class PlaceVent
     {
         public static bool Prefix(KillButton __instance)
         {

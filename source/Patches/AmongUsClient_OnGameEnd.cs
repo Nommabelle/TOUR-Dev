@@ -80,6 +80,17 @@ namespace TownOfUs
                         return;
                     }
                 }
+                else if (type == RoleEnum.Doomsayer)
+                {
+                    var doom = (Doomsayer)role;
+                    if (doom.WonByGuessing)
+                    {
+                        var winners = Utils.potentialWinners.Where(x => x.PlayerName == doom.PlayerName).ToList();
+                        TempData.winners = new List<WinningPlayerData>();
+                        foreach (var win in winners) TempData.winners.Add(win);
+                        return;
+                    }
+                }
             }
             foreach (var role in Role.AllRoles)
             {
@@ -205,16 +216,6 @@ namespace TownOfUs
                     if (phantom.CompletedTasks)
                     {
                         var winners = Utils.potentialWinners.Where(x => x.PlayerName == phantom.PlayerName).ToList();
-                        TempData.winners = new List<WinningPlayerData>();
-                        foreach (var win in winners) TempData.winners.Add(win);
-                    }
-                }
-                else if (type == RoleEnum.Doomsayer)
-                {
-                    var doom = (Doomsayer)role;
-                    if (doom.WonByGuessing)
-                    {
-                        var winners = Utils.potentialWinners.Where(x => x.PlayerName == doom.PlayerName).ToList();
                         TempData.winners = new List<WinningPlayerData>();
                         foreach (var win in winners) TempData.winners.Add(win);
                     }

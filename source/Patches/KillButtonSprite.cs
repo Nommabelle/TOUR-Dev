@@ -34,6 +34,7 @@ namespace TownOfUs
         private static Sprite Trap => TownOfUs.TrapSprite;
         private static Sprite Inspect => TownOfUs.InspectSprite;
         private static Sprite Swoop => TownOfUs.SwoopSprite;
+        private static Sprite Observe => TownOfUs.ObserveSprite;
 
         private static Sprite Kill;
 
@@ -123,6 +124,11 @@ namespace TownOfUs
             else if (PlayerControl.LocalPlayer.Is(RoleEnum.Chameleon))
             {
                 __instance.KillButton.graphic.sprite = Swoop;
+                flag = true;
+            }
+            else if (PlayerControl.LocalPlayer.Is(RoleEnum.Doomsayer))
+            {
+                __instance.KillButton.graphic.sprite = Observe;
                 flag = true;
             }
             else

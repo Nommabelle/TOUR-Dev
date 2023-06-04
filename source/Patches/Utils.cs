@@ -1054,6 +1054,12 @@ namespace TownOfUs
                 var pest = Role.GetRole<Pestilence>(PlayerControl.LocalPlayer);
                 pest.LastKill = DateTime.UtcNow;
             }
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Doomsayer))
+            {
+                var doom = Role.GetRole<Doomsayer>(PlayerControl.LocalPlayer);
+                doom.LastObserved = DateTime.UtcNow;
+                doom.LastObservedPlayer = null;
+            }
             #endregion
             #region ImposterRoles
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Escapist))

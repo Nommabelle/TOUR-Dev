@@ -379,6 +379,8 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
             {
                 var doomRole = Role.GetRole<Doomsayer>(amnesiac);
                 doomRole.GuessedCorrectly = 0;
+                doomRole.LastObserved = DateTime.UtcNow;
+                doomRole.LastObservedPlayer = null;
             }
 
             else if (role == RoleEnum.Plaguebearer)

@@ -5,7 +5,7 @@ using TownOfUs.Patches;
 using UnityEngine;
 using TownOfUs.NeutralRoles.ExecutionerMod;
 using TownOfUs.NeutralRoles.GuardianAngelMod;
-using Hazel;
+using System;
 
 namespace TownOfUs.Roles
 {
@@ -18,6 +18,9 @@ namespace TownOfUs.Roles
         public Dictionary<string, Color> SortedColorMapping;
 
         public Dictionary<byte, string> Guesses = new Dictionary<byte, string>();
+        public DateTime LastObserved;
+        public PlayerControl ClosestPlayer;
+        public PlayerControl LastObservedPlayer;
 
         public Doomsayer(PlayerControl player) : base(player)
         {
@@ -26,6 +29,7 @@ namespace TownOfUs.Roles
             TaskText = () => "Win by guessing player's roles\nFake Tasks:";
             Color = Patches.Colors.Doomsayer;
             RoleType = RoleEnum.Doomsayer;
+            LastObserved = DateTime.UtcNow;
             AddToRoleHistory(RoleType);
             Faction = Faction.NeutralOther;
 
@@ -91,6 +95,16 @@ namespace TownOfUs.Roles
             }
 
             SortedColorMapping = ColorMapping.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
+        }
+
+        public float ObserveTimer()
+        {
+            var utcNow = DateTime.UtcNow;
+            var timeSpan = utcNow - LastObserved;
+            var num = CustomGameOptions.ObserveCooldown * 1000f;
+            var flag2 = num - (float)timeSpan.TotalMilliseconds < 0f;
+            if (flag2) return 0;
+            return (num - (float)timeSpan.TotalMilliseconds) / 1000f;
         }
 
         public int GuessedCorrectly = 0;

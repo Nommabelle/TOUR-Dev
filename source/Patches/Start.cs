@@ -160,6 +160,13 @@ namespace TownOfUs.Patches
                 arsonist.LastDoused = arsonist.LastDoused.AddSeconds(CustomGameOptions.InitialCooldowns - CustomGameOptions.DouseCd);
             }
 
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Doomsayer))
+            {
+                var doomsayer = Role.GetRole<Doomsayer>(PlayerControl.LocalPlayer);
+                doomsayer.LastObserved = DateTime.UtcNow;
+                doomsayer.LastObserved = doomsayer.LastObserved.AddSeconds(CustomGameOptions.InitialCooldowns - CustomGameOptions.ObserveCooldown);
+            }
+
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Executioner))
             {
                 var exe = Role.GetRole<Executioner>(PlayerControl.LocalPlayer);
