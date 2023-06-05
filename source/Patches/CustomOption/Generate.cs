@@ -47,6 +47,7 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption ArsonistOn;
         public static CustomNumberOption PlaguebearerOn;
         public static CustomNumberOption GlitchOn;
+        public static CustomNumberOption VampireOn;
         public static CustomNumberOption WerewolfOn;
 
         public static CustomHeaderOption ImpostorConcealingRoles;
@@ -173,12 +174,14 @@ namespace TownOfUs.CustomOption
 
         public static CustomHeaderOption Sheriff;
         public static CustomToggleOption SheriffKillOther;
+        public static CustomToggleOption SheriffKillsDoomsayer;
         public static CustomToggleOption SheriffKillsExecutioner;
         public static CustomToggleOption SheriffKillsJester;
         public static CustomToggleOption SheriffKillsArsonist;
         public static CustomToggleOption SheriffKillsJuggernaut;
         public static CustomToggleOption SheriffKillsPlaguebearer;
         public static CustomToggleOption SheriffKillsGlitch;
+        public static CustomToggleOption SheriffKillsVampire;
         public static CustomToggleOption SheriffKillsWerewolf;
         public static CustomNumberOption SheriffKillCd;
         public static CustomToggleOption SheriffBodyReport;
@@ -416,6 +419,12 @@ namespace TownOfUs.CustomOption
         public static CustomToggleOption DoomsayerAfterVoting;
         public static CustomNumberOption DoomsayerGuessesToWin;
 
+        public static CustomHeaderOption Vampire;
+        public static CustomNumberOption BiteCooldown;
+        public static CustomToggleOption VampImpVision;
+        public static CustomToggleOption VampVent;
+        public static CustomToggleOption NewVampCanAssassin;
+
         public static CustomHeaderOption Giant;
         public static CustomNumberOption GiantSlow;
 
@@ -520,6 +529,8 @@ namespace TownOfUs.CustomOption
                 PercentFormat);
             GlitchOn = new CustomNumberOption(num++, MultiMenu.neutral, "<color=#00FF00FF>The Glitch</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
+            VampireOn = new CustomNumberOption(num++, MultiMenu.neutral, "<color=#262626FF>Vampire</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
             WerewolfOn = new CustomNumberOption(num++, MultiMenu.neutral, "<color=#A86629FF>Werewolf</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
 
@@ -600,9 +611,9 @@ namespace TownOfUs.CustomOption
             MaxNeutralEvilRoles =
                 new CustomNumberOption(num++, MultiMenu.main, "Max Neutral Evil Roles", 1, 0, 3, 1);
             MinNeutralKillingRoles =
-                new CustomNumberOption(num++, MultiMenu.main, "Min Neutral Killing Roles", 1, 0, 4, 1);
+                new CustomNumberOption(num++, MultiMenu.main, "Min Neutral Killing Roles", 1, 0, 5, 1);
             MaxNeutralKillingRoles =
-                new CustomNumberOption(num++, MultiMenu.main, "Max Neutral Killing Roles", 1, 0, 4, 1);
+                new CustomNumberOption(num++, MultiMenu.main, "Max Neutral Killing Roles", 1, 0, 5, 1);
 
             AllAnySettings =
                 new CustomHeaderOption(num++, MultiMenu.main, "All Any Settings");
@@ -818,6 +829,8 @@ namespace TownOfUs.CustomOption
                 new CustomHeaderOption(num++, MultiMenu.crewmate, "<color=#FFFF00FF>Sheriff</color>");
             SheriffKillOther =
                 new CustomToggleOption(num++, MultiMenu.crewmate, "Sheriff Miskill Kills Crewmate", false);
+            SheriffKillsDoomsayer =
+                new CustomToggleOption(num++, MultiMenu.crewmate, "Sheriff Kills Doomsayer", false);
             SheriffKillsExecutioner =
                 new CustomToggleOption(num++, MultiMenu.crewmate, "Sheriff Kills Executioner", false);
             SheriffKillsJester =
@@ -830,6 +843,8 @@ namespace TownOfUs.CustomOption
                 new CustomToggleOption(num++, MultiMenu.crewmate, "Sheriff Kills Juggernaut", false);
             SheriffKillsPlaguebearer =
                 new CustomToggleOption(num++, MultiMenu.crewmate, "Sheriff Kills Plaguebearer", false);
+            SheriffKillsVampire =
+                new CustomToggleOption(num++, MultiMenu.crewmate, "Sheriff Kills Vampire", false);
             SheriffKillsWerewolf =
                 new CustomToggleOption(num++, MultiMenu.crewmate, "Sheriff Kills Werewolf", false);
             SheriffKillCd =
@@ -1020,6 +1035,16 @@ namespace TownOfUs.CustomOption
                 new CustomStringOption(num++, MultiMenu.neutral, "Glitch Hack Distance", new[] { "Short", "Normal", "Long" });
             GlitchVent =
                 new CustomToggleOption(num++, MultiMenu.neutral, "Glitch Can Vent", false);
+
+            Vampire = new CustomHeaderOption(num++, MultiMenu.neutral, "<color=#262626FF>Vampire</color>");
+            BiteCooldown =
+                new CustomNumberOption(num++, MultiMenu.neutral, "Vampire Bite Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
+            VampImpVision =
+                new CustomToggleOption(num++, MultiMenu.neutral, "Vampires Have Impostor Vision", false);
+            VampVent =
+                new CustomToggleOption(num++, MultiMenu.neutral, "Vampires Can Vent", false);
+            NewVampCanAssassin =
+                new CustomToggleOption(num++, MultiMenu.neutral, "New Vampire Can Assassinate", false);
 
             Werewolf = new CustomHeaderOption(num++, MultiMenu.neutral, "<color=#A86629FF>Werewolf</color>");
             RampageCooldown =

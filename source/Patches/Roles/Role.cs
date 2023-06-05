@@ -23,6 +23,7 @@ namespace TownOfUs.Roles
 
         public static bool NobodyWins;
         public static bool SurvOnlyWins;
+        public static bool VampireWins;
 
         public List<KillButton> ExtraButtons = new List<KillButton>();
 
@@ -109,12 +110,12 @@ namespace TownOfUs.Roles
 
         internal virtual bool Criteria()
         {
-            return DeadCriteria() || ImpostorCriteria() || LoverCriteria() || SelfCriteria() || RoleCriteria() || GuardianAngelCriteria() || Local;
+            return DeadCriteria() || ImpostorCriteria() || VampireCriteria() || LoverCriteria() || SelfCriteria() || RoleCriteria() || GuardianAngelCriteria() || Local;
         }
 
         internal virtual bool ColorCriteria()
         {
-            return SelfCriteria() || DeadCriteria() || ImpostorCriteria() || RoleCriteria() || GuardianAngelCriteria();
+            return SelfCriteria() || DeadCriteria() || ImpostorCriteria() || VampireCriteria() || RoleCriteria() || GuardianAngelCriteria();
         }
 
         internal virtual bool DeadCriteria()
@@ -127,6 +128,12 @@ namespace TownOfUs.Roles
         {
             if (Faction == Faction.Impostors && PlayerControl.LocalPlayer.Data.IsImpostor() &&
                 CustomGameOptions.ImpostorSeeRoles) return true;
+            return false;
+        }
+
+        internal virtual bool VampireCriteria()
+        {
+            if (RoleType == RoleEnum.Vampire && PlayerControl.LocalPlayer.Is(RoleEnum.Vampire)) return true;
             return false;
         }
 
@@ -166,6 +173,10 @@ namespace TownOfUs.Roles
         public static void SurvOnlyWin()
         {
             SurvOnlyWins = true;
+        }
+        public static void VampWin()
+        {
+            VampireWins = true;
         }
 
         internal static bool NobodyEndCriteria(LogicGameFlowNormal __instance)
@@ -739,12 +750,13 @@ namespace TownOfUs.Roles
                         bool selfFlag = role.SelfCriteria();
                         bool deadFlag = role.DeadCriteria();
                         bool impostorFlag = role.ImpostorCriteria();
+                        bool vampireFlag = role.VampireCriteria();
                         bool loverFlag = role.LoverCriteria();
                         bool roleFlag = role.RoleCriteria();
                         bool gaFlag = role.GuardianAngelCriteria();
                         player.NameText.text = role.NameText(
                             selfFlag || deadFlag || role.Local,
-                            selfFlag || deadFlag || impostorFlag || roleFlag || gaFlag,
+                            selfFlag || deadFlag || impostorFlag || vampireFlag || roleFlag || gaFlag,
                             selfFlag || deadFlag,
                             loverFlag,
                             player
@@ -790,12 +802,13 @@ namespace TownOfUs.Roles
                             bool selfFlag = role.SelfCriteria();
                             bool deadFlag = role.DeadCriteria();
                             bool impostorFlag = role.ImpostorCriteria();
+                            bool vampireFlag = role.VampireCriteria();
                             bool loverFlag = role.LoverCriteria();
                             bool roleFlag = role.RoleCriteria();
                             bool gaFlag = role.GuardianAngelCriteria();
                             player.nameText().text = role.NameText(
                                 selfFlag || deadFlag || role.Local,
-                                selfFlag || deadFlag || impostorFlag || roleFlag || gaFlag,
+                                selfFlag || deadFlag || impostorFlag || vampireFlag || roleFlag || gaFlag,
                                 selfFlag || deadFlag,
                                 loverFlag
                              );

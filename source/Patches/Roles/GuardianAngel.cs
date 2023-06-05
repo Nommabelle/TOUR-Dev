@@ -16,6 +16,7 @@ namespace TownOfUs.Roles
         public TextMeshPro UsesText;
 
         public bool ButtonUsable => UsesLeft != 0;
+        public bool TargetIsVamp;
 
         public PlayerControl target;
 

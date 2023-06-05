@@ -35,6 +35,7 @@ namespace TownOfUs
         private static Sprite Inspect => TownOfUs.InspectSprite;
         private static Sprite Swoop => TownOfUs.SwoopSprite;
         private static Sprite Observe => TownOfUs.ObserveSprite;
+        private static Sprite Bite => TownOfUs.BiteSprite;
 
         private static Sprite Kill;
 
@@ -131,6 +132,11 @@ namespace TownOfUs
                 __instance.KillButton.graphic.sprite = Observe;
                 flag = true;
             }
+            else if (PlayerControl.LocalPlayer.Is(RoleEnum.Vampire))
+            {
+                __instance.KillButton.graphic.sprite = Bite;
+                flag = true;
+            }
             else
             {
                 __instance.KillButton.graphic.sprite = Kill;
@@ -145,7 +151,8 @@ namespace TownOfUs
                 __instance.KillButton.transform.localPosition = new Vector3(0f, 1f, 0f);
             }
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Engineer) || PlayerControl.LocalPlayer.Is(RoleEnum.Glitch)
-                 || PlayerControl.LocalPlayer.Is(RoleEnum.Pestilence) || PlayerControl.LocalPlayer.Is(RoleEnum.Juggernaut))
+                 || PlayerControl.LocalPlayer.Is(RoleEnum.Pestilence) || PlayerControl.LocalPlayer.Is(RoleEnum.Juggernaut)
+                 || PlayerControl.LocalPlayer.Is(RoleEnum.Vampire))
             {
                 __instance.ImpostorVentButton.transform.localPosition = new Vector3(-2f, 0f, 0f);
             }

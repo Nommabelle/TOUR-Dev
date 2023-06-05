@@ -1,5 +1,6 @@
 using HarmonyLib;
 using Il2CppSystem.Collections.Generic;
+using Newtonsoft.Json.Utilities;
 using System.Linq;
 using TownOfUs.Roles;
 using TownOfUs.Roles.Modifiers;
@@ -37,6 +38,32 @@ namespace TownOfUs
             if (Role.SurvOnlyWins)
             {
                 var winners = new List<WinningPlayerData>();
+                foreach (var role in Role.GetRoles(RoleEnum.Survivor))
+                {
+                    var surv = (Survivor)role;
+                    if (!surv.Player.Data.IsDead && !surv.Player.Data.Disconnected)
+                    {
+                        winners.Add(Utils.potentialWinners.Where(x => x.PlayerName == surv.PlayerName).ToList()[0]);
+                    }
+                }
+                TempData.winners = new List<WinningPlayerData>();
+                foreach (var win in winners) TempData.winners.Add(win);
+
+                return;
+            }
+            if (Role.VampireWins)
+            {
+                var winners = new List<WinningPlayerData>();
+                foreach (var role in Role.GetRoles(RoleEnum.Vampire))
+                {
+                    var vamp = (Vampire)role;
+                    winners.Add(Utils.potentialWinners.Where(x => x.PlayerName == vamp.PlayerName).ToList()[0]);
+                }
+                foreach (var role in Role.GetRoles(RoleEnum.GuardianAngel))
+                {
+                    var ga = (GuardianAngel)role;
+                    if (ga.TargetIsVamp) winners.Add(Utils.potentialWinners.Where(x => x.PlayerName == ga.PlayerName).ToList()[0]);
+                }
                 foreach (var role in Role.GetRoles(RoleEnum.Survivor))
                 {
                     var surv = (Survivor)role;

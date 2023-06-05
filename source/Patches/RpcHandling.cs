@@ -32,6 +32,7 @@ using PerformKillButton = TownOfUs.NeutralRoles.AmnesiacMod.PerformKillButton;
 using Random = UnityEngine.Random; //using Il2CppSystem;
 using TownOfUs.Patches;
 using AmongUs.GameOptions;
+using TownOfUs.NeutralRoles.VampireMod;
 
 namespace TownOfUs
 {
@@ -800,6 +801,9 @@ namespace TownOfUs
                             case 42:
                                 new Doomsayer(player);
                                 break;
+                            case 43:
+                                new Vampire(player);
+                                break;
                             case 100:
                                 new Necromancer(player);
                                 break;
@@ -895,7 +899,6 @@ namespace TownOfUs
                                 ((Glitch) role).Loses();
                         break;
 
-
                     case CustomRPC.JuggernautLose:
                         foreach (var role in Role.AllRoles)
                             if (role.RoleType == RoleEnum.Juggernaut)
@@ -914,12 +917,22 @@ namespace TownOfUs
                                 ((Executioner) role).Loses();
                         break;
 
+                    case CustomRPC.VampireLose:
+                        foreach (var role in Role.AllRoles)
+                            if (role.RoleType == RoleEnum.Vampire)
+                                ((Vampire)role).Loses();
+                        break;
+
                     case CustomRPC.NobodyWins:
                         Role.NobodyWinsFunc();
                         break;
 
                     case CustomRPC.SurvivorOnlyWin:
                         Role.SurvOnlyWin();
+                        break;
+
+                    case CustomRPC.VampireWin:
+                        Role.VampWin();
                         break;
 
                     case CustomRPC.SetCouple:
@@ -941,6 +954,7 @@ namespace TownOfUs
                         Murder.KilledPlayers.Clear();
                         Role.NobodyWins = false;
                         Role.SurvOnlyWins = false;
+                        Role.VampireWins = false;
                         ExileControllerPatch.lastExiled = null;
                         PatchKillTimer.GameStarted = false;
                         StartImitate.ImitatingPlayer = null;
@@ -978,6 +992,11 @@ namespace TownOfUs
                         mayorRole.ExtraVotes = reader.ReadBytesAndSize().ToList();
                         if (!mayor.Is(RoleEnum.Mayor)) mayorRole.VoteBank -= mayorRole.ExtraVotes.Count;
 
+                        break;
+
+                    case CustomRPC.Bite:
+                        var newVamp = Utils.PlayerById(reader.ReadByte());
+                        Bite.Convert(newVamp);
                         break;
 
                     case CustomRPC.SetSwaps:
@@ -1441,6 +1460,7 @@ namespace TownOfUs
                 Utils.ShowDeadBodies = false;
                 Role.NobodyWins = false;
                 Role.SurvOnlyWins = false;
+                Role.VampireWins = false;
                 ExileControllerPatch.lastExiled = null;
                 PatchKillTimer.GameStarted = false;
                 StartImitate.ImitatingPlayer = null;
@@ -1571,6 +1591,9 @@ namespace TownOfUs
 
                     if (CustomGameOptions.WerewolfOn > 0)
                         NeutralKillingRoles.Add((typeof(Werewolf), 27, CustomGameOptions.WerewolfOn, true));
+
+                    if (CustomGameOptions.GameMode == GameMode.Classic && CustomGameOptions.VampireOn > 0)
+                        NeutralKillingRoles.Add((typeof(Vampire), 43, CustomGameOptions.VampireOn, true));
 
                     if (CustomGameOptions.GameMode == GameMode.AllAny && CustomGameOptions.HiddenRoles)
                         NeutralKillingRoles.Add((typeof(Juggernaut), 18, 10, true));

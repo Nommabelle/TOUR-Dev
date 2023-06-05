@@ -70,6 +70,7 @@ namespace TownOfUs
         public static int ImitatorOn => (int)Generate.ImitatorOn.Get();
         public static int BomberOn => (int)Generate.BomberOn.Get();
         public static int DoomsayerOn => (int)Generate.DoomsayerOn.Get();
+        public static int VampireOn => (int)Generate.VampireOn.Get();
         public static int TorchOn => (int)Generate.TorchOn.Get();
         public static int DiseasedOn => (int)Generate.DiseasedOn.Get();
         public static int FlashOn => (int)Generate.FlashOn.Get();
@@ -89,12 +90,14 @@ namespace TownOfUs
         public static bool BothLoversDie => Generate.BothLoversDie.Get();
         public static bool NeutralLovers => Generate.NeutralLovers.Get();
         public static bool SheriffKillOther => Generate.SheriffKillOther.Get();
+        public static bool SheriffKillsDoomsayer => Generate.SheriffKillsDoomsayer.Get();
         public static bool SheriffKillsExecutioner => Generate.SheriffKillsExecutioner.Get();
         public static bool SheriffKillsJester => Generate.SheriffKillsJester.Get();
         public static bool SheriffKillsArsonist => Generate.SheriffKillsArsonist.Get();
         public static bool SheriffKillsJuggernaut => Generate.SheriffKillsJuggernaut.Get();
         public static bool SheriffKillsPlaguebearer => Generate.SheriffKillsPlaguebearer.Get();
         public static bool SheriffKillsGlitch => Generate.SheriffKillsGlitch.Get();
+        public static bool SheriffKillsVampire => Generate.SheriffKillsVampire.Get();
         public static bool SheriffKillsWerewolf => Generate.SheriffKillsWerewolf.Get();
         public static float SheriffKillCd => Generate.SheriffKillCd.Get();
         public static int MayorVoteBank => (int)Generate.MayorVoteBank.Get();
@@ -283,6 +286,10 @@ namespace TownOfUs
         public static bool DoomsayerGuessImpostors => Generate.DoomsayerGuessImpostors.Get();
         public static bool DoomsayerAfterVoting => Generate.DoomsayerAfterVoting.Get();
         public static int DoomsayerGuessesToWin => (int)Generate.DoomsayerGuessesToWin.Get();
+        public static float BiteCd => Generate.BiteCooldown.Get();
+        public static bool VampImpVision => Generate.VampImpVision.Get();
+        public static bool VampVent => Generate.VampVent.Get();
+        public static bool NewVampCanAssassin => Generate.NewVampCanAssassin.Get();
         public static AdminDeadPlayers WhoSeesDead => (AdminDeadPlayers)Generate.WhoSeesDead.Get();
         public static bool VentImprovements => Generate.VentImprovements.Get();
         public static bool VitalsLab => Generate.VitalsLab.Get();

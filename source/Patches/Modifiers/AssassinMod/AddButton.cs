@@ -24,7 +24,16 @@ namespace TownOfUs.Modifiers.AssassinMod
         {
             if (voteArea.AmDead) return true;
             var player = Utils.PlayerById(voteArea.TargetPlayerId);
-            if (PlayerControl.LocalPlayer.Is(Faction.NeutralKilling))
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Vampire))
+            {
+                if (
+                    player == null ||
+                    player.Is(RoleEnum.Vampire) ||
+                    player.Data.IsDead ||
+                    player.Data.Disconnected
+                ) return true;
+            }
+            else if (PlayerControl.LocalPlayer.Is(Faction.NeutralKilling))
             {
                 if (
                     player == null ||

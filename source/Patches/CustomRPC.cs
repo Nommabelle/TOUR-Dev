@@ -43,6 +43,8 @@ namespace TownOfUs
         WerewolfLose,
         SurvivorOnlyWin,
         DoomsayerLose,
+        VampireWin,
+        VampireLose,
 
         JanitorClean,
         FixLights,
@@ -81,6 +83,7 @@ namespace TownOfUs
         ChameleonSwoop,
         Imitate,
         StartImitate,
+        Bite,
 
         BypassKill,
         BypassMultiKill,

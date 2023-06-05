@@ -112,6 +112,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 case RoleEnum.Pestilence:
                 case RoleEnum.Werewolf:
                 case RoleEnum.Doomsayer:
+                case RoleEnum.Vampire:
 
                     rememberImp = false;
 
@@ -149,7 +150,8 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                     var survivor = new Survivor(other);
                     survivor.RegenTask();
                     if (role == RoleEnum.Arsonist || role == RoleEnum.Glitch || role == RoleEnum.Plaguebearer ||
-                            role == RoleEnum.Pestilence || role == RoleEnum.Werewolf || role == RoleEnum.Juggernaut)
+                            role == RoleEnum.Pestilence || role == RoleEnum.Werewolf || role == RoleEnum.Juggernaut
+                             || role == RoleEnum.Vampire)
                     {
                         if (CustomGameOptions.AmneTurnNeutAssassin)
                         {
@@ -397,6 +399,12 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 pestRole.LastKill = DateTime.UtcNow;
             }
 
+            else if (role == RoleEnum.Vampire)
+            {
+                var vampRole = Role.GetRole<Vampire>(amnesiac);
+                vampRole.LastBit = DateTime.UtcNow;
+            }
+
             else if (role == RoleEnum.Trapper)
             {
                 var trapperRole = Role.GetRole<Trapper>(amnesiac);
@@ -415,6 +423,12 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
             else if (!(amnesiac.Is(RoleEnum.Altruist) || amnesiac.Is(RoleEnum.Amnesiac) || amnesiac.Is(Faction.Impostors)))
             {
                 DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(false);
+            }
+
+            foreach (var ga in Role.GetRoles(RoleEnum.GuardianAngel))
+            {
+                var gaRole = (GuardianAngel)ga;
+                if (gaRole.target == other && gaRole.TargetIsVamp) gaRole.TargetIsVamp = false;
             }
 
             var killsList = (newRole.Kills, newRole.CorrectKills, newRole.IncorrectKills, newRole.CorrectAssassinKills, newRole.IncorrectAssassinKills);
