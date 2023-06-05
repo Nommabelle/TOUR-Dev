@@ -215,7 +215,7 @@ namespace TownOfUs.Modifiers.AssassinMod
 
             if (PlayerControl.LocalPlayer.Data.IsDead) return;
             if (!PlayerControl.LocalPlayer.Is(AbilityEnum.Assassin)) return;
-            if (PlayerControl.LocalPlayer.Is(Faction.NeutralOther)) return;
+            if (PlayerControl.LocalPlayer.Is(Faction.NeutralBenign)) return;
 
             var assassinRole = Ability.GetAbility<Assassin>(PlayerControl.LocalPlayer);
             if (assassinRole.RemainingKills <= 0) return;

@@ -19,7 +19,7 @@ namespace TownOfUs.Roles
             Color = Patches.Colors.Executioner;
             RoleType = RoleEnum.Executioner;
             AddToRoleHistory(RoleType);
-            Faction = Faction.NeutralOther;
+            Faction = Faction.NeutralEvil;
             Scale = 1.4f;
         }
 

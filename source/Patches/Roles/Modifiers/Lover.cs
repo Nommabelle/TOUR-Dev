@@ -2,7 +2,6 @@
 using System.Linq;
 using Hazel;
 using TownOfUs.Patches;
-using TownOfUs.Roles.Modifiers;
 using UnityEngine;
 
 namespace TownOfUs.Roles.Modifiers
@@ -42,7 +41,8 @@ namespace TownOfUs.Roles.Modifiers
             {
                 if (player.Is(Faction.Impostors) || (player.Is(Faction.NeutralKilling) && CustomGameOptions.NeutralLovers))
                     impostors.Add(player);
-                else if (player.Is(Faction.Crewmates) || (player.Is(Faction.NeutralOther) && CustomGameOptions.NeutralLovers))
+                else if (player.Is(Faction.Crewmates) || (player.Is(Faction.NeutralBenign) && CustomGameOptions.NeutralLovers)
+                     || (player.Is(Faction.NeutralEvil) && CustomGameOptions.NeutralLovers))
                     crewmates.Add(player);
             }
 

@@ -25,7 +25,7 @@ namespace TownOfUs.NeutralRoles.PhantomMod
         {
             if (WillBePhantom == null) return;
             var exiled = __instance.exiled?.Object;
-            if (!WillBePhantom.Data.IsDead && (exiled.Is(Faction.NeutralKilling) || exiled.Is(Faction.NeutralOther)) && !exiled.IsLover()) WillBePhantom = exiled;
+            if (!WillBePhantom.Data.IsDead && (exiled.Is(Faction.NeutralKilling) || exiled.Is(Faction.NeutralEvil) || exiled.Is(Faction.NeutralBenign)) && !exiled.IsLover()) WillBePhantom = exiled;
             if (exiled == WillBePhantom && exiled.Is(RoleEnum.Jester)) return;
             if (WillBePhantom.Data.Disconnected) return;
             if (!WillBePhantom.Data.IsDead && WillBePhantom != exiled) return;

@@ -17,7 +17,7 @@ namespace TownOfUs.Roles
             Color = Patches.Colors.Phantom;
             RoleType = RoleEnum.Phantom;
             AddToRoleHistory(RoleType);
-            Faction = Faction.NeutralOther;
+            Faction = Faction.NeutralEvil;
         }
 
         public void Loses()

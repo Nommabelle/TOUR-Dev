@@ -38,7 +38,8 @@ namespace TownOfUs
     public static class RpcHandling
     {
         private static readonly List<(Type, int, int, bool)> CrewmateRoles = new List<(Type, int, int, bool)>();
-        private static readonly List<(Type, int, int, bool)> NeutralNonKillingRoles = new List<(Type, int, int, bool)>();
+        private static readonly List<(Type, int, int, bool)> NeutralBenignRoles = new List<(Type, int, int, bool)>();
+        private static readonly List<(Type, int, int, bool)> NeutralEvilRoles = new List<(Type, int, int, bool)>();
         private static readonly List<(Type, int, int, bool)> NeutralKillingRoles = new List<(Type, int, int, bool)>();
         private static readonly List<(Type, int, int, bool)> ImpostorRoles = new List<(Type, int, int, bool)>();
         private static readonly List<(Type, int, int)> CrewmateModifiers = new List<(Type, int, int)>();
@@ -63,13 +64,16 @@ namespace TownOfUs
             var num = Random.RandomRangeInt(1, 101);
             return num <= 10 * NeutralKillingRoles.Count;
         }
+        private static void PickRoleCount(int roleCount, int min, int max)
+        {
+            if (min > max) min = max;
+            roleCount = Random.RandomRangeInt(min, max + 1);
+        }
 
-        private static void SortRoles(List<(Type, int, int, bool)> roles, int max, int min)
+        private static void SortRoles(List<(Type, int, int, bool)> roles, int numRoles)
         {
             roles.Shuffle();
-            if (roles.Count < max) max = roles.Count;
-            if (min > max) min = max;
-            var amount = Random.RandomRangeInt(min, max + 1);
+            if (roles.Count < numRoles) numRoles = roles.Count;
             roles.Sort((a, b) =>
             {
                 var a_ = a.Item3 == 100 ? 0 : 100;
@@ -81,7 +85,7 @@ namespace TownOfUs
             foreach (var role in roles)
                 if (role.Item3 == 100) certainRoles += 1;
                 else odds += role.Item3;
-            while (certainRoles < amount)
+            while (certainRoles < numRoles)
             {
                 var num = certainRoles;
                 var random = Random.RandomRangeInt(0, odds);
@@ -101,7 +105,7 @@ namespace TownOfUs
                     num += 1;
                 }
             }
-            while (roles.Count > amount) roles.RemoveAt(roles.Count - 1);
+            while (roles.Count > numRoles) roles.RemoveAt(roles.Count - 1);
         }
 
         private static void SortModifiers(List<(Type, int, int)> roles, int max)
@@ -125,28 +129,131 @@ namespace TownOfUs
 
             if (CustomGameOptions.GameMode == GameMode.Classic)
             {
-                if (crewmates.Count > CustomGameOptions.MaxNeutralNonKillingRoles)
-                    SortRoles(NeutralNonKillingRoles, CustomGameOptions.MaxNeutralNonKillingRoles, CustomGameOptions.MinNeutralNonKillingRoles);
-                else SortRoles(NeutralNonKillingRoles, crewmates.Count - 1, CustomGameOptions.MinNeutralNonKillingRoles);
-                if (crewmates.Count - NeutralNonKillingRoles.Count > CustomGameOptions.MaxNeutralKillingRoles)
-                    SortRoles(NeutralKillingRoles, CustomGameOptions.MaxNeutralKillingRoles, CustomGameOptions.MinNeutralKillingRoles);
-                else SortRoles(NeutralKillingRoles, crewmates.Count - NeutralNonKillingRoles.Count - 1, CustomGameOptions.MinNeutralKillingRoles);
+                var benign = CustomGameOptions.MaxNeutralBenignRoles;
+                if (NeutralBenignRoles.Count < benign) benign = NeutralBenignRoles.Count;
+                PickRoleCount(benign, CustomGameOptions.MinNeutralBenignRoles, benign);
+                var evil = CustomGameOptions.MaxNeutralEvilRoles;
+                if (NeutralEvilRoles.Count < evil) evil = NeutralEvilRoles.Count;
+                PickRoleCount(evil, CustomGameOptions.MinNeutralEvilRoles, evil);
+                var killing = CustomGameOptions.MaxNeutralKillingRoles;
+                if (NeutralKillingRoles.Count < killing) killing = NeutralKillingRoles.Count;
+                PickRoleCount(killing, CustomGameOptions.MinNeutralKillingRoles, killing);
+
+                var canSubtractBenign = benign > CustomGameOptions.MinNeutralBenignRoles;
+                var canSubtractEvil = evil > CustomGameOptions.MinNeutralEvilRoles;
+                var canSubtractKilling = killing > CustomGameOptions.MinNeutralKillingRoles;
+
+                while (crewmates.Count <= benign + evil + killing)
+                {
+                    if ((canSubtractBenign && canSubtractEvil && canSubtractKilling) ||
+                        (!canSubtractBenign && !canSubtractEvil && !canSubtractKilling))
+                    {
+                        var num = Random.RandomRangeInt(0, 3);
+                        if (num == 0 && benign > 0)
+                        {
+                            benign -= 1;
+                            canSubtractBenign = benign > CustomGameOptions.MinNeutralBenignRoles;
+                        }
+                        else if (num <= 1 && evil > 0)
+                        {
+                            evil -= 1;
+                            canSubtractEvil = evil > CustomGameOptions.MinNeutralEvilRoles;
+                        }
+                        else if (killing > 0)
+                        {
+                            killing -= 1;
+                            canSubtractKilling = killing > CustomGameOptions.MinNeutralKillingRoles;
+                        }
+                        else if (benign > 0)
+                        {
+                            benign -= 1;
+                            canSubtractBenign = benign > CustomGameOptions.MinNeutralBenignRoles;
+                        }
+                        else
+                        {
+                            evil -= 1;
+                            canSubtractEvil = evil > CustomGameOptions.MinNeutralEvilRoles;
+                        }
+                    }
+                    else if (canSubtractBenign && !canSubtractEvil && !canSubtractKilling)
+                    {
+                        benign -= 1;
+                        canSubtractBenign = benign > CustomGameOptions.MinNeutralBenignRoles;
+                    }
+                    else if (!canSubtractBenign && canSubtractEvil && !canSubtractKilling)
+                    {
+                        evil -= 1;
+                        canSubtractEvil = evil > CustomGameOptions.MinNeutralEvilRoles;
+                    }
+                    else if (!canSubtractBenign && !canSubtractEvil && canSubtractKilling)
+                    {
+                        killing -= 1;
+                        canSubtractKilling = killing > CustomGameOptions.MinNeutralKillingRoles;
+                    }
+                    else if (canSubtractBenign && canSubtractEvil && !canSubtractKilling)
+                    {
+                        var num = Random.RandomRangeInt(0, 2);
+                        if (num == 0)
+                        {
+                            benign -= 1;
+                            canSubtractBenign = benign > CustomGameOptions.MinNeutralBenignRoles;
+                        }
+                        else
+                        {
+                            evil -= 1;
+                            canSubtractEvil = evil > CustomGameOptions.MinNeutralEvilRoles;
+                        }
+                    }
+                    else if (canSubtractBenign && !canSubtractEvil && canSubtractKilling)
+                    {
+                        var num = Random.RandomRangeInt(0, 2);
+                        if (num == 0)
+                        {
+                            benign -= 1;
+                            canSubtractBenign = benign > CustomGameOptions.MinNeutralBenignRoles;
+                        }
+                        else
+                        {
+                            killing -= 1;
+                            canSubtractKilling = killing > CustomGameOptions.MinNeutralKillingRoles;
+                        }
+                    }
+                    else if (!canSubtractBenign && canSubtractEvil && canSubtractKilling)
+                    {
+                        var num = Random.RandomRangeInt(0, 2);
+                        if (num == 0)
+                        {
+                            evil -= 1;
+                            canSubtractEvil = evil > CustomGameOptions.MinNeutralEvilRoles;
+                        }
+                        else
+                        {
+                            killing -= 1;
+                            canSubtractKilling = killing > CustomGameOptions.MinNeutralKillingRoles;
+                        }
+                    }
+                }
+
+                SortRoles(NeutralBenignRoles, benign);
+                SortRoles(NeutralEvilRoles, evil);
+                SortRoles(NeutralKillingRoles, killing);
 
                 if (CheckJugg() && NeutralKillingRoles.Count > 0 && CustomGameOptions.HiddenRoles)
                 {
+                    NeutralKillingRoles.Shuffle();
                     NeutralKillingRoles.RemoveAt(NeutralKillingRoles.Count - 1);
                     NeutralKillingRoles.Add((typeof(Juggernaut), 18, 100, true));
                     NeutralKillingRoles.Shuffle();
                 }
 
-                SortRoles(CrewmateRoles, crewmates.Count - NeutralNonKillingRoles.Count - NeutralKillingRoles.Count,
-                    crewmates.Count - NeutralNonKillingRoles.Count - NeutralKillingRoles.Count);
-                SortRoles(ImpostorRoles, impostors.Count, impostors.Count);
+                SortRoles(CrewmateRoles, crewmates.Count - NeutralBenignRoles.Count - NeutralEvilRoles.Count - NeutralKillingRoles.Count);
+                SortRoles(ImpostorRoles, impostors.Count);
             }
 
             var crewAndNeutralRoles = new List<(Type, int, int, bool)>();
             if (CustomGameOptions.GameMode == GameMode.Classic) crewAndNeutralRoles.AddRange(CrewmateRoles);
-            crewAndNeutralRoles.AddRange(NeutralNonKillingRoles);
+            crewAndNeutralRoles.AddRange(NeutralBenignRoles);
+            crewAndNeutralRoles.AddRange(NeutralEvilRoles);
             crewAndNeutralRoles.AddRange(NeutralKillingRoles);
 
             var crewRoles = new List<(Type, int, int, bool)>();
@@ -293,7 +400,7 @@ namespace TownOfUs
                 Role.GenModifier<Modifier>(type, canHaveModifier, id);
             }
 
-            canHaveModifier.RemoveAll(player => player.Is(Faction.NeutralKilling) || player.Is(Faction.Impostors));
+            canHaveModifier.RemoveAll(player => !player.Is(Faction.Crewmates));
             canHaveModifier.Shuffle();
 
             while (canHaveModifier.Count > 0 && CrewmateModifiers.Count > 0)
@@ -344,7 +451,7 @@ namespace TownOfUs
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
             }
 
-            var toChooseFromNeut = PlayerControl.AllPlayerControls.ToArray().Where(x => (x.Is(Faction.NeutralOther) || x.Is(Faction.NeutralKilling)) && !x.Is(ModifierEnum.Lover)).ToList();
+            var toChooseFromNeut = PlayerControl.AllPlayerControls.ToArray().Where(x => (x.Is(Faction.NeutralBenign) || x.Is(Faction.NeutralEvil) || x.Is(Faction.NeutralKilling)) && !x.Is(ModifierEnum.Lover)).ToList();
             if (PhantomOn && toChooseFromNeut.Count != 0)
             {
                 var rand = Random.RandomRangeInt(0, toChooseFromNeut.Count);
@@ -382,7 +489,7 @@ namespace TownOfUs
                 }
             }
 
-            var gaTargets = PlayerControl.AllPlayerControls.ToArray().Where(x => !x.Is(Faction.NeutralOther) && !x.Is(Faction.NeutralKilling) && !x.Is(ModifierEnum.Lover)).ToList();
+            var gaTargets = PlayerControl.AllPlayerControls.ToArray().Where(x => !x.Is(Faction.NeutralBenign) && !x.Is(Faction.NeutralEvil) && !x.Is(Faction.NeutralKilling) && !x.Is(ModifierEnum.Lover)).ToList();
             foreach (var role in Role.GetRoles(RoleEnum.GuardianAngel))
             {
                 var ga = (GuardianAngel)role;
@@ -413,7 +520,7 @@ namespace TownOfUs
             ImpostorRoles.Add((typeof(Swooper), 30, 10, false));
             ImpostorRoles.Add((typeof(Grenadier), 34, 10, true));
 
-            SortRoles(ImpostorRoles, impostors.Count, impostors.Count);
+            SortRoles(ImpostorRoles, impostors.Count);
 
             NeutralKillingRoles.Add((typeof(Glitch), 11, 10, true));
             NeutralKillingRoles.Add((typeof(Werewolf), 27, 10, true));
@@ -428,8 +535,8 @@ namespace TownOfUs
             if (NeutralKillingRoles.Count < CustomGameOptions.NeutralRoles) neutrals = NeutralKillingRoles.Count;
             else neutrals = CustomGameOptions.NeutralRoles;
             var spareCrew = crewmates.Count - neutrals;
-            if (spareCrew > 2) SortRoles(NeutralKillingRoles, neutrals, neutrals);
-            else SortRoles(NeutralKillingRoles, crewmates.Count - 3, crewmates.Count - 3);
+            if (spareCrew > 2) SortRoles(NeutralKillingRoles, neutrals);
+            else SortRoles(NeutralKillingRoles, crewmates.Count - 3);
 
             var veterans = CustomGameOptions.VeteranCount;
             while (veterans > 0)
@@ -445,7 +552,7 @@ namespace TownOfUs
             }
             if (CrewmateRoles.Count + NeutralKillingRoles.Count > crewmates.Count)
             {
-                SortRoles(CrewmateRoles, crewmates.Count - NeutralKillingRoles.Count, crewmates.Count - NeutralKillingRoles.Count);
+                SortRoles(CrewmateRoles, crewmates.Count - NeutralKillingRoles.Count);
             }
             else if (CrewmateRoles.Count + NeutralKillingRoles.Count < crewmates.Count)
             {
@@ -486,8 +593,8 @@ namespace TownOfUs
             if (CustomGameOptions.SeerCultistOn > 0) specialRoles.Add((typeof(CultistSeer), 102, CustomGameOptions.SeerCultistOn, true));
             if (CustomGameOptions.SheriffCultistOn > 0) specialRoles.Add((typeof(Sheriff), 0, CustomGameOptions.SheriffCultistOn, true));
             if (CustomGameOptions.SurvivorCultistOn > 0) specialRoles.Add((typeof(Survivor), 23, CustomGameOptions.SurvivorCultistOn, true));
-            if (specialRoles.Count > CustomGameOptions.SpecialRoleCount) SortRoles(specialRoles, CustomGameOptions.SpecialRoleCount, CustomGameOptions.SpecialRoleCount);
-            if (specialRoles.Count > crewmates.Count) SortRoles(specialRoles, crewmates.Count, crewmates.Count);
+            if (specialRoles.Count > CustomGameOptions.SpecialRoleCount) SortRoles(specialRoles, CustomGameOptions.SpecialRoleCount);
+            if (specialRoles.Count > crewmates.Count) SortRoles(specialRoles, crewmates.Count);
             if (specialRoles.Count < crewmates.Count)
             {
                 var chameleons = CustomGameOptions.MaxChameleons;
@@ -532,11 +639,11 @@ namespace TownOfUs
                     crewRoles.Add((typeof(Vigilante), 15, 10, false));
                     vigilantes--;
                 }
-                SortRoles(crewRoles, crewmates.Count - specialRoles.Count, crewmates.Count - specialRoles.Count);
+                SortRoles(crewRoles, crewmates.Count - specialRoles.Count);
             }
             impRole.Add((typeof(Necromancer), 100, 10, true));
             impRole.Add((typeof(Whisperer), 101, 10, true));
-            SortRoles(impRole, 1, 1);
+            SortRoles(impRole, 1);
 
             foreach (var (type, id, _, unique) in specialRoles)
             {
@@ -1339,7 +1446,8 @@ namespace TownOfUs
                 StartImitate.ImitatingPlayer = null;
                 AddHauntPatch.AssassinatedPlayers.Clear();
                 CrewmateRoles.Clear();
-                NeutralNonKillingRoles.Clear();
+                NeutralBenignRoles.Clear();
+                NeutralEvilRoles.Clear();
                 NeutralKillingRoles.Clear();
                 ImpostorRoles.Clear();
                 CrewmateModifiers.Clear();
@@ -1435,22 +1543,22 @@ namespace TownOfUs
                     #endregion
                     #region Neutral Roles
                     if (CustomGameOptions.JesterOn > 0)
-                        NeutralNonKillingRoles.Add((typeof(Jester), 1, CustomGameOptions.JesterOn, false));
+                        NeutralEvilRoles.Add((typeof(Jester), 1, CustomGameOptions.JesterOn, false));
 
                     if (CustomGameOptions.AmnesiacOn > 0)
-                        NeutralNonKillingRoles.Add((typeof(Amnesiac), 17, CustomGameOptions.AmnesiacOn, false));
+                        NeutralBenignRoles.Add((typeof(Amnesiac), 17, CustomGameOptions.AmnesiacOn, false));
 
                     if (CustomGameOptions.ExecutionerOn > 0)
-                        NeutralNonKillingRoles.Add((typeof(Executioner), 9, CustomGameOptions.ExecutionerOn, false));
+                        NeutralEvilRoles.Add((typeof(Executioner), 9, CustomGameOptions.ExecutionerOn, false));
 
                     if (CustomGameOptions.DoomsayerOn > 0)
-                        NeutralNonKillingRoles.Add((typeof(Doomsayer), 42, CustomGameOptions.DoomsayerOn, false));
+                        NeutralEvilRoles.Add((typeof(Doomsayer), 42, CustomGameOptions.DoomsayerOn, false));
 
                     if (CustomGameOptions.SurvivorOn > 0)
-                        NeutralNonKillingRoles.Add((typeof(Survivor), 23, CustomGameOptions.SurvivorOn, false));
+                        NeutralBenignRoles.Add((typeof(Survivor), 23, CustomGameOptions.SurvivorOn, false));
 
                     if (CustomGameOptions.GuardianAngelOn > 0)
-                        NeutralNonKillingRoles.Add((typeof(GuardianAngel), 24, CustomGameOptions.GuardianAngelOn, false));
+                        NeutralBenignRoles.Add((typeof(GuardianAngel), 24, CustomGameOptions.GuardianAngelOn, false));
 
                     if (CustomGameOptions.GlitchOn > 0)
                         NeutralKillingRoles.Add((typeof(Glitch), 11, CustomGameOptions.GlitchOn, true));

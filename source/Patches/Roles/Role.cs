@@ -179,7 +179,7 @@ namespace TownOfUs.Roles
                 {
                     var role = GetRole(x);
                     if (role == null) return false;
-                    var flag2 = role.Faction == Faction.NeutralOther;
+                    var flag2 = role.Faction == Faction.NeutralEvil || role.Faction == Faction.NeutralBenign;
 
                     return flag2;
                 });
@@ -449,7 +449,7 @@ namespace TownOfUs.Roles
                     // var alpha = __instance.__4__this.RoleText.color.a;
                     if (role != null && !role.Hidden)
                     {
-                        if (role.Faction == Faction.NeutralKilling || role.Faction == Faction.NeutralOther)
+                        if (role.Faction == Faction.NeutralKilling || role.Faction == Faction.NeutralEvil || role.Faction == Faction.NeutralBenign)
                         {
                             __instance.__4__this.TeamTitle.text = "Neutral";
                             __instance.__4__this.TeamTitle.color = Color.white;
@@ -496,7 +496,7 @@ namespace TownOfUs.Roles
                     var role = GetRole(PlayerControl.LocalPlayer);
                     if (role != null && !role.Hidden)
                     {
-                        if (role.Faction == Faction.NeutralKilling || role.Faction == Faction.NeutralOther)
+                        if (role.Faction == Faction.NeutralKilling || role.Faction == Faction.NeutralEvil || role.Faction == Faction.NeutralBenign)
                         {
                             __instance.__4__this.TeamTitle.text = "Neutral";
                             __instance.__4__this.TeamTitle.color = Color.white;
@@ -538,7 +538,7 @@ namespace TownOfUs.Roles
                     var role = GetRole(PlayerControl.LocalPlayer);
                     if (role != null && !role.Hidden)
                     {
-                        if (role.Faction == Faction.NeutralKilling || role.Faction == Faction.NeutralOther)
+                        if (role.Faction == Faction.NeutralKilling || role.Faction == Faction.NeutralEvil || role.Faction == Faction.NeutralBenign)
                         {
                             __instance.__4__this.TeamTitle.text = "Neutral";
                             __instance.__4__this.TeamTitle.color = Color.white;

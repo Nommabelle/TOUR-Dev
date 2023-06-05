@@ -16,7 +16,7 @@ namespace TownOfUs.Roles
             Color = Patches.Colors.Jester;
             RoleType = RoleEnum.Jester;
             AddToRoleHistory(RoleType);
-            Faction = Faction.NeutralOther;
+            Faction = Faction.NeutralEvil;
         }
 
         protected override void IntroPrefix(IntroCutscene._ShowTeam_d__36 __instance)

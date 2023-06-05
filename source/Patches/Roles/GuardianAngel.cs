@@ -32,7 +32,7 @@ namespace TownOfUs.Roles
             LastProtected = DateTime.UtcNow;
             RoleType = RoleEnum.GuardianAngel;
             AddToRoleHistory(RoleType);
-            Faction = Faction.NeutralOther;
+            Faction = Faction.NeutralBenign;
             Scale = 1.4f;
 
             UsesLeft = CustomGameOptions.MaxProtects;

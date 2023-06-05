@@ -159,8 +159,10 @@ namespace TownOfUs
         public static int MaxDoused => (int)Generate.MaxDoused.Get();
         public static bool ArsoImpVision => Generate.ArsoImpVision.Get();
         public static bool IgniteCdRemoved => Generate.IgniteCdRemoved.Get();
-        public static int MinNeutralNonKillingRoles => (int)Generate.MinNeutralNonKillingRoles.Get();
-        public static int MaxNeutralNonKillingRoles => (int)Generate.MaxNeutralNonKillingRoles.Get();
+        public static int MinNeutralBenignRoles => (int)Generate.MinNeutralBenignRoles.Get();
+        public static int MaxNeutralBenignRoles => (int)Generate.MaxNeutralBenignRoles.Get();
+        public static int MinNeutralEvilRoles => (int)Generate.MinNeutralEvilRoles.Get();
+        public static int MaxNeutralEvilRoles => (int)Generate.MaxNeutralEvilRoles.Get();
         public static int MinNeutralKillingRoles => (int)Generate.MinNeutralKillingRoles.Get();
         public static int MaxNeutralKillingRoles => (int)Generate.MaxNeutralKillingRoles.Get();
         public static bool RandomNumberImps => Generate.RandomNumberImps.Get();

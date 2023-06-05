@@ -123,8 +123,10 @@ namespace TownOfUs.CustomOption
         public static CustomStringOption GameMode;
 
         public static CustomHeaderOption ClassicSettings;
-        public static CustomNumberOption MinNeutralNonKillingRoles;
-        public static CustomNumberOption MaxNeutralNonKillingRoles;
+        public static CustomNumberOption MinNeutralBenignRoles;
+        public static CustomNumberOption MaxNeutralBenignRoles;
+        public static CustomNumberOption MinNeutralEvilRoles;
+        public static CustomNumberOption MaxNeutralEvilRoles;
         public static CustomNumberOption MinNeutralKillingRoles;
         public static CustomNumberOption MaxNeutralKillingRoles;
 
@@ -502,7 +504,7 @@ namespace TownOfUs.CustomOption
                 PercentFormat);
 
             NeutralEvilRoles = new CustomHeaderOption(num++, MultiMenu.neutral, "Neutral Evil Roles");
-            DoomsayerOn = new CustomNumberOption(num++, MultiMenu.neutral, "<color=#33CCCCFF>Doomsayer</color>", 0f, 0f, 100f, 10f,
+            DoomsayerOn = new CustomNumberOption(num++, MultiMenu.neutral, "<color=#00FF80FF>Doomsayer</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             ExecutionerOn = new CustomNumberOption(num++, MultiMenu.neutral, "<color=#8C4005FF>Executioner</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
@@ -589,10 +591,14 @@ namespace TownOfUs.CustomOption
 
             ClassicSettings =
                 new CustomHeaderOption(num++, MultiMenu.main, "Classic Game Mode Settings");
-            MinNeutralNonKillingRoles =
-                new CustomNumberOption(num++, MultiMenu.main, "Min Neutral Non-Killing Roles", 1, 0, 5, 1);
-            MaxNeutralNonKillingRoles =
-                new CustomNumberOption(num++, MultiMenu.main, "Max Neutral Non-Killing Roles", 1, 0, 5, 1);
+            MinNeutralBenignRoles =
+                new CustomNumberOption(num++, MultiMenu.main, "Min Neutral Benign Roles", 1, 0, 3, 1);
+            MaxNeutralBenignRoles =
+                new CustomNumberOption(num++, MultiMenu.main, "Max Neutral Benign Roles", 1, 0, 3, 1);
+            MinNeutralEvilRoles =
+                new CustomNumberOption(num++, MultiMenu.main, "Min Neutral Evil Roles", 1, 0, 3, 1);
+            MaxNeutralEvilRoles =
+                new CustomNumberOption(num++, MultiMenu.main, "Max Neutral Evil Roles", 1, 0, 3, 1);
             MinNeutralKillingRoles =
                 new CustomNumberOption(num++, MultiMenu.main, "Min Neutral Killing Roles", 1, 0, 4, 1);
             MaxNeutralKillingRoles =
@@ -946,7 +952,7 @@ namespace TownOfUs.CustomOption
             MaxVests =
                 new CustomNumberOption(num++, MultiMenu.neutral, "Maximum Number Of Vests", 5, 1, 15, 1);
 
-            Doomsayer = new CustomHeaderOption(num++, MultiMenu.neutral, "<color=#33CCCCFF>Doomsayer</color>");
+            Doomsayer = new CustomHeaderOption(num++, MultiMenu.neutral, "<color=#00FF80FF>Doomsayer</color>");
             ObserveCooldown =
                 new CustomNumberOption(num++, MultiMenu.neutral, "Observe Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
             DoomsayerGuessNeutralBenign = new CustomToggleOption(num++, MultiMenu.neutral, "Doomsayer Can Guess Neutral Benign Roles", false);

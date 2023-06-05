@@ -31,7 +31,7 @@ namespace TownOfUs.Roles
             RoleType = RoleEnum.Doomsayer;
             LastObserved = DateTime.UtcNow;
             AddToRoleHistory(RoleType);
-            Faction = Faction.NeutralOther;
+            Faction = Faction.NeutralEvil;
 
             if (CustomGameOptions.GameMode == GameMode.Classic || CustomGameOptions.GameMode == GameMode.AllAny)
             {
