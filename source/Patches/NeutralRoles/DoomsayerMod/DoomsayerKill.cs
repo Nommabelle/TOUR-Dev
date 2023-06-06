@@ -12,6 +12,7 @@ using TownOfUs.Extensions;
 using TownOfUs.CrewmateRoles.VigilanteMod;
 using TownOfUs.CrewmateRoles.SwapperMod;
 using TownOfUs.Patches;
+using Reactor.Utilities.Extensions;
 
 namespace TownOfUs.NeutralRoles.DoomsayerMod
 {
@@ -111,6 +112,12 @@ namespace TownOfUs.NeutralRoles.DoomsayerMod
                     var doom = Role.GetRole<Doomsayer>(PlayerControl.LocalPlayer);
                     ShowHideButtonsDoom.HideButtonsDoom(doom);
                 }
+
+                if (player.Is(RoleEnum.Mayor))
+                {
+                    var mayor = Role.GetRole<Mayor>(PlayerControl.LocalPlayer);
+                    mayor.RevealButton.Destroy();
+                }
             }
             player.Die(DeathReason.Kill, false);
             if (checkLover && player.IsLover() && CustomGameOptions.BothLoversDie)
@@ -201,6 +208,11 @@ namespace TownOfUs.NeutralRoles.DoomsayerMod
                 if (playerVoteArea.VotedFor != player.PlayerId) continue;
                 playerVoteArea.UnsetVote();
                 var voteAreaPlayer = Utils.PlayerById(playerVoteArea.TargetPlayerId);
+                if (voteAreaPlayer.Is(RoleEnum.Prosecutor))
+                {
+                    var pros = Role.GetRole<Prosecutor>(voteAreaPlayer);
+                    pros.ProsecuteThisMeeting = false;
+                }
                 if (!voteAreaPlayer.AmOwner) continue;
                 meetingHud.ClearVote();
             }

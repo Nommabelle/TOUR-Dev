@@ -20,6 +20,31 @@ namespace TownOfUs.CrewmateRoles.MayorMod
             for (var i = 0; i < __instance.playerStates.Length; i++)
             {
                 var playerVoteArea = __instance.playerStates[i];
+                var player = Utils.PlayerById(playerVoteArea.TargetPlayerId);
+                if (!player.Is(RoleEnum.Prosecutor)) continue;
+                var pros = Role.GetRole<Prosecutor>(player);
+                if (pros.Player.Data.IsDead || pros.Player.Data.Disconnected) continue;
+                if (!playerVoteArea.DidVote
+                    || playerVoteArea.AmDead
+                    || playerVoteArea.VotedFor == PlayerVoteArea.MissedVote
+                    || playerVoteArea.VotedFor == PlayerVoteArea.DeadVote)
+                {
+                    pros.ProsecuteThisMeeting = false;
+                    continue;
+                }
+                else if (pros.ProsecuteThisMeeting)
+                {
+                    if (dictionary.TryGetValue(playerVoteArea.VotedFor, out var num2))
+                        dictionary[playerVoteArea.VotedFor] = num2 + 5;
+                    else
+                        dictionary[playerVoteArea.VotedFor] = 5;
+                    return dictionary;
+                }
+            }
+
+            for (var i = 0; i < __instance.playerStates.Length; i++)
+            {
+                var playerVoteArea = __instance.playerStates[i];
                 if (!playerVoteArea.DidVote
                     || playerVoteArea.AmDead
                     || playerVoteArea.VotedFor == PlayerVoteArea.MissedVote
@@ -94,6 +119,15 @@ namespace TownOfUs.CrewmateRoles.MayorMod
                 __instance.TitleText.text = Object.FindObjectOfType<TranslationController>()
                     .GetString(StringNames.MeetingVotingResults, Array.Empty<Il2CppSystem.Object>());
                 var amountOfSkippedVoters = 0;
+
+                var isProsecuting = false;
+                foreach (var pros in Role.GetRoles(RoleEnum.Prosecutor))
+                {
+                    var prosRole = (Prosecutor)pros;
+                    if (pros.Player.Data.IsDead || pros.Player.Data.Disconnected) continue;
+                    if (prosRole.ProsecuteThisMeeting) isProsecuting = true;
+                }
+
                 for (var i = 0; i < __instance.playerStates.Length; i++)
                 {
                     var playerVoteArea = __instance.playerStates[i];
@@ -104,6 +138,49 @@ namespace TownOfUs.CrewmateRoles.MayorMod
                     {
                         var voteState = states[stateIdx];
                         var playerInfo = GameData.Instance.GetPlayerById(voteState.VoterId);
+                        foreach (var pros in Role.GetRoles(RoleEnum.Prosecutor))
+                        {
+                            var prosRole = (Prosecutor)pros;
+                            if (pros.Player.Data.IsDead || pros.Player.Data.Disconnected) continue;
+                            if (prosRole.ProsecuteThisMeeting)
+                            {
+                                if (voteState.VoterId == prosRole.Player.PlayerId)
+                                {
+                                    if (playerInfo == null)
+                                    {
+                                        Debug.LogError(string.Format("Couldn't find player info for voter: {0}",
+                                            voteState.VoterId));
+                                        prosRole.ProsecuteThisMeeting = false;
+                                        prosRole.Prosecuted = true;
+                                    }
+                                    else if (i == 0 && voteState.SkippedVote)
+                                    {
+                                        __instance.BloopAVoteIcon(playerInfo, amountOfSkippedVoters, __instance.SkippedVoting.transform);
+                                        __instance.BloopAVoteIcon(playerInfo, amountOfSkippedVoters, __instance.SkippedVoting.transform);
+                                        __instance.BloopAVoteIcon(playerInfo, amountOfSkippedVoters, __instance.SkippedVoting.transform);
+                                        __instance.BloopAVoteIcon(playerInfo, amountOfSkippedVoters, __instance.SkippedVoting.transform);
+                                        __instance.BloopAVoteIcon(playerInfo, amountOfSkippedVoters, __instance.SkippedVoting.transform);
+                                        amountOfSkippedVoters += 5;
+                                        prosRole.ProsecuteThisMeeting = false;
+                                        prosRole.Prosecuted = true;
+                                    }
+                                    else if (voteState.VotedForId == playerVoteArea.TargetPlayerId)
+                                    {
+                                        __instance.BloopAVoteIcon(playerInfo, allNums[i], playerVoteArea.transform);
+                                        __instance.BloopAVoteIcon(playerInfo, allNums[i], playerVoteArea.transform);
+                                        __instance.BloopAVoteIcon(playerInfo, allNums[i], playerVoteArea.transform);
+                                        __instance.BloopAVoteIcon(playerInfo, allNums[i], playerVoteArea.transform);
+                                        __instance.BloopAVoteIcon(playerInfo, allNums[i], playerVoteArea.transform);
+                                        allNums[i] += 5;
+                                        prosRole.ProsecuteThisMeeting = false;
+                                        prosRole.Prosecuted = true;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (isProsecuting) continue;
+
                         if (playerInfo == null)
                         {
                             Debug.LogError(string.Format("Couldn't find player info for voter: {0}",
@@ -122,32 +199,34 @@ namespace TownOfUs.CrewmateRoles.MayorMod
                         foreach (var mayor in Role.GetRoles(RoleEnum.Mayor))
                         {
                             var mayorRole = (Mayor)mayor;
-                            if (voteState.VoterId == mayorRole.Player.PlayerId)
+                            if (mayorRole.Revealed)
                             {
-                                if (playerInfo == null)
+                                if (voteState.VoterId == mayorRole.Player.PlayerId)
                                 {
-                                    Debug.LogError(string.Format("Couldn't find player info for voter: {0}",
-                                        voteState.VoterId));
-                                }
-                                else if (i == 0 && voteState.SkippedVote)
-                                {
-                                    __instance.BloopAVoteIcon(playerInfo, amountOfSkippedVoters, __instance.SkippedVoting.transform);
-                                    __instance.BloopAVoteIcon(playerInfo, amountOfSkippedVoters, __instance.SkippedVoting.transform);
-                                    amountOfSkippedVoters++;
-                                    amountOfSkippedVoters++;
-                                }
-                                else if (voteState.VotedForId == playerVoteArea.TargetPlayerId)
-                                {
-                                    __instance.BloopAVoteIcon(playerInfo, allNums[i], playerVoteArea.transform);
-                                    __instance.BloopAVoteIcon(playerInfo, allNums[i], playerVoteArea.transform);
-                                    allNums[i]++;
-                                    allNums[i]++;
+                                    if (playerInfo == null)
+                                    {
+                                        Debug.LogError(string.Format("Couldn't find player info for voter: {0}",
+                                            voteState.VoterId));
+                                    }
+                                    else if (i == 0 && voteState.SkippedVote)
+                                    {
+                                        __instance.BloopAVoteIcon(playerInfo, amountOfSkippedVoters, __instance.SkippedVoting.transform);
+                                        __instance.BloopAVoteIcon(playerInfo, amountOfSkippedVoters, __instance.SkippedVoting.transform);
+                                        amountOfSkippedVoters++;
+                                        amountOfSkippedVoters++;
+                                    }
+                                    else if (voteState.VotedForId == playerVoteArea.TargetPlayerId)
+                                    {
+                                        __instance.BloopAVoteIcon(playerInfo, allNums[i], playerVoteArea.transform);
+                                        __instance.BloopAVoteIcon(playerInfo, allNums[i], playerVoteArea.transform);
+                                        allNums[i]++;
+                                        allNums[i]++;
+                                    }
                                 }
                             }
                         }
                     }
                 }
-
                 return false;
             }
         }

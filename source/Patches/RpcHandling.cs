@@ -813,6 +813,9 @@ namespace TownOfUs
                             case 44:
                                 new VampireHunter(player);
                                 break;
+                            case 45:
+                                new Prosecutor(player);
+                                break;
                             case 100:
                                 new Necromancer(player);
                                 break;
@@ -997,9 +1000,14 @@ namespace TownOfUs
                     case CustomRPC.Reveal:
                         var mayor = Utils.PlayerById(reader.ReadByte());
                         var mayorRole = Role.GetRole<Mayor>(mayor);
-                        var index = reader.ReadInt32();
                         mayorRole.Revealed = true;
                         AddRevealButton.RemoveAssassin(mayorRole);
+                        break;
+
+                    case CustomRPC.Prosecute:
+                        var prosecutor = Utils.PlayerById(reader.ReadByte());
+                        var prosRole = Role.GetRole<Prosecutor>(prosecutor);
+                        prosRole.ProsecuteThisMeeting = true;
                         break;
 
                     case CustomRPC.Bite:
@@ -1565,6 +1573,9 @@ namespace TownOfUs
 
                     if (CustomGameOptions.ImitatorOn > 0)
                         CrewmateRoles.Add((typeof(Imitator), 40, CustomGameOptions.ImitatorOn, true));
+
+                    if (CustomGameOptions.ProsecutorOn > 0)
+                        CrewmateRoles.Add((typeof(Prosecutor), 45, CustomGameOptions.ProsecutorOn, true));
                     #endregion
                     #region Neutral Roles
                     if (CustomGameOptions.JesterOn > 0)

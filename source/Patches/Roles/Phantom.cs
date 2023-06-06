@@ -5,6 +5,7 @@ namespace TownOfUs.Roles
 {
     public class Phantom : Role
     {
+        public RoleEnum formerRole = new RoleEnum();
         public bool Caught;
         public bool CompletedTasks;
         public bool Faded;

@@ -95,6 +95,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 case RoleEnum.Detective:
                 case RoleEnum.Imitator:
                 case RoleEnum.VampireHunter:
+                case RoleEnum.Prosecutor:
 
                     rememberImp = false;
                     rememberNeut = false;
@@ -210,6 +211,13 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
             {
                 var mayorRole = Role.GetRole<Mayor>(amnesiac);
                 mayorRole.Revealed = false;
+                DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(false);
+            }
+
+            else if (role == RoleEnum.Prosecutor)
+            {
+                var prosRole = Role.GetRole<Prosecutor>(amnesiac);
+                prosRole.Prosecuted = false;
                 DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(false);
             }
 

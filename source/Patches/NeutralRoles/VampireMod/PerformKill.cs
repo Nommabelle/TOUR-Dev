@@ -32,6 +32,11 @@ namespace TownOfUs.NeutralRoles.VampireMod
             if (role.ClosestPlayer == null) return false;
 
             var vamps = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(RoleEnum.Vampire)).ToList();
+            foreach (var phantom in Role.GetRoles(RoleEnum.Phantom))
+            {
+                var phantomRole = (Phantom)phantom;
+                if (phantomRole.formerRole == RoleEnum.Vampire) vamps.Add(phantomRole.Player);
+            }
             var aliveVamps = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(RoleEnum.Vampire) && !x.Data.IsDead && !x.Data.Disconnected).ToList();
             if (role.ClosestPlayer.Is(RoleEnum.VampireHunter))
             {

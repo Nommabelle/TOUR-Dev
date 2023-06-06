@@ -194,6 +194,11 @@ namespace TownOfUs.CrewmateRoles.VigilanteMod
                 if (playerVoteArea.VotedFor != player.PlayerId) continue;
                 playerVoteArea.UnsetVote();
                 var voteAreaPlayer = Utils.PlayerById(playerVoteArea.TargetPlayerId);
+                if (voteAreaPlayer.Is(RoleEnum.Prosecutor))
+                {
+                    var pros = Role.GetRole<Prosecutor>(voteAreaPlayer);
+                    pros.ProsecuteThisMeeting = false;
+                }
                 if (!voteAreaPlayer.AmOwner) continue;
                 meetingHud.ClearVote();
             }

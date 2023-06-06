@@ -37,6 +37,7 @@ namespace TownOfUs
         Doomsayer, // 42
         Vampire, // 43
         VampireHunter, // 44
+        Prosecutor, // 45
 
         Miner, // 29
         Swooper, // 30

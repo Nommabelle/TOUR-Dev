@@ -84,6 +84,7 @@ namespace TownOfUs
         StartImitate,
         Bite,
         Reveal,
+        Prosecute,
 
         BypassKill,
         BypassMultiKill,

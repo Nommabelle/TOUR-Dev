@@ -30,6 +30,7 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption ImitatorOn;
         public static CustomNumberOption MayorOn;
         public static CustomNumberOption MediumOn;
+        public static CustomNumberOption ProsecutorOn;
         public static CustomNumberOption SwapperOn;
         public static CustomNumberOption TransporterOn;
 
@@ -503,6 +504,8 @@ namespace TownOfUs.CustomOption
             MayorOn = new CustomNumberOption(num++, MultiMenu.crewmate, "<color=#704FA8FF>Mayor</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             MediumOn = new CustomNumberOption(num++, MultiMenu.crewmate, "<color=#A680FFFF>Medium</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
+            ProsecutorOn = new CustomNumberOption(num++, MultiMenu.crewmate, "<color=#B38000FF>Prosecutor</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             SwapperOn = new CustomNumberOption(num++, MultiMenu.crewmate, "<color=#66E666FF>Swapper</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);

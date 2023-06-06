@@ -38,6 +38,7 @@ namespace TownOfUs.NeutralRoles.PhantomMod
                 if (PlayerControl.LocalPlayer == WillBePhantom)
                 {
                     var role = new Phantom(PlayerControl.LocalPlayer);
+                    role.formerRole = oldRole.RoleType;
                     role.Kills = killsList.Kills;
                     role.CorrectAssassinKills = killsList.CorrectAssassinKills;
                     role.IncorrectAssassinKills = killsList.IncorrectAssassinKills;
@@ -46,6 +47,7 @@ namespace TownOfUs.NeutralRoles.PhantomMod
                 else
                 {
                     var role = new Phantom(WillBePhantom);
+                    role.formerRole = oldRole.RoleType;
                     role.Kills = killsList.Kills;
                     role.CorrectAssassinKills = killsList.CorrectAssassinKills;
                     role.IncorrectAssassinKills = killsList.IncorrectAssassinKills;
