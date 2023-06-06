@@ -209,7 +209,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
             else if (role == RoleEnum.Mayor)
             {
                 var mayorRole = Role.GetRole<Mayor>(amnesiac);
-                mayorRole.VoteBank = CustomGameOptions.MayorVoteBank;
+                mayorRole.Revealed = false;
                 DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(false);
             }
 

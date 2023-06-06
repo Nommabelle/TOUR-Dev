@@ -169,10 +169,6 @@ namespace TownOfUs.CustomOption
         public static CustomToggleOption SeeTasksDuringMeeting;
         public static CustomToggleOption SeeTasksWhenDead;
 
-        public static CustomHeaderOption Mayor;
-        public static CustomNumberOption MayorVoteBank;
-        public static CustomToggleOption MayorAnonymous;
-
         public static CustomHeaderOption Sheriff;
         public static CustomToggleOption SheriffKillOther;
         public static CustomToggleOption SheriffKillsDoomsayer;
@@ -916,13 +912,6 @@ namespace TownOfUs.CustomOption
                 new CustomHeaderOption(num++, MultiMenu.crewmate, "<color=#FFA60AFF>Engineer</color>");
             MaxFixes =
                 new CustomNumberOption(num++, MultiMenu.crewmate, "Maximum Number Of Fixes", 5, 1, 15, 1);
-
-            Mayor =
-                new CustomHeaderOption(num++, MultiMenu.crewmate, "<color=#704FA8FF>Mayor</color>");
-            MayorVoteBank =
-                new CustomNumberOption(num++, MultiMenu.crewmate, "Initial Mayor Vote Bank", 1, 1, 15, 1);
-            MayorAnonymous =
-                new CustomToggleOption(num++, MultiMenu.crewmate, "Mayor Votes Show Anonymous", false);
 
             Medium =
                 new CustomHeaderOption(num++, MultiMenu.crewmate, "<color=#A680FFFF>Medium</color>");

@@ -80,7 +80,7 @@ namespace TownOfUs.CrewmateRoles.SwapperMod
                 if (SwapVotes.Swap1 == null || SwapVotes.Swap2 == null) return true;
 
                 var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte) CustomRPC.SetSwaps, SendOption.Reliable, -1);
+                    (byte)CustomRPC.SetSwaps, SendOption.Reliable, -1);
                 writer.Write(SwapVotes.Swap1.TargetPlayerId);
                 writer.Write(SwapVotes.Swap2.TargetPlayerId);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
@@ -133,15 +133,6 @@ namespace TownOfUs.CrewmateRoles.SwapperMod
                     }
 
                     __instance.RpcVotingComplete(array, exiled, tie);
-
-                    foreach (var role in Role.GetRoles(RoleEnum.Mayor))
-                    {
-                        var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                            (byte)CustomRPC.SetExtraVotes, SendOption.Reliable, -1);
-                        writer.Write(role.Player.PlayerId);
-                        writer.WriteBytesAndSize(((Mayor)role).ExtraVotes.ToArray());
-                        AmongUsClient.Instance.FinishRpcImmediately(writer);
-                    }
                 }
 
                 return false;

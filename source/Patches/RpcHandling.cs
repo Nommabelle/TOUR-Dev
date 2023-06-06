@@ -33,6 +33,7 @@ using Random = UnityEngine.Random; //using Il2CppSystem;
 using TownOfUs.Patches;
 using AmongUs.GameOptions;
 using TownOfUs.NeutralRoles.VampireMod;
+using TownOfUs.CrewmateRoles.MayorMod;
 
 namespace TownOfUs
 {
@@ -993,13 +994,12 @@ namespace TownOfUs
                         lights.ActualSwitches = lights.ExpectedSwitches;
                         break;
 
-                    case CustomRPC.SetExtraVotes:
-
+                    case CustomRPC.Reveal:
                         var mayor = Utils.PlayerById(reader.ReadByte());
                         var mayorRole = Role.GetRole<Mayor>(mayor);
-                        mayorRole.ExtraVotes = reader.ReadBytesAndSize().ToList();
-                        if (!mayor.Is(RoleEnum.Mayor)) mayorRole.VoteBank -= mayorRole.ExtraVotes.Count;
-
+                        var index = reader.ReadInt32();
+                        mayorRole.Revealed = true;
+                        AddRevealButton.RemoveAssassin(mayorRole);
                         break;
 
                     case CustomRPC.Bite:
@@ -1428,9 +1428,6 @@ namespace TownOfUs
                     case CustomRPC.Convert:
                         var convertedPlayer = Utils.PlayerById(reader.ReadByte());
                         Utils.Convert(convertedPlayer);
-                        break;
-                    case CustomRPC.AddMayorVoteBank:
-                        Role.GetRole<Mayor>(Utils.PlayerById(reader.ReadByte())).VoteBank += reader.ReadInt32();
                         break;
                     case CustomRPC.RemoveAllBodies:
                         var buggedBodies = Object.FindObjectsOfType<DeadBody>();

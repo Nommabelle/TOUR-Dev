@@ -49,7 +49,6 @@ namespace TownOfUs
         JanitorClean,
         FixLights,
         EngineerFix,
-        SetExtraVotes,
         SetSwaps,
         Protect,
         AttemptSound,
@@ -84,6 +83,7 @@ namespace TownOfUs
         Imitate,
         StartImitate,
         Bite,
+        Reveal,
 
         BypassKill,
         BypassMultiKill,
@@ -100,7 +100,6 @@ namespace TownOfUs
         SetPos,
         SetSettings,
         
-        AddMayorVoteBank,
         RemoveAllBodies,
         CheckMurder,
 
