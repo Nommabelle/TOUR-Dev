@@ -83,6 +83,7 @@ namespace TownOfUs
         public static Sprite ImitateDeselectSprite;
         public static Sprite ObserveSprite;
         public static Sprite BiteSprite;
+        public static Sprite StakeSprite;
         public static Sprite HackSprite;
         public static Sprite MimicSprite;
         public static Sprite LockSprite;
@@ -169,6 +170,7 @@ namespace TownOfUs
             ImitateDeselectSprite = CreateSprite("TownOfUs.Resources.ImitateDeselect.png");
             ObserveSprite = CreateSprite("TownOfUs.Resources.Observe.png");
             BiteSprite = CreateSprite("TownOfUs.Resources.Bite.png");
+            StakeSprite = CreateSprite("TownOfUs.Resources.Stake.png");
             HackSprite = CreateSprite("TownOfUs.Resources.Hack.png");
             MimicSprite = CreateSprite("TownOfUs.Resources.Mimic.png");
             LockSprite = CreateSprite("TownOfUs.Resources.Lock.png");

@@ -247,6 +247,11 @@ namespace TownOfUs
                     NeutralKillingRoles.Shuffle();
                 }
 
+                if (NeutralKillingRoles.Contains((typeof(Vampire), 43, CustomGameOptions.VampireOn, true)))
+                {
+                    CrewmateRoles.Add((typeof(VampireHunter), 44, CustomGameOptions.VampireHunterOn, true));
+                }
+
                 SortRoles(CrewmateRoles, crewmates.Count - NeutralBenignRoles.Count - NeutralEvilRoles.Count - NeutralKillingRoles.Count);
                 SortRoles(ImpostorRoles, impostors.Count);
             }
@@ -803,6 +808,9 @@ namespace TownOfUs
                                 break;
                             case 43:
                                 new Vampire(player);
+                                break;
+                            case 44:
+                                new VampireHunter(player);
                                 break;
                             case 100:
                                 new Necromancer(player);

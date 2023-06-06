@@ -21,6 +21,7 @@ namespace TownOfUs.CustomOption
 
         public static CustomHeaderOption CrewKillingRoles;
         public static CustomNumberOption SheriffOn;
+        public static CustomNumberOption VampireHunterOn;
         public static CustomNumberOption VeteranOn;
         public static CustomNumberOption VigilanteOn;
 
@@ -424,6 +425,13 @@ namespace TownOfUs.CustomOption
         public static CustomToggleOption VampImpVision;
         public static CustomToggleOption VampVent;
         public static CustomToggleOption NewVampCanAssassin;
+        public static CustomNumberOption MaxVampiresPerGame;
+
+        public static CustomHeaderOption VampireHunter;
+        public static CustomNumberOption StakeCooldown;
+        public static CustomNumberOption MaxStakesPerRound;
+        public static CustomNumberOption ReducedRoundOneStakes;
+        public static CustomStringOption BecomeOnVampDeaths;
 
         public static CustomHeaderOption Giant;
         public static CustomNumberOption GiantSlow;
@@ -477,6 +485,8 @@ namespace TownOfUs.CustomOption
 
             CrewKillingRoles = new CustomHeaderOption(num++, MultiMenu.crewmate, "Crewmate Killing Roles");
             SheriffOn = new CustomNumberOption(num++, MultiMenu.crewmate, "<color=#FFFF00FF>Sheriff</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
+            VampireHunterOn = new CustomNumberOption(num++, MultiMenu.crewmate, "<color=#ADC2C2FF>Vampire Hunter</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             VeteranOn = new CustomNumberOption(num++, MultiMenu.crewmate, "<color=#998040FF>Veteran</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
@@ -851,6 +861,15 @@ namespace TownOfUs.CustomOption
                 new CustomNumberOption(num++, MultiMenu.crewmate, "Sheriff Kill Cooldown", 25f, 10f, 40f, 2.5f, CooldownFormat);
             SheriffBodyReport = new CustomToggleOption(num++, MultiMenu.crewmate, "Sheriff Can Report Who They've Killed");
 
+            VampireHunter =
+                new CustomHeaderOption(num++, MultiMenu.crewmate, "<color=#ADC2C2FF>Vampire Hunter</color>");
+            StakeCooldown =
+                new CustomNumberOption(num++, MultiMenu.crewmate, "Stake Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
+            MaxStakesPerRound = new CustomNumberOption(num++, MultiMenu.crewmate, "Maximum Stakes Per Round", 5, 1, 15, 1);
+            ReducedRoundOneStakes = new CustomNumberOption(num++, MultiMenu.crewmate, "Reduced Round One Stakes", 5, 1, 15, 1);
+            BecomeOnVampDeaths =
+                new CustomStringOption(num++, MultiMenu.crewmate, "What Vampire Hunter Becomes On All Vampire Deaths", new[] { "Crewmate", "Veteran", "Vigilante" });
+
             Veteran =
                 new CustomHeaderOption(num++, MultiMenu.crewmate, "<color=#998040FF>Veteran</color>");
             KilledOnAlert =
@@ -1045,6 +1064,8 @@ namespace TownOfUs.CustomOption
                 new CustomToggleOption(num++, MultiMenu.neutral, "Vampires Can Vent", false);
             NewVampCanAssassin =
                 new CustomToggleOption(num++, MultiMenu.neutral, "New Vampire Can Assassinate", false);
+            MaxVampiresPerGame =
+                new CustomNumberOption(num++, MultiMenu.neutral, "Maximum Vampires Per Game", 2, 2, 5, 1);
 
             Werewolf = new CustomHeaderOption(num++, MultiMenu.neutral, "<color=#A86629FF>Werewolf</color>");
             RampageCooldown =

@@ -38,7 +38,7 @@ namespace TownOfUs.NeutralRoles.ExecutionerMod
 
             role.target.nameText().color = Color.black;
 
-            if (!role.target.Data.IsDead && !role.target.Data.Disconnected) return;
+            if (!role.target.Data.IsDead && !role.target.Data.Disconnected && !role.target.Is(RoleEnum.Vampire)) return;
             if (role.TargetVotedOut) return;
 
             var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,

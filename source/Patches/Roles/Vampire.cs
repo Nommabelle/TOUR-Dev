@@ -52,7 +52,9 @@ namespace TownOfUs.Roles
                 Utils.EndGame();
                 return false;
             }
-            else
+            else if (PlayerControl.AllPlayerControls.ToArray().Count(x => !x.Data.IsDead && !x.Data.Disconnected) <= 4 &&
+                    PlayerControl.AllPlayerControls.ToArray().Count(x => !x.Data.IsDead && !x.Data.Disconnected &&
+                    (x.Data.IsImpostor() || x.Is(Faction.NeutralKilling)) && !x.Is(RoleEnum.Vampire)) == 0)
             {
                 var vampsAlives = PlayerControl.AllPlayerControls.ToArray()
                     .Where(x => !x.Data.IsDead && !x.Data.Disconnected && x.Is(RoleEnum.Vampire)).ToList();
@@ -63,6 +65,31 @@ namespace TownOfUs.Roles
                     .Where(x => !x.Data.IsDead && !x.Data.Disconnected && !x.Is(RoleEnum.Vampire) && (x.Is(Faction.Impostors) || x.Is(Faction.NeutralKilling))).ToList();
                 if (killersAlive.Count > 0) return false;
                 if (vampsAlives.Count == 2 && killersAlive.Count == 0 && alives.Count <= 4)
+                {
+                    var writer = AmongUsClient.Instance.StartRpcImmediately(
+                    PlayerControl.LocalPlayer.NetId,
+                    (byte)CustomRPC.VampireWin,
+                    SendOption.Reliable,
+                    -1
+                );
+                    VampWin();
+                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    Utils.EndGame();
+                    return false;
+                }
+                return false;
+            }
+            else
+            {
+                var vampsAlives = PlayerControl.AllPlayerControls.ToArray()
+                    .Where(x => !x.Data.IsDead && !x.Data.Disconnected && x.Is(RoleEnum.Vampire)).ToList();
+                if (vampsAlives.Count == 1 || vampsAlives.Count == 2) return false;
+                var alives = PlayerControl.AllPlayerControls.ToArray()
+                    .Where(x => !x.Data.IsDead && !x.Data.Disconnected).ToList();
+                var killersAlive = PlayerControl.AllPlayerControls.ToArray()
+                    .Where(x => !x.Data.IsDead && !x.Data.Disconnected && !x.Is(RoleEnum.Vampire) && (x.Is(Faction.Impostors) || x.Is(Faction.NeutralKilling))).ToList();
+                if (killersAlive.Count > 0) return false;
+                if (vampsAlives.Count == 3 && killersAlive.Count == 0 && alives.Count <= 6)
                 {
                     var writer = AmongUsClient.Instance.StartRpcImmediately(
                     PlayerControl.LocalPlayer.NetId,

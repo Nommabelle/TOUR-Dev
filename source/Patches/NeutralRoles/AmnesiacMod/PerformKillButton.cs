@@ -94,6 +94,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 case RoleEnum.Trapper:
                 case RoleEnum.Detective:
                 case RoleEnum.Imitator:
+                case RoleEnum.VampireHunter:
 
                     rememberImp = false;
                     rememberNeut = false;
@@ -153,13 +154,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                             role == RoleEnum.Pestilence || role == RoleEnum.Werewolf || role == RoleEnum.Juggernaut
                              || role == RoleEnum.Vampire)
                     {
-                        if (CustomGameOptions.AmneTurnNeutAssassin)
-                        {
-                            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                                (byte)CustomRPC.SetAssassin, SendOption.Reliable, -1);
-                            writer.Write(amnesiac.PlayerId);
-                            AmongUsClient.Instance.FinishRpcImmediately(writer);
-                        }
+                        if (CustomGameOptions.AmneTurnNeutAssassin) new Assassin(amnesiac);
                         if (other.Is(AbilityEnum.Assassin)) Ability.AbilityDictionary.Remove(other.PlayerId);
                     }
                 }
@@ -177,13 +172,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                         player.nameText().color = Patches.Colors.Impostor;
                     }
                 }
-                if (CustomGameOptions.AmneTurnImpAssassin)
-                {
-                    var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                        (byte)CustomRPC.SetAssassin, SendOption.Reliable, -1);
-                    writer.Write(amnesiac.PlayerId);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer);
-                }
+                if (CustomGameOptions.AmneTurnImpAssassin) new Assassin(amnesiac);
             }
 
             if (role == RoleEnum.Snitch)
@@ -245,6 +234,13 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 trackerRole.TrackerArrows.Clear();
                 trackerRole.UsesLeft = CustomGameOptions.MaxTracks;
                 trackerRole.LastTracked = DateTime.UtcNow;
+            }
+
+            else if (role == RoleEnum.VampireHunter)
+            {
+                var vhRole = Role.GetRole<VampireHunter>(amnesiac);
+                vhRole.UsesLeft = CustomGameOptions.MaxStakesPerRound;
+                vhRole.LastStaked = DateTime.UtcNow;
             }
 
             else if (role == RoleEnum.Detective)

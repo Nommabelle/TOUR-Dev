@@ -52,6 +52,13 @@ namespace TownOfUs.Patches
                 tracker.LastTracked = tracker.LastTracked.AddSeconds(CustomGameOptions.InitialCooldowns - CustomGameOptions.TrackCd);
             }
 
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.VampireHunter))
+            {
+                var vh = Role.GetRole<VampireHunter>(PlayerControl.LocalPlayer);
+                vh.LastStaked = DateTime.UtcNow;
+                vh.LastStaked = vh.LastStaked.AddSeconds(CustomGameOptions.InitialCooldowns - CustomGameOptions.StakeCd);
+            }
+
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Transporter))
             {
                 var transporter = Role.GetRole<Transporter>(PlayerControl.LocalPlayer);

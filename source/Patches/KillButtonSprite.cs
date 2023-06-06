@@ -36,6 +36,7 @@ namespace TownOfUs
         private static Sprite Swoop => TownOfUs.SwoopSprite;
         private static Sprite Observe => TownOfUs.ObserveSprite;
         private static Sprite Bite => TownOfUs.BiteSprite;
+        private static Sprite Stake => TownOfUs.StakeSprite;
 
         private static Sprite Kill;
 
@@ -135,6 +136,11 @@ namespace TownOfUs
             else if (PlayerControl.LocalPlayer.Is(RoleEnum.Vampire))
             {
                 __instance.KillButton.graphic.sprite = Bite;
+                flag = true;
+            }
+            else if (PlayerControl.LocalPlayer.Is(RoleEnum.VampireHunter))
+            {
+                __instance.KillButton.graphic.sprite = Stake;
                 flag = true;
             }
             else

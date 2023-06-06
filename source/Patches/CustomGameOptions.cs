@@ -3,6 +3,7 @@ using TownOfUs.CustomOption;
 using TownOfUs.NeutralRoles.ExecutionerMod;
 using TownOfUs.CrewmateRoles.HaunterMod;
 using TownOfUs.CrewmateRoles.MediumMod;
+using TownOfUs.CrewmateRoles.VampireHunterMod;
 using TownOfUs.NeutralRoles.GuardianAngelMod;
 
 namespace TownOfUs
@@ -71,6 +72,7 @@ namespace TownOfUs
         public static int BomberOn => (int)Generate.BomberOn.Get();
         public static int DoomsayerOn => (int)Generate.DoomsayerOn.Get();
         public static int VampireOn => (int)Generate.VampireOn.Get();
+        public static int VampireHunterOn => (int)Generate.VampireHunterOn.Get();
         public static int TorchOn => (int)Generate.TorchOn.Get();
         public static int DiseasedOn => (int)Generate.DiseasedOn.Get();
         public static int FlashOn => (int)Generate.FlashOn.Get();
@@ -290,6 +292,11 @@ namespace TownOfUs
         public static bool VampImpVision => Generate.VampImpVision.Get();
         public static bool VampVent => Generate.VampVent.Get();
         public static bool NewVampCanAssassin => Generate.NewVampCanAssassin.Get();
+        public static int MaxVampiresPerGame => (int)Generate.MaxVampiresPerGame.Get();
+        public static float StakeCd => Generate.StakeCooldown.Get();
+        public static int MaxStakesPerRound => (int)Generate.MaxStakesPerRound.Get();
+        public static int ReducedRoundOneStakes => (int)Generate.ReducedRoundOneStakes.Get();
+        public static BecomeEnum BecomeOnVampDeaths => (BecomeEnum)Generate.BecomeOnVampDeaths.Get();
         public static AdminDeadPlayers WhoSeesDead => (AdminDeadPlayers)Generate.WhoSeesDead.Get();
         public static bool VentImprovements => Generate.VentImprovements.Get();
         public static bool VitalsLab => Generate.VitalsLab.Get();

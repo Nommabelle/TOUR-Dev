@@ -36,6 +36,7 @@ namespace TownOfUs
         Imitator, // 40
         Doomsayer, // 42
         Vampire, // 43
+        VampireHunter, // 44
 
         Miner, // 29
         Swooper, // 30

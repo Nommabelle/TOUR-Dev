@@ -39,6 +39,12 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
                         Object.Destroy(trackerRole.UsesText);
                     }
 
+                    if (PlayerControl.LocalPlayer.Is(RoleEnum.VampireHunter))
+                    {
+                        var vhRole = Role.GetRole<VampireHunter>(PlayerControl.LocalPlayer);
+                        Object.Destroy(vhRole.UsesText);
+                    }
+
                     if (PlayerControl.LocalPlayer.Is(RoleEnum.Mystic))
                     {
                         var mysticRole = Role.GetRole<Mystic>(PlayerControl.LocalPlayer);

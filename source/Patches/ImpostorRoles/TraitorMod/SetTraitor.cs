@@ -10,6 +10,7 @@ using Reactor.Utilities;
 using TownOfUs.Patches;
 using AmongUs.GameOptions;
 using TownOfUs.CrewmateRoles.ImitatorMod;
+using TownOfUs.Roles.Modifiers;
 
 namespace TownOfUs.ImpostorRoles.TraitorMod
 {
@@ -130,13 +131,7 @@ namespace TownOfUs.ImpostorRoles.TraitorMod
                 }
             }
 
-            if (CustomGameOptions.TraitorCanAssassin)
-            {
-                var writer2 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.SetAssassin, SendOption.Reliable, -1);
-                writer2.Write(player.PlayerId);
-                AmongUsClient.Instance.FinishRpcImmediately(writer2);
-            }
+            if (CustomGameOptions.TraitorCanAssassin) new Assassin(player);
 
             if (PlayerControl.LocalPlayer.PlayerId == player.PlayerId)
             {

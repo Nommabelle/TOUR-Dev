@@ -21,6 +21,7 @@ using Random = UnityEngine.Random;
 using AmongUs.GameOptions;
 using TownOfUs.CrewmateRoles.TrapperMod;
 using TownOfUs.ImpostorRoles.BomberMod;
+using TownOfUs.CrewmateRoles.VampireHunterMod;
 
 namespace TownOfUs
 {
@@ -296,6 +297,11 @@ namespace TownOfUs
                             var vamp = Role.GetRole<Vampire>(player);
                             vamp.LastBit = DateTime.UtcNow;
                         }
+                        else if (player.Is(RoleEnum.VampireHunter))
+                        {
+                            var vh = Role.GetRole<VampireHunter>(player);
+                            vh.LastStaked = DateTime.UtcNow;
+                        }
                         else if (player.Is(RoleEnum.Werewolf))
                         {
                             var ww = Role.GetRole<Werewolf>(player);
@@ -352,6 +358,11 @@ namespace TownOfUs
                 {
                     var vamp = Role.GetRole<Vampire>(player);
                     vamp.LastBit = DateTime.UtcNow;
+                }
+                else if (player.Is(RoleEnum.VampireHunter))
+                {
+                    var vh = Role.GetRole<VampireHunter>(player);
+                    vh.LastStaked = DateTime.UtcNow;
                 }
                 else if (player.Is(RoleEnum.Werewolf))
                 {
@@ -500,9 +511,17 @@ namespace TownOfUs
                         target.Is(RoleEnum.Pestilence) && CustomGameOptions.SheriffKillsPlaguebearer ||
                         target.Is(RoleEnum.Werewolf) && CustomGameOptions.SheriffKillsWerewolf ||
                         target.Is(RoleEnum.Juggernaut) && CustomGameOptions.SheriffKillsJuggernaut ||
+                        target.Is(RoleEnum.Vampire) && CustomGameOptions.SheriffKillsVampire ||
                         target.Is(RoleEnum.Executioner) && CustomGameOptions.SheriffKillsExecutioner ||
+                        target.Is(RoleEnum.Doomsayer) && CustomGameOptions.SheriffKillsDoomsayer ||
                         target.Is(RoleEnum.Jester) && CustomGameOptions.SheriffKillsJester) sheriff.CorrectKills += 1;
                     else if (killer == target) sheriff.IncorrectKills += 1;
+                }
+
+                if (killer.Is(RoleEnum.VampireHunter))
+                {
+                    var vh = Role.GetRole<VampireHunter>(killer);
+                    vh.CorrectKills += 1;
                 }
 
                 if (killer.Is(RoleEnum.Veteran))
@@ -991,6 +1010,46 @@ namespace TownOfUs
                 {
                     tracker.TrackerArrows.Values.DestroyAll();
                     tracker.TrackerArrows.Clear();
+                }
+            }
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.VampireHunter))
+            {
+                var vh = Role.GetRole<VampireHunter>(PlayerControl.LocalPlayer);
+                vh.LastStaked = DateTime.UtcNow;
+                vh.UsesLeft = CustomGameOptions.MaxStakesPerRound;
+            }
+            foreach (var vh in Role.GetRoles(RoleEnum.VampireHunter))
+            {
+                var vamps = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(RoleEnum.Vampire) && !x.Data.IsDead && !x.Data.Disconnected).ToList();
+                if (vamps.Count == 0)
+                {
+                    var vhPlayer = ((VampireHunter)vh).Player;
+
+                    if (CustomGameOptions.BecomeOnVampDeaths == BecomeEnum.Veteran)
+                    {
+                        if (PlayerControl.LocalPlayer == vhPlayer) Object.Destroy(((VampireHunter)vh).UsesText);
+                        Role.RoleDictionary.Remove(vhPlayer.PlayerId);
+                        var kills = ((VampireHunter)vh).CorrectKills;
+                        var vet = new Veteran(vhPlayer);
+                        vet.CorrectKills = kills;
+                        vet.RegenTask();
+                        vet.LastAlerted = DateTime.UtcNow;
+                    }
+                    else if (CustomGameOptions.BecomeOnVampDeaths == BecomeEnum.Vigilante)
+                    {
+                        Role.RoleDictionary.Remove(vhPlayer.PlayerId);
+                        var kills = ((VampireHunter)vh).CorrectKills;
+                        var vigi = new Vigilante(vhPlayer);
+                        vigi.CorrectKills = kills;
+                        vigi.RegenTask();
+                    }
+                    else
+                    {
+                        Role.RoleDictionary.Remove(vhPlayer.PlayerId);
+                        var kills = ((VampireHunter)vh).CorrectKills;
+                        var crew = new Crewmate(vhPlayer);
+                        crew.CorrectKills = kills;
+                    }
                 }
             }
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Transporter))

@@ -110,7 +110,7 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
                             imitatedRole == RoleEnum.Veteran || imitatedRole == RoleEnum.Altruist ||
                             imitatedRole == RoleEnum.Engineer || imitatedRole == RoleEnum.Medium ||
                             imitatedRole == RoleEnum.Transporter || imitatedRole == RoleEnum.Trapper ||
-                            imitatedRole == RoleEnum.Medic)) imitatable = true;
+                            imitatedRole == RoleEnum.Medic || imitatedRole == RoleEnum.VampireHunter)) imitatable = true;
                         GenButton(imitatorRole, i, imitatable);
                     }
                 }

@@ -8,6 +8,8 @@ using TownOfUs.CrewmateRoles.InvestigatorMod;
 using TownOfUs.CrewmateRoles.TrapperMod;
 using TownOfUs.CrewmateRoles.ImitatorMod;
 using System.Linq;
+using TownOfUs.ImpostorRoles.TraitorMod;
+using TownOfUs.Roles.Modifiers;
 
 namespace TownOfUs.NeutralRoles.VampireMod
 {
@@ -30,7 +32,15 @@ namespace TownOfUs.NeutralRoles.VampireMod
             if (role.ClosestPlayer == null) return false;
 
             var vamps = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(RoleEnum.Vampire)).ToList();
-            if (role.ClosestPlayer.Is(Faction.Crewmates) && vamps.Count == 1)
+            var aliveVamps = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(RoleEnum.Vampire) && !x.Data.IsDead && !x.Data.Disconnected).ToList();
+            if (role.ClosestPlayer.Is(RoleEnum.VampireHunter))
+            {
+                role.LastBit = DateTime.UtcNow;
+                Utils.RpcMurderPlayer(role.ClosestPlayer, PlayerControl.LocalPlayer);
+                return false;
+            }
+            else if (role.ClosestPlayer.Is(Faction.Crewmates) && !role.ClosestPlayer.Is(ModifierEnum.Lover) &&
+                aliveVamps.Count == 1 && vamps.Count < CustomGameOptions.MaxVampiresPerGame)
             {
                 var interact = Utils.Interact(PlayerControl.LocalPlayer, role.ClosestPlayer);
                 if (interact[4] == true)
@@ -104,6 +114,32 @@ namespace TownOfUs.NeutralRoles.VampireMod
 
             if (PlayerControl.LocalPlayer == newVamp)
             {
+                if (PlayerControl.LocalPlayer == SetTraitor.WillBeTraitor)
+                {
+                    var toChooseFrom = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(Faction.Crewmates) &&
+                    !x.Is(ModifierEnum.Lover) && !x.Data.IsDead && !x.Data.Disconnected && !x.IsExeTarget()).ToList();
+                    if (toChooseFrom.Count == 0)
+                    {
+                        SetTraitor.WillBeTraitor = null;
+                        var writer2 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                        (byte)CustomRPC.SetTraitor, SendOption.Reliable, -1);
+                        writer2.Write(byte.MaxValue);
+                        AmongUsClient.Instance.FinishRpcImmediately(writer2);
+                    }
+                    else
+                    {
+                        var rand = UnityEngine.Random.RandomRangeInt(0, toChooseFrom.Count);
+                        var pc = toChooseFrom[rand];
+
+                        SetTraitor.WillBeTraitor = pc;
+
+                        var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                            (byte)CustomRPC.SetTraitor, SendOption.Reliable, -1);
+                        writer.Write(pc.PlayerId);
+                        AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    }
+                }
+
                 if (PlayerControl.LocalPlayer.Is(RoleEnum.Investigator)) Footprint.DestroyAll(Role.GetRole<Investigator>(PlayerControl.LocalPlayer));
 
                 if (PlayerControl.LocalPlayer.Is(RoleEnum.Engineer))
@@ -188,13 +224,7 @@ namespace TownOfUs.NeutralRoles.VampireMod
                 role.IncorrectAssassinKills = killsList.IncorrectAssassinKills;
             }
 
-            if (CustomGameOptions.NewVampCanAssassin)
-            {
-                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.SetAssassin, SendOption.Reliable, -1);
-                writer.Write(newVamp.PlayerId);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
-            }
+            if (CustomGameOptions.NewVampCanAssassin) new Assassin(newVamp);
         }
     }
 }
