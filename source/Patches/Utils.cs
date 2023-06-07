@@ -1093,7 +1093,7 @@ namespace TownOfUs
             {
                 var detective = Role.GetRole<Detective>(PlayerControl.LocalPlayer);
                 detective.LastExamined = DateTime.UtcNow;
-                if (detective.DetectedKiller.Data.IsDead || detective.DetectedKiller.Data.Disconnected)
+                if (detective.DetectedKiller != null && (detective.DetectedKiller.Data.IsDead || detective.DetectedKiller.Data.Disconnected))
                 {
                     detective.DetectedKiller = null;
                     detective.ExamineMode = false;
