@@ -816,6 +816,9 @@ namespace TownOfUs
                             case 45:
                                 new Prosecutor(player);
                                 break;
+                            case 46:
+                                new Warlock(player);
+                                break;
                             case 100:
                                 new Necromancer(player);
                                 break;
@@ -1641,6 +1644,9 @@ namespace TownOfUs
 
                     if (CustomGameOptions.BomberOn > 0)
                         ImpostorRoles.Add((typeof(Bomber), 41, CustomGameOptions.BomberOn, true));
+
+                    if (CustomGameOptions.WarlockOn > 0)
+                        ImpostorRoles.Add((typeof(Warlock), 46, CustomGameOptions.WarlockOn, false));
                     #endregion
                     #region Crewmate Modifiers
                     if (Check(CustomGameOptions.TorchOn))

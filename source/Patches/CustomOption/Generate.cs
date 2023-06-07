@@ -61,6 +61,7 @@ namespace TownOfUs.CustomOption
         public static CustomHeaderOption ImpostorKillingRoles;
         public static CustomNumberOption BomberOn;
         public static CustomNumberOption TraitorOn;
+        public static CustomNumberOption WarlockOn;
 
         public static CustomHeaderOption ImpostorSupportRoles;
         public static CustomNumberOption BlackmailerOn;
@@ -432,6 +433,10 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption ReducedRoundOneStakes;
         public static CustomStringOption BecomeOnVampDeaths;
 
+        public static CustomHeaderOption Warlock;
+        public static CustomNumberOption ChargeUpDuration;
+        public static CustomNumberOption ChargeUseDuration;
+
         public static CustomHeaderOption Giant;
         public static CustomNumberOption GiantSlow;
 
@@ -559,6 +564,8 @@ namespace TownOfUs.CustomOption
             BomberOn = new CustomNumberOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Bomber</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             TraitorOn = new CustomNumberOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Traitor</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
+            WarlockOn = new CustomNumberOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Warlock</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
 
             ImpostorSupportRoles = new CustomHeaderOption(num++, MultiMenu.imposter, "Impostor Support Roles");
@@ -1128,6 +1135,12 @@ namespace TownOfUs.CustomOption
             LatestSpawn = new CustomNumberOption(num++, MultiMenu.imposter, "Minimum People Alive When Traitor Can Spawn", 5, 3, 15, 1);
             NeutralKillingStopsTraitor =
                 new CustomToggleOption(num++, MultiMenu.imposter, "Traitor Won't Spawn If Any Neutral Killing Is Alive", false);
+
+            Warlock = new CustomHeaderOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Warlock</color>");
+            ChargeUpDuration =
+                new CustomNumberOption(num++, MultiMenu.imposter, "Time It Takes To Fully Charge", 25f, 10f, 60f, 2.5f, CooldownFormat);
+            ChargeUseDuration =
+                new CustomNumberOption(num++, MultiMenu.imposter, "Time It Takes To Use Full Charge", 1f, 0.25f, 5f, 0.25f, CooldownFormat);
 
             Blackmailer = new CustomHeaderOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Blackmailer</color>");
             BlackmailCooldown =

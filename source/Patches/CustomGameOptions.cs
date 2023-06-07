@@ -74,6 +74,7 @@ namespace TownOfUs
         public static int VampireOn => (int)Generate.VampireOn.Get();
         public static int VampireHunterOn => (int)Generate.VampireHunterOn.Get();
         public static int ProsecutorOn => (int)Generate.ProsecutorOn.Get();
+        public static int WarlockOn => (int)Generate.WarlockOn.Get();
         public static int TorchOn => (int)Generate.TorchOn.Get();
         public static int DiseasedOn => (int)Generate.DiseasedOn.Get();
         public static int FlashOn => (int)Generate.FlashOn.Get();
@@ -298,6 +299,8 @@ namespace TownOfUs
         public static int MaxStakesPerRound => (int)Generate.MaxStakesPerRound.Get();
         public static int ReducedRoundOneStakes => (int)Generate.ReducedRoundOneStakes.Get();
         public static BecomeEnum BecomeOnVampDeaths => (BecomeEnum)Generate.BecomeOnVampDeaths.Get();
+        public static float ChargeUpDuration => Generate.ChargeUpDuration.Get();
+        public static float ChargeUseDuration => Generate.ChargeUseDuration.Get();
         public static AdminDeadPlayers WhoSeesDead => (AdminDeadPlayers)Generate.WhoSeesDead.Get();
         public static bool VentImprovements => Generate.VentImprovements.Get();
         public static bool VitalsLab => Generate.VitalsLab.Get();

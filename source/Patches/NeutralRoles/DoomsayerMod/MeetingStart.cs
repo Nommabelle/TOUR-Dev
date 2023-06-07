@@ -34,7 +34,7 @@ namespace TownOfUs.NeutralRoles.DoomsayerMod
                  || player.Is(RoleEnum.Spy) || player.Is(RoleEnum.Glitch))
                 return $"You observe that {player.name} has an altered perception of reality";
             else if (player.Is(RoleEnum.Escapist) || player.Is(RoleEnum.Investigator) || player.Is(RoleEnum.Swooper)
-                 || player.Is(RoleEnum.Tracker) || player.Is(RoleEnum.Werewolf))
+                 || player.Is(RoleEnum.Tracker) || player.Is(RoleEnum.VampireHunter) || player.Is(RoleEnum.Werewolf))
                 return $"You observe that {player.name} is well trained in hunting down prey";
             else if (player.Is(RoleEnum.Arsonist) || player.Is(RoleEnum.Miner) || player.Is(RoleEnum.Plaguebearer)
                  || player.Is(RoleEnum.Seer) || player.Is(RoleEnum.Transporter))
@@ -46,7 +46,7 @@ namespace TownOfUs.NeutralRoles.DoomsayerMod
                  || player.Is(RoleEnum.Swapper) || player.Is(RoleEnum.Traitor) || player.Is(RoleEnum.Veteran))
                 return $"You observe that {player.name} has a trick up their sleeve";
             else if (player.Is(RoleEnum.Bomber) || player.Is(RoleEnum.Juggernaut) || player.Is(RoleEnum.Pestilence)
-                 || player.Is(RoleEnum.Sheriff) || player.Is(RoleEnum.VampireHunter) || player.Is(RoleEnum.Vigilante))
+                 || player.Is(RoleEnum.Sheriff) || player.Is(RoleEnum.Vigilante) || player.Is(RoleEnum.Warlock))
                 return $"You observe that {player.name} is capable of performing relentless attacks";
             else if (player.Is(RoleEnum.Crewmate) || player.Is(RoleEnum.Impostor))
                 return $"You observe that {player.name} appears to be roleless";
@@ -66,8 +66,8 @@ namespace TownOfUs.NeutralRoles.DoomsayerMod
                  || player.Is(RoleEnum.Spy) || player.Is(RoleEnum.Glitch))
                 return "(Detective, Morphling, Mystic, Spy or The Glitch)";
             else if (player.Is(RoleEnum.Escapist) || player.Is(RoleEnum.Investigator) || player.Is(RoleEnum.Swooper)
-                 || player.Is(RoleEnum.Tracker) || player.Is(RoleEnum.Werewolf))
-                return "(Escapist, Investigator, Swooper, Tracker or Werewolf)";
+                 || player.Is(RoleEnum.Tracker) || player.Is(RoleEnum.VampireHunter) || player.Is(RoleEnum.Werewolf))
+                return "(Escapist, Investigator, Swooper, Tracker, Vampire Hunter or Werewolf)";
             else if (player.Is(RoleEnum.Arsonist) || player.Is(RoleEnum.Miner) || player.Is(RoleEnum.Plaguebearer)
                  || player.Is(RoleEnum.Seer) || player.Is(RoleEnum.Transporter))
                 return "(Arsonist, Miner, Plaguebearer, Seer or Transporter)";
@@ -78,8 +78,8 @@ namespace TownOfUs.NeutralRoles.DoomsayerMod
                  || player.Is(RoleEnum.Swapper) || player.Is(RoleEnum.Traitor) || player.Is(RoleEnum.Veteran))
                 return "(Executioner, Jester, Prosecutor, Swapper, Traitor or Veteran)";
             else if (player.Is(RoleEnum.Bomber) || player.Is(RoleEnum.Juggernaut) || player.Is(RoleEnum.Pestilence)
-                 || player.Is(RoleEnum.Sheriff) || player.Is(RoleEnum.VampireHunter) || player.Is(RoleEnum.Vigilante))
-                return "(Bomber, Juggernaut, Pestilence, Sheriff, Vampire Hunter or Vigilante)";
+                 || player.Is(RoleEnum.Sheriff) || player.Is(RoleEnum.Vigilante) || player.Is(RoleEnum.Warlock))
+                return "(Bomber, Juggernaut, Pestilence, Sheriff, Vigilante or Warlock)";
             else if (player.Is(RoleEnum.Crewmate) || player.Is(RoleEnum.Impostor))
                 return "(Crewmate or Impostor)";
             else return "Error";

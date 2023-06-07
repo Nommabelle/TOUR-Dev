@@ -49,6 +49,7 @@ namespace TownOfUs
         Blackmailer, // 36
         Escapist, // 37
         Bomber, // 41
+        Warlock, // 46
 
         Crewmate, // 38
         Impostor, // 39

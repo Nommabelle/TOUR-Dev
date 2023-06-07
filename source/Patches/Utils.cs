@@ -621,6 +621,18 @@ namespace TownOfUs
                     return;
                 }
 
+                if (killer == PlayerControl.LocalPlayer && killer.Is(RoleEnum.Warlock))
+                {
+                    var warlock = Role.GetRole<Warlock>(killer);
+                    if (warlock.Charging)
+                    {
+                        warlock.UsingCharge = true;
+                        warlock.ChargeUseDuration = warlock.ChargePercent * CustomGameOptions.ChargeUseDuration / 100f;
+                    }
+                    killer.SetKillTimer(0.01f);
+                    return;
+                }
+
                 if (target.Is(ModifierEnum.Diseased) && killer.Is(RoleEnum.Werewolf))
                 {
                     var werewolf = Role.GetRole<Werewolf>(killer);
