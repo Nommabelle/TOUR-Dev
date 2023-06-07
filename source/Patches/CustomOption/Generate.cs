@@ -423,6 +423,8 @@ namespace TownOfUs.CustomOption
         public static CustomToggleOption VampVent;
         public static CustomToggleOption NewVampCanAssassin;
         public static CustomNumberOption MaxVampiresPerGame;
+        public static CustomToggleOption CanBiteNeutralBenign;
+        public static CustomToggleOption CanBiteNeutralEvil;
 
         public static CustomHeaderOption VampireHunter;
         public static CustomNumberOption StakeCooldown;
@@ -867,7 +869,7 @@ namespace TownOfUs.CustomOption
             MaxStakesPerRound = new CustomNumberOption(num++, MultiMenu.crewmate, "Maximum Stakes Per Round", 5, 1, 15, 1);
             ReducedRoundOneStakes = new CustomNumberOption(num++, MultiMenu.crewmate, "Reduced Round One Stakes", 5, 1, 15, 1);
             BecomeOnVampDeaths =
-                new CustomStringOption(num++, MultiMenu.crewmate, "What Vampire Hunter Becomes On All Vampire Deaths", new[] { "Crewmate", "Veteran", "Vigilante" });
+                new CustomStringOption(num++, MultiMenu.crewmate, "What Vampire Hunter Becomes On All Vampire Deaths", new[] { "Crewmate", "Sheriff", "Veteran", "Vigilante" });
 
             Veteran =
                 new CustomHeaderOption(num++, MultiMenu.crewmate, "<color=#998040FF>Veteran</color>");
@@ -1058,6 +1060,10 @@ namespace TownOfUs.CustomOption
                 new CustomToggleOption(num++, MultiMenu.neutral, "New Vampire Can Assassinate", false);
             MaxVampiresPerGame =
                 new CustomNumberOption(num++, MultiMenu.neutral, "Maximum Vampires Per Game", 2, 2, 5, 1);
+            CanBiteNeutralBenign =
+                new CustomToggleOption(num++, MultiMenu.neutral, "Can Convert Neutral Benign Roles", false);
+            CanBiteNeutralEvil =
+                new CustomToggleOption(num++, MultiMenu.neutral, "Can Convert Neutral Evil Roles", false);
 
             Werewolf = new CustomHeaderOption(num++, MultiMenu.neutral, "<color=#A86629FF>Werewolf</color>");
             RampageCooldown =

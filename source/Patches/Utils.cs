@@ -1025,7 +1025,15 @@ namespace TownOfUs
                 {
                     var vhPlayer = ((VampireHunter)vh).Player;
 
-                    if (CustomGameOptions.BecomeOnVampDeaths == BecomeEnum.Veteran)
+                    if (CustomGameOptions.BecomeOnVampDeaths == BecomeEnum.Sheriff)
+                    {
+                        Role.RoleDictionary.Remove(vhPlayer.PlayerId);
+                        var kills = ((VampireHunter)vh).CorrectKills;
+                        var sheriff = new Sheriff(vhPlayer);
+                        sheriff.CorrectKills = kills;
+                        sheriff.RegenTask();
+                    }
+                    else if (CustomGameOptions.BecomeOnVampDeaths == BecomeEnum.Veteran)
                     {
                         if (PlayerControl.LocalPlayer == vhPlayer) Object.Destroy(((VampireHunter)vh).UsesText);
                         Role.RoleDictionary.Remove(vhPlayer.PlayerId);

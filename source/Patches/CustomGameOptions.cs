@@ -292,6 +292,8 @@ namespace TownOfUs
         public static bool VampVent => Generate.VampVent.Get();
         public static bool NewVampCanAssassin => Generate.NewVampCanAssassin.Get();
         public static int MaxVampiresPerGame => (int)Generate.MaxVampiresPerGame.Get();
+        public static bool CanBiteNeutralBenign => Generate.CanBiteNeutralBenign.Get();
+        public static bool CanBiteNeutralEvil => Generate.CanBiteNeutralEvil.Get();
         public static float StakeCd => Generate.StakeCooldown.Get();
         public static int MaxStakesPerRound => (int)Generate.MaxStakesPerRound.Get();
         public static int ReducedRoundOneStakes => (int)Generate.ReducedRoundOneStakes.Get();

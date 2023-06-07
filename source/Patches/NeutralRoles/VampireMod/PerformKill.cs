@@ -44,7 +44,9 @@ namespace TownOfUs.NeutralRoles.VampireMod
                 Utils.RpcMurderPlayer(role.ClosestPlayer, PlayerControl.LocalPlayer);
                 return false;
             }
-            else if (role.ClosestPlayer.Is(Faction.Crewmates) && !role.ClosestPlayer.Is(ModifierEnum.Lover) &&
+            else if ((role.ClosestPlayer.Is(Faction.Crewmates) || (role.ClosestPlayer.Is(Faction.NeutralBenign)
+                && CustomGameOptions.CanBiteNeutralBenign) || (role.ClosestPlayer.Is(Faction.NeutralEvil)
+                && CustomGameOptions.CanBiteNeutralEvil)) && !role.ClosestPlayer.Is(ModifierEnum.Lover) &&
                 aliveVamps.Count == 1 && vamps.Count < CustomGameOptions.MaxVampiresPerGame)
             {
                 var interact = Utils.Interact(PlayerControl.LocalPlayer, role.ClosestPlayer);
@@ -117,6 +119,12 @@ namespace TownOfUs.NeutralRoles.VampireMod
 
             if (newVamp == StartImitate.ImitatingPlayer) StartImitate.ImitatingPlayer = null;
 
+            if (newVamp.Is(RoleEnum.GuardianAngel))
+            {
+                var ga = Role.GetRole<GuardianAngel>(newVamp);
+                ga.UnProtect();
+            }
+
             if (PlayerControl.LocalPlayer == newVamp)
             {
                 if (PlayerControl.LocalPlayer.Is(RoleEnum.Investigator)) Footprint.DestroyAll(Role.GetRole<Investigator>(PlayerControl.LocalPlayer));
@@ -180,6 +188,18 @@ namespace TownOfUs.NeutralRoles.VampireMod
                 {
                     var detecRole = Role.GetRole<Detective>(PlayerControl.LocalPlayer);
                     detecRole.ExamineButton.gameObject.SetActive(false);
+                }
+
+                if (PlayerControl.LocalPlayer.Is(RoleEnum.Survivor))
+                {
+                    var survRole = Role.GetRole<Survivor>(PlayerControl.LocalPlayer);
+                    UnityEngine.Object.Destroy(survRole.UsesText);
+                }
+
+                if (PlayerControl.LocalPlayer.Is(RoleEnum.GuardianAngel))
+                {
+                    var gaRole = Role.GetRole<GuardianAngel>(PlayerControl.LocalPlayer);
+                    UnityEngine.Object.Destroy(gaRole.UsesText);
                 }
             }
 

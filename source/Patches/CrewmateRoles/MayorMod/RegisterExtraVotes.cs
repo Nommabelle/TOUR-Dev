@@ -29,7 +29,6 @@ namespace TownOfUs.CrewmateRoles.MayorMod
                     || playerVoteArea.VotedFor == PlayerVoteArea.MissedVote
                     || playerVoteArea.VotedFor == PlayerVoteArea.DeadVote)
                 {
-                    pros.ProsecuteThisMeeting = false;
                     continue;
                 }
                 else if (pros.ProsecuteThisMeeting)
@@ -125,7 +124,10 @@ namespace TownOfUs.CrewmateRoles.MayorMod
                 {
                     var prosRole = (Prosecutor)pros;
                     if (pros.Player.Data.IsDead || pros.Player.Data.Disconnected) continue;
-                    if (prosRole.ProsecuteThisMeeting) isProsecuting = true;
+                    if (prosRole.ProsecuteThisMeeting)
+                    {
+                        isProsecuting = true;
+                    }
                 }
 
                 for (var i = 0; i < __instance.playerStates.Length; i++)
