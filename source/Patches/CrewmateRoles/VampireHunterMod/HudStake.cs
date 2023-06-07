@@ -20,7 +20,7 @@ namespace TownOfUs.CrewmateRoles.VampireHunterMod
 
             var role = Role.GetRole<VampireHunter>(PlayerControl.LocalPlayer);
 
-            if (role.UsesText == null && role.UsesLeft > 0)
+            if (role.UsesText == null && role.UsesLeft >= 0)
             {
                 role.UsesText = Object.Instantiate(stakeButton.cooldownTimerText, stakeButton.transform);
                 role.UsesText.gameObject.SetActive(false);
