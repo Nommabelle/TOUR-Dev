@@ -819,6 +819,9 @@ namespace TownOfUs
                             case 46:
                                 new Warlock(player);
                                 break;
+                            case 47:
+                                new Oracle(player);
+                                break;
                             case 100:
                                 new Necromancer(player);
                                 break;
@@ -1146,6 +1149,18 @@ namespace TownOfUs
                     case CustomRPC.Blackmail:
                         var blackmailer = Role.GetRole<Blackmailer>(Utils.PlayerById(reader.ReadByte()));
                         blackmailer.Blackmailed = Utils.PlayerById(reader.ReadByte());
+                        break;
+                    case CustomRPC.Confess:
+                        var oracle = Role.GetRole<Oracle>(Utils.PlayerById(reader.ReadByte()));
+                        oracle.Confessor = Utils.PlayerById(reader.ReadByte());
+                        var faction = reader.ReadInt32();
+                        if (faction == 0) oracle.RevealedFaction = Faction.Crewmates;
+                        else if (faction == 1) oracle.RevealedFaction = Faction.NeutralEvil;
+                        else oracle.RevealedFaction = Faction.Impostors;
+                        break;
+                    case CustomRPC.Bless:
+                        var oracle2 = Role.GetRole<Oracle>(Utils.PlayerById(reader.ReadByte()));
+                        oracle2.SavedConfessor = true;
                         break;
                     case CustomRPC.ExecutionerToJester:
                         TargetColor.ExeToJes(Utils.PlayerById(reader.ReadByte()));
@@ -1579,6 +1594,9 @@ namespace TownOfUs
 
                     if (CustomGameOptions.ProsecutorOn > 0)
                         CrewmateRoles.Add((typeof(Prosecutor), 45, CustomGameOptions.ProsecutorOn, true));
+
+                    if (CustomGameOptions.OracleOn > 0)
+                        CrewmateRoles.Add((typeof(Oracle), 47, CustomGameOptions.OracleOn, true));
                     #endregion
                     #region Neutral Roles
                     if (CustomGameOptions.JesterOn > 0)

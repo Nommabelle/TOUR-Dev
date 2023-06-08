@@ -37,6 +37,7 @@ namespace TownOfUs
         private static Sprite Observe => TownOfUs.ObserveSprite;
         private static Sprite Bite => TownOfUs.BiteSprite;
         private static Sprite Stake => TownOfUs.StakeSprite;
+        private static Sprite Confess => TownOfUs.ConfessSprite;
 
         private static Sprite Kill;
 
@@ -141,6 +142,11 @@ namespace TownOfUs
             else if (PlayerControl.LocalPlayer.Is(RoleEnum.VampireHunter))
             {
                 __instance.KillButton.graphic.sprite = Stake;
+                flag = true;
+            }
+            else if (PlayerControl.LocalPlayer.Is(RoleEnum.Oracle))
+            {
+                __instance.KillButton.graphic.sprite = Confess;
                 flag = true;
             }
             else

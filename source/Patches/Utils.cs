@@ -1003,6 +1003,11 @@ namespace TownOfUs
                 var seer = Role.GetRole<Seer>(PlayerControl.LocalPlayer);
                 seer.LastInvestigated = DateTime.UtcNow;
             }
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Oracle))
+            {
+                var oracle = Role.GetRole<Oracle>(PlayerControl.LocalPlayer);
+                oracle.LastConfessed = DateTime.UtcNow;
+            }
             if (PlayerControl.LocalPlayer.Is(RoleEnum.CultistSeer))
             {
                 var seer = Role.GetRole<CultistSeer>(PlayerControl.LocalPlayer);

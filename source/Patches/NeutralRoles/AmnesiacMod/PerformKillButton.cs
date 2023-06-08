@@ -96,6 +96,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 case RoleEnum.Imitator:
                 case RoleEnum.VampireHunter:
                 case RoleEnum.Prosecutor:
+                case RoleEnum.Oracle:
 
                     rememberImp = false;
                     rememberNeut = false;
@@ -293,6 +294,13 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 var seerRole = Role.GetRole<Seer>(amnesiac);
                 seerRole.Investigated.RemoveRange(0, seerRole.Investigated.Count);
                 seerRole.LastInvestigated = DateTime.UtcNow;
+            }
+
+            else if (role == RoleEnum.Oracle)
+            {
+                var oracleRole = Role.GetRole<Oracle>(amnesiac);
+                oracleRole.Confessor = null;
+                oracleRole.LastConfessed = DateTime.UtcNow;
             }
 
             else if (role == RoleEnum.Arsonist)

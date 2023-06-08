@@ -85,6 +85,8 @@ namespace TownOfUs
         Bite,
         Reveal,
         Prosecute,
+        Confess,
+        Bless,
 
         BypassKill,
         BypassMultiKill,

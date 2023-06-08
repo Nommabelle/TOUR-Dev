@@ -712,15 +712,29 @@ namespace TownOfUs.Roles
         {
             public static void Postfix(ref string __result, [HarmonyArgument(0)] StringNames name)
             {
-                if (ExileController.Instance == null || ExileController.Instance.exiled == null) return;
-
+                if (ExileController.Instance == null) return;
                 switch (name)
                 {
+                    case StringNames.NoExileTie:
+                        if (ExileController.Instance.exiled == null)
+                        {
+                            foreach (var oracle in GetRoles(RoleEnum.Oracle))
+                            {
+                                var oracleRole = (Oracle)oracle;
+                                if (oracleRole.SavedConfessor)
+                                {
+                                    oracleRole.SavedConfessor = false;
+                                    __result = $"{oracleRole.Confessor.name} was blessed by an Oracle!";
+                                }
+                            }
+                        }
+                        return;
                     case StringNames.ExileTextPN:
                     case StringNames.ExileTextSN:
                     case StringNames.ExileTextPP:
                     case StringNames.ExileTextSP:
                         {
+                            if (ExileController.Instance.exiled == null) return;
                             var info = ExileController.Instance.exiled;
                             var role = GetRole(info.Object);
                             if (role == null) return;

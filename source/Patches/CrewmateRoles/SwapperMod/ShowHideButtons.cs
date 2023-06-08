@@ -8,12 +8,39 @@ using TownOfUs.Roles;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Analytics;
 
 namespace TownOfUs.CrewmateRoles.SwapperMod
 {
     public class ShowHideButtonsSwapper
     {
         public static Dictionary<byte, int> CalculateVotes(MeetingHud __instance)
+        {
+            var self = CalculateVotesSwap(__instance);
+
+            var maxIdx = self.MaxPair(out var tie);
+
+            var exiled = GameData.Instance.AllPlayers.ToArray().FirstOrDefault(v => !tie && v.PlayerId == maxIdx.Key);
+
+            foreach (var oracle in Role.GetRoles(RoleEnum.Oracle))
+            {
+                var oracleRole = (Oracle)oracle;
+                if (oracleRole.Player.Data.IsDead || oracleRole.Player.Data.Disconnected || exiled == null || oracleRole.Confessor == null) continue;
+                if (oracleRole.Confessor.PlayerId == exiled.PlayerId)
+                {
+                    oracleRole.SavedConfessor = true;
+                    var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                        (byte)CustomRPC.Bless, SendOption.Reliable, -1);
+                    writer.Write(oracleRole.Player.PlayerId);
+                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    var dictionary = new Dictionary<byte, int>();
+                    return dictionary;
+                }
+            }
+
+            return self;
+        }
+        public static Dictionary<byte, int> CalculateVotesSwap(MeetingHud __instance)
         {
             var self = RegisterExtraVotes.CalculateAllVotes(__instance);
             if (SwapVotes.Swap1 == null || SwapVotes.Swap2 == null) return self;
