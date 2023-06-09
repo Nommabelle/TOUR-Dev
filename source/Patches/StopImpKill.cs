@@ -31,6 +31,7 @@ namespace TownOfUs
                 {
                     warlock.UsingCharge = true;
                     warlock.ChargeUseDuration = warlock.ChargePercent * CustomGameOptions.ChargeUseDuration / 100f;
+                    if (warlock.ChargeUseDuration == 0f) warlock.ChargeUseDuration += 0.01f;
                 }
                 PlayerControl.LocalPlayer.SetKillTimer(0.01f);
             }

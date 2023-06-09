@@ -159,6 +159,7 @@ namespace TownOfUs
         public static bool DisableLevels => Generate.DisableLevels.Get();
         public static bool WhiteNameplates => Generate.WhiteNameplates.Get();
         public static bool HiddenRoles => Generate.HiddenRoles.Get();
+        public static bool FirstDeathShield => Generate.FirstDeathShield.Get();
         public static bool SeeTasksDuringRound => Generate.SeeTasksDuringRound.Get();
         public static bool SeeTasksDuringMeeting => Generate.SeeTasksDuringMeeting.Get();
         public static bool SeeTasksWhenDead => Generate.SeeTasksWhenDead.Get();

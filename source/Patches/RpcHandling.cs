@@ -417,7 +417,7 @@ namespace TownOfUs
             }
 
 
-            var toChooseFromCrew = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(Faction.Crewmates) && !x.Is(ModifierEnum.Lover)).ToList();
+            var toChooseFromCrew = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(Faction.Crewmates) && !x.Is(RoleEnum.Mayor) && !x.Is(ModifierEnum.Lover)).ToList();
             if (TraitorOn && toChooseFromCrew.Count != 0)
             {
                 var rand = Random.RandomRangeInt(0, toChooseFromCrew.Count);
@@ -971,7 +971,10 @@ namespace TownOfUs
                         break;
 
                     case CustomRPC.Start:
+                        readByte = reader.ReadByte();
                         Utils.ShowDeadBodies = false;
+                        ShowRoundOneShield.FirstRoundShielded = readByte == byte.MaxValue ? null : Utils.PlayerById(readByte);
+                        ShowRoundOneShield.DiedFirst = "";
                         Murder.KilledPlayers.Clear();
                         Role.NobodyWins = false;
                         Role.SurvOnlyWins = false;
@@ -983,6 +986,7 @@ namespace TownOfUs
                         ReviveHudManagerUpdate.DontRevive = byte.MaxValue;
                         AddHauntPatch.AssassinatedPlayers.Clear();
                         HudUpdate.Zooming = false;
+                        HudUpdate.ZoomStart();
                         break;
 
                     case CustomRPC.JanitorClean:
@@ -1499,6 +1503,21 @@ namespace TownOfUs
                 var infected = GameData.Instance.AllPlayers.ToArray().Where(o => o.IsImpostor());
 
                 Utils.ShowDeadBodies = false;
+                if (ShowRoundOneShield.DiedFirst != null && CustomGameOptions.FirstDeathShield)
+                {
+                    var shielded = false;
+                    foreach (var player in PlayerControl.AllPlayerControls)
+                    {
+                        if (player.name == ShowRoundOneShield.DiedFirst)
+                        {
+                            ShowRoundOneShield.FirstRoundShielded = player;
+                            shielded = true;
+                        }
+                    }
+                    if (!shielded) ShowRoundOneShield.FirstRoundShielded = null;
+                }
+                else ShowRoundOneShield.FirstRoundShielded = null;
+                ShowRoundOneShield.DiedFirst = "";
                 Role.NobodyWins = false;
                 Role.SurvOnlyWins = false;
                 Role.VampireWins = false;
@@ -1522,10 +1541,22 @@ namespace TownOfUs
                 KillButtonTarget.DontRevive = byte.MaxValue;
                 ReviveHudManagerUpdate.DontRevive = byte.MaxValue;
                 HudUpdate.Zooming = false;
+                HudUpdate.ZoomStart();
 
-                var startWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte) CustomRPC.Start, SendOption.Reliable, -1);
-                AmongUsClient.Instance.FinishRpcImmediately(startWriter);
+                if (ShowRoundOneShield.FirstRoundShielded != null)
+                {
+                    var startWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                        (byte)CustomRPC.Start, SendOption.Reliable, -1);
+                    startWriter.Write(ShowRoundOneShield.FirstRoundShielded.PlayerId);
+                    AmongUsClient.Instance.FinishRpcImmediately(startWriter);
+                }
+                else
+                {
+                    var startWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                        (byte)CustomRPC.Start, SendOption.Reliable, -1);
+                    startWriter.Write(byte.MaxValue);
+                    AmongUsClient.Instance.FinishRpcImmediately(startWriter);
+                }
 
                 if (GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.HideNSeek) return;
 

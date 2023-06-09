@@ -118,6 +118,7 @@ namespace TownOfUs.CustomOption
         public static CustomToggleOption ParallelMedScans;
         public static CustomStringOption SkipButtonDisable;
         public static CustomToggleOption HiddenRoles;
+        public static CustomToggleOption FirstDeathShield;
 
         public static CustomHeaderOption BetterPolusSettings;
         public static CustomToggleOption VentImprovements;
@@ -752,6 +753,7 @@ namespace TownOfUs.CustomOption
             DisableLevels = new CustomToggleOption(num++, MultiMenu.main, "Disable Level Icons", false);
             WhiteNameplates = new CustomToggleOption(num++, MultiMenu.main, "Disable Player Nameplates", false);
             HiddenRoles = new CustomToggleOption(num++, MultiMenu.main, "Enable Hidden Roles", true);
+            FirstDeathShield = new CustomToggleOption(num++, MultiMenu.main, "First Death Shield Next Game", false);
 
             TaskTrackingSettings =
                 new CustomHeaderOption(num++, MultiMenu.main, "Task Tracking Settings");

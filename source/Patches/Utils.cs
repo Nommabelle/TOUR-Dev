@@ -220,7 +220,11 @@ namespace TownOfUs
             {
                 foreach (var pb in Role.GetRoles(RoleEnum.Plaguebearer)) ((Plaguebearer)pb).RpcSpreadInfection(target, player);
             }
-            if (target.Is(RoleEnum.Pestilence))
+            if (target == ShowRoundOneShield.FirstRoundShielded && toKill)
+            {
+                zeroSecReset = true;
+            }
+            else if (target.Is(RoleEnum.Pestilence))
             {
                 if (player.IsShielded())
                 {
@@ -496,6 +500,8 @@ namespace TownOfUs
             var data = target.Data;
             if (data != null && !data.IsDead)
             {
+                if (ShowRoundOneShield.DiedFirst == "") ShowRoundOneShield.DiedFirst = target.name;
+
                 if (killer == PlayerControl.LocalPlayer)
                     SoundManager.Instance.PlaySound(PlayerControl.LocalPlayer.KillSfx, false, 0.8f);
 
@@ -629,6 +635,7 @@ namespace TownOfUs
                     {
                         warlock.UsingCharge = true;
                         warlock.ChargeUseDuration = warlock.ChargePercent * CustomGameOptions.ChargeUseDuration / 100f;
+                        if (warlock.ChargeUseDuration == 0f) warlock.ChargeUseDuration += 0.01f;
                     }
                     killer.SetKillTimer(0.01f);
                     return;
