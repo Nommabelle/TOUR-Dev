@@ -5,6 +5,7 @@ using TownOfUs.CrewmateRoles.MedicMod;
 using TownOfUs.Extensions;
 using TownOfUs.Roles;
 using AmongUs.GameOptions;
+using TownOfUs.Patches;
 
 namespace TownOfUs.CrewmateRoles.SheriffMod
 {
@@ -89,11 +90,12 @@ namespace TownOfUs.CrewmateRoles.SheriffMod
 
                 return false;
             }
+            else if (role.ClosestPlayer == ShowRoundOneShield.FirstRoundShielded) return false;
             else if (role.ClosestPlayer.IsShielded())
             {
                 var medic = role.ClosestPlayer.GetMedic().Player.PlayerId;
                 var writer1 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte) CustomRPC.AttemptSound, SendOption.Reliable, -1);
+                    (byte)CustomRPC.AttemptSound, SendOption.Reliable, -1);
                 writer1.Write(medic);
                 writer1.Write(role.ClosestPlayer.PlayerId);
                 AmongUsClient.Instance.FinishRpcImmediately(writer1);
