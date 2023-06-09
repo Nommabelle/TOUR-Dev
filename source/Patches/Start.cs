@@ -160,6 +160,13 @@ namespace TownOfUs.Patches
                 swooper.LastSwooped = swooper.LastSwooped.AddSeconds(CustomGameOptions.InitialCooldowns - CustomGameOptions.SwoopCd);
             }
 
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Venerer))
+            {
+                var venerer = Role.GetRole<Venerer>(PlayerControl.LocalPlayer);
+                venerer.LastCamouflaged = DateTime.UtcNow;
+                venerer.LastCamouflaged = venerer.LastCamouflaged.AddSeconds(CustomGameOptions.InitialCooldowns - CustomGameOptions.AbilityCd);
+            }
+
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Undertaker))
             {
                 var undertaker = Role.GetRole<Undertaker>(PlayerControl.LocalPlayer);

@@ -363,6 +363,13 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 swooperRole.LastSwooped = DateTime.UtcNow;
             }
 
+            else if (role == RoleEnum.Venerer)
+            {
+                var venererRole = Role.GetRole<Venerer>(amnesiac);
+                venererRole.LastCamouflaged = DateTime.UtcNow;
+                venererRole.KillsAtStartAbility = 0;
+            }
+
             else if (role == RoleEnum.Blackmailer)
             {
                 var blackmailerRole = Role.GetRole<Blackmailer>(amnesiac);

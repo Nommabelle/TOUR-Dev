@@ -58,6 +58,7 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption MorphlingOn;
         public static CustomNumberOption SwooperOn;
         public static CustomNumberOption GrenadierOn;
+        public static CustomNumberOption VenererOn;
 
         public static CustomHeaderOption ImpostorKillingRoles;
         public static CustomNumberOption BomberOn;
@@ -445,6 +446,12 @@ namespace TownOfUs.CustomOption
         public static CustomToggleOption NeutralEvilShowsEvil;
         public static CustomToggleOption NeutralKillingShowsEvil;
 
+        public static CustomHeaderOption Venerer;
+        public static CustomNumberOption AbilityCooldown;
+        public static CustomNumberOption AbilityDuration;
+        public static CustomNumberOption SprintSpeed;
+        public static CustomNumberOption FreezeSpeed;
+
         public static CustomHeaderOption Giant;
         public static CustomNumberOption GiantSlow;
 
@@ -568,6 +575,8 @@ namespace TownOfUs.CustomOption
             MorphlingOn = new CustomNumberOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Morphling</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             SwooperOn = new CustomNumberOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Swooper</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
+            VenererOn = new CustomNumberOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Venerer</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
 
             ImpostorKillingRoles = new CustomHeaderOption(num++, MultiMenu.imposter, "Impostor Killing Roles");
@@ -1135,13 +1144,20 @@ namespace TownOfUs.CustomOption
                 new CustomToggleOption(num++, MultiMenu.imposter, "Morphling Can Vent", false);
 
             Swooper = new CustomHeaderOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Swooper</color>");
-
             SwoopCooldown =
                 new CustomNumberOption(num++, MultiMenu.imposter, "Swoop Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
             SwoopDuration =
                 new CustomNumberOption(num++, MultiMenu.imposter, "Swoop Duration", 10f, 5f, 15f, 1f, CooldownFormat);
             SwooperVent =
                 new CustomToggleOption(num++, MultiMenu.imposter, "Swooper Can Vent", false);
+
+            Venerer = new CustomHeaderOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Venerer</color>");
+            AbilityCooldown =
+                new CustomNumberOption(num++, MultiMenu.imposter, "Ability Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
+            AbilityDuration =
+                new CustomNumberOption(num++, MultiMenu.imposter, "Ability Duration", 10f, 5f, 15f, 1f, CooldownFormat);
+            SprintSpeed = new CustomNumberOption(num++, MultiMenu.imposter, "Sprint Speed", 1.25f, 1.05f, 2.5f, 0.05f, MultiplierFormat);
+            FreezeSpeed = new CustomNumberOption(num++, MultiMenu.imposter, "Freeze Speed", 0.75f, 0.25f, 1f, 0.05f, MultiplierFormat);
 
             Bomber =
                 new CustomHeaderOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Bomber</color>");

@@ -1,6 +1,5 @@
 using HarmonyLib;
 using TownOfUs.Roles;
-using Hazel;
 
 namespace TownOfUs.CrewmateRoles.OracleMod
 {
@@ -16,9 +15,9 @@ namespace TownOfUs.CrewmateRoles.OracleMod
                     if (player.PlayerId != state.TargetPlayerId) continue;
                     if (player == role.Confessor)
                     {
-                        if (role.RevealedFaction == Faction.Crewmates) state.NameText.text += "<color=#00FFFFFF> (Crew)</color>";
-                        else if (role.RevealedFaction == Faction.Impostors) state.NameText.text += "<color=#FF0000FF> (Imp)</color>";
-                        else state.NameText.text += "<color=#808080FF> (Neut)</color>";
+                        if (role.RevealedFaction == Faction.Crewmates) state.NameText.text = "<color=#00FFFFFF>(Crew) </color>" + state.NameText.text;
+                        else if (role.RevealedFaction == Faction.Impostors) state.NameText.text = "<color=#FF0000FF>(Imp) </color>" + state.NameText.text;
+                        else state.NameText.text = "<color=#808080FF>(Neut) </color>" + state.NameText.text;
                     }
                 }
             }

@@ -822,6 +822,9 @@ namespace TownOfUs
                             case 47:
                                 new Oracle(player);
                                 break;
+                            case 48:
+                                new Venerer(player);
+                                break;
                             case 100:
                                 new Necromancer(player);
                                 break;
@@ -1187,6 +1190,13 @@ namespace TownOfUs
                         var chameleonRole = Role.GetRole<Chameleon>(chameleon);
                         chameleonRole.TimeRemaining = CustomGameOptions.SwoopDuration;
                         chameleonRole.Swoop();
+                        break;
+                    case CustomRPC.Camouflage:
+                        var venerer = Utils.PlayerById(reader.ReadByte());
+                        var venererRole = Role.GetRole<Venerer>(venerer);
+                        venererRole.TimeRemaining = CustomGameOptions.AbilityDuration;
+                        venererRole.KillsAtStartAbility = reader.ReadInt32();
+                        venererRole.Ability();
                         break;
                     case CustomRPC.Alert:
                         var veteran = Utils.PlayerById(reader.ReadByte());
@@ -1665,6 +1675,9 @@ namespace TownOfUs
 
                     if (CustomGameOptions.WarlockOn > 0)
                         ImpostorRoles.Add((typeof(Warlock), 46, CustomGameOptions.WarlockOn, false));
+
+                    if (CustomGameOptions.VenererOn > 0)
+                        ImpostorRoles.Add((typeof(Venerer), 48, CustomGameOptions.VenererOn, true));
                     #endregion
                     #region Crewmate Modifiers
                     if (Check(CustomGameOptions.TorchOn))

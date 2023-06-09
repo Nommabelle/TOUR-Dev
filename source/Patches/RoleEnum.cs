@@ -51,6 +51,7 @@ namespace TownOfUs
         Escapist, // 37
         Bomber, // 41
         Warlock, // 46
+        Venerer, // 48
 
         Crewmate, // 38
         Impostor, // 39

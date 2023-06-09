@@ -76,6 +76,7 @@ namespace TownOfUs
         public static int ProsecutorOn => (int)Generate.ProsecutorOn.Get();
         public static int WarlockOn => (int)Generate.WarlockOn.Get();
         public static int OracleOn => (int)Generate.OracleOn.Get();
+        public static int VenererOn => (int)Generate.VenererOn.Get();
         public static int TorchOn => (int)Generate.TorchOn.Get();
         public static int DiseasedOn => (int)Generate.DiseasedOn.Get();
         public static int FlashOn => (int)Generate.FlashOn.Get();
@@ -307,6 +308,10 @@ namespace TownOfUs
         public static bool NeutralBenignShowsEvil => Generate.NeutralBenignShowsEvil.Get();
         public static bool NeutralEvilShowsEvil => Generate.NeutralEvilShowsEvil.Get();
         public static bool NeutralKillingShowsEvil => Generate.NeutralKillingShowsEvil.Get();
+        public static float AbilityCd => Generate.AbilityCooldown.Get();
+        public static float AbilityDuration => Generate.AbilityDuration.Get();
+        public static float SprintSpeed => Generate.SprintSpeed.Get();
+        public static float FreezeSpeed => Generate.FreezeSpeed.Get();
         public static AdminDeadPlayers WhoSeesDead => (AdminDeadPlayers)Generate.WhoSeesDead.Get();
         public static bool VentImprovements => Generate.VentImprovements.Get();
         public static bool VitalsLab => Generate.VitalsLab.Get();

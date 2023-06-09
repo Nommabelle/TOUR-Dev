@@ -87,6 +87,7 @@ namespace TownOfUs
         Prosecute,
         Confess,
         Bless,
+        Camouflage,
 
         BypassKill,
         BypassMultiKill,

@@ -22,6 +22,7 @@ using AmongUs.GameOptions;
 using TownOfUs.CrewmateRoles.TrapperMod;
 using TownOfUs.ImpostorRoles.BomberMod;
 using TownOfUs.CrewmateRoles.VampireHunterMod;
+using TownOfUs.CrewmateRoles.ImitatorMod;
 
 namespace TownOfUs
 {
@@ -1038,7 +1039,7 @@ namespace TownOfUs
             foreach (var vh in Role.GetRoles(RoleEnum.VampireHunter))
             {
                 var vamps = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(RoleEnum.Vampire) && !x.Data.IsDead && !x.Data.Disconnected).ToList();
-                if (vamps.Count == 0)
+                if (vamps.Count == 0 && vh.Player != StartImitate.ImitatingPlayer)
                 {
                     var vhPlayer = ((VampireHunter)vh).Player;
 
@@ -1216,6 +1217,11 @@ namespace TownOfUs
             {
                 var swooper = Role.GetRole<Swooper>(PlayerControl.LocalPlayer);
                 swooper.LastSwooped = DateTime.UtcNow;
+            }
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Venerer))
+            {
+                var venerer = Role.GetRole<Venerer>(PlayerControl.LocalPlayer);
+                venerer.LastCamouflaged = DateTime.UtcNow;
             }
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Undertaker))
             {
