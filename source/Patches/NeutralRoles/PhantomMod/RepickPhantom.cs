@@ -15,7 +15,6 @@ namespace TownOfUs.NeutralRoles.PhantomMod
             if (PlayerControl.LocalPlayer.Data == null) return;
             if (PlayerControl.LocalPlayer != SetPhantom.WillBePhantom) return;
             if (PlayerControl.LocalPlayer.Data.IsDead) return;
-            var toChooseFrom = PlayerControl.AllPlayerControls.ToArray().Where(x => !x.Is(Faction.Crewmates) && !x.Is(Faction.Impostors) && !x.Is(ModifierEnum.Lover) && x.Data.IsDead && !x.Data.Disconnected).ToList();
             if (!PlayerControl.LocalPlayer.Is(Faction.NeutralKilling) && !PlayerControl.LocalPlayer.Is(Faction.NeutralEvil) && !PlayerControl.LocalPlayer.Is(Faction.NeutralBenign))
             {
                 var toChooseFromAlive = PlayerControl.AllPlayerControls.ToArray().Where(x => (x.Is(Faction.NeutralKilling) || x.Is(Faction.NeutralEvil) || x.Is(Faction.NeutralBenign)) && !x.Is(ModifierEnum.Lover) && !x.Data.Disconnected).ToList();
@@ -42,6 +41,7 @@ namespace TownOfUs.NeutralRoles.PhantomMod
                 }
                 return;
             }
+            var toChooseFrom = PlayerControl.AllPlayerControls.ToArray().Where(x => !x.Is(Faction.Crewmates) && !x.Is(Faction.Impostors) && !x.Is(ModifierEnum.Lover) && x.Data.IsDead && !x.Data.Disconnected).ToList();
             if (toChooseFrom.Count == 0) return;
             var rand = Random.RandomRangeInt(0, toChooseFrom.Count);
             var pc = toChooseFrom[rand];
