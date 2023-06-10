@@ -642,7 +642,7 @@ namespace TownOfUs.Roles
                 }
 
                 if (GameData.Instance.TotalTasks <= GameData.Instance.CompletedTasks) return true;
-
+                
                 var result = true;
                 foreach (var role in AllRoles)
                 {

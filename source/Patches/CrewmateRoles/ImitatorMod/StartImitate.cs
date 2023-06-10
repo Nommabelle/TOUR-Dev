@@ -65,7 +65,6 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
             if (imitatorRole == RoleEnum.Seer) new Seer(ImitatingPlayer);
             if (imitatorRole == RoleEnum.Spy) new Spy(ImitatingPlayer);
             if (imitatorRole == RoleEnum.Tracker) new Tracker(ImitatingPlayer);
-            if (imitatorRole == RoleEnum.VampireHunter) new VampireHunter(ImitatingPlayer);
             if (imitatorRole == RoleEnum.Sheriff) new Sheriff(ImitatingPlayer);
             if (imitatorRole == RoleEnum.Veteran) new Veteran(ImitatingPlayer);
             if (imitatorRole == RoleEnum.Altruist) new Altruist(ImitatingPlayer);
@@ -79,6 +78,12 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
                 medic.UsedAbility = true;
                 medic.StartingCooldown = medic.StartingCooldown.AddSeconds(-10f);
             }
+            if (imitatorRole == RoleEnum.VampireHunter)
+            {
+                var vh = new VampireHunter(ImitatingPlayer);
+                vh.UsesLeft = CustomGameOptions.MaxStakesPerRound;
+            }
+
             var newRole = Role.GetRole(ImitatingPlayer);
             newRole.RemoveFromRoleHistory(newRole.RoleType);
             newRole.Kills = killsList.Kills;

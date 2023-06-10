@@ -1046,7 +1046,7 @@ namespace TownOfUs
             foreach (var vh in Role.GetRoles(RoleEnum.VampireHunter))
             {
                 var vamps = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(RoleEnum.Vampire) && !x.Data.IsDead && !x.Data.Disconnected).ToList();
-                if (vamps.Count == 0 && vh.Player != StartImitate.ImitatingPlayer)
+                if (vamps.Count == 0 && vh.Player != StartImitate.ImitatingPlayer && !vh.Player.Data.IsDead && !vh.Player.Data.Disconnected)
                 {
                     var vhPlayer = ((VampireHunter)vh).Player;
 
