@@ -248,7 +248,7 @@ namespace TownOfUs
                     NeutralKillingRoles.Shuffle();
                 }
 
-                if (NeutralKillingRoles.Contains((typeof(Vampire), 43, CustomGameOptions.VampireOn, true)))
+                if (NeutralKillingRoles.Contains((typeof(Vampire), 43, CustomGameOptions.VampireOn, true)) && CustomGameOptions.VampireHunterOn > 0)
                 {
                     CrewmateRoles.Add((typeof(VampireHunter), 44, CustomGameOptions.VampireHunterOn, true));
                 }
@@ -888,6 +888,9 @@ namespace TownOfUs
                                 break;
                             case 14:
                                 new Underdog(player2);
+                                break;
+                            case 15:
+                                new Frosty(player2);
                                 break;
                         }
                         break;
@@ -1725,6 +1728,9 @@ namespace TownOfUs
 
                     if (Check(CustomGameOptions.MultitaskerOn))
                         CrewmateModifiers.Add((typeof(Multitasker), 12, CustomGameOptions.MultitaskerOn));
+
+                    if (Check(CustomGameOptions.FrostyOn))
+                        CrewmateModifiers.Add((typeof(Frosty), 15, CustomGameOptions.FrostyOn));
                     #endregion
                     #region Global Modifiers
                     if (Check(CustomGameOptions.TiebreakerOn))

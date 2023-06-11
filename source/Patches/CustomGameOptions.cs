@@ -92,6 +92,7 @@ namespace TownOfUs
         public static int MultitaskerOn => (int)Generate.MultitaskerOn.Get();
         public static int DoubleShotOn => (int)Generate.DoubleShotOn.Get();
         public static int UnderdogOn => (int)Generate.UnderdogOn.Get();
+        public static int FrostyOn => (int)Generate.FrostyOn.Get();
         public static float InitialCooldowns => Generate.InitialCooldowns.Get();
         public static bool BothLoversDie => Generate.BothLoversDie.Get();
         public static bool NeutralLovers => Generate.NeutralLovers.Get();
@@ -313,6 +314,8 @@ namespace TownOfUs
         public static float AbilityDuration => Generate.AbilityDuration.Get();
         public static float SprintSpeed => Generate.SprintSpeed.Get();
         public static float FreezeSpeed => Generate.FreezeSpeed.Get();
+        public static float ChillDuration => Generate.ChillDuration.Get();
+        public static float ChillStartSpeed => Generate.ChillStartSpeed.Get();
         public static AdminDeadPlayers WhoSeesDead => (AdminDeadPlayers)Generate.WhoSeesDead.Get();
         public static bool VentImprovements => Generate.VentImprovements.Get();
         public static bool VitalsLab => Generate.VitalsLab.Get();

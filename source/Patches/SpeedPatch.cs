@@ -1,6 +1,8 @@
 ﻿using HarmonyLib;
+using System;
 using TownOfUs.Extensions;
 using TownOfUs.Roles;
+using TownOfUs.Roles.Modifiers;
 
 namespace TownOfUs.Patches
 {
@@ -23,6 +25,22 @@ namespace TownOfUs.Patches
                         else if (venerer.KillsAtStartAbility >= 3) __instance.body.velocity *= CustomGameOptions.FreezeSpeed;
                     }
                 }
+                foreach (var modifier in Modifier.GetModifiers(ModifierEnum.Frosty))
+                {
+                    var frosty = (Frosty)modifier;
+                    if (frosty.IsChilled && frosty.Chilled == PlayerControl.LocalPlayer)
+                    {
+                        var utcNow = DateTime.UtcNow;
+                        var timeSpan = utcNow - frosty.LastChilled;
+                        var duration = CustomGameOptions.ChillDuration * 1000f;
+                        if ((float)timeSpan.TotalMilliseconds < duration)
+                        {
+                            __instance.body.velocity *= 1 - (duration - (float)timeSpan.TotalMilliseconds)
+                                * (1 - CustomGameOptions.ChillStartSpeed) / duration;
+                        }
+                        else frosty.IsChilled = false;
+                    }
+                }
             }
         }
 
@@ -42,6 +60,22 @@ namespace TownOfUs.Patches
                     {
                         if (venerer.KillsAtStartAbility >= 2 && venerer.Player == player) __instance.body.velocity *= CustomGameOptions.SprintSpeed;
                         else if (venerer.KillsAtStartAbility >= 3) __instance.body.velocity *= CustomGameOptions.FreezeSpeed;
+                    }
+                }
+                foreach (var modifier in Modifier.GetModifiers(ModifierEnum.Frosty))
+                {
+                    var frosty = (Frosty)modifier;
+                    if (frosty.IsChilled && frosty.Chilled == player)
+                    {
+                        var utcNow = DateTime.UtcNow;
+                        var timeSpan = utcNow - frosty.LastChilled;
+                        var duration = CustomGameOptions.ChillDuration * 1000f;
+                        if ((float)timeSpan.TotalMilliseconds < duration)
+                        {
+                            __instance.body.velocity *= 1 - (duration - (float)timeSpan.TotalMilliseconds)
+                                * (1 - CustomGameOptions.ChillStartSpeed) / duration;
+                        }
+                        else frosty.IsChilled = false;
                     }
                 }
             }

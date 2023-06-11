@@ -75,6 +75,7 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption BaitOn;
         public static CustomNumberOption BlindOn;
         public static CustomNumberOption DiseasedOn;
+        public static CustomNumberOption FrostyOn;
         public static CustomNumberOption MultitaskerOn;
         public static CustomNumberOption TorchOn;
 
@@ -471,6 +472,10 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption LovingImpPercent;
         public static CustomToggleOption NeutralLovers;
 
+        public static CustomHeaderOption Frosty;
+        public static CustomNumberOption ChillDuration;
+        public static CustomNumberOption ChillStartSpeed;
+
         public static Func<object, string> PercentFormat { get; } = value => $"{value:0}%";
         private static Func<object, string> CooldownFormat { get; } = value => $"{value:0.0#}s";
         private static Func<object, string> MultiplierFormat { get; } = value => $"{value:0.0#}x";
@@ -604,6 +609,8 @@ namespace TownOfUs.CustomOption
             BlindOn = new CustomNumberOption(num++, MultiMenu.modifiers, "<color=#AAAAAAFF>Blind</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             DiseasedOn = new CustomNumberOption(num++, MultiMenu.modifiers, "<color=#808080FF>Diseased</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
+            FrostyOn = new CustomNumberOption(num++, MultiMenu.modifiers, "<color=#99FFFFFF>Frosty</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             MultitaskerOn = new CustomNumberOption(num++, MultiMenu.modifiers, "<color=#FF804DFF>Multitasker</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
@@ -1206,6 +1213,10 @@ namespace TownOfUs.CustomOption
 
             Diseased = new CustomHeaderOption(num++, MultiMenu.modifiers, "<color=#808080FF>Diseased</color>");
             DiseasedKillMultiplier = new CustomNumberOption(num++, MultiMenu.modifiers, "Diseased Kill Multiplier", 3f, 1.5f, 5f, 0.5f, MultiplierFormat);
+
+            Frosty = new CustomHeaderOption(num++, MultiMenu.modifiers, "<color=#99FFFFFF>Frosty</color>");
+            ChillDuration = new CustomNumberOption(num++, MultiMenu.modifiers, "Chill Duration", 10f, 1f, 15f, 1f, CooldownFormat);
+            ChillStartSpeed = new CustomNumberOption(num++, MultiMenu.modifiers, "Chill Start Speed", 0.75f, 0.25f, 0.95f, 0.05f, MultiplierFormat);
 
             Flash = new CustomHeaderOption(num++, MultiMenu.modifiers, "<color=#FF8080FF>Flash</color>");
             FlashSpeed = new CustomNumberOption(num++, MultiMenu.modifiers, "Flash Speed", 1.25f, 1.05f, 2.5f, 0.05f, MultiplierFormat);

@@ -602,6 +602,14 @@ namespace TownOfUs
                 }
                 else killer.MyPhysics.StartCoroutine(killer.KillAnimations.Random().CoPerformKill(target, target));
 
+                if (target.Is(ModifierEnum.Frosty))
+                {
+                    var frosty = Modifier.GetModifier<Frosty>(target);
+                    frosty.Chilled = killer;
+                    frosty.LastChilled = DateTime.UtcNow;
+                    frosty.IsChilled = true;
+                }
+
                 var deadBody = new DeadPlayer
                 {
                     PlayerId = target.PlayerId,

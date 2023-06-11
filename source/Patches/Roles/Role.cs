@@ -176,7 +176,31 @@ namespace TownOfUs.Roles
         }
         public static void VampWin()
         {
+            foreach (var jest in GetRoles(RoleEnum.Jester))
+            {
+                var jestRole = (Jester)jest;
+                if (jestRole.VotedOut) return;
+            }
+            foreach (var exe in GetRoles(RoleEnum.Executioner))
+            {
+                var exeRole = (Executioner)exe;
+                if (exeRole.TargetVotedOut) return;
+            }
+            foreach (var doom in GetRoles(RoleEnum.Doomsayer))
+            {
+                var doomRole = (Doomsayer)doom;
+                if (doomRole.WonByGuessing) return;
+            }
+
             VampireWins = true;
+
+            var writer = AmongUsClient.Instance.StartRpcImmediately(
+                PlayerControl.LocalPlayer.NetId,
+                (byte)CustomRPC.VampireWin,
+                SendOption.Reliable,
+                -1
+                );
+            AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
 
         internal static bool NobodyEndCriteria(LogicGameFlowNormal __instance)

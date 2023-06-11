@@ -81,7 +81,8 @@ namespace TownOfUs
         Disperser, // 11
         Multitasker, // 12
         DoubleShot, // 13
-        Underdog // 14
+        Underdog, // 14
+        Frosty // 15
     }
 
     public enum AbilityEnum

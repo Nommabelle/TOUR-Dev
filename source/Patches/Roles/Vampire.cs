@@ -1,5 +1,4 @@
 using System;
-using Hazel;
 using System.Linq;
 using Il2CppSystem.Collections.Generic;
 using TownOfUs.Extensions;
@@ -41,14 +40,7 @@ namespace TownOfUs.Roles
                     PlayerControl.AllPlayerControls.ToArray().Count(x => !x.Data.IsDead && !x.Data.Disconnected &&
                     (x.Data.IsImpostor() || x.Is(Faction.NeutralKilling))) == 1)
             {
-                var writer = AmongUsClient.Instance.StartRpcImmediately(
-                    PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.VampireWin,
-                    SendOption.Reliable,
-                    -1
-                );
                 VampWin();
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
                 Utils.EndGame();
                 return false;
             }
@@ -66,14 +58,7 @@ namespace TownOfUs.Roles
                 if (killersAlive.Count > 0) return false;
                 if (vampsAlives.Count == 2 && killersAlive.Count == 0 && alives.Count <= 4)
                 {
-                    var writer = AmongUsClient.Instance.StartRpcImmediately(
-                    PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.VampireWin,
-                    SendOption.Reliable,
-                    -1
-                );
                     VampWin();
-                    AmongUsClient.Instance.FinishRpcImmediately(writer);
                     Utils.EndGame();
                     return false;
                 }
@@ -91,14 +76,7 @@ namespace TownOfUs.Roles
                 if (killersAlive.Count > 0) return false;
                 if (vampsAlives.Count == 3 && killersAlive.Count == 0 && alives.Count <= 6)
                 {
-                    var writer = AmongUsClient.Instance.StartRpcImmediately(
-                    PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.VampireWin,
-                    SendOption.Reliable,
-                    -1
-                );
                     VampWin();
-                    AmongUsClient.Instance.FinishRpcImmediately(writer);
                     Utils.EndGame();
                     return false;
                 }

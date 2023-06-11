@@ -7,6 +7,7 @@ namespace TownOfUs.ImpostorRoles.VenererMod
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
     public class HudManagerUpdate
     {
+        public static Sprite NoneSprite => TownOfUs.NoAbilitySprite;
         public static Sprite CamoSprite => TownOfUs.CamouflageSprite;
         public static Sprite CamoSprintSprite => TownOfUs.CamoSprintSprite;
         public static Sprite CamoSprintFreezeSprite => TownOfUs.CamoSprintFreezeSprite;
@@ -24,7 +25,8 @@ namespace TownOfUs.ImpostorRoles.VenererMod
                 role.AbilityButton.graphic.enabled = true;
                 role.AbilityButton.gameObject.SetActive(false);
             }
-            if (role.Kills <= 1) role.AbilityButton.graphic.sprite = CamoSprite;
+            if (role.Kills == 0) role.AbilityButton.graphic.sprite = NoneSprite;
+            else if (role.Kills == 1) role.AbilityButton.graphic.sprite = CamoSprite;
             else if (role.Kills == 2) role.AbilityButton.graphic.sprite = CamoSprintSprite;
             else role.AbilityButton.graphic.sprite = CamoSprintFreezeSprite;
             role.AbilityButton.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)

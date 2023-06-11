@@ -86,6 +86,7 @@ namespace TownOfUs
         public static Sprite StakeSprite;
         public static Sprite RevealSprite;
         public static Sprite ConfessSprite;
+        public static Sprite NoAbilitySprite;
         public static Sprite CamouflageSprite;
         public static Sprite CamoSprintSprite;
         public static Sprite CamoSprintFreezeSprite;
@@ -178,6 +179,7 @@ namespace TownOfUs
             StakeSprite = CreateSprite("TownOfUs.Resources.Stake.png");
             RevealSprite = CreateSprite("TownOfUs.Resources.Reveal.png");
             ConfessSprite = CreateSprite("TownOfUs.Resources.Confess.png");
+            NoAbilitySprite = CreateSprite("TownOfUs.Resources.NoAbility.png");
             CamouflageSprite = CreateSprite("TownOfUs.Resources.Camouflage.png");
             CamoSprintSprite = CreateSprite("TownOfUs.Resources.CamoSprint.png");
             CamoSprintFreezeSprite = CreateSprite("TownOfUs.Resources.CamoSprintFreeze.png");
