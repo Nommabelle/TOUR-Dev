@@ -4,6 +4,7 @@ using System.Linq;
 using Hazel;
 using TownOfUs.CrewmateRoles.MedicMod;
 using TownOfUs.Extensions;
+using TownOfUs.Patches;
 
 namespace TownOfUs.Roles
 {
@@ -100,7 +101,7 @@ namespace TownOfUs.Roles
             foreach (var playerId in DousedPlayers)
             {
                 var player = Utils.PlayerById(playerId);
-                if (!player.Is(RoleEnum.Pestilence) && !player.IsShielded() && !player.IsProtected())
+                if (!player.Is(RoleEnum.Pestilence) && !player.IsShielded() && !player.IsProtected() && player != ShowRoundOneShield.FirstRoundShielded)
                 {
                     Utils.RpcMultiMurderPlayer(Player, player);
                 }

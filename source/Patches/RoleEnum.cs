@@ -39,6 +39,7 @@ namespace TownOfUs
         VampireHunter, // 44
         Prosecutor, // 45
         Oracle, // 47
+        Aurial, // 49
 
         Miner, // 29
         Swooper, // 30

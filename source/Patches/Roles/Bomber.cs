@@ -5,6 +5,7 @@ using TownOfUs.ImpostorRoles.BomberMod;
 using System.Reflection;
 using Hazel;
 using TownOfUs.CrewmateRoles.MedicMod;
+using TownOfUs.Patches;
 
 namespace TownOfUs.Roles
 {
@@ -72,7 +73,7 @@ namespace TownOfUs.Roles
             while (playersToDie.Count > CustomGameOptions.MaxKillsInDetonation) playersToDie.Remove(playersToDie[playersToDie.Count - 1]);
             foreach (var player in playersToDie)
             {
-                if (!player.Is(RoleEnum.Pestilence) && !player.IsShielded() && !player.IsProtected())
+                if (!player.Is(RoleEnum.Pestilence) && !player.IsShielded() && !player.IsProtected() && player != ShowRoundOneShield.FirstRoundShielded)
                 {
                     Utils.RpcMultiMurderPlayer(Player, player);
                 }

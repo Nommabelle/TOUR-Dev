@@ -24,12 +24,12 @@ namespace TownOfUs.NeutralRoles.DoomsayerMod
 
         public static string PlayerReportFeedback(PlayerControl player)
         {
-            if (player.Is(RoleEnum.Detective) || player.Is(RoleEnum.Imitator) || StartImitate.ImitatingPlayer == player
+            if (player.Is(RoleEnum.Aurial) || player.Is(RoleEnum.Imitator) || StartImitate.ImitatingPlayer == player
                 || player.Is(RoleEnum.Morphling) || player.Is(RoleEnum.Mystic)
                  || player.Is(RoleEnum.Spy) || player.Is(RoleEnum.Glitch))
                 return $"You observe that {player.name} has an altered perception of reality";
-            else if (player.Is(RoleEnum.Blackmailer) || player.Is(RoleEnum.Doomsayer) || player.Is(RoleEnum.Oracle)
-                || player.Is(RoleEnum.Snitch) || player.Is(RoleEnum.Trapper))
+            else if (player.Is(RoleEnum.Blackmailer) || player.Is(RoleEnum.Detective) || player.Is(RoleEnum.Doomsayer)
+                 || player.Is(RoleEnum.Oracle) || player.Is(RoleEnum.Snitch) || player.Is(RoleEnum.Trapper))
                 return $"You observe that {player.name} has an insight for private information";
             else if (player.Is(RoleEnum.Altruist) || player.Is(RoleEnum.Amnesiac) || player.Is(RoleEnum.Janitor)
                  || player.Is(RoleEnum.Medium) || player.Is(RoleEnum.Undertaker) || player.Is(RoleEnum.Vampire))
@@ -57,13 +57,13 @@ namespace TownOfUs.NeutralRoles.DoomsayerMod
 
         public static string RoleReportFeedback(PlayerControl player)
         {
-            if (player.Is(RoleEnum.Detective) || player.Is(RoleEnum.Imitator) || StartImitate.ImitatingPlayer == player
+            if (player.Is(RoleEnum.Aurial) || player.Is(RoleEnum.Imitator) || StartImitate.ImitatingPlayer == player
                 || player.Is(RoleEnum.Morphling) || player.Is(RoleEnum.Mystic)
                  || player.Is(RoleEnum.Spy) || player.Is(RoleEnum.Glitch))
-                return "(Detective, Imitator, Morphling, Mystic, Spy or The Glitch)";
-            else if (player.Is(RoleEnum.Blackmailer) || player.Is(RoleEnum.Doomsayer) || player.Is(RoleEnum.Oracle)
-                || player.Is(RoleEnum.Snitch) || player.Is(RoleEnum.Trapper))
-                return "(Blackmailer, Doomsayer, Oracle, Snitch or Trapper)";
+                return "(Aurial, Imitator, Morphling, Mystic, Spy or The Glitch)";
+            else if (player.Is(RoleEnum.Blackmailer) || player.Is(RoleEnum.Detective) || player.Is(RoleEnum.Doomsayer)
+                 || player.Is(RoleEnum.Oracle) || player.Is(RoleEnum.Snitch) || player.Is(RoleEnum.Trapper))
+                return "(Blackmailer, Detective, Doomsayer, Oracle, Snitch or Trapper)";
             else if (player.Is(RoleEnum.Altruist) || player.Is(RoleEnum.Amnesiac) || player.Is(RoleEnum.Janitor)
                  || player.Is(RoleEnum.Medium) || player.Is(RoleEnum.Undertaker) || player.Is(RoleEnum.Vampire))
                 return "(Altruist, Amnesiac, Janitor, Medium, Undertaker or Vampire)";
