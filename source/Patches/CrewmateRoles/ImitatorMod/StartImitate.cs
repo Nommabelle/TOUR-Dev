@@ -83,6 +83,11 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
                 var vh = new VampireHunter(ImitatingPlayer);
                 vh.UsesLeft = CustomGameOptions.MaxStakesPerRound;
             }
+            if (imitatorRole == RoleEnum.Aurial)
+            {
+                var aurial = new Aurial(ImitatingPlayer);
+                aurial.CannotSeeDelay = DateTime.UtcNow;
+            }
 
             var newRole = Role.GetRole(ImitatingPlayer);
             newRole.RemoveFromRoleHistory(newRole.RoleType);

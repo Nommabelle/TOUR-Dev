@@ -6,6 +6,8 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 using TownOfUs.Patches;
+using TownOfUs.CrewmateRoles.AurialMod;
+using TownOfUs.Patches.ScreenEffects;
 
 namespace TownOfUs.CrewmateRoles.HaunterMod
 {
@@ -31,6 +33,16 @@ namespace TownOfUs.CrewmateRoles.HaunterMod
 
             if (!WillBeHaunter.Is(RoleEnum.Haunter))
             {
+                if (WillBeHaunter == PlayerControl.LocalPlayer)
+                {
+                    if (PlayerControl.LocalPlayer.Is(RoleEnum.Aurial))
+                    {
+                        var aurial = Role.GetRole<Aurial>(PlayerControl.LocalPlayer);
+                        aurial.NormalVision = true;
+                        SeeAll.AllToNormal();
+                        CameraEffect.singleton.materials.Clear();
+                    }
+                }
                 var oldRole = Role.GetRole(WillBeHaunter);
                 var killsList = (oldRole.CorrectKills, oldRole.IncorrectKills, oldRole.CorrectAssassinKills, oldRole.IncorrectAssassinKills);
                 Role.RoleDictionary.Remove(WillBeHaunter.PlayerId);

@@ -5,6 +5,7 @@ namespace TownOfUs.CustomOption
     public class Generate
     {
         public static CustomHeaderOption CrewInvestigativeRoles;
+        public static CustomNumberOption AurialOn;
         public static CustomNumberOption DetectiveOn;
         public static CustomNumberOption HaunterOn;
         public static CustomNumberOption InvestigatorOn;
@@ -454,6 +455,13 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption SprintSpeed;
         public static CustomNumberOption FreezeSpeed;
 
+        public static CustomHeaderOption Aurial;
+        public static CustomNumberOption RadiateRange;
+        public static CustomNumberOption RadiateCooldown;
+        public static CustomNumberOption RadiateSucceedChance;
+        public static CustomNumberOption RadiateCount;
+        public static CustomNumberOption RadiateInvis;
+
         public static CustomHeaderOption Giant;
         public static CustomNumberOption GiantSlow;
 
@@ -489,6 +497,8 @@ namespace TownOfUs.CustomOption
             Patches.ImportButton = new Import(num++);
 
             CrewInvestigativeRoles = new CustomHeaderOption(num++, MultiMenu.crewmate, "Crewmate Investigative Roles");
+            AurialOn = new CustomNumberOption(num++, MultiMenu.crewmate, $"<color=#B34D99FF>Aurial</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
             DetectiveOn = new CustomNumberOption(num++, MultiMenu.crewmate, "<color=#4D4DFFFF>Detective</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             HaunterOn = new CustomNumberOption(num++, MultiMenu.crewmate, "<color=#D3D3D3FF>Haunter</color>", 0f, 0f, 100f, 10f,
@@ -784,6 +794,19 @@ namespace TownOfUs.CustomOption
             AssassinGuessModifiers = new CustomToggleOption(num++, MultiMenu.imposter, "Assassin Can Guess Crewmate Modifiers", false);
             AssassinGuessLovers = new CustomToggleOption(num++, MultiMenu.imposter, "Assassin Can Guess Lovers", false);
             AssassinateAfterVoting = new CustomToggleOption(num++, MultiMenu.imposter, "Assassin Can Guess After Voting", false);
+
+            Aurial =
+                new CustomHeaderOption(num++, MultiMenu.crewmate, "<color=#B34D99FF>Aurial</color>");
+            RadiateRange =
+                new CustomNumberOption(num++, MultiMenu.crewmate, "Radiate Range", 1f, 0.25f, 5f, 0.25f, MultiplierFormat);
+            RadiateCooldown =
+                new CustomNumberOption(num++, MultiMenu.crewmate, "Radiate Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
+            RadiateInvis =
+                new CustomNumberOption(num++, MultiMenu.crewmate, "Radiate See Delay", 10f, 0f, 15f, 1f, CooldownFormat);
+            RadiateCount =
+                new CustomNumberOption(num++, MultiMenu.crewmate, "Radiate Uses To See", 3, 1, 5, 1);
+            RadiateSucceedChance =
+                new CustomNumberOption(num++, MultiMenu.crewmate, "Radiate Succeed Chance", 100f, 0f, 100f, 10f, PercentFormat);
 
             Detective =
                 new CustomHeaderOption(num++, MultiMenu.crewmate, "<color=#4D4DFFFF>Detective</color>");

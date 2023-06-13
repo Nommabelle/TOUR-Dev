@@ -45,6 +45,13 @@ namespace TownOfUs.Patches
                 oracle.LastConfessed = oracle.LastConfessed.AddSeconds(CustomGameOptions.InitialCooldowns - CustomGameOptions.ConfessCd);
             }
 
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Aurial))
+            {
+                var aurial = Role.GetRole<Aurial>(PlayerControl.LocalPlayer);
+                aurial.LastRadiated = DateTime.UtcNow;
+                aurial.LastRadiated = aurial.LastRadiated.AddSeconds(CustomGameOptions.InitialCooldowns - CustomGameOptions.RadiateCooldown);
+            }
+
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Sheriff))
             {
                 var sheriff = Role.GetRole<Sheriff>(PlayerControl.LocalPlayer);

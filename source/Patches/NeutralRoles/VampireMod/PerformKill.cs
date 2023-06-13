@@ -10,6 +10,8 @@ using TownOfUs.CrewmateRoles.ImitatorMod;
 using System.Linq;
 using TownOfUs.ImpostorRoles.TraitorMod;
 using TownOfUs.Roles.Modifiers;
+using TownOfUs.CrewmateRoles.AurialMod;
+using TownOfUs.Patches.ScreenEffects;
 
 namespace TownOfUs.NeutralRoles.VampireMod
 {
@@ -188,6 +190,14 @@ namespace TownOfUs.NeutralRoles.VampireMod
                 {
                     var detecRole = Role.GetRole<Detective>(PlayerControl.LocalPlayer);
                     detecRole.ExamineButton.gameObject.SetActive(false);
+                }
+
+                if (PlayerControl.LocalPlayer.Is(RoleEnum.Aurial))
+                {
+                    var aurialRole = Role.GetRole<Aurial>(PlayerControl.LocalPlayer);
+                    aurialRole.NormalVision = true;
+                    SeeAll.AllToNormal();
+                    CameraEffect.singleton.materials.Clear();
                 }
 
                 if (PlayerControl.LocalPlayer.Is(RoleEnum.Survivor))

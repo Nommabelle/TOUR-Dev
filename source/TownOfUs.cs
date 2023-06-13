@@ -19,6 +19,7 @@ using Il2CppInterop.Runtime.Injection;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TownOfUs.Patches.ScreenEffects;
 
 namespace TownOfUs
 {
@@ -31,7 +32,9 @@ namespace TownOfUs
         public const string Id = "com.slushiegoose.townofus";
         public const string VersionString = "5.0.0";
         public static System.Version Version = System.Version.Parse(VersionString);
-        
+
+        public static AssetLoader bundledAssets;
+
         public static Sprite JanitorClean;
         public static Sprite EngineerFix;
         public static Sprite SwapperSwitch;
@@ -90,6 +93,7 @@ namespace TownOfUs
         public static Sprite CamouflageSprite;
         public static Sprite CamoSprintSprite;
         public static Sprite CamoSprintFreezeSprite;
+        public static Sprite RadiateSprite;
         public static Sprite HackSprite;
         public static Sprite MimicSprite;
         public static Sprite LockSprite;
@@ -124,6 +128,8 @@ namespace TownOfUs
             _harmony = new Harmony("com.slushiegoose.townofus");
 
             Generate.GenerateAll();
+
+            bundledAssets = new();
 
             JanitorClean = CreateSprite("TownOfUs.Resources.Janitor.png");
             EngineerFix = CreateSprite("TownOfUs.Resources.Engineer.png");
@@ -183,6 +189,7 @@ namespace TownOfUs
             CamouflageSprite = CreateSprite("TownOfUs.Resources.Camouflage.png");
             CamoSprintSprite = CreateSprite("TownOfUs.Resources.CamoSprint.png");
             CamoSprintFreezeSprite = CreateSprite("TownOfUs.Resources.CamoSprintFreeze.png");
+            RadiateSprite = CreateSprite("TownOfUs.Resources.Radiate.png");
             HackSprite = CreateSprite("TownOfUs.Resources.Hack.png");
             MimicSprite = CreateSprite("TownOfUs.Resources.Mimic.png");
             LockSprite = CreateSprite("TownOfUs.Resources.Lock.png");

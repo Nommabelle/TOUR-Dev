@@ -11,6 +11,8 @@ using TownOfUs.Patches;
 using AmongUs.GameOptions;
 using TownOfUs.CrewmateRoles.ImitatorMod;
 using TownOfUs.Roles.Modifiers;
+using TownOfUs.CrewmateRoles.AurialMod;
+using TownOfUs.Patches.ScreenEffects;
 
 namespace TownOfUs.ImpostorRoles.TraitorMod
 {
@@ -92,6 +94,14 @@ namespace TownOfUs.ImpostorRoles.TraitorMod
                 {
                     var trapperRole = Role.GetRole<Trapper>(PlayerControl.LocalPlayer);
                     Object.Destroy(trapperRole.UsesText);
+                }
+
+                if (PlayerControl.LocalPlayer.Is(RoleEnum.Aurial))
+                {
+                    var aurial = Role.GetRole<Aurial>(PlayerControl.LocalPlayer);
+                    aurial.NormalVision = true;
+                    SeeAll.AllToNormal();
+                    CameraEffect.singleton.materials.Clear();
                 }
 
                 if (PlayerControl.LocalPlayer == StartImitate.ImitatingPlayer) StartImitate.ImitatingPlayer = null;

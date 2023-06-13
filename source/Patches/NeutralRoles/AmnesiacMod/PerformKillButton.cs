@@ -11,6 +11,8 @@ using TownOfUs.CrewmateRoles.ImitatorMod;
 using AmongUs.GameOptions;
 using TownOfUs.Roles.Modifiers;
 using TownOfUs.ImpostorRoles.BomberMod;
+using TownOfUs.CrewmateRoles.AurialMod;
+using TownOfUs.Patches.ScreenEffects;
 
 namespace TownOfUs.NeutralRoles.AmnesiacMod
 {
@@ -97,6 +99,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 case RoleEnum.VampireHunter:
                 case RoleEnum.Prosecutor:
                 case RoleEnum.Oracle:
+                case RoleEnum.Aurial:
 
                     rememberImp = false;
                     rememberNeut = false;
@@ -124,6 +127,14 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
 
             newRole = Role.GetRole(other);
             newRole.Player = amnesiac;
+
+            if (role == RoleEnum.Aurial && PlayerControl.LocalPlayer == other)
+            {
+                var aurial = Role.GetRole<Aurial>(other);
+                aurial.NormalVision = true;
+                SeeAll.AllToNormal();
+                CameraEffect.singleton.materials.Clear();
+            }
 
             if (role == RoleEnum.Investigator) Footprint.DestroyAll(Role.GetRole<Investigator>(other));
 
@@ -301,6 +312,15 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 var oracleRole = Role.GetRole<Oracle>(amnesiac);
                 oracleRole.Confessor = null;
                 oracleRole.LastConfessed = DateTime.UtcNow;
+            }
+
+            else if (role == RoleEnum.Aurial)
+            {
+                var aurialRole = Role.GetRole<Aurial>(amnesiac);
+                aurialRole.LastRadiated = DateTime.UtcNow;
+                aurialRole.NormalVision = false;
+                aurialRole.knownPlayerRoles.Clear();
+                if (amnesiac.AmOwner) aurialRole.ApplyEffect();
             }
 
             else if (role == RoleEnum.Arsonist)

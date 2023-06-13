@@ -7,6 +7,7 @@ using Reactor.Utilities.Extensions;
 using TownOfUs.Roles;
 using TownOfUs.Extensions;
 using AmongUs.GameOptions;
+using TownOfUs.Patches.ScreenEffects;
 
 namespace TownOfUs.Patches {
 
@@ -29,6 +30,7 @@ namespace TownOfUs.Patches {
 
         public static void Postfix(AmongUsClient __instance, [HarmonyArgument(0)] EndGameResult endGameResult)
         {
+            if (CameraEffect.singleton) CameraEffect.singleton.materials.Clear();
             AdditionalTempData.clear();
             var playerRole = "";
             // Theres a better way of doing this e.g. switch statement or dictionary. But this works for now.
@@ -91,6 +93,7 @@ namespace TownOfUs.Patches {
                     else if (role.Value == RoleEnum.Warlock) { playerRole += "<color=#" + Patches.Colors.Impostor.ToHtmlStringRGBA() + ">Warlock</color> > "; }
                     else if (role.Value == RoleEnum.Oracle) { playerRole += "<color=#" + Patches.Colors.Oracle.ToHtmlStringRGBA() + ">Oracle</color> > "; }
                     else if (role.Value == RoleEnum.Venerer) { playerRole += "<color=#" + Patches.Colors.Impostor.ToHtmlStringRGBA() + ">Venerer</color> > "; }
+                    else if (role.Value == RoleEnum.Aurial) { playerRole += "<color=#" + Patches.Colors.Aurial.ToHtmlStringRGBA() + ">Aurial</color> > "; }
                     if (CustomGameOptions.GameMode == GameMode.Cultist && playerControl.Data.IsImpostor())
                     {
                         if (role.Value == RoleEnum.Engineer) { playerRole += "<color=#" + Patches.Colors.Impostor.ToHtmlStringRGBA() + ">Demolitionist</color> > "; }

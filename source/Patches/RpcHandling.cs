@@ -825,6 +825,9 @@ namespace TownOfUs
                             case 48:
                                 new Venerer(player);
                                 break;
+                            case 49:
+                                new Aurial(player);
+                                break;
                             case 100:
                                 new Necromancer(player);
                                 break;
@@ -1641,6 +1644,9 @@ namespace TownOfUs
 
                     if (CustomGameOptions.OracleOn > 0)
                         CrewmateRoles.Add((typeof(Oracle), 47, CustomGameOptions.OracleOn, true));
+
+                    if (CustomGameOptions.AurialOn > 0)
+                        CrewmateRoles.Add((typeof(Aurial), 49, CustomGameOptions.AurialOn, false));
                     #endregion
                     #region Neutral Roles
                     if (CustomGameOptions.JesterOn > 0)

@@ -77,6 +77,7 @@ namespace TownOfUs
         public static int WarlockOn => (int)Generate.WarlockOn.Get();
         public static int OracleOn => (int)Generate.OracleOn.Get();
         public static int VenererOn => (int)Generate.VenererOn.Get();
+        public static int AurialOn => (int)Generate.AurialOn.Get();
         public static int TorchOn => (int)Generate.TorchOn.Get();
         public static int DiseasedOn => (int)Generate.DiseasedOn.Get();
         public static int FlashOn => (int)Generate.FlashOn.Get();
@@ -316,6 +317,11 @@ namespace TownOfUs
         public static float FreezeSpeed => Generate.FreezeSpeed.Get();
         public static float ChillDuration => Generate.ChillDuration.Get();
         public static float ChillStartSpeed => Generate.ChillStartSpeed.Get();
+        public static float RadiateRange => (float)Generate.RadiateRange.Get();
+        public static float RadiateCooldown => (float)Generate.RadiateCooldown.Get();
+        public static float RadiateInvis => (float)Generate.RadiateInvis.Get();
+        public static int RadiateCount => (int)Generate.RadiateCount.Get();
+        public static int RadiateChance => (int)Generate.RadiateSucceedChance.Get();
         public static AdminDeadPlayers WhoSeesDead => (AdminDeadPlayers)Generate.WhoSeesDead.Get();
         public static bool VentImprovements => Generate.VentImprovements.Get();
         public static bool VitalsLab => Generate.VitalsLab.Get();

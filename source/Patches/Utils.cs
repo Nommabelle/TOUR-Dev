@@ -23,6 +23,7 @@ using TownOfUs.CrewmateRoles.TrapperMod;
 using TownOfUs.ImpostorRoles.BomberMod;
 using TownOfUs.CrewmateRoles.VampireHunterMod;
 using TownOfUs.CrewmateRoles.ImitatorMod;
+using TownOfUs.CrewmateRoles.AurialMod;
 
 namespace TownOfUs
 {
@@ -1023,6 +1024,18 @@ namespace TownOfUs
             {
                 var oracle = Role.GetRole<Oracle>(PlayerControl.LocalPlayer);
                 oracle.LastConfessed = DateTime.UtcNow;
+            }
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Aurial))
+            {
+                var aurial = Role.GetRole<Aurial>(PlayerControl.LocalPlayer);
+                aurial.LastRadiated = DateTime.UtcNow;
+                aurial.CannotSeeDelay = DateTime.UtcNow;
+                if (PlayerControl.LocalPlayer.Data.IsDead)
+                {
+                    aurial.NormalVision = true;
+                    SeeAll.AllToNormal();
+                    aurial.ClearEffect();
+                }
             }
             if (PlayerControl.LocalPlayer.Is(RoleEnum.CultistSeer))
             {

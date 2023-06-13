@@ -4,6 +4,8 @@ using UnityEngine;
 using TownOfUs.CrewmateRoles.InvestigatorMod;
 using TownOfUs.CrewmateRoles.TrapperMod;
 using System.Collections.Generic;
+using TownOfUs.CrewmateRoles.AurialMod;
+using TownOfUs.Patches.ScreenEffects;
 
 namespace TownOfUs.CrewmateRoles.ImitatorMod
 {
@@ -92,6 +94,14 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
                         var detecRole = Role.GetRole<Detective>(PlayerControl.LocalPlayer);
                         detecRole.ClosestPlayer = null;
                         detecRole.ExamineButton.gameObject.SetActive(false);
+                    }
+
+                    if (PlayerControl.LocalPlayer.Is(RoleEnum.Aurial))
+                    {
+                        var aurialRole = Role.GetRole<Aurial>(PlayerControl.LocalPlayer);
+                        aurialRole.NormalVision = true;
+                        SeeAll.AllToNormal();
+                        CameraEffect.singleton.materials.Clear();
                     }
 
                     if (!PlayerControl.LocalPlayer.Is(RoleEnum.Investigator) && !PlayerControl.LocalPlayer.Is(RoleEnum.Mystic)

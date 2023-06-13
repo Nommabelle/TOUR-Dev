@@ -38,6 +38,7 @@ namespace TownOfUs
         private static Sprite Bite => TownOfUs.BiteSprite;
         private static Sprite Stake => TownOfUs.StakeSprite;
         private static Sprite Confess => TownOfUs.ConfessSprite;
+        private static Sprite Radiate => TownOfUs.RadiateSprite;
 
         private static Sprite Kill;
 
@@ -147,6 +148,11 @@ namespace TownOfUs
             else if (PlayerControl.LocalPlayer.Is(RoleEnum.Oracle))
             {
                 __instance.KillButton.graphic.sprite = Confess;
+                flag = true;
+            }
+            else if (PlayerControl.LocalPlayer.Is(RoleEnum.Aurial))
+            {
+                __instance.KillButton.graphic.sprite = Radiate;
                 flag = true;
             }
             else

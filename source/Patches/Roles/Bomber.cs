@@ -18,8 +18,7 @@ namespace TownOfUs.Roles
         public bool Detonated = true;
         public Vector3 DetonatePoint;
         public Bomb Bomb = new Bomb();
-        public static AssetBundle bundle = loadBundle();
-        public static Material bombMaterial = bundle.LoadAsset<Material>("bomb").DontUnload();
+        public static Material bombMaterial = TownOfUs.bundledAssets.Get<Material>("bomb");
         public DateTime StartingCooldown { get; set; }
 
         public Bomber(PlayerControl player) : base(player)
@@ -101,14 +100,6 @@ namespace TownOfUs.Roles
                 playersToDie[r] = tmp;
             }
             return playersToDie;
-        }
-
-        public static AssetBundle loadBundle()
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            var stream = assembly.GetManifestResourceStream("TownOfUs.Resources.bombershader");
-            var assets = stream.ReadFully();
-            return AssetBundle.LoadFromMemory(assets);
         }
     }
 }

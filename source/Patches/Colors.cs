@@ -30,6 +30,7 @@ namespace TownOfUs.Patches
         public readonly static Color VampireHunter = new Color(0.7f, 0.7f, 0.9f, 1f);
         public readonly static Color Prosecutor = new Color(0.7f, 0.5f, 0f, 1f);
         public readonly static Color Oracle = new Color(0.75f, 0f, 0.75f, 1f);
+        public readonly static Color Aurial = new Color(0.7f, 0.3f, 0.6f, 1f);
 
         // Neutral Colors
         public readonly static Color Jester = new Color(1f, 0.75f, 0.8f, 1f);
