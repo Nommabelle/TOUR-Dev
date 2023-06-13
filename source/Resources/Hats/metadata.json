@@ -2301,6 +2301,61 @@
       "artist": "Ophidian"
     },
     {
+      "id": "hats0460",
+      "name": "5up hat",
+      "artist": "Rum"
+    },
+    {
+      "id": "hats0461",
+      "name": "Angel Is Kimi hat",
+      "artist": "Rum"
+    },
+    {
+      "id": "hats0462",
+      "name": "DK hat",
+      "artist": "Rum"
+    },
+    {
+      "id": "hats0463",
+      "name": "Dumbdog hat",
+      "artist": "Rum"
+    },
+    {
+      "id": "hats0464",
+      "name": "Ellum hat",
+      "artist": "Rum"
+    },
+    {
+      "id": "hats0465",
+      "name": "Hafu Penguin hat",
+      "artist": "Rum"
+    },
+    {
+      "id": "hats0466",
+      "name": "Koji hat",
+      "artist": "Rum"
+    },
+    {
+      "id": "hats0467",
+      "name": "Smajor hat",
+      "artist": "Rum"
+    },
+    {
+      "id": "hats0468",
+      "name": "Steve hat",
+      "artist": "Rum"
+    },
+    {
+      "id": "hats0469",
+      "name": "vGumiho hat",
+      "artist": "Rum"
+    },
+    {
+      "id": "hats0470",
+      "name": "xChocobars hat",
+      "artist": "Rum"
+    },
+    {
       "id": "misc0000",
       "name": "ZeroXFusionz hat",
       "artist": "TheLastShaymin"
@@ -2783,6 +2838,21 @@
     {
       "id": "standard0050",
       "name": "Zeta Mark V hat",
+      "artist": "Little Doo Doo"
+    },
+    {
+      "id": "standard0051",
+      "name": "Billy Butcher hat",
+      "artist": "Little Doo Doo"
+    },
+    {
+      "id": "standard0052",
+      "name": "Queen Maeve hat",
+      "artist": "Little Doo Doo"
+    },
+    {
+      "id": "standard0053",
+      "name": "Starlight hat",
       "artist": "Little Doo Doo"
     }
   ]
