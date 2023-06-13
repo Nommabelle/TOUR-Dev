@@ -143,7 +143,14 @@ namespace TownOfUs.Roles
             {
                 if (Local) return true;
                 var lover = Modifier.GetModifier<Lover>(PlayerControl.LocalPlayer);
-                return lover.OtherLover.Player == Player;
+                if (lover.OtherLover.Player != Player) return false;
+                if (!PlayerControl.LocalPlayer.Is(RoleEnum.Aurial)) return true;
+                if (MeetingHud.Instance || Utils.ShowDeadBodies) return true;
+                if (lover.OtherLover.Player.Is(RoleEnum.Mayor))
+                {
+                    var mayor = GetRole<Mayor>(lover.OtherLover.Player);
+                    if (mayor.Revealed) return true;
+                }
             }
             return false;
         }

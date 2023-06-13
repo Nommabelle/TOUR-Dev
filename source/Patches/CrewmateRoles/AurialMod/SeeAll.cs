@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using Reactor.Utilities;
 using TownOfUs.Extensions;
 using TownOfUs.Roles;
 using Color = UnityEngine.Color;
@@ -48,8 +47,20 @@ namespace TownOfUs.CrewmateRoles.AurialMod
 
                 if (s.SeeDelay() != 0f)
                 {
-                    ColorChar(player, Color.clear);
-                    continue;
+                    if (player.Is(RoleEnum.Mayor))
+                    {
+                        var mayor = Role.GetRole<Mayor>(player);
+                        if (!mayor.Revealed)
+                        {
+                            ColorChar(player, Color.clear);
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        ColorChar(player, Color.clear);
+                        continue;
+                    }
                 }
 
                 if (!Check(s, player))
@@ -92,7 +103,7 @@ namespace TownOfUs.CrewmateRoles.AurialMod
         public static void ColorChar(PlayerControl p, Color c)
         {
             var fit = p.GetCustomOutfitType();
-            if ((fit != CustomPlayerOutfitType.Aurial && fit != CustomPlayerOutfitType.Swooper) || ( fit == CustomPlayerOutfitType.Aurial && p.myRend().color != c))
+            if ((fit != CustomPlayerOutfitType.Aurial && fit != CustomPlayerOutfitType.Camouflage && fit != CustomPlayerOutfitType.Swooper) || ( fit == CustomPlayerOutfitType.Aurial && p.myRend().color != c))
             {
                 p.SetOutfit(CustomPlayerOutfitType.Aurial, new GameData.PlayerOutfit()
                 {
@@ -100,8 +111,9 @@ namespace TownOfUs.CrewmateRoles.AurialMod
                     HatId = "",
                     SkinId = "",
                     VisorId = "",
+                    NamePlateId = p.GetDefaultOutfit().NamePlateId,
                     PlayerName = " "
-                });
+                }); ;
                 if (c == Color.red) p.cosmetics.SetBodyColor(0);
                 if (c == Color.green) p.cosmetics.SetBodyColor(2);
                 if (c == Color.white) p.cosmetics.SetBodyColor(7);

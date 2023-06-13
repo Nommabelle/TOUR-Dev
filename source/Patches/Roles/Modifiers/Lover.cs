@@ -3,6 +3,7 @@ using System.Linq;
 using Hazel;
 using TownOfUs.Patches;
 using UnityEngine;
+using TownOfUs.Extensions;
 
 namespace TownOfUs.Roles.Modifiers
 {
@@ -13,7 +14,7 @@ namespace TownOfUs.Roles.Modifiers
             Name = "Lover";
             SymbolName = "♥";
             TaskText = () =>
-                "You are in Love with " + OtherLover.Player.name;
+                "You are in Love with " + OtherLover.Player.GetDefaultOutfit().PlayerName;
             Color = Colors.Lovers;
             ModifierType = ModifierEnum.Lover;
         }
