@@ -109,10 +109,10 @@ namespace TownOfUs.Patches.CustomHats
 
             var hat = ScriptableObject.CreateInstance<HatData>();
             var a = new HatViewData();
-            var b = new AddressableLoadWrapper<HatViewData>();
-            b.viewData = a;
+            /*var b = new AddressableLoadWrapper<HatViewData>();
+            b.viewData = a;*/
             a.MainImage = sprite;
-            hat.hatViewData = b;
+            /*hat.hatViewData = b;*/
             hat.ChipOffset = new Vector2(-0.1f, 0.35f);
 
             hat.InFront = true;
