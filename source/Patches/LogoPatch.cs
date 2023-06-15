@@ -35,18 +35,6 @@ namespace TownOfUs {
             touLogo.transform.SetParent(GameObject.Find("RightPanel").transform);
 
 
-            var reactor = GameObject.Find("LeftPanel").transform.GetChild(3);
-            reactor.SetParent(GameObject.Find("RightPanel").transform);
-            reactor.localPosition = new Vector3(7.5887f, - 3f, 0f);
-
-            var rpos = reactor.GetComponent<AspectPosition>();
-            rpos.Alignment = AspectPosition.EdgeAlignments.LeftBottom;
-            rpos.DistanceFromEdge = new Vector3(13f, 0f, 10f);
-
-
-            rpos.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) => {
-                rpos.AdjustPosition();
-            })));
         }
     }
 }
