@@ -47,7 +47,7 @@ namespace TownOfUs
 
             var aspect2 = text.gameObject.AddComponent<AspectPosition>();
             aspect2.Alignment = AspectPosition.EdgeAlignments.Bottom;
-            aspect2.DistanceFromEdge = new Vector3(0f, 3f, 10f);
+            aspect2.DistanceFromEdge = new Vector3(-1f, 3f, 10f);
 
             aspect2.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) =>
             {
