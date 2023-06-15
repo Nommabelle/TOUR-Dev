@@ -110,10 +110,7 @@ namespace TownOfUs.Patches.CustomHats
 
 
             var hat = ScriptableObject.CreateInstance<HatData>();
-            var a = ScriptableObject.CreateInstance<HatViewData>();
-            a.name = s;
-            a.MainImage = sprite;
-            HatCache.hatViewDatas.Add(a);
+            if (!HatCache.hatViewDatas.ContainsKey(s)) HatCache.hatViewDatas.Add(s,sprite);
 
             hat.ChipOffset = new Vector2(-0.1f, 0.35f);
 

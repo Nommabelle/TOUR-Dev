@@ -17,7 +17,7 @@ namespace TownOfUs.Patches.CustomHats.Patches
         public static class HP_patch
         { 
             public static bool Prefix(HatParent __instance, int color) {
-                if (!HatCache.hatViewDatas.Any(x => x.name == __instance.Hat.ProductId)) return true;
+                if (!HatCache.hatViewDatas.ContainsKey(__instance.Hat.ProductId)) return true;
                 __instance.UnloadAsset();
                 __instance.PopulateFromHatViewData();
                 __instance.SetMaterialColor(color);
@@ -30,10 +30,10 @@ namespace TownOfUs.Patches.CustomHats.Patches
         {
             public static bool Prefix(HatParent __instance)
             {
-                if (!HatCache.hatViewDatas.Any(x => x.name == __instance.Hat.ProductId)) return true;
+                if (!HatCache.hatViewDatas.ContainsKey(__instance.Hat.ProductId)) return true;
                 __instance.UpdateMaterial();
-                Sprite hat = HatCache.hatViewDatas.Where(x => x.name == __instance.Hat.ProductId).FirstOrDefault().MainImage;
-                if (hat == null) return true;
+                Sprite hat = HatCache.hatViewDatas[__instance.Hat.ProductId];
+
                 SpriteAnimNodeSync spriteAnimNodeSync = __instance.SpriteSyncNode ?? __instance.GetComponent<SpriteAnimNodeSync>();
                 if ((bool)(Object)spriteAnimNodeSync)
                     spriteAnimNodeSync.NodeId = __instance.Hat.NoBounce ? 1 : 0;

@@ -9,7 +9,7 @@ namespace TownOfUs.Patches.CustomHats
 {
     public static class HatCache
     {
-        public static List<HatViewData> hatViewDatas= new List<HatViewData>();
+        public static Dictionary<string, Sprite> hatViewDatas= new Dictionary<string, Sprite>();
 
         
     }
