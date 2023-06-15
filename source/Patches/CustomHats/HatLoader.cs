@@ -113,7 +113,7 @@ namespace TownOfUs.Patches.CustomHats
             if (!HatCache.hatViewDatas.ContainsKey(s)) HatCache.hatViewDatas.Add(s,sprite);
 
             hat.ChipOffset = new Vector2(-0.1f, 0.35f);
-
+            hat.SpritePreview = sprite;
             hat.InFront = true;
             hat.NoBounce = true;
 
