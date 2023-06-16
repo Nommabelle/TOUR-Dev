@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using System.Linq;
 using TownOfUs.CrewmateRoles.ImitatorMod;
+using TownOfUs.Extensions;
 using TownOfUs.Roles;
 
 namespace TownOfUs.CrewmateRoles.OracleMod
@@ -29,7 +30,7 @@ namespace TownOfUs.CrewmateRoles.OracleMod
             var evilPlayers = PlayerControl.AllPlayerControls.ToArray().Where(x => !x.Data.IsDead && !x.Data.Disconnected &&
             (x.Is(Faction.Impostors) || (x.Is(Faction.NeutralKilling) && CustomGameOptions.NeutralKillingShowsEvil) ||
             (x.Is(Faction.NeutralEvil) && CustomGameOptions.NeutralEvilShowsEvil) || (x.Is(Faction.NeutralBenign) && CustomGameOptions.NeutralBenignShowsEvil))).ToList();
-            if (evilPlayers.Count == 0) return $"{player.name} confesses to knowing that there are no more evil players!"; 
+            if (evilPlayers.Count == 0) return $"{player.GetDefaultOutfit().PlayerName} confesses to knowing that there are no more evil players!"; 
             allPlayers.Shuffle();
             evilPlayers.Shuffle();
             var secondPlayer = allPlayers[0];
@@ -41,12 +42,12 @@ namespace TownOfUs.CrewmateRoles.OracleMod
             if (firstTwoEvil)
             {
                 var thirdPlayer = allPlayers[1];
-                return $"{player.name} confesses to knowing that they, {secondPlayer.name} and/or {thirdPlayer.name} is evil!";
+                return $"{player.GetDefaultOutfit().PlayerName} confesses to knowing that they, {secondPlayer.GetDefaultOutfit().PlayerName} and/or {thirdPlayer.GetDefaultOutfit().PlayerName} is evil!";
             }
             else
             {
                 var thirdPlayer = evilPlayers[0];
-                return $"{player.name} confesses to knowing that they, {secondPlayer.name} and/or {thirdPlayer.name} is evil!";
+                return $"{player.GetDefaultOutfit().PlayerName} confesses to knowing that they, {secondPlayer.GetDefaultOutfit().PlayerName} and/or {thirdPlayer.GetDefaultOutfit().PlayerName} is evil!";
             }
         }
     }

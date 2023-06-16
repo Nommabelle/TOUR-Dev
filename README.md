@@ -8,16 +8,19 @@ An Among Us mod that adds a bunch of roles, modifiers and game settings
 Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or want to find people to play with!
 
 **Crewmate Roles**
+- [Aurial](#aurial)
 - [Detective](#detective)
 - [Haunter](#haunter)
 - [Investigator](#investigator)
 - [Mystic](#mystic)
+- [Oracle](#oracle)
 - [Seer](#seer)
 - [Snitch](#snitch)
 - [Spy](#spy)
 - [Tracker](#tracker)
 - [Trapper](#trapper)
 - [Sheriff](#sheriff)
+- [Vampire Hunter](#vampire-hunter)
 - [Veteran](#veteran)
 - [Vigilante](#vigilante)
 - [Altruist](#altruist)
@@ -26,6 +29,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 - [Imitator](#imitator)
 - [Mayor](#mayor)
 - [Medium](#medium)
+- [Prosecutor](#prosecutor)
 - [Swapper](#swapper)
 - [Transporter](#transporter)
 
@@ -33,6 +37,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 - [Amnesiac](#amnesiac)
 - [Guardian Angel](#guardian-angel)
 - [Survivor](#survivor)
+- [Doomsayer](#doomsayer)
 - [Executioner](#executioner)
 - [Jester](#jester)
 - [Phantom](#phantom)
@@ -40,6 +45,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 - [Juggernaut](#juggernaut)
 - [Plaguebearer](#plaguebearer)
 - [The Glitch](#the-glitch)
+- [Vampire](#vampire)
 - [Werewolf](#werewolf)
 
 **Impostor Roles**
@@ -47,8 +53,10 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 - [Grenadier](#grenadier)
 - [Morphling](#morphling)
 - [Swooper](#swooper)
+- [Venerer](#venerer)
 - [Bomber](#bomber)
 - [Traitor](#traitor)
+- [Warlock](#warlock)
 - [Blackmailer](#blackmailer)
 - [Janitor](#janitor)
 - [Miner](#miner)
@@ -58,6 +66,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 - [Bait](#bait)
 - [Blind](#blind)
 - [Diseased](#diseased)
+- [Frosty](#frosty)
 - [Multitasker](#multitasker)
 - [Torch](#torch)
 - [Button Barry](#button-barry)
@@ -75,6 +84,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 # Releases
 | Among Us - Version| Mod Version | Link |
 |----------|-------------|-----------------|
+| 2023.6.13s & 2023.6.13e | v5.0.0 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v5.0.0/ToU.v5.0.0.zip) |
 | 2023.3.28s & 2023.3.28e | v4.0.6 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v4.0.6/ToU.v4.0.6.zip) |
 | 2023.3.28s & 2023.3.28e | v4.0.5 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v4.0.5/ToU.v4.0.5.zip) |
 | 2023.3.28s & 2023.3.28e | v4.0.4 | [Download](https://github.com/eDonnes124/Town-Of-Us/releases/download/v4.0.4/ToU.v4.0.4.zip) |
@@ -134,8 +144,24 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 <details>
   <summary> Changelog </summary>
   <details>
+  <summary> v5.0.0 </summary>
+  <ul> <li>New Role: Doomsayer</li> </ul>
+  <ul> <li>New Role: Vampire</li> </ul>
+  <ul> <li>New Role: Vampire Hunter</li> </ul>
+  <ul> <li>New Role: Prosecutor</li> </ul>
+  <ul> <li>New Role: Warlock</li> </ul>
+  <ul> <li>New Role: Oracle</li> </ul>
+  <ul> <li>New Role: Venerer</li> </ul>
+  <ul> <li>New Role: Aurial</li> </ul>
+  <ul> <li>Reworked Detective</li> </ul>
+  <ul> <li>Reworked Mayor</li> </ul>
+  <ul> <li>Neutral Non-Killing settings split into Neutral Benign and Neutral Evil</li> </ul>
+  <ul> <li>New Setting: First round shield for first death in prior game</li> </ul>
+  <ul> <li>Removed Settings for disabling name plates and level numbers</li> </ul>
+  </details>
+  <details>
   <summary> v4.0.6 </summary>
-  <ul> <li>Bug Fix: Reverted alot of the changes from the last few patches...</li> </ul>
+  <ul> <li>Bug Fixes: Reverted alot of the changes from the last few patches...</li> </ul>
   </details>
   <details>
   <summary> v4.0.5 </summary>
