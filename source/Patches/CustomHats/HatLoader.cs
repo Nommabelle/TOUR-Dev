@@ -102,15 +102,22 @@ namespace TownOfUs.Patches.CustomHats
 
         private static HatData GenerateHatBehaviour(string s, byte[] mainImg)
         {
-            
+
             //TODO: Move to Graphics Utils class
-            var tex2D = new Texture2D(1, 1, TextureFormat.ARGB32, false);
-            TownOfUs.LoadImage(tex2D, mainImg, false);
-            var sprite = Sprite.Create(tex2D, new Rect(0.0f, 0.0f, tex2D.width, tex2D.height), new Vector2(0.5f, 0.5f), 100);
+            Sprite sprite;
+            if (HatCache.hatViewDatas.ContainsKey(s))
+            {
+                sprite = HatCache.hatViewDatas[s];
+            }
+            else
+            {
+                var tex2D = new Texture2D(1, 1, TextureFormat.ARGB32, false);
+                TownOfUs.LoadImage(tex2D, mainImg, false);
+                sprite = Sprite.Create(tex2D, new Rect(0.0f, 0.0f, tex2D.width, tex2D.height), new Vector2(0.5f, 0.5f), 100);
+                HatCache.hatViewDatas.Add(s, sprite);
+            }
 
-
-            var hat = ScriptableObject.CreateInstance<HatData>();
-            if (!HatCache.hatViewDatas.ContainsKey(s)) HatCache.hatViewDatas.Add(s,sprite);
+            var hat = ScriptableObject.CreateInstance<HatData>();   
 
             hat.ChipOffset = new Vector2(-0.1f, 0.35f);
             hat.SpritePreview = sprite;
