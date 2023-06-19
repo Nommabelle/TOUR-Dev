@@ -26,6 +26,7 @@ namespace TownOfUs.CrewmateRoles.ProsecutorMod
                         role.StartProsecute = false;
                         var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                         (byte)CustomRPC.Prosecute, SendOption.Reliable, -1);
+                        writer.Write(false);
                         writer.Write(role.Player.PlayerId);
                         AmongUsClient.Instance.FinishRpcImmediately(writer);
                     }
@@ -36,6 +37,14 @@ namespace TownOfUs.CrewmateRoles.ProsecutorMod
                     role.StartProsecute = true;
                     MeetingHud.Instance.SkipVoteButton.gameObject.SetActive(false);
                     AddProsecute.UpdateButton(role, MeetingHud.Instance);
+                    if (!AmongUsClient.Instance.AmHost)
+                    {
+                        var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                        (byte)CustomRPC.Prosecute, SendOption.Reliable, -1);
+                        writer.Write(true);
+                        writer.Write(role.Player.PlayerId);
+                        AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    }
                     return false;
                 }
             }

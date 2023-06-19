@@ -1024,9 +1024,19 @@ namespace TownOfUs
                         break;
 
                     case CustomRPC.Prosecute:
-                        var prosecutor = Utils.PlayerById(reader.ReadByte());
-                        var prosRole = Role.GetRole<Prosecutor>(prosecutor);
-                        prosRole.ProsecuteThisMeeting = true;
+                        var host = reader.ReadBoolean();
+                        if (host && AmongUsClient.Instance.AmHost)
+                        {
+                            var prosecutor = Utils.PlayerById(reader.ReadByte());
+                            var prosRole = Role.GetRole<Prosecutor>(prosecutor);
+                            prosRole.ProsecuteThisMeeting = true;
+                        }
+                        else if (!host && !AmongUsClient.Instance.AmHost)
+                        {
+                            var prosecutor = Utils.PlayerById(reader.ReadByte());
+                            var prosRole = Role.GetRole<Prosecutor>(prosecutor);
+                            prosRole.ProsecuteThisMeeting = true;
+                        }
                         break;
 
                     case CustomRPC.Bite:

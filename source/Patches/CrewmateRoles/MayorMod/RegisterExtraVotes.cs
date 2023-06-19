@@ -29,6 +29,7 @@ namespace TownOfUs.CrewmateRoles.MayorMod
                     || playerVoteArea.VotedFor == PlayerVoteArea.MissedVote
                     || playerVoteArea.VotedFor == PlayerVoteArea.DeadVote)
                 {
+                    pros.ProsecuteThisMeeting = false;
                     continue;
                 }
                 else if (pros.ProsecuteThisMeeting)
