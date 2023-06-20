@@ -302,6 +302,7 @@ namespace TownOfUs
         public static int MaxStakesPerRound => (int)Generate.MaxStakesPerRound.Get();
         public static int ReducedRoundOneStakes => (int)Generate.ReducedRoundOneStakes.Get();
         public static BecomeEnum BecomeOnVampDeaths => (BecomeEnum)Generate.BecomeOnVampDeaths.Get();
+        public static bool ProsDiesOnIncorrectPros => Generate.ProsDiesOnIncorrectPros.Get();
         public static float ChargeUpDuration => Generate.ChargeUpDuration.Get();
         public static float ChargeUseDuration => Generate.ChargeUseDuration.Get();
         public static float ConfessCd => Generate.ConfessCooldown.Get();

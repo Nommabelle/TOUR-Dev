@@ -436,6 +436,9 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption ReducedRoundOneStakes;
         public static CustomStringOption BecomeOnVampDeaths;
 
+        public static CustomHeaderOption Prosecutor;
+        public static CustomToggleOption ProsDiesOnIncorrectPros;
+
         public static CustomHeaderOption Warlock;
         public static CustomNumberOption ChargeUpDuration;
         public static CustomNumberOption ChargeUseDuration;
@@ -995,6 +998,11 @@ namespace TownOfUs.CustomOption
                 new CustomToggleOption(num++, MultiMenu.crewmate, "Reveal The Medium To The Mediate Target", true);
             DeadRevealed =
                 new CustomStringOption(num++, MultiMenu.crewmate, "Who Is Revealed With Mediate", new[] { "Oldest Dead", "Newest Dead", "All Dead" });
+
+            Prosecutor =
+                new CustomHeaderOption(num++, MultiMenu.crewmate, "<color=#B38000FF>Prosecutor</color>");
+            ProsDiesOnIncorrectPros =
+                new CustomToggleOption(num++, MultiMenu.crewmate, "Prosecutor Dies When They Exile A Crewmate", false);
 
             Swapper =
                 new CustomHeaderOption(num++, MultiMenu.crewmate, "<color=#66E666FF>Swapper</color>");

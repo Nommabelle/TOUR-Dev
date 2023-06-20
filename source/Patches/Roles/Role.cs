@@ -755,7 +755,7 @@ namespace TownOfUs.Roles
                                 if (oracleRole.SavedConfessor)
                                 {
                                     oracleRole.SavedConfessor = false;
-                                    __result = $"{oracleRole.Confessor.name} was blessed by an Oracle!";
+                                    __result = $"{oracleRole.Confessor.GetDefaultOutfit().PlayerName} was blessed by an Oracle!";
                                 }
                             }
                         }
