@@ -840,7 +840,7 @@ The final ability is giving a blessing to the person confessing to them, with th
 ### **Team: Crewmates**
 The Seer is a Crewmate that can reveal the alliance of other players.\
 Based on settings, the Seer can find out whether a player is a Good or an Evil role.\
-A player's name will change color to their team.
+A player's name will change color depending on faction and role.
 ### Game Options
 | Name | Description | Type | Default |
 |----------|:-------------:|:------:|:------:|
@@ -872,9 +872,8 @@ However, when they only have a single task left, the Impostors get an arrow poin
 ## Spy
 ### **Team: Crewmates**
 
-The Spy is a Crewmate that gains more information when on Admin Table and Vitals.\
-On Admin Table, the Spy can see the colors of every person on the map.\
-On Vitals, the Spy can see how long killed bodies have been dead for.
+The Spy is a Crewmate that gains more information when on the Admin Table.\
+On Admin Table, the Spy can see the colors of every person on the map.
 ### Game Options
 | Name | Description | Type | Default |
 |----------|:-------------:|:------:|:------:|
@@ -1006,7 +1005,7 @@ After a set period of time, the player will be resurrected, if the revival isn't
 ## Medic
 ### **Team: Crewmates**
 The Medic is a Crewmate that can give any player a shield that will make them immortal until the Medic dies.\
-A Shielded player cannot be Shifted into, Hacked or Killed by anyone, unless by suicide.\
+A Shielded player cannot be killed by anyone, unless by suicide.\
 If the Medic reports a dead body, they can get a report containing clues to the Killer's identity.\
 A report can contain the name of the killer or the color type (Darker/Lighter)
 ### Colors
@@ -1576,7 +1575,7 @@ The Blind's report button does not light up.
 -----------------------
 ## Diseased
 ### **Applied to: Crewmates**
-Killing the Diseased triples the killer's Kill cooldown.
+Killing the Diseased increases the killer's kill cooldown.
 ### Game Options
 | Name | Description | Type | Default |
 |----------|:-------------:|:------:|:------:|
@@ -1625,7 +1624,7 @@ They have the same amount of meetings as a regular player.
 -----------------------
 ## Flash
 ### **Applied to: All**
-The Flash travels at twice the speed of a normal player.
+The Flash travels at a faster speed in comparison to a normal player.
 ### Game Options
 | Name | Description | Type | Default |
 |----------|:-------------:|:------:|:------:|
@@ -1683,8 +1682,7 @@ During meetings the Sleuth can see the roles of all players in which they've rep
 ## Tiebreaker
 ### **Applied to: All**
 If any vote is a draw, the Tiebreaker's vote will go through.\
-If they voted another player, they will get voted out.\
-If the Tiebreaker is the Mayor, it applies to the Mayor's __first__ vote.
+If they voted another player, they will get voted out.
 ### Game Options
 | Name | Description | Type | Default |
 |----------|:-------------:|:------:|:------:|
