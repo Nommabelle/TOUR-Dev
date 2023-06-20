@@ -1121,6 +1121,7 @@ The Prosecutor can also see votes non-anonymously.
 | Name | Description | Type | Default |
 |----------|:-------------:|:------:|:------:|
 | Prosecutor | The percentage probability of the Prosecutor appearing | Percentage | 0% |
+| Prosecutor Dies When They Exile A Crewmate | Whether the Prosecutor also gets exiled when they exile a Crewmate | Toggle | False |
 
 -----------------------
 ## Swapper
