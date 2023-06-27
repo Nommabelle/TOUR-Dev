@@ -13,6 +13,7 @@ using TownOfUs.CrewmateRoles.VigilanteMod;
 using TownOfUs.CrewmateRoles.SwapperMod;
 using TownOfUs.Patches;
 using Reactor.Utilities.Extensions;
+using TownOfUs.CrewmateRoles.ImitatorMod;
 
 namespace TownOfUs.NeutralRoles.DoomsayerMod
 {
@@ -29,11 +30,7 @@ namespace TownOfUs.NeutralRoles.DoomsayerMod
         {
             DoomKillCount(player, doomsayer);
             MurderPlayer(voteArea, player);
-            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                (byte)CustomRPC.DoomsayerKill, SendOption.Reliable, -1);
-            writer.Write(player.PlayerId);
-            writer.Write(doomsayer.PlayerId);
-            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            Utils.Rpc(CustomRPC.DoomsayerKill, player.PlayerId, doomsayer.PlayerId);
         }
 
         public static void MurderPlayer(PlayerControl player, bool checkLover = true)
@@ -94,6 +91,36 @@ namespace TownOfUs.NeutralRoles.DoomsayerMod
                 }
 
                 player.myTasks.Insert(0, importantTextTask);
+
+                if (player.Is(RoleEnum.Swapper))
+                {
+                    var swapper = Role.GetRole<Swapper>(PlayerControl.LocalPlayer);
+                    swapper.ListOfActives.Clear();
+                    swapper.Buttons.Clear();
+                    SwapVotes.Swap1 = null;
+                    SwapVotes.Swap2 = null;
+                    Utils.Rpc(CustomRPC.SetSwaps, sbyte.MaxValue, sbyte.MaxValue);
+                    var buttons = Role.GetRole<Swapper>(player).Buttons;
+                    foreach (var button in buttons)
+                    {
+                        button.SetActive(false);
+                        button.GetComponent<PassiveButton>().OnClick = new Button.ButtonClickedEvent();
+                    }
+                }
+
+                if (player.Is(RoleEnum.Imitator))
+                {
+                    var imitator = Role.GetRole<Imitator>(PlayerControl.LocalPlayer);
+                    imitator.ListOfActives.Clear();
+                    imitator.Buttons.Clear();
+                    SetImitate.Imitate = null;
+                    var buttons = Role.GetRole<Imitator>(player).Buttons;
+                    foreach (var button in buttons)
+                    {
+                        button.SetActive(false);
+                        button.GetComponent<PassiveButton>().OnClick = new Button.ButtonClickedEvent();
+                    }
+                }
 
                 if (player.Is(AbilityEnum.Assassin))
                 {
@@ -192,11 +219,7 @@ namespace TownOfUs.NeutralRoles.DoomsayerMod
                     swapper.ListOfActives[voteArea.TargetPlayerId] = false;
                     if (SwapVotes.Swap1 == voteArea) SwapVotes.Swap1 = null;
                     if (SwapVotes.Swap2 == voteArea) SwapVotes.Swap2 = null;
-                    var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                            (byte)CustomRPC.SetSwaps, SendOption.Reliable, -1);
-                    writer.Write(sbyte.MaxValue);
-                    writer.Write(sbyte.MaxValue);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    Utils.Rpc(CustomRPC.SetSwaps, sbyte.MaxValue, sbyte.MaxValue);
                 }
                 button.SetActive(false);
                 button.GetComponent<PassiveButton>().OnClick = new Button.ButtonClickedEvent();

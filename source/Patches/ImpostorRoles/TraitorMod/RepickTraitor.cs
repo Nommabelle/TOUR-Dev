@@ -21,10 +21,7 @@ namespace TownOfUs.ImpostorRoles.TraitorMod
             if (toChooseFrom.Count == 0)
             {
                 SetTraitor.WillBeTraitor = null;
-                var writer2 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                (byte)CustomRPC.SetTraitor, SendOption.Reliable, -1);
-                writer2.Write(byte.MaxValue);
-                AmongUsClient.Instance.FinishRpcImmediately(writer2);
+                Utils.Rpc(CustomRPC.SetTraitor, byte.MaxValue);
             }
             else
             {
@@ -33,10 +30,7 @@ namespace TownOfUs.ImpostorRoles.TraitorMod
 
                 SetTraitor.WillBeTraitor = pc;
 
-                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.SetTraitor, SendOption.Reliable, -1);
-                writer.Write(pc.PlayerId);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                Utils.Rpc(CustomRPC.SetTraitor, pc.PlayerId);
             }
             return;
         }

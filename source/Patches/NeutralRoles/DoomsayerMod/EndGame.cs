@@ -15,10 +15,7 @@ namespace TownOfUs.NeutralRoles.DoomsayerMod
                 if (role.RoleType == RoleEnum.Doomsayer)
                     ((Doomsayer) role).Loses();
 
-            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                (byte) CustomRPC.DoomsayerLose,
-                SendOption.Reliable, -1);
-            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            Utils.Rpc(CustomRPC.DoomsayerLose);
 
             return true;
         }

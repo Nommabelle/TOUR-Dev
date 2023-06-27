@@ -15,10 +15,7 @@ namespace TownOfUs.NeutralRoles.JesterMod
                 if (role.RoleType == RoleEnum.Jester)
                     ((Jester) role).Loses();
 
-            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                (byte) CustomRPC.JesterLose,
-                SendOption.Reliable, -1);
-            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            Utils.Rpc(CustomRPC.JesterLose);
 
             return true;
         }

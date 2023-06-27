@@ -30,7 +30,6 @@ namespace TownOfUs.Patches.ScreenEffects
                 bundles.Add(b.name, b);
                 b.GetAllAssetNames().ToList().ForEach(y => {
                     objectname_to_bundle.Add(ConvertToBaseName(y), x);
-                    PluginSingleton<TownOfUs>.Instance.Log.LogMessage($"{ConvertToBaseName(y)}:{x}");
                 });
             });
 
@@ -40,7 +39,6 @@ namespace TownOfUs.Patches.ScreenEffects
         private static AssetBundle loadBundle(string bundlename)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            PluginSingleton<TownOfUs>.Instance.Log.LogMessage($"TownOfUs.Resources.{bundlename}");
             var stream = assembly.GetManifestResourceStream($"TownOfUs.Resources.{bundlename}");
             var assets = stream.ReadFully();
             return AssetBundle.LoadFromMemory(assets);

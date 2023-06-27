@@ -22,10 +22,7 @@ namespace TownOfUs.NeutralRoles.PhantomMod
                 {
                     SetPhantom.WillBePhantom = null;
 
-                    var writer2 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.SetPhantom, SendOption.Reliable, -1);
-                    writer2.Write(byte.MaxValue);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer2);
+                    Utils.Rpc(CustomRPC.SetPhantom, byte.MaxValue);
                 }
                 else
                 {
@@ -34,10 +31,7 @@ namespace TownOfUs.NeutralRoles.PhantomMod
 
                     SetPhantom.WillBePhantom = pc2;
 
-                    var writer3 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                        (byte)CustomRPC.SetPhantom, SendOption.Reliable, -1);
-                    writer3.Write(pc2.PlayerId);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer3);
+                    Utils.Rpc(CustomRPC.SetPhantom, pc2.PlayerId);
                 }
                 return;
             }
@@ -48,10 +42,7 @@ namespace TownOfUs.NeutralRoles.PhantomMod
 
             SetPhantom.WillBePhantom = pc;
 
-            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                (byte)CustomRPC.SetPhantom, SendOption.Reliable, -1);
-            writer.Write(pc.PlayerId);
-            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            Utils.Rpc(CustomRPC.SetPhantom, pc.PlayerId);
             return;
         }
     }

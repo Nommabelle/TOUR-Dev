@@ -103,7 +103,7 @@ namespace TownOfUs.CrewmateRoles.AurialMod
         public static void ColorChar(PlayerControl p, Color c)
         {
             var fit = p.GetCustomOutfitType();
-            if ((fit != CustomPlayerOutfitType.Aurial && fit != CustomPlayerOutfitType.Camouflage && fit != CustomPlayerOutfitType.Swooper) || ( fit == CustomPlayerOutfitType.Aurial && p.myRend().color != c))
+            if ((fit != CustomPlayerOutfitType.Aurial && fit != CustomPlayerOutfitType.Camouflage && fit != CustomPlayerOutfitType.Swooper) || (fit == CustomPlayerOutfitType.Aurial && p.myRend().color != c))
             {
                 p.SetOutfit(CustomPlayerOutfitType.Aurial, new GameData.PlayerOutfit()
                 {
@@ -112,7 +112,8 @@ namespace TownOfUs.CrewmateRoles.AurialMod
                     SkinId = "",
                     VisorId = "",
                     NamePlateId = p.GetDefaultOutfit().NamePlateId,
-                    PlayerName = " "
+                    PlayerName = " ",
+                    PetId = ""
                 }); ;
                 if (c == Color.red) p.cosmetics.SetBodyColor(0);
                 if (c == Color.green) p.cosmetics.SetBodyColor(2);

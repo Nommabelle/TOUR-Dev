@@ -16,10 +16,7 @@ namespace TownOfUs.NeutralRoles.SurvivorMod
                     {
                         ((Survivor)role).AliveImpWin();
 
-                        var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                            (byte)CustomRPC.SurvivorImpWin,
-                            SendOption.Reliable, -1);
-                        AmongUsClient.Instance.FinishRpcImmediately(writer);
+                        Utils.Rpc(CustomRPC.SurvivorImpWin);
                         return true;
                     }
             }
@@ -30,10 +27,7 @@ namespace TownOfUs.NeutralRoles.SurvivorMod
                     {
                         ((Survivor)role).DeadCrewWin();
 
-                        var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                            (byte)CustomRPC.SurvivorCrewWin,
-                            SendOption.Reliable, -1);
-                        AmongUsClient.Instance.FinishRpcImmediately(writer);
+                        Utils.Rpc(CustomRPC.SurvivorCrewWin);
                         return true;
                     }
             }

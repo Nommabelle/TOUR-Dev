@@ -20,11 +20,7 @@ namespace TownOfUs.ImpostorRoles.VenererMod
                 if (!__instance.isActiveAndEnabled) return false;
                 if (role.AbilityTimer() != 0 || role.Kills < 1) return false;
 
-                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte) CustomRPC.Camouflage, SendOption.Reliable, -1);
-                writer.Write(PlayerControl.LocalPlayer.PlayerId);
-                writer.Write(role.Kills);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                Utils.Rpc(CustomRPC.Camouflage, PlayerControl.LocalPlayer.PlayerId, role.Kills);
                 role.TimeRemaining = CustomGameOptions.AbilityDuration;
                 role.KillsAtStartAbility = role.Kills;
                 role.Ability();

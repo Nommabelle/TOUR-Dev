@@ -30,10 +30,7 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
 
             Imitate(imitator);
 
-            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                (byte)CustomRPC.StartImitate, SendOption.Reliable, -1);
-            writer.Write(imitator.Player.PlayerId);
-            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            Utils.Rpc(CustomRPC.StartImitate, imitator.Player.PlayerId);
         }
 
         public static void Postfix(ExileController __instance) => ExileControllerPostfix(__instance);
@@ -41,8 +38,8 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
         [HarmonyPatch(typeof(Object), nameof(Object.Destroy), new Type[] { typeof(GameObject) })]
         public static void Prefix(GameObject obj)
         {
-            if (!SubmergedCompatibility.Loaded || GameOptionsManager.Instance.currentNormalGameOptions.MapId != 5) return;
-            if (obj.name.Contains("ExileCutscene")) ExileControllerPostfix(ExileControllerPatch.lastExiled);
+            if (!SubmergedCompatibility.Loaded || GameOptionsManager.Instance?.currentNormalGameOptions?.MapId != 5) return;
+            if (obj.name?.Contains("ExileCutscene") == true) ExileControllerPostfix(ExileControllerPatch.lastExiled);
         }
 
         public static void Imitate(Imitator imitator)

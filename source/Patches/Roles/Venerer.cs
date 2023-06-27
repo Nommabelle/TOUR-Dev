@@ -55,6 +55,8 @@ namespace TownOfUs.Roles
             {
                 TimeRemaining = 0f;
             }
+
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Aurial) && !Role.GetRole<Aurial>(PlayerControl.LocalPlayer).NormalVision) return;
             if (Player.GetCustomOutfitType() != CustomPlayerOutfitType.Camouflage)
             {
                 Player.SetOutfit(CustomPlayerOutfitType.Camouflage, new GameData.PlayerOutfit()
@@ -63,7 +65,8 @@ namespace TownOfUs.Roles
                     HatId = "",
                     SkinId = "",
                     VisorId = "",
-                    PlayerName = " "
+                    PlayerName = " ",
+                    PetId = ""
                 });
                 PlayerMaterial.SetColors(Color.grey, Player.myRend());
                 Player.nameText().color = Color.clear;

@@ -53,11 +53,7 @@ namespace TownOfUs.CrewmateRoles.SheriffMod
                 if (role.ClosestPlayer.IsShielded())
                 {
                     var medic = role.ClosestPlayer.GetMedic().Player.PlayerId;
-                    var writer1 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                        (byte)CustomRPC.AttemptSound, SendOption.Reliable, -1);
-                    writer1.Write(medic);
-                    writer1.Write(role.ClosestPlayer.PlayerId);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer1);
+                    Utils.Rpc(CustomRPC.AttemptSound, medic, role.ClosestPlayer.PlayerId);
 
                     if (CustomGameOptions.ShieldBreaks) role.LastKilled = DateTime.UtcNow;
 
@@ -68,11 +64,7 @@ namespace TownOfUs.CrewmateRoles.SheriffMod
                 else if (role.Player.IsShielded())
                 {
                     var medic = role.Player.GetMedic().Player.PlayerId;
-                    var writer1 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                        (byte)CustomRPC.AttemptSound, SendOption.Reliable, -1);
-                    writer1.Write(medic);
-                    writer1.Write(role.Player.PlayerId);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer1);
+                    Utils.Rpc(CustomRPC.AttemptSound, medic, role.Player.PlayerId);
                     if (CustomGameOptions.ShieldBreaks) role.LastKilled = DateTime.UtcNow;
                     StopKill.BreakShield(medic, role.Player.PlayerId, CustomGameOptions.ShieldBreaks);
                     Utils.RpcMurderPlayer(PlayerControl.LocalPlayer, PlayerControl.LocalPlayer);
@@ -94,11 +86,7 @@ namespace TownOfUs.CrewmateRoles.SheriffMod
             else if (role.ClosestPlayer.IsShielded())
             {
                 var medic = role.ClosestPlayer.GetMedic().Player.PlayerId;
-                var writer1 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.AttemptSound, SendOption.Reliable, -1);
-                writer1.Write(medic);
-                writer1.Write(role.ClosestPlayer.PlayerId);
-                AmongUsClient.Instance.FinishRpcImmediately(writer1);
+                Utils.Rpc(CustomRPC.AttemptSound, medic, role.ClosestPlayer.PlayerId);
 
                 if (CustomGameOptions.ShieldBreaks) role.LastKilled = DateTime.UtcNow;
 

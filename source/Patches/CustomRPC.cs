@@ -62,7 +62,6 @@ namespace TownOfUs
         AssassinKill,
         VigilanteKill,
         DoomsayerKill,
-        HaunterFinished,
         FlashGrenade,
         Alert,
         Remember,

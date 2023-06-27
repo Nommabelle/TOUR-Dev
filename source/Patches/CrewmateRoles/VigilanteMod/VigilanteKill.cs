@@ -28,11 +28,7 @@ namespace TownOfUs.CrewmateRoles.VigilanteMod
         {
             MurderPlayer(voteArea, player);
             VigiKillCount(player, vigilante);
-            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                (byte)CustomRPC.VigilanteKill, SendOption.Reliable, -1);
-            writer.Write(player.PlayerId);
-            writer.Write(vigilante.PlayerId);
-            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            Utils.Rpc(CustomRPC.VigilanteKill, player.PlayerId, vigilante.PlayerId);
         }
 
         public static void MurderPlayer(PlayerControl player, bool checkLover = true)
@@ -178,11 +174,7 @@ namespace TownOfUs.CrewmateRoles.VigilanteMod
                     swapper.ListOfActives[voteArea.TargetPlayerId] = false;
                     if (SwapVotes.Swap1 == voteArea) SwapVotes.Swap1 = null;
                     if (SwapVotes.Swap2 == voteArea) SwapVotes.Swap2 = null;
-                    var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                            (byte)CustomRPC.SetSwaps, SendOption.Reliable, -1);
-                    writer.Write(sbyte.MaxValue);
-                    writer.Write(sbyte.MaxValue);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    Utils.Rpc(CustomRPC.SetSwaps, sbyte.MaxValue, sbyte.MaxValue);
                 }
                 button.SetActive(false);
                 button.GetComponent<PassiveButton>().OnClick = new Button.ButtonClickedEvent();

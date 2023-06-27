@@ -14,10 +14,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
             foreach (var role in Role.AllRoles)
                 if (role.RoleType == RoleEnum.Amnesiac)
                     ((Amnesiac) role).Loses();
-            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                (byte) CustomRPC.AmnesiacLose,
-                SendOption.Reliable, -1);
-            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            Utils.Rpc(CustomRPC.AmnesiacLose);
 
             return true;
         }

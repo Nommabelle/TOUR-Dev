@@ -24,11 +24,7 @@ namespace TownOfUs.CrewmateRoles.ProsecutorMod
                     {
                         role.ProsecuteThisMeeting = true;
                         role.StartProsecute = false;
-                        var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                        (byte)CustomRPC.Prosecute, SendOption.Reliable, -1);
-                        writer.Write(false);
-                        writer.Write(role.Player.PlayerId);
-                        AmongUsClient.Instance.FinishRpcImmediately(writer);
+                        Utils.Rpc(CustomRPC.Prosecute, false, role.Player.PlayerId);
                     }
                     return true;
                 }
@@ -39,11 +35,7 @@ namespace TownOfUs.CrewmateRoles.ProsecutorMod
                     AddProsecute.UpdateButton(role, MeetingHud.Instance);
                     if (!AmongUsClient.Instance.AmHost)
                     {
-                        var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                        (byte)CustomRPC.Prosecute, SendOption.Reliable, -1);
-                        writer.Write(true);
-                        writer.Write(role.Player.PlayerId);
-                        AmongUsClient.Instance.FinishRpcImmediately(writer);
+                        Utils.Rpc(CustomRPC.Prosecute, true, role.Player.PlayerId);
                     }
                     return false;
                 }

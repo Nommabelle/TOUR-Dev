@@ -15,10 +15,7 @@ namespace TownOfUs.NeutralRoles.VampireMod
                 if (role.RoleType == RoleEnum.Vampire)
                     ((Vampire)role).Loses();
 
-            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                (byte)CustomRPC.VampireLose,
-                SendOption.Reliable, -1);
-            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            Utils.Rpc(CustomRPC.VampireLose);
 
             return true;
         }

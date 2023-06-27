@@ -72,17 +72,12 @@ namespace TownOfUs.Roles.Modifiers
             }
             canHaveModifiers.Remove(secondLover);
 
-            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                (byte) CustomRPC.SetCouple, SendOption.Reliable, -1);
-            writer.Write(firstLover.PlayerId);
-            writer.Write(secondLover.PlayerId);
+            Utils.Rpc(CustomRPC.SetCouple, firstLover.PlayerId, secondLover.PlayerId);
             var lover1 = new Lover(firstLover);
             var lover2 = new Lover(secondLover);
 
             lover1.OtherLover = lover2;
             lover2.OtherLover = lover1;
-
-            AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
 
         internal override bool ModifierWin(LogicGameFlowNormal __instance)
@@ -91,11 +86,7 @@ namespace TownOfUs.Roles.Modifiers
 
             if (CheckLoversWin())
             {
-                //System.Console.WriteLine("LOVERS WIN");
-                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte) CustomRPC.LoveWin, SendOption.Reliable, -1);
-                writer.Write(Player.PlayerId);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                Utils.Rpc(CustomRPC.LoveWin, Player.PlayerId);
                 Win();
                 Utils.EndGame();
                 return false;

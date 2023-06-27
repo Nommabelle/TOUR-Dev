@@ -24,6 +24,9 @@ using TownOfUs.ImpostorRoles.BomberMod;
 using TownOfUs.CrewmateRoles.VampireHunterMod;
 using TownOfUs.CrewmateRoles.ImitatorMod;
 using TownOfUs.CrewmateRoles.AurialMod;
+using Reactor.Networking;
+using Reactor.Networking.Extensions;
+using Unity.Services.Core.Telemetry.Internal;
 
 namespace TownOfUs
 {
@@ -40,17 +43,19 @@ namespace TownOfUs
         public static void Morph(PlayerControl player, PlayerControl MorphedPlayer, bool resetAnim = false)
         {
             if (CamouflageUnCamouflage.IsCamoed) return;
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Aurial) && !Role.GetRole<Aurial>(PlayerControl.LocalPlayer).NormalVision) return;
             if (player.GetCustomOutfitType() != CustomPlayerOutfitType.Morph)
                 player.SetOutfit(CustomPlayerOutfitType.Morph, MorphedPlayer.Data.DefaultOutfit);
         }
 
         public static void Unmorph(PlayerControl player)
         {
-           player.SetOutfit(CustomPlayerOutfitType.Default);
+            if (!(PlayerControl.LocalPlayer.Is(RoleEnum.Aurial) && !Role.GetRole<Aurial>(PlayerControl.LocalPlayer).NormalVision)) player.SetOutfit(CustomPlayerOutfitType.Default);
         }
 
         public static void Camouflage()
         {
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Aurial) && !Role.GetRole<Aurial>(PlayerControl.LocalPlayer).NormalVision) return;
             foreach (var player in PlayerControl.AllPlayerControls)
             {
                 if (player.GetCustomOutfitType() != CustomPlayerOutfitType.Camouflage &&
@@ -63,7 +68,8 @@ namespace TownOfUs
                         HatId = "",
                         SkinId = "",
                         VisorId = "",
-                        PlayerName = " "
+                        PlayerName = " ",
+                        PetId = ""
                     });
                     PlayerMaterial.SetColors(Color.grey, player.myRend());
                     player.nameText().color = Color.clear;
@@ -230,11 +236,7 @@ namespace TownOfUs
                 if (player.IsShielded())
                 {
                     var medic = player.GetMedic().Player.PlayerId;
-                    var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                        (byte)CustomRPC.AttemptSound, SendOption.Reliable, -1);
-                    writer.Write(medic);
-                    writer.Write(player.PlayerId);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    Rpc(CustomRPC.AttemptSound, medic, player.PlayerId);
 
                     if (CustomGameOptions.ShieldBreaks) fullCooldownReset = true;
                     else zeroSecReset = true;
@@ -250,11 +252,7 @@ namespace TownOfUs
                 else if (player.IsShielded())
                 {
                     var medic = player.GetMedic().Player.PlayerId;
-                    var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                        (byte)CustomRPC.AttemptSound, SendOption.Reliable, -1);
-                    writer.Write(medic);
-                    writer.Write(player.PlayerId);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    Rpc(CustomRPC.AttemptSound, medic, player.PlayerId);
 
                     if (CustomGameOptions.ShieldBreaks) fullCooldownReset = true;
                     else zeroSecReset = true;
@@ -268,11 +266,7 @@ namespace TownOfUs
                     if (target.IsShielded())
                     {
                         var medic = target.GetMedic().Player.PlayerId;
-                        var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                            (byte)CustomRPC.AttemptSound, SendOption.Reliable, -1);
-                        writer.Write(medic);
-                        writer.Write(target.PlayerId);
-                        AmongUsClient.Instance.FinishRpcImmediately(writer);
+                        Rpc(CustomRPC.AttemptSound, medic, target.PlayerId);
 
                         if (CustomGameOptions.ShieldBreaks) fullCooldownReset = true;
                         else zeroSecReset = true;
@@ -323,11 +317,7 @@ namespace TownOfUs
             }
             else if (target.IsShielded() && toKill)
             {
-                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.AttemptSound, SendOption.Reliable, -1);
-                writer.Write(target.GetMedic().Player.PlayerId);
-                writer.Write(target.PlayerId);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                Rpc(CustomRPC.AttemptSound, target.GetMedic().Player.PlayerId, target.PlayerId);
 
                 System.Console.WriteLine(CustomGameOptions.ShieldBreaks + "- shield break");
                 if (CustomGameOptions.ShieldBreaks) fullCooldownReset = true;
@@ -479,21 +469,13 @@ namespace TownOfUs
         public static void RpcMurderPlayer(PlayerControl killer, PlayerControl target)
         {
             MurderPlayer(killer, target, true);
-            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                (byte)CustomRPC.BypassKill, SendOption.Reliable, -1);
-            writer.Write(killer.PlayerId);
-            writer.Write(target.PlayerId);
-            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            Rpc(CustomRPC.BypassKill, killer.PlayerId, target.PlayerId);
         }
 
         public static void RpcMultiMurderPlayer(PlayerControl killer, PlayerControl target)
         {
             MurderPlayer(killer, target, false);
-            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                (byte)CustomRPC.BypassMultiKill, SendOption.Reliable, -1);
-            writer.Write(killer.PlayerId);
-            writer.Write(target.PlayerId);
-            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            Rpc(CustomRPC.BypassMultiKill, killer.PlayerId, target.PlayerId);
         }
 
         public static void MurderPlayer(PlayerControl killer, PlayerControl target, bool jumpToBody)
@@ -748,11 +730,7 @@ namespace TownOfUs
                     {
                         if (body.ParentId == target.PlayerId)
                         {
-                            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                                (byte)CustomRPC.BaitReport, SendOption.Reliable, -1);
-                            writer.Write(killer.PlayerId);
-                            writer.Write(target.PlayerId);
-                            AmongUsClient.Instance.FinishRpcImmediately(writer);
+                            Rpc(CustomRPC.BaitReport, killer.PlayerId, target.PlayerId);
                             break;
                         }
                     }
@@ -957,6 +935,71 @@ namespace TownOfUs
         public static void EndGame(GameOverReason reason = GameOverReason.ImpostorByVote, bool showAds = false)
         {
             GameManager.Instance.RpcEndGame(reason, showAds);
+        }
+
+
+        public static void Rpc(params object[] data)
+        {
+            if (data[0] is not CustomRPC) throw new ArgumentException($"first parameter must be a {typeof(CustomRPC).FullName}");
+
+            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
+                        (byte)(CustomRPC)data[0], SendOption.Reliable, -1);
+
+            if (data.Length == 1)
+            {
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                return;
+            }
+
+            foreach (var item in data[1..])
+            {
+
+                if (item is bool boolean)
+                {
+                    writer.Write(boolean);
+                }
+                else if (item is int integer)
+                {
+                    writer.Write(integer);
+                }
+                else if (item is uint uinteger)
+                {
+                    writer.Write(uinteger);
+                }
+                else if (item is float Float)
+                {
+                    writer.Write(Float);
+                }
+                else if (item is byte Byte)
+                {
+                    writer.Write(Byte);
+                }
+                else if (item is sbyte sByte)
+                {
+                    writer.Write(sByte);
+                }
+                else if (item is Vector2 vector)
+                {
+                    writer.Write(vector);
+                }
+                else if (item is Vector3 vector3)
+                {
+                    writer.Write(vector3);
+                }
+                else if (item is string str)
+                {
+                    writer.Write(str);
+                }
+                else if (item is byte[] array)
+                {
+                    writer.WriteBytesAndSize(array);
+                }
+                else
+                {
+                    Logger<TownOfUs>.Error($"unknown data type entered for rpc write: item - {nameof(item)}, {item.GetType().FullName}, rpc - {data[0]}");
+                }
+            }
+            AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
 
         [HarmonyPatch(typeof(MedScanMinigame), nameof(MedScanMinigame.FixedUpdate))]

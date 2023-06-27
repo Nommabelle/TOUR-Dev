@@ -30,11 +30,7 @@ namespace TownOfUs.Modifiers.AssassinMod
         {
             MurderPlayer(voteArea, player);
             AssassinKillCount(player, assassin);
-            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                (byte)CustomRPC.AssassinKill, SendOption.Reliable, -1);
-            writer.Write(player.PlayerId);
-            writer.Write(assassin.PlayerId);
-            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            Utils.Rpc(CustomRPC.AssassinKill, player.PlayerId, assassin.PlayerId);
         }
 
         public static void MurderPlayer(PlayerControl player, bool checkLover = true)
@@ -102,11 +98,7 @@ namespace TownOfUs.Modifiers.AssassinMod
                     swapper.Buttons.Clear();
                     SwapVotes.Swap1 = null;
                     SwapVotes.Swap2 = null;
-                    var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                            (byte)CustomRPC.SetSwaps, SendOption.Reliable, -1);
-                    writer.Write(sbyte.MaxValue);
-                    writer.Write(sbyte.MaxValue);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    Utils.Rpc(CustomRPC.SetSwaps, sbyte.MaxValue, sbyte.MaxValue);
                     var buttons = Role.GetRole<Swapper>(player).Buttons;
                     foreach (var button in buttons)
                     {
@@ -226,11 +218,7 @@ namespace TownOfUs.Modifiers.AssassinMod
                     swapper.ListOfActives[voteArea.TargetPlayerId] = false;
                     if (SwapVotes.Swap1 == voteArea) SwapVotes.Swap1 = null;
                     if (SwapVotes.Swap2 == voteArea) SwapVotes.Swap2 = null;
-                    var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                            (byte)CustomRPC.SetSwaps, SendOption.Reliable, -1);
-                    writer.Write(sbyte.MaxValue);
-                    writer.Write(sbyte.MaxValue);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    Utils.Rpc(CustomRPC.SetSwaps, sbyte.MaxValue, sbyte.MaxValue);
                 }
                 button.SetActive(false);
                 button.GetComponent<PassiveButton>().OnClick = new Button.ButtonClickedEvent();

@@ -55,10 +55,7 @@ namespace TownOfUs.NeutralRoles.VampireMod
                 if (interact[4] == true)
                 {
                     Convert(role.ClosestPlayer);
-                    var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                        (byte)CustomRPC.Bite, SendOption.Reliable, -1);
-                    writer.Write(role.ClosestPlayer.PlayerId);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    Utils.Rpc(CustomRPC.Bite, role.ClosestPlayer.PlayerId);
                 }
                 if (interact[0] == true)
                 {

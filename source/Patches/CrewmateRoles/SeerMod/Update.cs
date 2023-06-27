@@ -33,8 +33,9 @@ namespace TownOfUs.CrewmateRoles.SeerMod
                                 foreach (var role in Role.GetRoles(RoleEnum.Traitor))
                                 {
                                     var traitor = (Traitor)role;
-                                    if (traitor.formerRole == RoleEnum.Sheriff || traitor.formerRole == RoleEnum.Vigilante ||
-                                        traitor.formerRole == RoleEnum.Veteran || traitor.formerRole == RoleEnum.VampireHunter) state.NameText.color = Color.red;
+                                    if ((traitor.formerRole == RoleEnum.Sheriff || traitor.formerRole == RoleEnum.Vigilante ||
+                                        traitor.formerRole == RoleEnum.Veteran || traitor.formerRole == RoleEnum.VampireHunter)
+                                    && CustomGameOptions.CrewKillingRed) state.NameText.color = Color.red;
                                     else state.NameText.color = Color.green;
                                 }
                             }
@@ -81,8 +82,9 @@ namespace TownOfUs.CrewmateRoles.SeerMod
                             foreach (var role in Role.GetRoles(RoleEnum.Traitor))
                             {
                                 var traitor = (Traitor)role;
-                                if (traitor.formerRole == RoleEnum.Sheriff || traitor.formerRole == RoleEnum.Vigilante ||
-                                    traitor.formerRole == RoleEnum.Veteran || traitor.formerRole == RoleEnum.VampireHunter) player.nameText().color = Color.red;
+                                if ((traitor.formerRole == RoleEnum.Sheriff || traitor.formerRole == RoleEnum.Vigilante ||
+                                    traitor.formerRole == RoleEnum.Veteran || traitor.formerRole == RoleEnum.VampireHunter)
+                                    && CustomGameOptions.CrewKillingRed) player.nameText().color = Color.red;
                                 else player.nameText().color = Color.green;
                             }
                         }

@@ -15,10 +15,7 @@ namespace TownOfUs.NeutralRoles.PlaguebearerMod
                 if (role.RoleType == RoleEnum.Plaguebearer)
                     ((Plaguebearer)role).Loses();
 
-            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                (byte)CustomRPC.PlaguebearerLose,
-                SendOption.Reliable, -1);
-            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            Utils.Rpc(CustomRPC.PlaguebearerLose);
 
             return true;
         }

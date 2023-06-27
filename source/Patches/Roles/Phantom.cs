@@ -54,12 +54,14 @@ namespace TownOfUs.Roles
                     HatId = "",
                     SkinId = "",
                     VisorId = "",
-                    PlayerName = " "
+                    PlayerName = " ",
+                    PetId = " "
                 });
             }
             Player.myRend().color = color;
             Player.nameText().color = Color.clear;
             Player.cosmetics.colorBlindText.color = Color.clear;
+            Player.cosmetics.SetBodyCosmeticsVisible(false);
         }
     }
 }

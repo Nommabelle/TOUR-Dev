@@ -15,10 +15,7 @@ namespace TownOfUs.NeutralRoles.WerewolfMod
                 if (role.RoleType == RoleEnum.Werewolf)
                     ((Werewolf) role).Loses();
 
-            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                (byte) CustomRPC.WerewolfLose,
-                SendOption.Reliable, -1);
-            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            Utils.Rpc(CustomRPC.WerewolfLose);
 
             return true;
         }

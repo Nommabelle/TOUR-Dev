@@ -22,10 +22,7 @@ namespace TownOfUs.CrewmateRoles.HaunterMod
                 {
                     SetHaunter.WillBeHaunter = null;
 
-                    var writer2 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.SetHaunter, SendOption.Reliable, -1);
-                    writer2.Write(byte.MaxValue);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer2);
+                    Utils.Rpc(CustomRPC.SetHaunter, byte.MaxValue);
                 }
                 else
                 {
@@ -34,10 +31,7 @@ namespace TownOfUs.CrewmateRoles.HaunterMod
 
                     SetHaunter.WillBeHaunter = pc2;
 
-                    var writer3 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                        (byte)CustomRPC.SetHaunter, SendOption.Reliable, -1);
-                    writer3.Write(pc2.PlayerId);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer3);
+                    Utils.Rpc(CustomRPC.SetHaunter, pc2.PlayerId);
                 }
                 return;
             }
@@ -48,10 +42,7 @@ namespace TownOfUs.CrewmateRoles.HaunterMod
 
             SetHaunter.WillBeHaunter = pc;
 
-            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                (byte)CustomRPC.SetHaunter, SendOption.Reliable, -1);
-            writer.Write(pc.PlayerId);
-            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            Utils.Rpc(CustomRPC.SetHaunter, pc.PlayerId);
             return;
         }
     }

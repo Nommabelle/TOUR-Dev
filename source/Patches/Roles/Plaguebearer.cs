@@ -38,15 +38,8 @@ namespace TownOfUs.Roles
                     PlayerControl.AllPlayerControls.ToArray().Count(x => !x.Data.IsDead && !x.Data.Disconnected &&
                     (x.Data.IsImpostor() || x.Is(Faction.NeutralKilling))) == 1)
             {
-                var writer = AmongUsClient.Instance.StartRpcImmediately(
-                    PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.PlaguebearerWin,
-                    SendOption.Reliable,
-                    -1
-                );
-                writer.Write(Player.PlayerId);
+                Utils.Rpc(CustomRPC.PlaguebearerWin, Player.PlayerId);
                 Wins();
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
                 Utils.EndGame();
                 return false;
             }
@@ -87,27 +80,23 @@ namespace TownOfUs.Roles
             if (InfectedPlayers.Contains(source.PlayerId) && !InfectedPlayers.Contains(target.PlayerId))
             {
                 InfectedPlayers.Add(target.PlayerId);
-                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.Infect, SendOption.Reliable, -1);
-                writer.Write(Player.PlayerId);
-                writer.Write(target.PlayerId);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                Utils.Rpc(CustomRPC.Infect, Player.PlayerId, target.PlayerId);
             }
             else if (InfectedPlayers.Contains(target.PlayerId) && !InfectedPlayers.Contains(source.PlayerId))
             {
                 InfectedPlayers.Add(source.PlayerId);
-                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.Infect, SendOption.Reliable, -1);
-                writer.Write(Player.PlayerId);
-                writer.Write(source.PlayerId);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                Utils.Rpc(CustomRPC.Infect, Player.PlayerId, source.PlayerId);
             }
         }
 
         public void TurnPestilence()
         {
+            var oldRole = GetRole(Player);
+            var killsList = (oldRole.CorrectAssassinKills, oldRole.IncorrectAssassinKills);
             RoleDictionary.Remove(Player.PlayerId);
             var role = new Pestilence(Player);
+            role.CorrectAssassinKills = killsList.CorrectAssassinKills;
+            role.IncorrectAssassinKills = killsList.IncorrectAssassinKills;
             if (Player == PlayerControl.LocalPlayer)
             {
                 Coroutines.Start(Utils.FlashCoroutine(Patches.Colors.Pestilence));

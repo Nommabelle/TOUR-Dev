@@ -53,12 +53,7 @@ namespace TownOfUs.CrewmateRoles.OracleMod
                 if (faction == 0) role.RevealedFaction = Faction.Crewmates;
                 else if (faction == 1) role.RevealedFaction = Faction.NeutralEvil;
                 else role.RevealedFaction = Faction.Impostors;
-                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.Confess, SendOption.Reliable, -1);
-                writer.Write(PlayerControl.LocalPlayer.PlayerId);
-                writer.Write(role.Confessor.PlayerId);
-                writer.Write(faction);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                Utils.Rpc(CustomRPC.Confess, PlayerControl.LocalPlayer.PlayerId, role.Confessor.PlayerId, faction);
             }
             if (interact[0] == true)
             {

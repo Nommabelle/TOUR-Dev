@@ -15,10 +15,7 @@ namespace TownOfUs.NeutralRoles.PhantomMod
                 if (role.RoleType == RoleEnum.Phantom)
                     ((Phantom) role).Loses();
 
-            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                (byte) CustomRPC.PhantomLose,
-                SendOption.Reliable, -1);
-            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            Utils.Rpc(CustomRPC.PhantomLose);
 
             return true;
         }

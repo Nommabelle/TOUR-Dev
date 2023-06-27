@@ -201,13 +201,7 @@ namespace TownOfUs.Roles
 
             VampireWins = true;
 
-            var writer = AmongUsClient.Instance.StartRpcImmediately(
-                PlayerControl.LocalPlayer.NetId,
-                (byte)CustomRPC.VampireWin,
-                SendOption.Reliable,
-                -1
-                );
-            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            Utils.Rpc(CustomRPC.VampireWin);
         }
 
         internal static bool NobodyEndCriteria(LogicGameFlowNormal __instance)
@@ -246,9 +240,7 @@ namespace TownOfUs.Roles
             {
                 if (SurvOnly())
                 {
-                    var messageWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                        (byte)CustomRPC.SurvivorOnlyWin, SendOption.Reliable, -1);
-                    AmongUsClient.Instance.FinishRpcImmediately(messageWriter);
+                    Utils.Rpc(CustomRPC.SurvivorOnlyWin);
 
                     SurvOnlyWin();
                     Utils.EndGame();
@@ -256,9 +248,7 @@ namespace TownOfUs.Roles
                 }
                 else
                 {
-                    var messageWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                        (byte)CustomRPC.NobodyWins, SendOption.Reliable, -1);
-                    AmongUsClient.Instance.FinishRpcImmediately(messageWriter);
+                    Utils.Rpc(CustomRPC.NobodyWins);
 
                     NobodyWinsFunc();
                     Utils.EndGame();
@@ -369,50 +359,39 @@ namespace TownOfUs.Roles
         {
             var role = (T)Activator.CreateInstance(type, new object[] { player });
 
-            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                (byte)rpc, SendOption.Reliable, -1);
-            writer.Write(player.PlayerId);
-            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            Utils.Rpc(rpc, player.PlayerId);
             return role;
         }
 
-        public static T GenRole<T>(Type type, PlayerControl player, int id)
+        public static T GenRole<T>(Type type, PlayerControl player)
         {
             var role = (T)Activator.CreateInstance(type, new object[] { player });
 
-            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                (byte)CustomRPC.SetRole, SendOption.Reliable, -1);
-            writer.Write(player.PlayerId);
-            writer.Write(id);
-            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            Utils.Rpc(CustomRPC.SetRole, player.PlayerId, (string)type.FullName);
             return role;
         }
 
-        public static T GenModifier<T>(Type type, PlayerControl player, int id)
+        public static T GenModifier<T>(Type type, PlayerControl player)
         {
             var modifier = (T)Activator.CreateInstance(type, new object[] { player });
 
-            var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                (byte)CustomRPC.SetModifier, SendOption.Reliable, -1);
-            writer.Write(player.PlayerId);
-            writer.Write(id);
-            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            Utils.Rpc(CustomRPC.SetModifier, player.PlayerId, (string)type.FullName);
             return modifier;
         }
 
-        public static T GenRole<T>(Type type, List<PlayerControl> players, int id)
+        public static T GenRole<T>(Type type, List<PlayerControl> players)
         {
             var player = players[Random.RandomRangeInt(0, players.Count)];
 
-            var role = GenRole<T>(type, player, id);
+            var role = GenRole<T>(type, player);
             players.Remove(player);
             return role;
         }
-        public static T GenModifier<T>(Type type, List<PlayerControl> players, int id)
+        public static T GenModifier<T>(Type type, List<PlayerControl> players)
         {
             var player = players[Random.RandomRangeInt(0, players.Count)];
 
-            var modifier = GenModifier<T>(type, player, id);
+            var modifier = GenModifier<T>(type, player);
             players.Remove(player);
             return modifier;
         }

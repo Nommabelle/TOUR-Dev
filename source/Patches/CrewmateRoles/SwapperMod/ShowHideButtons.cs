@@ -29,10 +29,7 @@ namespace TownOfUs.CrewmateRoles.SwapperMod
                 if (oracleRole.Confessor.PlayerId == exiled.PlayerId)
                 {
                     oracleRole.SavedConfessor = true;
-                    var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                        (byte)CustomRPC.Bless, SendOption.Reliable, -1);
-                    writer.Write(oracleRole.Player.PlayerId);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    Utils.Rpc(CustomRPC.Bless, oracleRole.Player.PlayerId);
                     var dictionary = new Dictionary<byte, int>();
                     return dictionary;
                 }
@@ -106,11 +103,7 @@ namespace TownOfUs.CrewmateRoles.SwapperMod
 
                 if (SwapVotes.Swap1 == null || SwapVotes.Swap2 == null) return true;
 
-                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                    (byte)CustomRPC.SetSwaps, SendOption.Reliable, -1);
-                writer.Write(SwapVotes.Swap1.TargetPlayerId);
-                writer.Write(SwapVotes.Swap2.TargetPlayerId);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                Utils.Rpc(CustomRPC.SetSwaps, SwapVotes.Swap1.TargetPlayerId, SwapVotes.Swap2.TargetPlayerId);
                 return true;
             }
         }

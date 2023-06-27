@@ -43,10 +43,7 @@ namespace TownOfUs.CrewmateRoles.MayorMod
             {
                 role.RevealButton.Destroy();
                 role.Revealed = true;
-                var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                                (byte)CustomRPC.Reveal, SendOption.Reliable, -1);
-                writer.Write(role.Player.PlayerId);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                Utils.Rpc(CustomRPC.Reveal, role.Player.PlayerId);
             }
 
             return Listener;

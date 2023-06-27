@@ -16,19 +16,13 @@ namespace TownOfUs.NeutralRoles.GuardianAngelMod
                     {
                         ((GuardianAngel)role).ImpTargetWin();
 
-                        var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                            (byte)CustomRPC.GAImpWin,
-                            SendOption.Reliable, -1);
-                        AmongUsClient.Instance.FinishRpcImmediately(writer);
+                        Utils.Rpc(CustomRPC.GAImpWin);
                     }
                     else
                     {
                         ((GuardianAngel)role).ImpTargetLose();
 
-                        var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
-                            (byte)CustomRPC.GAImpLose,
-                            SendOption.Reliable, -1);
-                        AmongUsClient.Instance.FinishRpcImmediately(writer);
+                        Utils.Rpc(CustomRPC.GAImpLose);
                     }
                     return true;
                 }
