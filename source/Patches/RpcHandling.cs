@@ -65,7 +65,7 @@ namespace TownOfUs
         internal static bool CheckJugg()
         {
             var num = Random.RandomRangeInt(1, 101);
-            return num <= 10 * NeutralKillingRoles.Count;
+            return num <= 10 * CustomGameOptions.MaxNeutralKillingRoles;
         }
         private static void PickRoleCount(int roleCount, int min, int max)
         {
@@ -240,14 +240,6 @@ namespace TownOfUs
                 SortRoles(NeutralBenignRoles, benign);
                 SortRoles(NeutralEvilRoles, evil);
                 SortRoles(NeutralKillingRoles, killing);
-
-                if (CheckJugg() && NeutralKillingRoles.Count > 0 && CustomGameOptions.HiddenRoles)
-                {
-                    NeutralKillingRoles.Shuffle();
-                    NeutralKillingRoles.RemoveAt(NeutralKillingRoles.Count - 1);
-                    NeutralKillingRoles.Add((typeof(Juggernaut), 100, true));
-                    NeutralKillingRoles.Shuffle();
-                }
 
                 if (NeutralKillingRoles.Contains((typeof(Vampire), CustomGameOptions.VampireOn, true)) && CustomGameOptions.VampireHunterOn > 0)
                 {
@@ -1452,8 +1444,8 @@ namespace TownOfUs
                     if (CustomGameOptions.GameMode == GameMode.Classic && CustomGameOptions.VampireOn > 0)
                         NeutralKillingRoles.Add((typeof(Vampire), CustomGameOptions.VampireOn, true));
 
-                    if (CustomGameOptions.GameMode == GameMode.AllAny && CustomGameOptions.HiddenRoles)
-                        NeutralKillingRoles.Add((typeof(Juggernaut), 10, true));
+                    if ((CheckJugg() || CustomGameOptions.GameMode == GameMode.AllAny) && CustomGameOptions.HiddenRoles)
+                        NeutralKillingRoles.Add((typeof(Juggernaut), 100, true));
                     #endregion
                     #region Impostor Roles
                     if (CustomGameOptions.UndertakerOn > 0)
