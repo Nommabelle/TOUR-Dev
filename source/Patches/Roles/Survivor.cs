@@ -64,15 +64,5 @@ namespace TownOfUs.Roles
             __instance.teamToShow = survTeam;
         }
 
-        public void AliveImpWin()
-        {
-            Player.Data.Role.TeamType = RoleTeamTypes.Impostor;
-            RoleManager.Instance.SetRole(Player, RoleTypes.Impostor);
-        }
-
-        public void DeadCrewWin()
-        {
-            LostByRPC = true;
-        }
     }
 }

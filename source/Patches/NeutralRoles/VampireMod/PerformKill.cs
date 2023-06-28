@@ -99,11 +99,6 @@ namespace TownOfUs.NeutralRoles.VampireMod
 
         public static void Convert(PlayerControl newVamp)
         {
-            foreach (var ga in Role.GetRoles(RoleEnum.GuardianAngel))
-            {
-                var gaRole = (GuardianAngel)ga;
-                if (gaRole.target == newVamp) gaRole.TargetIsVamp = true;
-            }
             var oldRole = Role.GetRole(newVamp);
             var killsList = (oldRole.CorrectKills, oldRole.IncorrectKills, oldRole.CorrectAssassinKills, oldRole.IncorrectAssassinKills);
 

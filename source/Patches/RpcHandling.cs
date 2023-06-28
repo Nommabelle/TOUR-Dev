@@ -664,53 +664,6 @@ namespace TownOfUs
                         Modifier.GetModifier<Lover>(winnerlover).Win();
                         break;
 
-                    case CustomRPC.JesterLose:
-                        foreach (var role in Role.AllRoles)
-                            if (role.RoleType == RoleEnum.Jester)
-                                ((Jester)role).Loses();
-                        break;
-
-                    case CustomRPC.DoomsayerLose:
-                        foreach (var role in Role.AllRoles)
-                            if (role.RoleType == RoleEnum.Doomsayer)
-                                ((Doomsayer)role).Loses();
-                        break;
-
-                    case CustomRPC.PhantomLose:
-                        foreach (var role in Role.AllRoles)
-                            if (role.RoleType == RoleEnum.Phantom)
-                                ((Phantom) role).Loses();
-                        break;
-                    case CustomRPC.GlitchLose:
-                        foreach (var role in Role.AllRoles)
-                            if (role.RoleType == RoleEnum.Glitch)
-                                ((Glitch) role).Loses();
-                        break;
-
-                    case CustomRPC.JuggernautLose:
-                        foreach (var role in Role.AllRoles)
-                            if (role.RoleType == RoleEnum.Juggernaut)
-                                ((Juggernaut)role).Loses();
-                        break;
-
-                    case CustomRPC.AmnesiacLose:
-                        foreach (var role in Role.AllRoles)
-                            if (role.RoleType == RoleEnum.Amnesiac)
-                                ((Amnesiac)role).Loses();
-                        break;
-
-                    case CustomRPC.ExecutionerLose:
-                        foreach (var role in Role.AllRoles)
-                            if (role.RoleType == RoleEnum.Executioner)
-                                ((Executioner) role).Loses();
-                        break;
-
-                    case CustomRPC.VampireLose:
-                        foreach (var role in Role.AllRoles)
-                            if (role.RoleType == RoleEnum.Vampire)
-                                ((Vampire)role).Loses();
-                        break;
-
                     case CustomRPC.NobodyWins:
                         Role.NobodyWinsFunc();
                         break;
@@ -1022,56 +975,13 @@ namespace TownOfUs
                         var theArsonistTheRole = Role.AllRoles.FirstOrDefault(x => x.RoleType == RoleEnum.Arsonist);
                         ((Arsonist) theArsonistTheRole)?.Wins();
                         break;
-                    case CustomRPC.ArsonistLose:
-                        foreach (var role in Role.AllRoles)
-                            if (role.RoleType == RoleEnum.Arsonist)
-                                ((Arsonist) role).Loses();
-                        break;
                     case CustomRPC.WerewolfWin:
                         var theWerewolfTheRole = Role.AllRoles.FirstOrDefault(x => x.RoleType == RoleEnum.Werewolf);
                         ((Werewolf)theWerewolfTheRole)?.Wins();
                         break;
-                    case CustomRPC.WerewolfLose:
-                        foreach (var role in Role.AllRoles)
-                            if (role.RoleType == RoleEnum.Werewolf)
-                                ((Werewolf)role).Loses();
-                        break;
-                    case CustomRPC.SurvivorImpWin:
-                        foreach (var role in Role.AllRoles)
-                            if (role.RoleType == RoleEnum.Survivor && !role.Player.Data.IsDead && !role.Player.Data.Disconnected)
-                            {
-                                ((Survivor)role).AliveImpWin();
-                            }
-                        break;
-                    case CustomRPC.SurvivorCrewWin:
-                        foreach (var role in Role.AllRoles)
-                            if (role.RoleType == RoleEnum.Survivor && (role.Player.Data.IsDead || role.Player.Data.Disconnected))
-                            {
-                                ((Survivor)role).DeadCrewWin();
-                            }
-                        break;
-                    case CustomRPC.GAImpWin:
-                        foreach (var role in Role.AllRoles)
-                            if (role.RoleType == RoleEnum.GuardianAngel && ((GuardianAngel)role).target.Is(Faction.Impostors))
-                            {
-                                ((GuardianAngel)role).ImpTargetWin();
-                            }
-                        break;
-                    case CustomRPC.GAImpLose:
-                        foreach (var role in Role.AllRoles)
-                            if (role.RoleType == RoleEnum.GuardianAngel && ((GuardianAngel)role).target.Is(Faction.Impostors))
-                            {
-                                ((GuardianAngel)role).ImpTargetLose();
-                            }
-                        break;
                     case CustomRPC.PlaguebearerWin:
                         var thePlaguebearerTheRole = Role.AllRoles.FirstOrDefault(x => x.RoleType == RoleEnum.Plaguebearer);
                         ((Plaguebearer)thePlaguebearerTheRole)?.Wins();
-                        break;
-                    case CustomRPC.PlaguebearerLose:
-                        foreach (var role in Role.AllRoles)
-                            if (role.RoleType == RoleEnum.Plaguebearer)
-                                ((Plaguebearer)role).Loses();
                         break;
                     case CustomRPC.Infect:
                         Role.GetRole<Plaguebearer>(Utils.PlayerById(reader.ReadByte())).InfectedPlayers.Add(reader.ReadByte());
@@ -1082,11 +992,6 @@ namespace TownOfUs
                     case CustomRPC.PestilenceWin:
                         var thePestilenceTheRole = Role.AllRoles.FirstOrDefault(x => x.RoleType == RoleEnum.Pestilence);
                         ((Pestilence)thePestilenceTheRole)?.Wins();
-                        break;
-                    case CustomRPC.PestilenceLose:
-                        foreach (var role in Role.AllRoles)
-                            if (role.RoleType == RoleEnum.Pestilence)
-                                ((Pestilence)role).Loses();
                         break;
                     case CustomRPC.SyncCustomSettings:
                         Rpc.ReceiveRpc(reader);

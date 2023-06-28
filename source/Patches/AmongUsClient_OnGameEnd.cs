@@ -1,9 +1,9 @@
 using HarmonyLib;
 using Il2CppSystem.Collections.Generic;
-using Newtonsoft.Json.Utilities;
 using System.Linq;
 using TownOfUs.Roles;
 using TownOfUs.Roles.Modifiers;
+using TownOfUs.Extensions;
 
 namespace TownOfUs
 {
@@ -23,11 +23,108 @@ namespace TownOfUs
     {
         public static void Prefix()
         {
-            var toRemoveColorIds = Role.AllRoles.Where(o => o.LostByRPC).Select(o => o.Player.Data.DefaultOutfit.ColorId).ToArray();
-            var toRemoveWinners = TempData.winners.ToArray().Where(o => toRemoveColorIds.Contains(o.ColorId)).ToArray();
-            for (int i = 0; i < toRemoveWinners.Count(); i++)
+            List<int> losers = new List<int>();
+            foreach (var role in Role.GetRoles(RoleEnum.Amnesiac))
             {
-                TempData.winners.Remove(toRemoveWinners[i]);
+                var amne = (Amnesiac)role;
+                losers.Add(amne.Player.GetDefaultOutfit().ColorId);
+            }
+            foreach (var role in Role.GetRoles(RoleEnum.GuardianAngel))
+            {
+                var ga = (GuardianAngel)role;
+                losers.Add(ga.Player.GetDefaultOutfit().ColorId);
+            }
+            foreach (var role in Role.GetRoles(RoleEnum.Survivor))
+            {
+                var surv = (Survivor)role;
+                losers.Add(surv.Player.GetDefaultOutfit().ColorId);
+            }
+            foreach (var role in Role.GetRoles(RoleEnum.Doomsayer))
+            {
+                var doom = (Doomsayer)role;
+                losers.Add(doom.Player.GetDefaultOutfit().ColorId);
+            }
+            foreach (var role in Role.GetRoles(RoleEnum.Executioner))
+            {
+                var exe = (Executioner)role;
+                losers.Add(exe.Player.GetDefaultOutfit().ColorId);
+            }
+            foreach (var role in Role.GetRoles(RoleEnum.Jester))
+            {
+                var jest = (Jester)role;
+                losers.Add(jest.Player.GetDefaultOutfit().ColorId);
+            }
+            foreach (var role in Role.GetRoles(RoleEnum.Phantom))
+            {
+                var phan = (Phantom)role;
+                losers.Add(phan.Player.GetDefaultOutfit().ColorId);
+            }
+            foreach (var role in Role.GetRoles(RoleEnum.Arsonist))
+            {
+                var arso = (Arsonist)role;
+                losers.Add(arso.Player.GetDefaultOutfit().ColorId);
+            }
+            foreach (var role in Role.GetRoles(RoleEnum.Juggernaut))
+            {
+                var jugg = (Juggernaut)role;
+                losers.Add(jugg.Player.GetDefaultOutfit().ColorId);
+            }
+            foreach (var role in Role.GetRoles(RoleEnum.Pestilence))
+            {
+                var pest = (Pestilence)role;
+                losers.Add(pest.Player.GetDefaultOutfit().ColorId);
+            }
+            foreach (var role in Role.GetRoles(RoleEnum.Plaguebearer))
+            {
+                var pb = (Plaguebearer)role;
+                losers.Add(pb.Player.GetDefaultOutfit().ColorId);
+            }
+            foreach (var role in Role.GetRoles(RoleEnum.Glitch))
+            {
+                var glitch = (Glitch)role;
+                losers.Add(glitch.Player.GetDefaultOutfit().ColorId);
+            }
+            foreach (var role in Role.GetRoles(RoleEnum.Vampire))
+            {
+                var vamp = (Vampire)role;
+                losers.Add(vamp.Player.GetDefaultOutfit().ColorId);
+            }
+            foreach (var role in Role.GetRoles(RoleEnum.Werewolf))
+            {
+                var ww = (Werewolf)role;
+                losers.Add(ww.Player.GetDefaultOutfit().ColorId);
+            }
+
+            var toRemoveWinners = TempData.winners.ToArray().Where(o => losers.Contains(o.ColorId)).ToArray();
+            for (int i = 0; i < toRemoveWinners.Count(); i++) TempData.winners.Remove(toRemoveWinners[i]);
+
+            foreach (var role in Role.GetRoles(RoleEnum.GuardianAngel))
+            {
+                var ga = (GuardianAngel)role;
+                var gaTargetData = new WinningPlayerData(ga.target.Data);
+                foreach (WinningPlayerData winner in TempData.winners.ToArray())
+                {
+                    if (gaTargetData.ColorId == winner.ColorId)
+                    {
+                        var isImp = TempData.winners[0].IsImpostor;
+                        var gaWinData = new WinningPlayerData(ga.Player.Data);
+                        if (isImp) gaWinData.IsImpostor = true;
+                        if (PlayerControl.LocalPlayer != ga.Player) gaWinData.IsYou = false;
+                        TempData.winners.Add(gaWinData);
+                    }
+                }
+            }
+            foreach (var role in Role.GetRoles(RoleEnum.Survivor))
+            {
+                var surv = (Survivor)role;
+                if (!surv.Player.Data.IsDead && !surv.Player.Data.Disconnected)
+                {
+                    var isImp = TempData.winners[0].IsImpostor;
+                    var survWinData = new WinningPlayerData(surv.Player.Data);
+                    if (isImp) survWinData.IsImpostor = true;
+                    if (PlayerControl.LocalPlayer != surv.Player) survWinData.IsYou = false;
+                    TempData.winners.Add(survWinData);
+                }
             }
 
             if (Role.NobodyWins)
@@ -59,17 +156,26 @@ namespace TownOfUs
                     var vamp = (Vampire)role;
                     winners.Add(Utils.potentialWinners.Where(x => x.PlayerName == vamp.PlayerName).ToList()[0]);
                 }
-                foreach (var role in Role.GetRoles(RoleEnum.GuardianAngel))
-                {
-                    var ga = (GuardianAngel)role;
-                    if (ga.TargetIsVamp) winners.Add(Utils.potentialWinners.Where(x => x.PlayerName == ga.PlayerName).ToList()[0]);
-                }
                 foreach (var role in Role.GetRoles(RoleEnum.Survivor))
                 {
                     var surv = (Survivor)role;
                     if (!surv.Player.Data.IsDead && !surv.Player.Data.Disconnected)
                     {
                         winners.Add(Utils.potentialWinners.Where(x => x.PlayerName == surv.PlayerName).ToList()[0]);
+                    }
+                }
+                foreach (var role in Role.GetRoles(RoleEnum.GuardianAngel))
+                {
+                    var ga = (GuardianAngel)role;
+                    var gaTargetData = new WinningPlayerData(ga.target.Data);
+                    foreach (WinningPlayerData winner in winners.ToArray())
+                    {
+                        if (gaTargetData.ColorId == winner.ColorId)
+                        {
+                            var gaWinData = new WinningPlayerData(ga.Player.Data);
+                            if (PlayerControl.LocalPlayer != ga.Player) gaWinData.IsYou = false;
+                            winners.Add(gaWinData);
+                        }
                     }
                 }
                 TempData.winners = new List<WinningPlayerData>();

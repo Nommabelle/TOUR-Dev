@@ -46,11 +46,6 @@ namespace TownOfUs.Roles
             JuggernautWins = true;
         }
 
-        public void Loses()
-        {
-            LostByRPC = true;
-        }
-
         public float KillTimer()
         {
             var utcNow = DateTime.UtcNow;

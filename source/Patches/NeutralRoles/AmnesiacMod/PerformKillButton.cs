@@ -460,12 +460,6 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(false);
             }
 
-            foreach (var ga in Role.GetRoles(RoleEnum.GuardianAngel))
-            {
-                var gaRole = (GuardianAngel)ga;
-                if (gaRole.target == other && gaRole.TargetIsVamp) gaRole.TargetIsVamp = false;
-            }
-
             var killsList = (newRole.Kills, newRole.CorrectKills, newRole.IncorrectKills, newRole.CorrectAssassinKills, newRole.IncorrectAssassinKills);
             var otherRole = Role.GetRole(other);
             newRole.Kills = otherRole.Kills;

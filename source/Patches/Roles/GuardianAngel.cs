@@ -16,7 +16,6 @@ namespace TownOfUs.Roles
         public TextMeshPro UsesText;
 
         public bool ButtonUsable => UsesLeft != 0;
-        public bool TargetIsVamp;
 
         public PlayerControl target;
 
@@ -68,18 +67,6 @@ namespace TownOfUs.Roles
             }
             Enabled = false;
             LastProtected = DateTime.UtcNow;
-        }
-
-        public void ImpTargetWin()
-        {
-            Player.Data.Role.TeamType = RoleTeamTypes.Impostor;
-            if (Player.Data.IsDead) RoleManager.Instance.SetRole(Player, RoleTypes.ImpostorGhost);
-            else RoleManager.Instance.SetRole(Player, RoleTypes.Impostor);
-        }
-
-        public void ImpTargetLose()
-        {
-            LostByRPC = true;
         }
 
         protected override void IntroPrefix(IntroCutscene._ShowTeam_d__36 __instance)

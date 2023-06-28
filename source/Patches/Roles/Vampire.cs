@@ -90,11 +90,5 @@ namespace TownOfUs.Roles
             vampTeam.Add(PlayerControl.LocalPlayer);
             __instance.teamToShow = vampTeam;
         }
-
-
-        public void Loses()
-        {
-            LostByRPC = true;
-        }
     }
 }

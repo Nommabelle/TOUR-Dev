@@ -43,10 +43,5 @@ namespace TownOfUs.Roles
             if (Player.Data.IsDead || Player.Data.Disconnected) return;
             TargetVotedOut = true;
         }
-
-        public void Loses()
-        {
-            LostByRPC = true;
-        }
     }
 }

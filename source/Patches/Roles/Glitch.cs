@@ -80,11 +80,6 @@ namespace TownOfUs.Roles
             GlitchWins = true;
         }
 
-        public void Loses()
-        {
-            LostByRPC = true;
-        }
-
         protected override void IntroPrefix(IntroCutscene._ShowTeam_d__36 __instance)
         {
             var glitchTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();

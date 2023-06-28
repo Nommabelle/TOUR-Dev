@@ -67,11 +67,6 @@ namespace TownOfUs.Roles
             ArsonistWins = true;
         }
 
-        public void Loses()
-        {
-            LostByRPC = true;
-        }
-
         protected override void IntroPrefix(IntroCutscene._ShowTeam_d__36 __instance)
         {
             var arsonistTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();

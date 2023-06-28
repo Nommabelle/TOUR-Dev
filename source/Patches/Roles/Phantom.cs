@@ -21,11 +21,6 @@ namespace TownOfUs.Roles
             Faction = Faction.NeutralEvil;
         }
 
-        public void Loses()
-        {
-            LostByRPC = true;
-        }
-
         public void Fade()
         {
             Faded = true;

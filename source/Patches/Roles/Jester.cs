@@ -38,10 +38,5 @@ namespace TownOfUs.Roles
             //System.Console.WriteLine("Reached Here - Jester edition");
             VotedOut = true;
         }
-
-        public void Loses()
-        {
-            LostByRPC = true;
-        }
     }
 }

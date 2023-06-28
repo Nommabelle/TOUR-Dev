@@ -133,10 +133,5 @@ namespace TownOfUs.Roles
             Utils.EndGame();
             return false;
         }
-
-        public void Loses()
-        {
-            LostByRPC = true;
-        }
     }
 }
