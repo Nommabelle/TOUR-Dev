@@ -75,6 +75,8 @@ namespace TownOfUs.CrewmateRoles.AltruistMod
                 var lover = Modifier.GetModifier<Lover>(player).OtherLover.Player;
 
                 lover.Revive();
+                if (lover.Is(Faction.Impostors)) RoleManager.Instance.SetRole(lover, RoleTypes.Impostor);
+                else RoleManager.Instance.SetRole(lover, RoleTypes.Crewmate);
                 Murder.KilledPlayers.Remove(
                     Murder.KilledPlayers.FirstOrDefault(x => x.PlayerId == lover.PlayerId));
                 revived.Add(lover);
