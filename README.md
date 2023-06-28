@@ -157,7 +157,9 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <ul> <li>Reworked Mayor</li> </ul>
   <ul> <li>Neutral Non-Killing settings split into Neutral Benign and Neutral Evil</li> </ul>
   <ul> <li>New Setting: First round shield for first death in prior game</li> </ul>
+  <ul> <li>New Setting: Guardian Angel target evil percentage</li> </ul>
   <ul> <li>Removed Settings for disabling name plates and level numbers</li> </ul>
+  <ul> <li>Guardian Angel targets can now be a Neutral Killer</li> </ul>
   </details>
   <details>
   <summary> v4.0.6 </summary>
@@ -1183,6 +1185,7 @@ If their target loses, they lose.
 | Guardian Angel becomes on Target Dead | Which role the Guardian Angel becomes when their target dies | Crewmate / Amnesiac / Survivor / Jester | Crewmate |
 | Target Knows GA Exists | Whether the GA's Target knows they have a GA | Toggle | False |
 | GA Knows Targets Role | Whether the GA knows their target's role | Toggle | False |
+| Odds Of Target Being Evil | The chances of the Guardian Angel's target being evil | Percentage | 20% |
 
 -----------------------
 ## Survivor

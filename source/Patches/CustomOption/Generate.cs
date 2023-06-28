@@ -378,6 +378,7 @@ namespace TownOfUs.CustomOption
         public static CustomStringOption GaOnTargetDeath;
         public static CustomToggleOption GATargetKnows;
         public static CustomToggleOption GAKnowsTargetRole;
+        public static CustomNumberOption EvilTargetPercent;
 
         public static CustomHeaderOption Mystic;
         public static CustomNumberOption MysticArrowDuration;
@@ -1043,6 +1044,8 @@ namespace TownOfUs.CustomOption
                 new CustomToggleOption(num++, MultiMenu.neutral, "Target Knows GA Exists", false);
             GAKnowsTargetRole =
                 new CustomToggleOption(num++, MultiMenu.neutral, "GA Knows Targets Role", false);
+            EvilTargetPercent = new CustomNumberOption(num++, MultiMenu.neutral, "Odds Of Target Being Evil", 20f, 0f, 100f, 10f,
+                PercentFormat);
 
             Survivor =
                 new CustomHeaderOption(num++, MultiMenu.neutral, "<color=#FFE64DFF>Survivor</color>");

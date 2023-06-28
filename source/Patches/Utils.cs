@@ -36,10 +36,6 @@ namespace TownOfUs
         internal static bool ShowDeadBodies = false;
         private static GameData.PlayerInfo voteTarget = null;
 
-        public static Dictionary<PlayerControl, Color> oldColors = new Dictionary<PlayerControl, Color>();
-
-        public static List<WinningPlayerData> potentialWinners = new List<WinningPlayerData>();
-
         public static void Morph(PlayerControl player, PlayerControl MorphedPlayer, bool resetAnim = false)
         {
             if (CamouflageUnCamouflage.IsCamoed) return;

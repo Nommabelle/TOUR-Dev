@@ -467,14 +467,30 @@ namespace TownOfUs
                 }
             }
 
-            var gaTargets = PlayerControl.AllPlayerControls.ToArray().Where(x => !x.Is(Faction.NeutralBenign) && !x.Is(Faction.NeutralEvil) && !x.Is(Faction.NeutralKilling) && !x.Is(ModifierEnum.Lover)).ToList();
+            var goodGATargets = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(Faction.Crewmates) && !x.Is(ModifierEnum.Lover)).ToList();
+            var evilGATargets = PlayerControl.AllPlayerControls.ToArray().Where(x => (x.Is(Faction.Impostors) || x.Is(Faction.NeutralKilling)) && !x.Is(ModifierEnum.Lover)).ToList();
             foreach (var role in Role.GetRoles(RoleEnum.GuardianAngel))
             {
                 var ga = (GuardianAngel)role;
-                if (gaTargets.Count > 0)
+                if (!(goodGATargets.Count == 0 && CustomGameOptions.EvilTargetPercent == 0) ||
+                    (evilGATargets.Count == 0 && CustomGameOptions.EvilTargetPercent == 100) ||
+                    goodGATargets.Count == 0 && evilGATargets.Count == 0)
                 {
-                    ga.target = gaTargets[Random.RandomRangeInt(0, gaTargets.Count)];
-                    gaTargets.Remove(ga.target);
+                    if (goodGATargets.Count == 0)
+                    {
+                        ga.target = evilGATargets[Random.RandomRangeInt(0, evilGATargets.Count)];
+                        evilGATargets.Remove(ga.target);
+                    }
+                    else if (evilGATargets.Count == 0 || !Check(CustomGameOptions.EvilTargetPercent))
+                    {
+                        ga.target = goodGATargets[Random.RandomRangeInt(0, goodGATargets.Count)];
+                        goodGATargets.Remove(ga.target);
+                    }
+                    else
+                    {
+                        ga.target = evilGATargets[Random.RandomRangeInt(0, evilGATargets.Count)];
+                        evilGATargets.Remove(ga.target);
+                    }
 
                     Utils.Rpc(CustomRPC.SetGATarget, role.Player.PlayerId, ga.target.PlayerId);
                 }
