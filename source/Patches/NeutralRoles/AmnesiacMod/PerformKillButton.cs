@@ -212,7 +212,8 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
             else if (role == RoleEnum.Medic)
             {
                 var medicRole = Role.GetRole<Medic>(amnesiac);
-                medicRole.UsedAbility = false;
+                if (amnesiac != StartImitate.ImitatingPlayer) medicRole.UsedAbility = false;
+                else medicRole.UsedAbility = true;
             }
 
             else if (role == RoleEnum.Mayor)
