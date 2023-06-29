@@ -160,6 +160,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <ul> <li>New Setting: Guardian Angel target evil percentage</li> </ul>
   <ul> <li>Removed Settings for disabling name plates and level numbers</li> </ul>
   <ul> <li>Guardian Angel targets can now be a Neutral Killer</li> </ul>
+  <ul> <li>Bug Fix: Plaguebearer no longer turns into Pestilence early</li> </ul>
   </details>
   <details>
   <summary> v4.0.6 </summary>

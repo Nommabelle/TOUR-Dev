@@ -15,7 +15,7 @@ namespace TownOfUs.Roles
         public DateTime LastInfected;
         public bool PlaguebearerWins { get; set; }
 
-        public int InfectedAlive => InfectedPlayers.Count(x => Utils.PlayerById(x) != null && Utils.PlayerById(x).Data != null && !Utils.PlayerById(x).Data.IsDead);
+        public int InfectedAlive => InfectedPlayers.Count(x => Utils.PlayerById(x) != null && Utils.PlayerById(x).Data != null && !Utils.PlayerById(x).Data.IsDead && !Utils.PlayerById(x).Data.Disconnected);
         public bool CanTransform => PlayerControl.AllPlayerControls.ToArray().Count(x => x != null && !x.Data.IsDead && !x.Data.Disconnected) <= InfectedAlive;
 
         public Plaguebearer(PlayerControl player) : base(player)
@@ -72,16 +72,14 @@ namespace TownOfUs.Roles
         public void RpcSpreadInfection(PlayerControl source, PlayerControl target)
         {
             new WaitForSeconds(1f);
-            if (InfectedPlayers.Contains(source.PlayerId) && !InfectedPlayers.Contains(target.PlayerId))
-            {
-                InfectedPlayers.Add(target.PlayerId);
-                Utils.Rpc(CustomRPC.Infect, Player.PlayerId, target.PlayerId);
-            }
-            else if (InfectedPlayers.Contains(target.PlayerId) && !InfectedPlayers.Contains(source.PlayerId))
-            {
-                InfectedPlayers.Add(source.PlayerId);
-                Utils.Rpc(CustomRPC.Infect, Player.PlayerId, source.PlayerId);
-            }
+            SpreadInfection(source, target);
+            Utils.Rpc(CustomRPC.Infect, Player.PlayerId, source.PlayerId, target.PlayerId);
+        }
+
+        public void SpreadInfection(PlayerControl source, PlayerControl target)
+        {
+            if (InfectedPlayers.Contains(source.PlayerId) && !InfectedPlayers.Contains(target.PlayerId)) InfectedPlayers.Add(target.PlayerId);
+            else if (InfectedPlayers.Contains(target.PlayerId) && !InfectedPlayers.Contains(source.PlayerId)) InfectedPlayers.Add(source.PlayerId);
         }
 
         public void TurnPestilence()

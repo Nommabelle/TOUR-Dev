@@ -25,11 +25,6 @@ namespace TownOfUs.NeutralRoles.PlaguebearerMod
                         GameOptionsData.KillDistances[GameOptionsManager.Instance.currentNormalGameOptions.KillDistance];
             if (!flag3) return false;
             var interact = Utils.Interact(PlayerControl.LocalPlayer, role.ClosestPlayer);
-            if (interact[4] == true)
-            {
-                Utils.Rpc(CustomRPC.Infect, PlayerControl.LocalPlayer.PlayerId, role.ClosestPlayer.PlayerId);
-                role.InfectedPlayers.Add(role.ClosestPlayer.PlayerId);
-            }
             if (interact[0] == true)
             {
                 role.LastInfected = DateTime.UtcNow;

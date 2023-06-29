@@ -2,7 +2,6 @@ using System.Linq;
 using HarmonyLib;
 using TownOfUs.Roles;
 using UnityEngine;
-using Hazel;
 using TownOfUs.Extensions;
 
 namespace TownOfUs.NeutralRoles.PlaguebearerMod
@@ -45,8 +44,8 @@ namespace TownOfUs.NeutralRoles.PlaguebearerMod
             if (role.CanTransform && (PlayerControl.AllPlayerControls.ToArray().Where(x => !x.Data.IsDead && !x.Data.Disconnected).ToList().Count > 1) && !isDead)
             {
                 var transform = false;
-                var alives = PlayerControl.AllPlayerControls.ToArray().Where(x => !x.Data.IsDead && !x.Data.Disconnected).ToList();
-                if (alives.Count == 2)
+                var alives = PlayerControl.AllPlayerControls.ToArray().Where(x => !x.Data.IsDead && !x.Data.Disconnected && x != PlayerControl.LocalPlayer).ToList();
+                if (alives.Count <= 1)
                 {
                     foreach (var player in alives)
                     {

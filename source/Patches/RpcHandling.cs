@@ -1000,7 +1000,8 @@ namespace TownOfUs
                         ((Plaguebearer)thePlaguebearerTheRole)?.Wins();
                         break;
                     case CustomRPC.Infect:
-                        Role.GetRole<Plaguebearer>(Utils.PlayerById(reader.ReadByte())).InfectedPlayers.Add(reader.ReadByte());
+                        var pb = Role.GetRole<Plaguebearer>(Utils.PlayerById(reader.ReadByte()));
+                        pb.SpreadInfection(Utils.PlayerById(reader.ReadByte()), Utils.PlayerById(reader.ReadByte()));
                         break;
                     case CustomRPC.TurnPestilence:
                         Role.GetRole<Plaguebearer>(Utils.PlayerById(reader.ReadByte())).TurnPestilence();
