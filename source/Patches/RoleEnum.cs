@@ -77,7 +77,7 @@ namespace TownOfUs
         ButtonBarry,
         Bait,
         Sleuth,
-        Blind,
+        Aftermath,
         Radar,
         Disperser,
         Multitasker,

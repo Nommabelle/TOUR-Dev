@@ -53,7 +53,7 @@ namespace TownOfUs.Patches
 
         //Modifiers
         public readonly static Color Bait = new Color(0f, 0.7f, 0.7f, 1f);
-        public readonly static Color Blind = new Color(0.6f, 0.6f, 0.6f, 1f);
+        public readonly static Color Aftermath = new Color(0.65f, 1f, 0.65f, 1f);
         public readonly static Color Diseased = Color.grey;
         public readonly static Color Torch = new Color(1f, 1f, 0.6f, 1f);
         public readonly static Color ButtonBarry = new Color(0.9f, 0f, 1f, 1f);

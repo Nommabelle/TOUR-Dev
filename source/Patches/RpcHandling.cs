@@ -1413,8 +1413,8 @@ namespace TownOfUs
                     if (Check(CustomGameOptions.BaitOn))
                         CrewmateModifiers.Add((typeof(Bait), CustomGameOptions.BaitOn));
 
-                    if (Check(CustomGameOptions.BlindOn))
-                        CrewmateModifiers.Add((typeof(Blind), CustomGameOptions.BlindOn));
+                    if (Check(CustomGameOptions.AftermathOn))
+                        CrewmateModifiers.Add((typeof(Aftermath), CustomGameOptions.AftermathOn));
 
                     if (Check(CustomGameOptions.MultitaskerOn))
                         CrewmateModifiers.Add((typeof(Multitasker), CustomGameOptions.MultitaskerOn));

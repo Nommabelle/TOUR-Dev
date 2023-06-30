@@ -87,7 +87,7 @@ namespace TownOfUs
         public static int BaitOn => (int)Generate.BaitOn.Get();
         public static int LoversOn => (int)Generate.LoversOn.Get();
         public static int SleuthOn => (int)Generate.SleuthOn.Get();
-        public static int BlindOn => (int)Generate.BlindOn.Get();
+        public static int AftermathOn => (int)Generate.AftermathOn.Get();
         public static int RadarOn => (int)Generate.RadarOn.Get();
         public static int DisperserOn => (int)Generate.DisperserOn.Get();
         public static int MultitaskerOn => (int)Generate.MultitaskerOn.Get();

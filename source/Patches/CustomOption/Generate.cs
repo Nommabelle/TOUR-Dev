@@ -73,8 +73,8 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption UndertakerOn;
 
         public static CustomHeaderOption CrewmateModifiers;
+        public static CustomNumberOption AftermathOn;
         public static CustomNumberOption BaitOn;
-        public static CustomNumberOption BlindOn;
         public static CustomNumberOption DiseasedOn;
         public static CustomNumberOption FrostyOn;
         public static CustomNumberOption MultitaskerOn;
@@ -616,9 +616,9 @@ namespace TownOfUs.CustomOption
                 PercentFormat);
 
             CrewmateModifiers = new CustomHeaderOption(num++, MultiMenu.modifiers, "Crewmate Modifiers");
-            BaitOn = new CustomNumberOption(num++, MultiMenu.modifiers, "<color=#00B3B3FF>Bait</color>", 0f, 0f, 100f, 10f,
+            AftermathOn = new CustomNumberOption(num++, MultiMenu.modifiers, "<color=#A6FFA6FF>Aftermath</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
-            BlindOn = new CustomNumberOption(num++, MultiMenu.modifiers, "<color=#AAAAAAFF>Blind</color>", 0f, 0f, 100f, 10f,
+            BaitOn = new CustomNumberOption(num++, MultiMenu.modifiers, "<color=#00B3B3FF>Bait</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             DiseasedOn = new CustomNumberOption(num++, MultiMenu.modifiers, "<color=#808080FF>Diseased</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);

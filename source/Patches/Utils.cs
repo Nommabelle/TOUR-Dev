@@ -607,6 +607,11 @@ namespace TownOfUs
                     BaitReport(killer, target);
                 }
 
+                if (target.Is(ModifierEnum.Aftermath))
+                {
+                    Aftermath.ForceAbility(killer, target);
+                }
+
                 if (!jumpToBody) return;
 
                 if (killer.Data.IsImpostor() && GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.HideNSeek)

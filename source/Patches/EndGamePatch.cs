@@ -113,9 +113,9 @@ namespace TownOfUs.Patches {
                 {
                     playerRole += " (<color=#" + Patches.Colors.ButtonBarry.ToHtmlStringRGBA() + ">Button Barry</color>)";
                 }
-                else if (playerControl.Is(ModifierEnum.Blind))
+                else if (playerControl.Is(ModifierEnum.Aftermath))
                 {
-                    playerRole += " (<color=#" + Patches.Colors.Blind.ToHtmlStringRGBA() + ">Blind</color>)";
+                    playerRole += " (<color=#" + Patches.Colors.Aftermath.ToHtmlStringRGBA() + ">Aftermath</color>)";
                 }
                 else if (playerControl.Is(ModifierEnum.Bait))
                 {

@@ -155,6 +155,9 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <ul> <li>New Role: Aurial</li> </ul>
   <ul> <li>Reworked Detective</li> </ul>
   <ul> <li>Reworked Mayor</li> </ul>
+  <ul> <li>New Modifier: Frosty</li> </ul>
+  <ul> <li>New Modifier: Aftermath</li> </ul>
+  <ul> <li>Removed Blind</li> </ul>
   <ul> <li>Neutral Non-Killing settings split into Neutral Benign and Neutral Evil</li> </ul>
   <ul> <li>New Setting: First round shield for first death in prior game</li> </ul>
   <ul> <li>New Setting: Guardian Angel target evil percentage</li> </ul>
@@ -1557,6 +1560,15 @@ The Undertaker is an Impostor that can drag and drop bodies.
 
 # Modifiers
 Modifiers are added on top of players' roles.
+## Aftermath
+### **Applied to: Crewmates**
+Killing the Aftermath forces their killer to use their ability (if they have one and it's not in use).
+### Game Options
+| Name | Description | Type | Default |
+|----------|:-------------:|:------:|:------:|
+| Aftermath | The percentage probability of the Aftermath appearing | Percentage | 0% |
+
+-----------------------
 ## Bait
 ### **Applied to: Crewmates**
 Killing the Bait makes the killer auto self-report.
@@ -1566,15 +1578,6 @@ Killing the Bait makes the killer auto self-report.
 | Bait | The percentage probability of the Bait appearing | Percentage | 0% |
 | Bait Minimum Delay | The minimum time the killer of the Bait reports the body | Time | 0s |
 | Bait Maximum Delay | The maximum time the killer of the Bait reports the body | Time | 1s |
-
------------------------
-## Blind
-### **Applied to: Crewmates**
-The Blind's report button does not light up.
-### Game Options
-| Name | Description | Type | Default |
-|----------|:-------------:|:------:|:------:|
-| Blind | The percentage probability of the Blind appearing | Percentage | 0% |
 
 -----------------------
 ## Diseased
@@ -1889,7 +1892,7 @@ If you have any bugs or any need to contact me, join the [Discord Server](https:
 [TheOtherRoles](https://github.com/Eisbison/TheOtherRoles) - For the inspiration of the Vigilante, Tracker and Spy roles, as well as the Bait modifier.\
 [5up](https://www.twitch.tv/5uppp) and the Submarine Team - For the inspiration of the Grenadier role.\
 [Guus](https://github.com/OhMyGuus) - For support for the old Among Us versions (v2021.11.9.5 and v2021.12.15).\
-[MyDragonBreath](https://github.com/MyDragonBreath) - For Submerged Compatibility, the Trapper and Aurial roles and support for the new Among Us versions (v2022.6.21 & v2023.6.13).\
+[MyDragonBreath](https://github.com/MyDragonBreath) - For Submerged Compatibility, the Trapper and Aurial roles, the Aftermath modifier and support for the new Among Us versions (v2022.6.21 & v2023.6.13).\
 [ItsTheNumberH](https://github.com/itsTheNumberH/Town-Of-H) - For the code used for Blind, Bait, Poisoner and partially for Tracker, as well as other bug fixes.\
 [Ruiner](https://github.com/ruiner189/Town-Of-Us-Redux) - For lovers changed into a modifier and Task Tracking.\
 [Term](https://www.twitch.tv/termboii) - For creating Transporter, Medium, Blackmailer, Plaguebearer, Sleuth, Multitasker and porting v2.5.0 to the new Among Us version (v2021.12.15).\
