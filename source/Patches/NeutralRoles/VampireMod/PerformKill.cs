@@ -3,12 +3,10 @@ using HarmonyLib;
 using TownOfUs.Roles;
 using UnityEngine;
 using AmongUs.GameOptions;
-using Hazel;
 using TownOfUs.CrewmateRoles.InvestigatorMod;
 using TownOfUs.CrewmateRoles.TrapperMod;
 using TownOfUs.CrewmateRoles.ImitatorMod;
 using System.Linq;
-using TownOfUs.ImpostorRoles.TraitorMod;
 using TownOfUs.Roles.Modifiers;
 using TownOfUs.CrewmateRoles.AurialMod;
 using TownOfUs.Patches.ScreenEffects;
@@ -119,9 +117,18 @@ namespace TownOfUs.NeutralRoles.VampireMod
                 ga.UnProtect();
             }
 
+            if (newVamp.Is(RoleEnum.Medium))
+            {
+                var medRole = Role.GetRole<Medium>(newVamp);
+                medRole.MediatedPlayers.Values.DestroyAll();
+                medRole.MediatedPlayers.Clear();
+            }
+
             if (PlayerControl.LocalPlayer == newVamp)
             {
                 if (PlayerControl.LocalPlayer.Is(RoleEnum.Investigator)) Footprint.DestroyAll(Role.GetRole<Investigator>(PlayerControl.LocalPlayer));
+
+                if (PlayerControl.LocalPlayer.Is(RoleEnum.Sheriff)) HudManager.Instance.KillButton.buttonLabelText.gameObject.SetActive(false);
 
                 if (PlayerControl.LocalPlayer.Is(RoleEnum.Engineer))
                 {
@@ -162,13 +169,6 @@ namespace TownOfUs.NeutralRoles.VampireMod
                 {
                     var veteranRole = Role.GetRole<Veteran>(PlayerControl.LocalPlayer);
                     UnityEngine.Object.Destroy(veteranRole.UsesText);
-                }
-
-                if (PlayerControl.LocalPlayer.Is(RoleEnum.Medium))
-                {
-                    var medRole = Role.GetRole<Medium>(PlayerControl.LocalPlayer);
-                    medRole.MediatedPlayers.Values.DestroyAll();
-                    medRole.MediatedPlayers.Clear();
                 }
 
                 if (PlayerControl.LocalPlayer.Is(RoleEnum.Trapper))

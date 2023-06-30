@@ -1,5 +1,4 @@
 using HarmonyLib;
-using Hazel;
 using TownOfUs.CrewmateRoles.InvestigatorMod;
 using TownOfUs.CrewmateRoles.SnitchMod;
 using TownOfUs.CrewmateRoles.TrapperMod;
@@ -130,6 +129,12 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 aurial.NormalVision = true;
                 SeeAll.AllToNormal();
                 CameraEffect.singleton.materials.Clear();
+            }
+
+            if ((role == RoleEnum.Glitch || role == RoleEnum.Juggernaut || role == RoleEnum.Pestilence ||
+                role == RoleEnum.Werewolf) && PlayerControl.LocalPlayer == other)
+            {
+                HudManager.Instance.KillButton.buttonLabelText.gameObject.SetActive(false);
             }
 
             if (role == RoleEnum.Investigator) Footprint.DestroyAll(Role.GetRole<Investigator>(other));
