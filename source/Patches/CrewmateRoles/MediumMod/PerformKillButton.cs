@@ -32,7 +32,7 @@ namespace TownOfUs.CrewmateRoles.MediumMod
                 if (Object.FindObjectsOfType<DeadBody>().Any(x => x.ParentId == dead.PlayerId && !role.MediatedPlayers.Keys.Contains(x.ParentId)))
                 {
                     role.AddMediatePlayer(dead.PlayerId);
-                    Utils.Rpc(CustomRPC.Mediate, dead.PlayerId, PlayerControl.LocalPlayer);
+                    Utils.Rpc(CustomRPC.Mediate, dead.PlayerId, PlayerControl.LocalPlayer.PlayerId);
                     if (CustomGameOptions.DeadRevealed != DeadRevealed.All) return false;
                 }
             }
