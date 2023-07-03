@@ -12,6 +12,7 @@ namespace TownOfUs.Roles
         public DateTime LastRadiated { get; set; }
         public DateTime CannotSeeDelay { get; set; }
         public bool NormalVision { get; set; } = false;
+        public bool Loaded { get; set; } = false;
         public Aurial(PlayerControl player) : base(player)
         {
             Name = "Aurial";

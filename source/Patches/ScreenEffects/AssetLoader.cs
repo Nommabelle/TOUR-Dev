@@ -17,14 +17,12 @@ namespace TownOfUs.Patches.ScreenEffects
     // do i care? no
     public class AssetLoader
     {
-
         public static string[] AssetBundles = { "trappershader", "soundvision" };
 
         public AssetLoader() { Initialize(); }
 
         public void Initialize()
         {
-
             Array.ForEach(AssetBundles, x => {
                 var b = loadBundle(x);
                 bundles.Add(b.name, b);
@@ -32,8 +30,6 @@ namespace TownOfUs.Patches.ScreenEffects
                     objectname_to_bundle.Add(ConvertToBaseName(y), x);
                 });
             });
-
-
         }
 
         private static AssetBundle loadBundle(string bundlename)

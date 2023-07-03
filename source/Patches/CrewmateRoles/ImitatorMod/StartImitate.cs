@@ -84,6 +84,7 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
             {
                 var aurial = new Aurial(ImitatingPlayer);
                 aurial.CannotSeeDelay = DateTime.UtcNow;
+                aurial.Loaded = true;
             }
 
             var newRole = Role.GetRole(ImitatingPlayer);

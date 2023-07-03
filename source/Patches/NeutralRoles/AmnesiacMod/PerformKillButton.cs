@@ -323,6 +323,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 aurialRole.NormalVision = false;
                 aurialRole.knownPlayerRoles.Clear();
                 if (amnesiac.AmOwner) aurialRole.ApplyEffect();
+                aurialRole.Loaded = true;
             }
 
             else if (role == RoleEnum.Arsonist)

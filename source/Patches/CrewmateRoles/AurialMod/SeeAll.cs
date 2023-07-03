@@ -10,13 +10,14 @@ namespace TownOfUs.CrewmateRoles.AurialMod
     {
         public static void Postfix(HudManager __instance)
         {
-
+            if (PlayerControl.AllPlayerControls.Count <= 1) return;
             if (PlayerControl.LocalPlayer == null) return;
             if (PlayerControl.LocalPlayer.Data == null) return;
             if (!PlayerControl.LocalPlayer.Is(RoleEnum.Aurial)) return;
-            if (!PlayerControl.LocalPlayer.CanMove) return;
 
             Aurial s = Role.GetRole<Aurial>(PlayerControl.LocalPlayer);
+
+            if (!PlayerControl.LocalPlayer.CanMove && !s.Loaded) return;
 
             var button = __instance.KillButton;
             button.gameObject.SetActive((__instance.UseButton.isActiveAndEnabled || __instance.PetButton.isActiveAndEnabled)
@@ -35,6 +36,8 @@ namespace TownOfUs.CrewmateRoles.AurialMod
                 renderer.color = Palette.DisabledClear;
                 renderer.material.SetFloat("_Desat", 1f);
             }
+
+            if (!s.Loaded) s.Loaded = true;
 
             foreach (var player in PlayerControl.AllPlayerControls)
             {
