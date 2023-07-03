@@ -52,11 +52,6 @@ namespace TownOfUs.CrewmateRoles.HaunterMod
                 {
                     Coroutines.Start(Utils.FlashCoroutine(Color.white));
                 }
-                foreach (var haunter in Role.GetRoles(RoleEnum.Haunter))
-                {
-                    var haunterRole = (Haunter)haunter;
-                    haunterRole.CompletedTasks = true;
-                }
             }
         }
     }

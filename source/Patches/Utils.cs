@@ -799,6 +799,26 @@ namespace TownOfUs
                 mystic.RegenTask();
             }
 
+            if (player.Is(RoleEnum.CultistSnitch))
+            {
+                var snitch = Role.GetRole<CultistSnitch>(player);
+                snitch.Name = "Informant";
+                snitch.TaskText = () => "Complete all your tasks to reveal a fake Impostor!";
+                snitch.Color = Patches.Colors.Impostor;
+                snitch.Faction = Faction.Impostors;
+                snitch.RegenTask();
+                if (PlayerControl.LocalPlayer == player && snitch.CompletedTasks)
+                {
+                    var crew = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(Faction.Crewmates) && !x.Is(RoleEnum.Mayor)).ToList();
+                    if (crew.Count != 0)
+                    {
+                        crew.Shuffle();
+                        snitch.RevealedPlayer = crew[0];
+                        Rpc(CustomRPC.SnitchCultistReveal, player.PlayerId, snitch.RevealedPlayer.PlayerId);
+                    }
+                }
+            }
+
             if (player.Is(RoleEnum.Spy))
             {
                 var spy = Role.GetRole<Spy>(player);
@@ -833,6 +853,7 @@ namespace TownOfUs
                 if (CustomGameOptions.MaxEngineers > 0) colorMapping.Add("Engineer", Colors.Engineer);
                 if (CustomGameOptions.MaxInvestigators > 0) colorMapping.Add("Investigator", Colors.Investigator);
                 if (CustomGameOptions.MaxMystics > 0) colorMapping.Add("Mystic", Colors.Mystic);
+                if (CustomGameOptions.MaxSnitches > 0) colorMapping.Add("Snitch", Colors.Snitch);
                 if (CustomGameOptions.MaxSpies > 0) colorMapping.Add("Spy", Colors.Spy);
                 if (CustomGameOptions.MaxTransporters > 0) colorMapping.Add("Transporter", Colors.Transporter);
                 if (CustomGameOptions.MaxVigilantes > 1) colorMapping.Add("Vigilante", Colors.Vigilante);
@@ -849,6 +870,21 @@ namespace TownOfUs
             player.Data.Role.TeamType = RoleTeamTypes.Impostor;
             RoleManager.Instance.SetRole(player, RoleTypes.Impostor);
             player.SetKillTimer(GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown);
+
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.CultistSnitch))
+            {
+                var snitch = Role.GetRole<CultistSnitch>(PlayerControl.LocalPlayer);
+                if (snitch.RevealedPlayer == player)
+                {
+                    var crew = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(Faction.Crewmates) && !x.Is(RoleEnum.Mayor)).ToList();
+                    if (crew.Count != 0)
+                    {
+                        crew.Shuffle();
+                        snitch.RevealedPlayer = crew[0];
+                        Rpc(CustomRPC.SnitchCultistReveal, player.PlayerId, snitch.RevealedPlayer.PlayerId);
+                    }
+                }
+            }
 
             foreach (var player2 in PlayerControl.AllPlayerControls)
             {

@@ -157,6 +157,7 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption MaxEngineers;
         public static CustomNumberOption MaxInvestigators;
         public static CustomNumberOption MaxMystics;
+        public static CustomNumberOption MaxSnitches;
         public static CustomNumberOption MaxSpies;
         public static CustomNumberOption MaxTransporters;
         public static CustomNumberOption MaxVigilantes;
@@ -707,6 +708,8 @@ namespace TownOfUs.CustomOption
                 new CustomNumberOption(num++, MultiMenu.main, "Max Investigators", 3, 0, 5, 1);
             MaxMystics =
                 new CustomNumberOption(num++, MultiMenu.main, "Max Mystics", 3, 0, 5, 1);
+            MaxSnitches =
+                new CustomNumberOption(num++, MultiMenu.main, "Max Snitches", 3, 0, 5, 1);
             MaxSpies =
                 new CustomNumberOption(num++, MultiMenu.main, "Max Spies", 3, 0, 5, 1);
             MaxTransporters =

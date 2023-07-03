@@ -25,7 +25,7 @@ namespace TownOfUs.CrewmateRoles.AurialMod
             button.SetCoolDown(s.RadiateTimer(), CustomGameOptions.RadiateCooldown);
 
             var renderer = button.graphic;
-            if (!button.isCoolingDown && button.gameObject.active)
+            if (!button.isCoolingDown)
             {
                 renderer.color = Palette.EnabledColor;
                 renderer.material.SetFloat("_Desat", 0f);

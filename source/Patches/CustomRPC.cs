@@ -71,6 +71,7 @@ namespace TownOfUs
         Confess,
         Bless,
         Camouflage,
+        SnitchCultistReveal,
 
         BypassKill,
         BypassMultiKill,

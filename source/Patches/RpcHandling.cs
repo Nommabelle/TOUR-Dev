@@ -591,6 +591,7 @@ namespace TownOfUs
                 var engineers = CustomGameOptions.MaxEngineers;
                 var investigators = CustomGameOptions.MaxInvestigators;
                 var mystics = CustomGameOptions.MaxMystics;
+                var snitches = CustomGameOptions.MaxSnitches;
                 var spies = CustomGameOptions.MaxSpies;
                 var transporters = CustomGameOptions.MaxTransporters;
                 var vigilantes = CustomGameOptions.MaxVigilantes;
@@ -613,6 +614,11 @@ namespace TownOfUs
                 {
                     crewRoles.Add((typeof(CultistMystic), 10, false));
                     mystics--;
+                }
+                while (snitches > 0)
+                {
+                    crewRoles.Add((typeof(CultistSnitch), 10, false));
+                    snitches--;
                 }
                 while (spies > 0)
                 {
@@ -902,6 +908,11 @@ namespace TownOfUs
                     case CustomRPC.Blackmail:
                         var blackmailer = Role.GetRole<Blackmailer>(Utils.PlayerById(reader.ReadByte()));
                         blackmailer.Blackmailed = Utils.PlayerById(reader.ReadByte());
+                        break;
+                    case CustomRPC.SnitchCultistReveal:
+                        var snitch = Role.GetRole<CultistSnitch>(Utils.PlayerById(reader.ReadByte()));
+                        snitch.CompletedTasks = true;
+                        snitch.RevealedPlayer = Utils.PlayerById(reader.ReadByte());
                         break;
                     case CustomRPC.Confess:
                         var oracle = Role.GetRole<Oracle>(Utils.PlayerById(reader.ReadByte()));

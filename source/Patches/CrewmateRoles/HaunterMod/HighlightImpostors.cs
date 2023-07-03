@@ -1,6 +1,5 @@
 using HarmonyLib;
 using TownOfUs.Roles;
-using Hazel;
 
 namespace TownOfUs.CrewmateRoles.HaunterMod
 {

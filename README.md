@@ -164,6 +164,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <ul> <li>Removed Settings for disabling name plates and level numbers</li> </ul>
   <ul> <li>Guardian Angel targets can now be a Neutral Killer</li> </ul>
   <ul> <li>Bug Fix: Plaguebearer no longer turns into Pestilence early</li> </ul>
+  <ul> <li>Added a new version of Snitch to Cultist</li> </ul>
   </details>
   <details>
   <summary> v4.0.6 </summary>
@@ -1777,6 +1778,7 @@ When they are the only remaining Impostor, they will have their kill cooldown sh
 | Max Engineers | The maximum number of Engineers that can spawn | Number | 3 |
 | Max Investigators | The maximum number of Investigators that can spawn | Number | 3 |
 | Max Mystics | The maximum number of Mystics that can spawn | Number | 3 |
+| Max Snitches | The maximum number of Snitches that can spawn | Number | 3 |
 | Max Spies | The maximum number of Spies that can spawn | Number | 3 |
 | Max Transporters | The maximum number of Transporters that can spawn | Number | 3 |
 | Max Vigilantes | The maximum number of Vigilantes that can spawn | Number | 3 |

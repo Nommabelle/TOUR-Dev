@@ -62,6 +62,7 @@ namespace TownOfUs
         CultistSeer,
         CultistMystic,
         Chameleon,
+        CultistSnitch,
 
         None
     }

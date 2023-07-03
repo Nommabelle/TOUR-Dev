@@ -354,6 +354,7 @@ namespace TownOfUs
         public static int MaxEngineers => (int)Generate.MaxEngineers.Get();
         public static int MaxInvestigators => (int)Generate.MaxInvestigators.Get();
         public static int MaxMystics => (int)Generate.MaxMystics.Get();
+        public static int MaxSnitches => (int)Generate.MaxSnitches.Get();
         public static int MaxSpies => (int)Generate.MaxSpies.Get();
         public static int MaxTransporters => (int)Generate.MaxTransporters.Get();
         public static int MaxVigilantes => (int)Generate.MaxVigilantes.Get();
