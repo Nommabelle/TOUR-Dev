@@ -2,6 +2,7 @@
 using TownOfUs.Roles;
 using System;
 using System.Linq;
+using TownOfUs.CrewmateRoles.OracleMod;
 
 namespace TownOfUs.CrewmateRoles.ImitatorMod
 {
@@ -35,6 +36,12 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
                         DestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, message);
                 }
                 imitatorRole.trappedPlayers.Clear();
+            }
+            else if (imitatorRole.confessingPlayer != null)
+            {
+                var playerResults = MeetingStartOracle.PlayerReportFeedback(imitatorRole.confessingPlayer);
+
+                if (!string.IsNullOrWhiteSpace(playerResults)) DestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, playerResults);
             }
         }
     }

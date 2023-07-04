@@ -11,6 +11,7 @@ namespace TownOfUs.Roles
         public PlayerControl ImitatePlayer = null;
 
         public List<RoleEnum> trappedPlayers = null;
+        public PlayerControl confessingPlayer = null;
 
 
         public Imitator(PlayerControl player) : base(player)

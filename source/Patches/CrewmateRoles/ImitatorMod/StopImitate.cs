@@ -22,6 +22,7 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
             if (StartImitate.ImitatingPlayer != null && !StartImitate.ImitatingPlayer.Is(RoleEnum.Traitor))
             {
                 List<RoleEnum> trappedPlayers = null;
+                PlayerControl confessingPlayer = null;
 
                 if (PlayerControl.LocalPlayer == StartImitate.ImitatingPlayer)
                 {
@@ -74,19 +75,18 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
                         Object.Destroy(veteranRole.UsesText);
                     }
 
-                    if (PlayerControl.LocalPlayer.Is(RoleEnum.Medium))
-                    {
-                        var medRole = Role.GetRole<Medium>(PlayerControl.LocalPlayer);
-                        medRole.MediatedPlayers.Values.DestroyAll();
-                        medRole.MediatedPlayers.Clear();
-                    }
-
                     if (PlayerControl.LocalPlayer.Is(RoleEnum.Trapper))
                     {
                         var trapperRole = Role.GetRole<Trapper>(PlayerControl.LocalPlayer);
                         Object.Destroy(trapperRole.UsesText);
                         trapperRole.traps.ClearTraps();
                         trappedPlayers = trapperRole.trappedPlayers;
+                    }
+
+                    if (PlayerControl.LocalPlayer.Is(RoleEnum.Oracle))
+                    {
+                        var oracleRole = Role.GetRole<Oracle>(PlayerControl.LocalPlayer);
+                        confessingPlayer = oracleRole.Confessor;
                     }
 
                     if (PlayerControl.LocalPlayer.Is(RoleEnum.Detective))
@@ -107,11 +107,20 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
                     if (!PlayerControl.LocalPlayer.Is(RoleEnum.Investigator) && !PlayerControl.LocalPlayer.Is(RoleEnum.Mystic)
                         && !PlayerControl.LocalPlayer.Is(RoleEnum.Spy)) DestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(false);
                 }
+
+                if (StartImitate.ImitatingPlayer.Is(RoleEnum.Medium))
+                {
+                    var medRole = Role.GetRole<Medium>(StartImitate.ImitatingPlayer);
+                    medRole.MediatedPlayers.Values.DestroyAll();
+                    medRole.MediatedPlayers.Clear();
+                }
+
                 var role = Role.GetRole(StartImitate.ImitatingPlayer);
                 var killsList = (role.Kills, role.CorrectKills, role.IncorrectKills, role.CorrectAssassinKills, role.IncorrectAssassinKills);
                 Role.RoleDictionary.Remove(StartImitate.ImitatingPlayer.PlayerId);
                 var imitator = new Imitator(StartImitate.ImitatingPlayer);
                 imitator.trappedPlayers = trappedPlayers;
+                imitator.confessingPlayer = confessingPlayer;
                 var newRole = Role.GetRole(StartImitate.ImitatingPlayer);
                 newRole.RemoveFromRoleHistory(newRole.RoleType);
                 newRole.Kills = killsList.Kills;

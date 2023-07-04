@@ -1,13 +1,12 @@
 ﻿using HarmonyLib;
 using System.Linq;
-using TownOfUs.CrewmateRoles.ImitatorMod;
 using TownOfUs.Extensions;
 using TownOfUs.Roles;
 
 namespace TownOfUs.CrewmateRoles.OracleMod
 {
     [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Start))]
-    public class MeetingStart
+    public class MeetingStartOracle
     {
         public static void Postfix(MeetingHud __instance)
         {
