@@ -261,7 +261,8 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
             else if (role == RoleEnum.VampireHunter)
             {
                 var vhRole = Role.GetRole<VampireHunter>(amnesiac);
-                vhRole.UsesLeft = CustomGameOptions.MaxStakesPerRound;
+                if (vhRole.AddedStakes) vhRole.UsesLeft = CustomGameOptions.MaxFailedStakesPerGame;
+                else vhRole.UsesLeft = 0;
                 vhRole.LastStaked = DateTime.UtcNow;
             }
 

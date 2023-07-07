@@ -434,8 +434,9 @@ namespace TownOfUs.CustomOption
 
         public static CustomHeaderOption VampireHunter;
         public static CustomNumberOption StakeCooldown;
-        public static CustomNumberOption MaxStakesPerRound;
-        public static CustomNumberOption ReducedRoundOneStakes;
+        public static CustomNumberOption MaxFailedStakesPerGame;
+        public static CustomToggleOption CanStakeRoundOne;
+        public static CustomToggleOption SelfKillAfterFinalStake;
         public static CustomStringOption BecomeOnVampDeaths;
 
         public static CustomHeaderOption Prosecutor;
@@ -940,8 +941,9 @@ namespace TownOfUs.CustomOption
                 new CustomHeaderOption(num++, MultiMenu.crewmate, "<color=#B3B3E6FF>Vampire Hunter</color>");
             StakeCooldown =
                 new CustomNumberOption(num++, MultiMenu.crewmate, "Stake Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
-            MaxStakesPerRound = new CustomNumberOption(num++, MultiMenu.crewmate, "Maximum Stakes Per Round", 5, 1, 15, 1);
-            ReducedRoundOneStakes = new CustomNumberOption(num++, MultiMenu.crewmate, "Reduced Round One Stakes", 5, 1, 15, 1);
+            MaxFailedStakesPerGame = new CustomNumberOption(num++, MultiMenu.crewmate, "Maximum Failed Stakes Per Game", 5, 1, 15, 1);
+            CanStakeRoundOne = new CustomToggleOption(num++, MultiMenu.crewmate, "Can Stake Round One", false);
+            SelfKillAfterFinalStake = new CustomToggleOption(num++, MultiMenu.crewmate, "Self Kill On Failure To Kill A Vamp With All Stakes", false);
             BecomeOnVampDeaths =
                 new CustomStringOption(num++, MultiMenu.crewmate, "What Vampire Hunter Becomes On All Vampire Deaths", new[] { "Crewmate", "Sheriff", "Veteran", "Vigilante" });
 

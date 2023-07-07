@@ -10,6 +10,7 @@ namespace TownOfUs.Roles
 
         public int UsesLeft;
         public TextMeshPro UsesText;
+        public bool AddedStakes;
 
         public bool ButtonUsable => UsesLeft != 0;
 
@@ -23,8 +24,8 @@ namespace TownOfUs.Roles
             RoleType = RoleEnum.VampireHunter;
             AddToRoleHistory(RoleType);
 
-            UsesLeft = CustomGameOptions.MaxStakesPerRound - CustomGameOptions.ReducedRoundOneStakes;
-            if (UsesLeft < 0) UsesLeft = 0;
+            UsesLeft = 0;
+            AddedStakes = false;
         }
 
         public float StakeTimer()

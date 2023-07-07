@@ -300,8 +300,9 @@ namespace TownOfUs
         public static bool CanBiteNeutralBenign => Generate.CanBiteNeutralBenign.Get();
         public static bool CanBiteNeutralEvil => Generate.CanBiteNeutralEvil.Get();
         public static float StakeCd => Generate.StakeCooldown.Get();
-        public static int MaxStakesPerRound => (int)Generate.MaxStakesPerRound.Get();
-        public static int ReducedRoundOneStakes => (int)Generate.ReducedRoundOneStakes.Get();
+        public static int MaxFailedStakesPerGame => (int)Generate.MaxFailedStakesPerGame.Get();
+        public static bool CanStakeRoundOne => Generate.CanStakeRoundOne.Get();
+        public static bool SelfKillAfterFinalStake => Generate.SelfKillAfterFinalStake.Get();
         public static BecomeEnum BecomeOnVampDeaths => (BecomeEnum)Generate.BecomeOnVampDeaths.Get();
         public static bool ProsDiesOnIncorrectPros => Generate.ProsDiesOnIncorrectPros.Get();
         public static float ChargeUpDuration => Generate.ChargeUpDuration.Get();

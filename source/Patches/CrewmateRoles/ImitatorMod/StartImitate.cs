@@ -79,7 +79,8 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
             if (imitatorRole == RoleEnum.VampireHunter)
             {
                 var vh = new VampireHunter(ImitatingPlayer);
-                vh.UsesLeft = CustomGameOptions.MaxStakesPerRound;
+                vh.UsesLeft = CustomGameOptions.MaxFailedStakesPerGame;
+                vh.AddedStakes = true;
             }
             if (imitatorRole == RoleEnum.Aurial)
             {

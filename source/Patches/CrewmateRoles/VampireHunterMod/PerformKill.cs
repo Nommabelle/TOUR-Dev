@@ -31,6 +31,8 @@ namespace TownOfUs.CrewmateRoles.VampireHunterMod
                 {
                     role.LastStaked = DateTime.UtcNow;
                     role.UsesLeft--;
+                    if (role.UsesLeft == 0 && role.CorrectKills == 0 && CustomGameOptions.SelfKillAfterFinalStake)
+                        Utils.RpcMurderPlayer(PlayerControl.LocalPlayer, PlayerControl.LocalPlayer);
                     return false;
                 }
                 else if (interact[1] == true)
@@ -45,11 +47,7 @@ namespace TownOfUs.CrewmateRoles.VampireHunterMod
             else
             {
                 var interact = Utils.Interact(PlayerControl.LocalPlayer, role.ClosestPlayer, true);
-                if (interact[4] == true) 
-                {
-                    role.UsesLeft--;
-                    return false;
-                }
+                if (interact[4] == true) return false;
                 else if (interact[0] == true)
                 {
                     role.LastStaked = DateTime.UtcNow;

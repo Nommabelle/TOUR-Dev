@@ -507,13 +507,13 @@ namespace TownOfUs
                 if (killer.Is(RoleEnum.VampireHunter))
                 {
                     var vh = Role.GetRole<VampireHunter>(killer);
-                    vh.CorrectKills += 1;
+                    if (killer != target) vh.CorrectKills += 1;
                 }
 
                 if (killer.Is(RoleEnum.Veteran))
                 {
                     var veteran = Role.GetRole<Veteran>(killer);
-                    if (target.Is(Faction.Impostors) || target.Is(Faction.NeutralKilling)) veteran.CorrectKills += 1;
+                    if (target.Is(Faction.Impostors) || target.Is(Faction.NeutralKilling) || target.Is(Faction.NeutralEvil)) veteran.CorrectKills += 1;
                     else if (killer != target) veteran.IncorrectKills += 1;
                 }
 
@@ -1142,7 +1142,11 @@ namespace TownOfUs
             {
                 var vh = Role.GetRole<VampireHunter>(PlayerControl.LocalPlayer);
                 vh.LastStaked = DateTime.UtcNow;
-                vh.UsesLeft = CustomGameOptions.MaxStakesPerRound;
+                if (!vh.AddedStakes)
+                {
+                    vh.UsesLeft = CustomGameOptions.MaxFailedStakesPerGame;
+                    vh.AddedStakes = true;
+                }
             }
             foreach (var vh in Role.GetRoles(RoleEnum.VampireHunter))
             {

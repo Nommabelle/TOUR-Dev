@@ -956,8 +956,9 @@ Once all Vampires are dead they turn into a different Crewmate role after the fo
 |----------|:-------------:|:------:|:------:|
 | Vampire Hunter | The percentage probability of the Vampire Hunter appearing | Percentage | 0% |
 | Stake Cooldown | The cooldown of the Vampire Hunter's Stake button | Time | 25s |
-| Max Uses Per Round | The amount of times the Stake ability can be used per round | Number | 5 |
-| Reduced Uses Round One | The reduced amount of times the Stake ability can be on the first round | Number | 5 |
+| Max Failed Stakes Per Game | The amount of times the Stake ability can be used per game incorrectly | Number | 5 |
+| Can Stake Round One | If the Vampire Hunter can stake players on the first round | Toggle | False |
+| Self Kill On Failure To Kill A Vamp With All Stakes | Whether the Vampire Hunter will die if they fail to stake any Vampires | Toggle | False |
 | Vampire Hunter becomes on Vampire Death | Which role the Vampire Hunter becomes when all Vampires die | Crewmate / Sheriff / Veteran / Vigilante | Crewmate |
 
 -----------------------

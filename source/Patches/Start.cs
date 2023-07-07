@@ -73,6 +73,16 @@ namespace TownOfUs.Patches
                 vh.LastStaked = vh.LastStaked.AddSeconds(CustomGameOptions.InitialCooldowns - CustomGameOptions.StakeCd);
             }
 
+            if (CustomGameOptions.CanStakeRoundOne)
+            {
+                foreach (var vh in Role.GetRoles(RoleEnum.VampireHunter))
+                {
+                    var vhRole = (VampireHunter)vh;
+                    vhRole.UsesLeft = CustomGameOptions.MaxFailedStakesPerGame;
+                    vhRole.AddedStakes = true;
+                }
+            }
+
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Transporter))
             {
                 var transporter = Role.GetRole<Transporter>(PlayerControl.LocalPlayer);
