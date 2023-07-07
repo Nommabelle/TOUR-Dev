@@ -51,17 +51,8 @@ namespace TownOfUs.Roles
                 var vampsAlives = PlayerControl.AllPlayerControls.ToArray()
                     .Where(x => !x.Data.IsDead && !x.Data.Disconnected && x.Is(RoleEnum.Vampire)).ToList();
                 if (vampsAlives.Count == 1) return false;
-                var alives = PlayerControl.AllPlayerControls.ToArray()
-                    .Where(x => !x.Data.IsDead && !x.Data.Disconnected).ToList();
-                var killersAlive = PlayerControl.AllPlayerControls.ToArray()
-                    .Where(x => !x.Data.IsDead && !x.Data.Disconnected && !x.Is(RoleEnum.Vampire) && (x.Is(Faction.Impostors) || x.Is(Faction.NeutralKilling))).ToList();
-                if (killersAlive.Count > 0) return false;
-                if (vampsAlives.Count == 2 && killersAlive.Count == 0 && alives.Count <= 4)
-                {
-                    VampWin();
-                    Utils.EndGame();
-                    return false;
-                }
+                VampWin();
+                Utils.EndGame();
                 return false;
             }
             else
@@ -74,7 +65,7 @@ namespace TownOfUs.Roles
                 var killersAlive = PlayerControl.AllPlayerControls.ToArray()
                     .Where(x => !x.Data.IsDead && !x.Data.Disconnected && !x.Is(RoleEnum.Vampire) && (x.Is(Faction.Impostors) || x.Is(Faction.NeutralKilling))).ToList();
                 if (killersAlive.Count > 0) return false;
-                if (vampsAlives.Count == 3 && killersAlive.Count == 0 && alives.Count <= 6)
+                if (alives.Count <= 6)
                 {
                     VampWin();
                     Utils.EndGame();

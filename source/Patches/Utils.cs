@@ -1142,18 +1142,19 @@ namespace TownOfUs
             {
                 var vh = Role.GetRole<VampireHunter>(PlayerControl.LocalPlayer);
                 vh.LastStaked = DateTime.UtcNow;
-                if (!vh.AddedStakes)
-                {
-                    vh.UsesLeft = CustomGameOptions.MaxFailedStakesPerGame;
-                    vh.AddedStakes = true;
-                }
             }
             foreach (var vh in Role.GetRoles(RoleEnum.VampireHunter))
             {
+                var vhRole = (VampireHunter)vh;
+                if (!vhRole.AddedStakes)
+                {
+                    vhRole.UsesLeft = CustomGameOptions.MaxFailedStakesPerGame;
+                    vhRole.AddedStakes = true;
+                }
                 var vamps = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(RoleEnum.Vampire) && !x.Data.IsDead && !x.Data.Disconnected).ToList();
                 if (vamps.Count == 0 && vh.Player != StartImitate.ImitatingPlayer && !vh.Player.Data.IsDead && !vh.Player.Data.Disconnected)
                 {
-                    var vhPlayer = ((VampireHunter)vh).Player;
+                    var vhPlayer = vhRole.Player;
 
                     if (CustomGameOptions.BecomeOnVampDeaths == BecomeEnum.Sheriff)
                     {
