@@ -63,8 +63,8 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 - [Undertaker](#undertaker)
 
 **Modifiers**
+- [Aftermath](#aftermath)
 - [Bait](#bait)
-- [Blind](#blind)
 - [Diseased](#diseased)
 - [Frosty](#frosty)
 - [Multitasker](#multitasker)
