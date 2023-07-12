@@ -1082,6 +1082,16 @@ namespace TownOfUs
         }
 
         public static bool IsOpen(this ChatController self) => self.state == ChatControllerState.Open;
+        public static void OpenClose(this ChatController self, bool openorclose)
+        {
+            CustomNetworkTransform customNetworkTransform = PlayerControl.LocalPlayer ? PlayerControl.LocalPlayer.NetTransform : null;
+            if (!customNetworkTransform) return;
+            self.StopAllCoroutines();
+            self.chatScreen.SetActive(openorclose);
+            customNetworkTransform.Halt();
+            if (openorclose) self.StartCoroutine(self.CoOpen());
+            else self.StartCoroutine(self.CoClose());
+        }
 
         public static void ResetCustomTimers()
         {
