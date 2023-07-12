@@ -1081,6 +1081,8 @@ namespace TownOfUs
             return (IList)Activator.CreateInstance(genericListType);
         }
 
+        public static bool IsOpen(this ChatController self) => self.state == ChatControllerState.Open;
+
         public static void ResetCustomTimers()
         {
             #region CrewmateRoles
