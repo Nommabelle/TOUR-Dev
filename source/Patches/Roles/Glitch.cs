@@ -132,10 +132,10 @@ namespace TownOfUs.Roles
                 if (Minigame.Instance)
                     Minigame.Instance.Close();
 
-                if (!MimicList.IsOpen() || MeetingHud.Instance)
+                if (!MimicList.IsOpenOrOpening || MeetingHud.Instance)
                 {
                     MimicList.Toggle();
-                    MimicList.SetVisible(false);
+                    MimicList.gameObject.SetActive(false);
                     MimicList = null;
                 }
                 else
@@ -618,15 +618,15 @@ namespace TownOfUs.Roles
                     __gInstance.MimicList.SetVisible(true);
                     __gInstance.MimicList.Toggle();
 
-                    // where did these go? who knows.
-                    //__gInstance.MimicList.TextBubble.enabled = false;
-                    //__gInstance.MimicList.TextBubble.gameObject.SetActive(false);
+                    var aspect = __gInstance.MimicList.gameObject.AddComponent<AspectPosition>();
+                    aspect.Alignment = AspectPosition.EdgeAlignments.Center;
+                    aspect.AdjustPosition();
 
                     __gInstance.MimicList.freeChatField.enabled = false;
                     __gInstance.MimicList.freeChatField.gameObject.SetActive(false);
 
-                    __gInstance.MimicList.banButton.enabled = false;
-                    __gInstance.MimicList.banButton.gameObject.SetActive(false);
+                    __gInstance.MimicList.banButton.MenuButton.enabled = false;
+                    __gInstance.MimicList.banButton.MenuButton.gameObject.SetActive(false);
 
                     __gInstance.MimicList.freeChatField.charCountText.enabled = false;
                     __gInstance.MimicList.freeChatField.charCountText.gameObject.SetActive(false);
@@ -679,7 +679,7 @@ namespace TownOfUs.Roles
                 else
                 {
                     __gInstance.MimicList.Toggle();
-                    __gInstance.MimicList.SetVisible(false);
+                    __gInstance.MimicList.gameObject.SetActive(false);
                     __gInstance.MimicList = null;
                 }
             }
