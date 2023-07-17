@@ -85,6 +85,10 @@ namespace TownOfUs.Roles
                 aspect.Alignment = AspectPosition.EdgeAlignments.Center;
                 aspect.AdjustPosition();
 
+                TransportList.GetPooledBubble().enabled = false;
+                TransportList.GetPooledBubble().gameObject.SetActive(false);
+
+
                 TransportList.freeChatField.enabled = false;
                 TransportList.freeChatField.gameObject.SetActive(false);
 

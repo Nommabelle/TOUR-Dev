@@ -622,6 +622,9 @@ namespace TownOfUs.Roles
                     aspect.Alignment = AspectPosition.EdgeAlignments.Center;
                     aspect.AdjustPosition();
 
+                    __gInstance.MimicList.GetPooledBubble().enabled = false;
+                    __gInstance.MimicList.GetPooledBubble().gameObject.SetActive(false);
+
                     __gInstance.MimicList.freeChatField.enabled = false;
                     __gInstance.MimicList.freeChatField.gameObject.SetActive(false);
 
