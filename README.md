@@ -148,6 +148,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <details>
   <summary> v5.0.2 </summary>
   <ul> <li>Compatibility with the new Among Us version v2023.7.12</li> </ul>
+  <ul> <li>New Setting: Detective can detect last killer</li> </ul>
   </details>
   <details>
   <summary> v5.0.1 </summary>
@@ -793,6 +794,7 @@ If the killer of the inspected player dies, the following round the examine butt
 | Show Detective Reports | Whether the Detective should get information when reporting a body | Toggle | True |
 | Time Where Detective Reports Will Have Role | If a body has been dead for shorter than this amount, the Detective's report will contain the killer's role | Time | 15s |
 | Time Where Detective Reports Will Have Faction | If a body has been dead for shorter than this amount, the Detective's report will contain the killer's faction | Time | 30s |
+| Can Detect Last Killer | Whether the Detective can also detect the last player who killed (resets on round start) | Toggle | False |
 
 -----------------------
 ## Haunter

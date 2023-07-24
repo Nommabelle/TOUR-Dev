@@ -525,6 +525,12 @@ namespace TownOfUs
                     Coroutines.Start(FlashCoroutine(Patches.Colors.Mystic));
                 }
 
+                if (PlayerControl.LocalPlayer.Is(RoleEnum.Detective))
+                {
+                    var detective = Role.GetRole<Detective>(PlayerControl.LocalPlayer);
+                    detective.LastKiller = killer;
+                }
+
                 if (target.AmOwner)
                 {
                     try
@@ -1212,13 +1218,9 @@ namespace TownOfUs
             {
                 var detective = Role.GetRole<Detective>(PlayerControl.LocalPlayer);
                 detective.LastExamined = DateTime.UtcNow;
-                if (detective.DetectedKiller != null && (detective.DetectedKiller.Data.IsDead || detective.DetectedKiller.Data.Disconnected))
-                {
-                    detective.DetectedKiller = null;
-                    detective.ExamineMode = false;
-                    detective.ClosestPlayer = null;
-                }
+                detective.ClosestPlayer = null;
                 detective.CurrentTarget = null;
+                detective.LastKiller = null;
             }
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Chameleon))
             {
