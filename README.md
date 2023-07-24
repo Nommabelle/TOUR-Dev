@@ -149,6 +149,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <summary> v5.0.2 </summary>
   <ul> <li>Compatibility with the new Among Us version v2023.7.12</li> </ul>
   <ul> <li>New Setting: Detective can detect last killer</li> </ul>
+  <ul> <li>New Setting: Neutral Evil Win Ends Game</li> </ul>
   </details>
   <details>
   <summary> v5.0.1 </summary>
@@ -1845,6 +1846,7 @@ When they are the only remaining Impostor, they will have their kill cooldown sh
 | Disable Meeting Skip Button | Whether the meeting button is disabled | No / Emergency / Always | No |
 | Enable Hidden Roles | Whether hidden roles are added to the role selections | Toggle | True |
 | First Death Shield Next Game | Whether the first player to die gets a shield for the first round next game | Toggle | False |
+| Neutral Evils Win Ends Game | Whether a Neutral Evil role winning ends the game | Toggle | True |
 
 -----------------------
 # Task Tracking Settings

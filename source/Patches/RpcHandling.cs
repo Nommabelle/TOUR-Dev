@@ -1123,7 +1123,9 @@ namespace TownOfUs
                         phantomPlayer.Exiled();
                         break;
                     case CustomRPC.PhantomWin:
-                        Role.GetRole<Phantom>(Utils.PlayerById(reader.ReadByte())).CompletedTasks = true;
+                        var phantomWinner = Role.GetRole<Phantom>(Utils.PlayerById(reader.ReadByte()));
+                        phantomWinner.CompletedTasks = true;
+                        if (!CustomGameOptions.NeutralEvilWinEndsGame) phantomWinner.Caught = true;
                         break;
                     case CustomRPC.SetHaunter:
                         readByte = reader.ReadByte();

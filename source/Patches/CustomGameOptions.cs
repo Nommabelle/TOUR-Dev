@@ -160,6 +160,7 @@ namespace TownOfUs
         public static bool DeadSeeRoles => Generate.DeadSeeRoles.Get();
         public static bool HiddenRoles => Generate.HiddenRoles.Get();
         public static bool FirstDeathShield => Generate.FirstDeathShield.Get();
+        public static bool NeutralEvilWinEndsGame => Generate.NeutralEvilWinEndsGame.Get();
         public static bool SeeTasksDuringRound => Generate.SeeTasksDuringRound.Get();
         public static bool SeeTasksDuringMeeting => Generate.SeeTasksDuringMeeting.Get();
         public static bool SeeTasksWhenDead => Generate.SeeTasksWhenDead.Get();

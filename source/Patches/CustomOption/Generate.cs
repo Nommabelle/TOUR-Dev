@@ -119,6 +119,7 @@ namespace TownOfUs.CustomOption
         public static CustomStringOption SkipButtonDisable;
         public static CustomToggleOption HiddenRoles;
         public static CustomToggleOption FirstDeathShield;
+        public static CustomToggleOption NeutralEvilWinEndsGame;
 
         public static CustomHeaderOption BetterPolusSettings;
         public static CustomToggleOption VentImprovements;
@@ -776,6 +777,7 @@ namespace TownOfUs.CustomOption
             SkipButtonDisable = new CustomStringOption(num++, MultiMenu.main, "Disable Meeting Skip Button", new[] { "No", "Emergency", "Always" });
             HiddenRoles = new CustomToggleOption(num++, MultiMenu.main, "Enable Hidden Roles", true);
             FirstDeathShield = new CustomToggleOption(num++, MultiMenu.main, "First Death Shield Next Game", false);
+            NeutralEvilWinEndsGame = new CustomToggleOption(num++, MultiMenu.main, "Neutral Evil Win Ends Game", true);
 
             TaskTrackingSettings =
                 new CustomHeaderOption(num++, MultiMenu.main, "Task Tracking Settings");
