@@ -1,4 +1,7 @@
 using HarmonyLib;
+using Reactor.Utilities;
+using System.Linq;
+using TownOfUs.Patches.NeutralRoles;
 using TownOfUs.Roles;
 
 namespace TownOfUs.NeutralRoles.JesterMod
@@ -15,6 +18,17 @@ namespace TownOfUs.NeutralRoles.JesterMod
             var role = Role.GetRole(player);
             if (role == null) return;
             if (role.RoleType == RoleEnum.Jester) ((Jester)role).Wins();
+
+            if (PlayerControl.LocalPlayer != player) return;
+            PlayerVoteArea[] pv = MeetingHud.Instance.playerStates;
+
+            byte[] toKill = MeetingHud.Instance.playerStates.Where(x => x.VotedFor == player.PlayerId).Select(x => x.TargetPlayerId).ToArray();
+            var pk = new PunishmentKill((x) => {
+                Utils.RpcMultiMurderPlayer(player, x);
+            }, (y) => {
+                return toKill.Contains(y.PlayerId);
+            });
+            Coroutines.Start(pk.Open());
         }
     }
 }
