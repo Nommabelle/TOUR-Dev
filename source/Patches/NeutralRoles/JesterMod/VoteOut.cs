@@ -19,6 +19,7 @@ namespace TownOfUs.NeutralRoles.JesterMod
             if (role == null) return;
             if (role.RoleType == RoleEnum.Jester) ((Jester)role).Wins();
 
+            if (!CustomGameOptions.NeutralEvilWinEndsGame) return;
             if (PlayerControl.LocalPlayer != player) return;
             PlayerVoteArea[] pv = MeetingHud.Instance.playerStates;
 
