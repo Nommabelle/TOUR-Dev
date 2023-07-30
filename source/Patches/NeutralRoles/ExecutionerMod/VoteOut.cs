@@ -21,11 +21,11 @@ namespace TownOfUs.NeutralRoles.ExecutionerMod
                     ((Executioner)role).Wins();
 
                     if (!CustomGameOptions.NeutralEvilWinEndsGame) return;
+                    Utils.MurderPlayer(player, player,false);
                     if (PlayerControl.LocalPlayer != player) return;
 
                     PlayerVoteArea[] pv = MeetingHud.Instance.playerStates;
-
-                    byte[] toKill = MeetingHud.Instance.playerStates.Where(x => x.VotedFor == ((Executioner)role).target.PlayerId && x.TargetPlayerId != player.PlayerId).Select(x => x.TargetPlayerId).ToArray();
+                    byte[] toKill = MeetingHud.Instance.playerStates.Where(x => x.VotedFor == ((Executioner)role).target.PlayerId).Select(x => x.TargetPlayerId).ToArray();
                     var pk = new PunishmentKill((x) => {
                         Utils.RpcMultiMurderPlayer(player, x);
                     }, (y) => {
