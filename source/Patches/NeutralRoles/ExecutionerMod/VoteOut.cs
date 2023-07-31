@@ -20,9 +20,9 @@ namespace TownOfUs.NeutralRoles.ExecutionerMod
                 {
                     ((Executioner)role).Wins();
 
-                    if (!CustomGameOptions.NeutralEvilWinEndsGame) return;
+                    if (CustomGameOptions.NeutralEvilWinEndsGame) return;
                     Utils.MurderPlayer(player, player,false);
-                    if (PlayerControl.LocalPlayer != player) return;
+                    if (PlayerControl.LocalPlayer.Is(RoleEnum.Executioner)) return;
 
                     PlayerVoteArea[] pv = MeetingHud.Instance.playerStates;
                     byte[] toKill = MeetingHud.Instance.playerStates.Where(x => x.VotedFor == ((Executioner)role).target.PlayerId).Select(x => x.TargetPlayerId).ToArray();
