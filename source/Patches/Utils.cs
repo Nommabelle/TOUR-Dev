@@ -479,7 +479,7 @@ namespace TownOfUs
             var data = target.Data;
             if (data != null && !data.IsDead)
             {
-                if (ShowRoundOneShield.DiedFirst == "") ShowRoundOneShield.DiedFirst = target.name;
+                if (ShowRoundOneShield.DiedFirst == "") ShowRoundOneShield.DiedFirst = target.GetDefaultOutfit().PlayerName;
 
                 if (killer == PlayerControl.LocalPlayer)
                     SoundManager.Instance.PlaySound(PlayerControl.LocalPlayer.KillSfx, false, 0.8f);
