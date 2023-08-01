@@ -22,7 +22,7 @@ namespace TownOfUs.NeutralRoles.JesterMod
                 ((Jester)role).Wins();
 
                 if (CustomGameOptions.NeutralEvilWinEndsGame) return;
-                if (!PlayerControl.LocalPlayer.Is(RoleEnum.Jester)) return;
+                if (PlayerControl.LocalPlayer != player) return;
                 PlayerVoteArea[] pv = MeetingHud.Instance.playerStates;
 
                 byte[] toKill = MeetingHud.Instance.playerStates.Where(x => x.VotedFor == player.PlayerId).Select(x => x.TargetPlayerId).ToArray();
