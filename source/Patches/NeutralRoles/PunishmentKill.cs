@@ -5,9 +5,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TownOfUs.Roles;
 using UnityEngine;
 
 namespace TownOfUs.Patches.NeutralRoles
@@ -38,7 +35,7 @@ namespace TownOfUs.Patches.NeutralRoles
         {
             yield return new WaitForSecondsRealtime(3f);
             while (ExileController.Instance != null) { yield return 0; }
-            Targets = PlayerControl.AllPlayerControls.ToArray().Where(x => Inclusion(x) && !x.Data.IsDead).ToList();
+            Targets = PlayerControl.AllPlayerControls.ToArray().Where(x => Inclusion(x) && !x.Data.IsDead && !x.Data.Disconnected).ToList();
             Reactor.Utilities.Logger<TownOfUs>.Warning($"Targets {Targets.Count}");
             if (Menu == null)
             {

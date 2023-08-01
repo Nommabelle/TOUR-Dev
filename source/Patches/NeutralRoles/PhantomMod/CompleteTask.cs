@@ -1,5 +1,7 @@
 using System.Linq;
 using HarmonyLib;
+using Reactor.Utilities;
+using TownOfUs.Patches.NeutralRoles;
 using TownOfUs.Roles;
 
 namespace TownOfUs.NeutralRoles.PhantomMod
@@ -23,7 +25,18 @@ namespace TownOfUs.NeutralRoles.PhantomMod
                 {
                     Utils.Rpc(CustomRPC.PhantomWin, role.Player.PlayerId);
                     if (CustomGameOptions.NeutralEvilWinEndsGame) Utils.EndGame();
-                    else role.Caught = true;
+                    else
+                    {
+                        role.Caught = true;
+                        if (!PlayerControl.LocalPlayer.Is(RoleEnum.Phantom) || !CustomGameOptions.PhantomSpook) return;
+                        byte[] toKill = MeetingHud.Instance.playerStates.Select(x => x.TargetPlayerId).ToArray();
+                        var pk = new PunishmentKill((x) => {
+                            Utils.RpcMultiMurderPlayer(PlayerControl.LocalPlayer, x);
+                        }, (y) => {
+                            return toKill.Contains(y.PlayerId);
+                        });
+                        Coroutines.Start(pk.Open());
+                    }
                 }
             }
         }

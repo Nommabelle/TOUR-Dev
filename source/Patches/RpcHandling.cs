@@ -35,6 +35,7 @@ using AmongUs.GameOptions;
 using TownOfUs.NeutralRoles.VampireMod;
 using TownOfUs.CrewmateRoles.MayorMod;
 using System.Reflection;
+using TownOfUs.Patches.NeutralRoles;
 
 namespace TownOfUs
 {
@@ -1125,7 +1126,18 @@ namespace TownOfUs
                     case CustomRPC.PhantomWin:
                         var phantomWinner = Role.GetRole<Phantom>(Utils.PlayerById(reader.ReadByte()));
                         phantomWinner.CompletedTasks = true;
-                        if (!CustomGameOptions.NeutralEvilWinEndsGame) phantomWinner.Caught = true;
+                        if (!CustomGameOptions.NeutralEvilWinEndsGame)
+                        {
+                            phantomWinner.Caught = true;
+                            if (!PlayerControl.LocalPlayer.Is(RoleEnum.Phantom) || !CustomGameOptions.PhantomSpook) return;
+                            byte[] toKill = MeetingHud.Instance.playerStates.Select(x => x.TargetPlayerId).ToArray();
+                            var pk = new PunishmentKill((x) => {
+                                Utils.RpcMultiMurderPlayer(PlayerControl.LocalPlayer, x);
+                            }, (y) => {
+                                return toKill.Contains(y.PlayerId);
+                            });
+                            Coroutines.Start(pk.Open());
+                        }
                         break;
                     case CustomRPC.SetHaunter:
                         readByte = reader.ReadByte();

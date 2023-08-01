@@ -21,9 +21,8 @@ namespace TownOfUs.NeutralRoles.JesterMod
             {
                 ((Jester)role).Wins();
 
-                if (CustomGameOptions.NeutralEvilWinEndsGame) return;
+                if (CustomGameOptions.NeutralEvilWinEndsGame || !CustomGameOptions.JesterHaunt) return;
                 if (PlayerControl.LocalPlayer != player) return;
-                PlayerVoteArea[] pv = MeetingHud.Instance.playerStates;
 
                 byte[] toKill = MeetingHud.Instance.playerStates.Where(x => x.VotedFor == player.PlayerId).Select(x => x.TargetPlayerId).ToArray();
                 var pk = new PunishmentKill((x) =>
