@@ -21,6 +21,7 @@ namespace TownOfUs.NeutralRoles.GlitchMod
             if (role == null) return;
             PoolablePlayer[] array = Object.FindObjectsOfType<PoolablePlayer>();
             foreach (var player in array) player.NameText().text = role.ColorString + player.NameText().text + "</color>";
+            __instance.BackgroundBar.material.color = role.Color;
             var text = Object.Instantiate(__instance.WinText);
             text.text = "The Glitch Wins!";
             text.color = role.Color;
@@ -28,15 +29,6 @@ namespace TownOfUs.NeutralRoles.GlitchMod
             pos.y = 1.5f;
             text.transform.position = pos;
             text.text = $"<size=4>{text.text}</size>";
-            var doomRole = Role.AllRoles.FirstOrDefault(x => x.RoleType == RoleEnum.Doomsayer && ((Doomsayer)x).WonByGuessing && ((Doomsayer)x).Player == PlayerControl.LocalPlayer);
-            if (doomRole != null) return;
-            var exeRole = Role.AllRoles.FirstOrDefault(x => x.RoleType == RoleEnum.Executioner && ((Executioner)x).TargetVotedOut && ((Executioner)x).Player == PlayerControl.LocalPlayer);
-            if (exeRole != null) return;
-            var jestRole = Role.AllRoles.FirstOrDefault(x => x.RoleType == RoleEnum.Jester && ((Jester)x).VotedOut && ((Jester)x).Player == PlayerControl.LocalPlayer);
-            if (jestRole != null) return;
-            var phantomRole = Role.AllRoles.FirstOrDefault(x => x.RoleType == RoleEnum.Phantom && ((Phantom)x).CompletedTasks && ((Phantom)x).Player == PlayerControl.LocalPlayer);
-            if (phantomRole != null) return;
-            __instance.BackgroundBar.material.color = role.Color;
         }
     }
 }
