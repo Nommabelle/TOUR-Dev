@@ -27,13 +27,13 @@ namespace TownOfUs.Patches.NeutralRoles
             {
                 singleton.Menu.DestroyImmediate();
                 singleton = null;
-            } 
+            }
             singleton = this;
         }
 
-        public IEnumerator Open()
+        public IEnumerator Open(float delay)
         {
-            yield return new WaitForSecondsRealtime(3f);
+            yield return new WaitForSecondsRealtime(delay);
             while (ExileController.Instance != null) { yield return 0; }
             Targets = PlayerControl.AllPlayerControls.ToArray().Where(x => Inclusion(x) && !x.Data.IsDead && !x.Data.Disconnected).ToList();
             Reactor.Utilities.Logger<TownOfUs>.Warning($"Targets {Targets.Count}");
@@ -90,6 +90,19 @@ namespace TownOfUs.Patches.NeutralRoles
 
                 ControllerManager.Instance.OpenOverlayMenu(__instance.name, __instance.BackButton, __instance.DefaultButtonSelected, list2);
                 return false;
+            }
+        }
+        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.StartMeeting))]
+        public static class StartMeeting
+        {
+            public static void Prefix(PlayerControl __instance)
+            {
+                if (__instance == null) return;
+                try
+                {
+                    PunishmentKill.singleton.Menu.Close();
+                }
+                catch { }
             }
         }
     }

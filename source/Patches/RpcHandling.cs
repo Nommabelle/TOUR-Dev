@@ -1129,14 +1129,14 @@ namespace TownOfUs
                         if (!CustomGameOptions.NeutralEvilWinEndsGame)
                         {
                             phantomWinner.Caught = true;
-                            if (!PlayerControl.LocalPlayer.Is(RoleEnum.Phantom) || !CustomGameOptions.PhantomSpook) return;
+                            if (!PlayerControl.LocalPlayer.Is(RoleEnum.Phantom) || !CustomGameOptions.PhantomSpook || MeetingHud.Instance) return;
                             byte[] toKill = MeetingHud.Instance.playerStates.Select(x => x.TargetPlayerId).ToArray();
                             var pk = new PunishmentKill((x) => {
                                 Utils.RpcMultiMurderPlayer(PlayerControl.LocalPlayer, x);
                             }, (y) => {
                                 return toKill.Contains(y.PlayerId);
                             });
-                            Coroutines.Start(pk.Open());
+                            Coroutines.Start(pk.Open(1f));
                         }
                         break;
                     case CustomRPC.SetHaunter:

@@ -35,7 +35,7 @@ namespace TownOfUs.NeutralRoles.PhantomMod
                         }, (y) => {
                             return toKill.Contains(y.PlayerId);
                         });
-                        Coroutines.Start(pk.Open());
+                        Coroutines.Start(pk.Open(1f));
                     }
                 }
             }

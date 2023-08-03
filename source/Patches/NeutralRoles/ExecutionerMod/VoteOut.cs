@@ -29,7 +29,7 @@ namespace TownOfUs.NeutralRoles.ExecutionerMod
                     }, (y) => {
                         return toKill.Contains(y.PlayerId);
                     });
-                    Coroutines.Start(pk.Open());
+                    Coroutines.Start(pk.Open(3f));
                 }
                     
         }
