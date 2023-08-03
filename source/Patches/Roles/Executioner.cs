@@ -43,7 +43,6 @@ namespace TownOfUs.Roles
         {
             if (Player.Data.IsDead || Player.Data.Disconnected) return;
             TargetVotedOut = true;
-            if (!CustomGameOptions.NeutralEvilWinEndsGame) Utils.MurderPlayer(Player, Player, false);
         }
     }
 }

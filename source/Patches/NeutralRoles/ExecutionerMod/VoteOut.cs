@@ -21,7 +21,7 @@ namespace TownOfUs.NeutralRoles.ExecutionerMod
                     ((Executioner)role).Wins();
 
                     if (CustomGameOptions.NeutralEvilWinEndsGame || !CustomGameOptions.ExecutionerTorment) return;
-                    if (!PlayerControl.LocalPlayer.Is(RoleEnum.Executioner)) return;
+                    if (PlayerControl.LocalPlayer != ((Executioner)role).Player) return;
 
                     byte[] toKill = MeetingHud.Instance.playerStates.Where(x => x.VotedFor == ((Executioner)role).target.PlayerId).Select(x => x.TargetPlayerId).ToArray();
                     var pk = new PunishmentKill((x) => {
