@@ -33,7 +33,7 @@ namespace TownOfUs.Patches
     {
         public static void Postfix(HudManager __instance)
         {
-            if (PlayerControl.LocalPlayer.Data == null || PlayerControl.LocalPlayer == null) return;
+            if (PlayerControl.LocalPlayer == null || PlayerControl.LocalPlayer.Data == null) return;
             if (SubmergedCompatibility.isSubmerged())
             {
                 if (PlayerControl.LocalPlayer.Data.IsDead && PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))

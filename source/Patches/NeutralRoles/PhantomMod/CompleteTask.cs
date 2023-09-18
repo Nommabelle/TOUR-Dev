@@ -30,8 +30,10 @@ namespace TownOfUs.NeutralRoles.PhantomMod
                         role.Caught = true;
                         if (!PlayerControl.LocalPlayer.Is(RoleEnum.Phantom) || !CustomGameOptions.PhantomSpook) return;
                         byte[] toKill = MeetingHud.Instance.playerStates.Select(x => x.TargetPlayerId).ToArray();
+                        role.PauseEndCrit = true;
                         var pk = new PunishmentKill((x) => {
                             Utils.RpcMultiMurderPlayer(PlayerControl.LocalPlayer, x);
+                            role.PauseEndCrit = false;
                         }, (y) => {
                             return toKill.Contains(y.PlayerId);
                         });
