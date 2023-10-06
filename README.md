@@ -149,6 +149,8 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <summary> v5.0.2 </summary>
   <ul> <li>Compatibility with the new Among Us version v2023.7.12</li> </ul>
   <ul> <li>New Setting: Detective can detect last killer</li> </ul>
+  <ul> <li>New Setting: Neutral Evil Win Ends Game</li> </ul>
+  <ul> <li>New Settings: Neutral Evils can kill players on victory</li> </ul>
   </details>
   <details>
   <summary> v5.0.1 </summary>
@@ -1253,6 +1255,7 @@ If that player gets voted out, they win the game.
 | Executioner | The percentage probability of the Executioner appearing | Percentage | 0% |
 | Executioner becomes on Target Dead | Which role the Executioner becomes when their target dies | Crewmate / Amnesiac / Survivor / Jester | Crewmate |
 | Executioner Can Button | Whether the Executioner Can Press the Button | Toggle | True |
+| Executioner Torment On Victory | Whether the Executioner can torment someone when they win | Toggle | True |
 
 -----------------------
 ## Jester
@@ -1268,6 +1271,7 @@ However, the Jester does not win if the Crewmates, Impostors or another Neutral 
 | Jester Can Button | Whether the Jester Can Press the Button | Toggle | True |
 | Jester Can Vent | Whether the Jester Can Vent | Toggle | False |
 | Jester Has Impostor Vision | Whether the Jester Has Impostor Vision | Toggle | False |
+| Jester Haunt On Victory | Whether the Jester can haunt someone when they win | Toggle | True |
 
 -----------------------
 ## Phantom
@@ -1280,6 +1284,7 @@ They become half-invisible when they die and has to complete all their tasks wit
 |----------|:-------------:|:------:|:------:|
 | Phantom | The percentage probability of the Phantom appearing | Percentage | 0% |
 | When Phantom Can Be Clicked | The amount of tasks remaining when the Phantom Can Be Clicked | Number | 5 |
+| Phantom Spook On Victory | Whether the Phantom can spook someone when they win | Toggle | True |
 
 -----------------------
 ## Arsonist
@@ -1845,6 +1850,7 @@ When they are the only remaining Impostor, they will have their kill cooldown sh
 | Disable Meeting Skip Button | Whether the meeting button is disabled | No / Emergency / Always | No |
 | Enable Hidden Roles | Whether hidden roles are added to the role selections | Toggle | True |
 | First Death Shield Next Game | Whether the first player to die gets a shield for the first round next game | Toggle | False |
+| Neutral Evils Win Ends Game | Whether a Neutral Evil role winning ends the game | Toggle | True |
 
 -----------------------
 # Task Tracking Settings

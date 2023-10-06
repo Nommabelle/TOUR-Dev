@@ -408,7 +408,7 @@ namespace TownOfUs
             PlayerControl result = null;
             foreach (var player in AllPlayers)
             {
-                if (player.Data.IsDead || player.PlayerId == refPlayer.PlayerId || !player.Collider.enabled) continue;
+                if (player.Data.IsDead || player.PlayerId == refPlayer.PlayerId || !player.Collider.enabled || player.inVent) continue;
                 var playerPosition = player.GetTruePosition();
                 var distBetweenPlayers = Vector2.Distance(refPosition, playerPosition);
                 var isClosest = distBetweenPlayers < num;
@@ -479,7 +479,7 @@ namespace TownOfUs
             var data = target.Data;
             if (data != null && !data.IsDead)
             {
-                if (ShowRoundOneShield.DiedFirst == "") ShowRoundOneShield.DiedFirst = target.name;
+                if (ShowRoundOneShield.DiedFirst == "") ShowRoundOneShield.DiedFirst = target.GetDefaultOutfit().PlayerName;
 
                 if (killer == PlayerControl.LocalPlayer)
                     SoundManager.Instance.PlaySound(PlayerControl.LocalPlayer.KillSfx, false, 0.8f);
