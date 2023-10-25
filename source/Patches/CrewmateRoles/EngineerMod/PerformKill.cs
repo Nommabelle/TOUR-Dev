@@ -21,10 +21,8 @@ namespace TownOfUs.CrewmateRoles.EngineerMod
             if (!role.ButtonUsable) return false;
             var system = ShipStatus.Instance.Systems[SystemTypes.Sabotage].Cast<SabotageSystemType>();
             if (system == null) return false;
-            var specials = system.specials.ToArray();
-            var dummyActive = system.dummy.IsActive;
-            var sabActive = specials.Any(s => s.IsActive);
-            if (!sabActive | dummyActive) return false;
+            var sabActive = system.AnyActive;
+            if (!sabActive) return false;
             role.UsesLeft -= 1;
 
             switch (GameOptionsManager.Instance.currentNormalGameOptions.MapId)
@@ -102,33 +100,33 @@ namespace TownOfUs.CrewmateRoles.EngineerMod
 
         private static bool FixComms()
         {
-            ShipStatus.Instance.RpcRepairSystem(SystemTypes.Comms, 0);
+            ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Comms, 0);
             return false;
         }
 
         private static bool FixMiraComms()
         {
-            ShipStatus.Instance.RpcRepairSystem(SystemTypes.Comms, 16 | 0);
-            ShipStatus.Instance.RpcRepairSystem(SystemTypes.Comms, 16 | 1);
+            ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Comms, 16 | 0);
+            ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Comms, 16 | 1);
             return false;
         }
 
         private static bool FixAirshipReactor()
         {
-            ShipStatus.Instance.RpcRepairSystem(SystemTypes.Reactor, 16 | 0);
-            ShipStatus.Instance.RpcRepairSystem(SystemTypes.Reactor, 16 | 1);
+            ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Reactor, 16 | 0);
+            ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Reactor, 16 | 1);
             return false;
         }
 
         private static bool FixReactor(SystemTypes system)
         {
-            ShipStatus.Instance.RpcRepairSystem(system, 16);
+            ShipStatus.Instance.RpcUpdateSystem(system, 16);
             return false;
         }
 
         private static bool FixOxygen()
         {
-            ShipStatus.Instance.RpcRepairSystem(SystemTypes.LifeSupp, 16);
+            ShipStatus.Instance.RpcUpdateSystem(SystemTypes.LifeSupp, 16);
             return false;
         }
 

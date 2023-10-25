@@ -20,9 +20,7 @@ namespace TownOfUs.ImpostorRoles.GrenadierMod
                 if (__instance.isCoolingDown) return false;
                 if (!__instance.isActiveAndEnabled) return false;
                 var system = ShipStatus.Instance.Systems[SystemTypes.Sabotage].Cast<SabotageSystemType>();
-                var specials = system.specials.ToArray();
-                var dummyActive = system.dummy.IsActive;
-                var sabActive = specials.Any(s => s.IsActive);
+                var sabActive = system.AnyActive;
                 if (sabActive) return false;
                 if (role.FlashTimer() != 0) return false;
 
