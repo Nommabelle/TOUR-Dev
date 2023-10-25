@@ -1,5 +1,4 @@
 using HarmonyLib;
-using Hazel;
 using TownOfUs.Roles;
 using System.Linq;
 using TownOfUs.CrewmateRoles.InvestigatorMod;

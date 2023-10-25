@@ -26,7 +26,6 @@ using TownOfUs.CrewmateRoles.ImitatorMod;
 using TownOfUs.CrewmateRoles.AurialMod;
 using Reactor.Networking;
 using Reactor.Networking.Extensions;
-using Unity.Services.Core.Telemetry.Internal;
 
 namespace TownOfUs
 {

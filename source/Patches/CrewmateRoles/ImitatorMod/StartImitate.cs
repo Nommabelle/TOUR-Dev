@@ -4,7 +4,6 @@ using TownOfUs.Roles;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using TownOfUs.Patches;
-using Hazel;
 
 namespace TownOfUs.CrewmateRoles.ImitatorMod
 {

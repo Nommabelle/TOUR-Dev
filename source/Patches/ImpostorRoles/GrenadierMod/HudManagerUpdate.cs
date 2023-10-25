@@ -1,7 +1,6 @@
 using HarmonyLib;
 using TownOfUs.Roles;
 using UnityEngine;
-using System.Linq;
 using TownOfUs.Extensions;
 
 namespace TownOfUs.ImpostorRoles.GrenadierMod

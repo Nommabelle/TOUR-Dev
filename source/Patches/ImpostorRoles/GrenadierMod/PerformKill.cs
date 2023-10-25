@@ -1,7 +1,5 @@
 using HarmonyLib;
-using Hazel;
 using TownOfUs.Roles;
-using System.Linq;
 
 namespace TownOfUs.ImpostorRoles.GrenadierMod
 {

@@ -1,5 +1,4 @@
 using HarmonyLib;
-using Hazel;
 using System;
 using TownOfUs.Patches;
 using TownOfUs.CustomOption;

@@ -11,7 +11,6 @@ using Il2CppInterop.Runtime.Injection;
 using UnityEngine;
 using Reactor.Utilities;
 using TownOfUs.Roles;
-using Hazel;
 
 namespace TownOfUs.Patches
 {
