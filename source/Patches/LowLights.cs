@@ -1,5 +1,6 @@
 using AmongUs.GameOptions;
 using HarmonyLib;
+using Reactor.Utilities;
 using TownOfUs.Extensions;
 using TownOfUs.Roles;
 using UnityEngine;
@@ -33,7 +34,8 @@ namespace TownOfUs
                 return false;
             }
 
-            var switchSystem = __instance.Systems[SystemTypes.Electrical]?.TryCast<SwitchSystem>();
+            // WARNING - FUNGLE AND SUBMERGED HAVE AN ID CLASH.
+            var switchSystem = GameOptionsManager.Instance.currentNormalGameOptions.MapId == 5 ? null : __instance.Systems[SystemTypes.Electrical]?.TryCast<SwitchSystem>();
             if (player.IsImpostor() || player._object.Is(RoleEnum.Glitch) ||
                 player._object.Is(RoleEnum.Juggernaut) || player._object.Is(RoleEnum.Pestilence) ||
                 (player._object.Is(RoleEnum.Jester) && CustomGameOptions.JesterImpVision) ||
