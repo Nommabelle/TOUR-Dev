@@ -73,6 +73,7 @@ namespace TownOfUs
             totalWeight += CustomGameOptions.RandomMapMira;
             totalWeight += CustomGameOptions.RandomMapPolus;
             totalWeight += CustomGameOptions.RandomMapAirship;
+            totalWeight += CustomGameOptions.RandomMapFungle;
             if (SubmergedCompatibility.Loaded) totalWeight += CustomGameOptions.RandomMapSubmerged;
 
             if (totalWeight == 0) return GameOptionsManager.Instance.currentNormalGameOptions.MapId;
@@ -86,7 +87,9 @@ namespace TownOfUs
             randomNumber -= CustomGameOptions.RandomMapPolus;
             if (randomNumber < CustomGameOptions.RandomMapAirship) return 4;
             randomNumber -= CustomGameOptions.RandomMapAirship;
-            if (SubmergedCompatibility.Loaded && randomNumber < CustomGameOptions.RandomMapSubmerged) return 5;
+            if (randomNumber < CustomGameOptions.RandomMapFungle) return 5;
+            randomNumber -= CustomGameOptions.RandomMapFungle;
+            if (SubmergedCompatibility.Loaded && randomNumber < CustomGameOptions.RandomMapSubmerged) return 6;
 
             return GameOptionsManager.Instance.currentNormalGameOptions.MapId;
         }
