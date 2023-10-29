@@ -22,7 +22,7 @@ namespace TownOfUs.CrewmateRoles.EngineerMod
             var sabActive = system.AnyActive;
             if (!sabActive) return false;
             role.UsesLeft -= 1;
-
+            Utils.Rpc(CustomRPC.EngineerFix, PlayerControl.LocalPlayer.NetId);
             switch (GameOptionsManager.Instance.currentNormalGameOptions.MapId)
             {
                 case 0:
@@ -72,9 +72,9 @@ namespace TownOfUs.CrewmateRoles.EngineerMod
                     var mushroom = ShipStatus.Instance.Systems[SystemTypes.MushroomMixupSabotage].Cast<MushroomMixupSabotageSystem>();
                     if (mushroom.IsActive)
                     {
-                        mushroom.currentSecondsUntilHeal = 0;
+                        mushroom.currentSecondsUntilHeal = 0.1f;
                         return false;
-                    }
+                    } 
                     break;
                 case 6:
                     var reactor5 = ShipStatus.Instance.Systems[SystemTypes.Reactor].Cast<ReactorSystemType>();
@@ -103,7 +103,7 @@ namespace TownOfUs.CrewmateRoles.EngineerMod
                     break;
             }
 
-            Utils.Rpc(CustomRPC.EngineerFix, PlayerControl.LocalPlayer.NetId);
+            
 
             return false;
         }

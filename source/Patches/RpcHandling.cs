@@ -747,10 +747,10 @@ namespace TownOfUs
                         var engineer = Utils.PlayerById(reader.ReadByte());
                         Role.GetRole<Engineer>(engineer).UsesLeft -= 1;
 
-                        if (GameOptionsManager.Instance.currentNormalGameOptions.MapId == 5)
+                        if (ShipStatus.Instance.Systems.ContainsKey(SystemTypes.MushroomMixupSabotage))
                         {
                             var mushroom = ShipStatus.Instance.Systems[SystemTypes.MushroomMixupSabotage].Cast<MushroomMixupSabotageSystem>();
-                            if (mushroom.IsActive) mushroom.currentSecondsUntilHeal = 0;
+                            if (mushroom.IsActive) mushroom.currentSecondsUntilHeal = 0.1f;
                         }
                         break;
 
