@@ -61,5 +61,21 @@ namespace TownOfUs.CrewmateRoles.TransporterMod
                 }
             }
         }
+
+        [HarmonyPatch(typeof(ZiplineBehaviour), nameof(ZiplineBehaviour.Use))]
+        public class SaveZiplinePlayer
+        {
+            public static void Prefix(ZiplineBehaviour __instance)
+            {
+                if (PlayerControl.LocalPlayer.Is(RoleEnum.Transporter))
+                {
+                    Role.GetRole<Transporter>(PlayerControl.LocalPlayer).UntransportablePlayers.Add(PlayerControl.LocalPlayer.PlayerId, DateTime.UtcNow);
+                }
+                else
+                {
+                    Utils.Rpc(CustomRPC.SetUntransportable, PlayerControl.LocalPlayer.PlayerId);
+                }
+            }
+        }
     }
 }
