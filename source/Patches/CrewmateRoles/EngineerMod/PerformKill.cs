@@ -65,6 +65,18 @@ namespace TownOfUs.CrewmateRoles.EngineerMod
                     if (lights4.IsActive) return FixLights(lights4);
                     break;
                 case 5:
+                    var reactor7 = ShipStatus.Instance.Systems[SystemTypes.Reactor].Cast<ReactorSystemType>();
+                    if (reactor7.IsActive) return FixReactor(SystemTypes.Reactor);
+                    var comms7 = ShipStatus.Instance.Systems[SystemTypes.Comms].Cast<HqHudSystemType>();
+                    if (comms7.IsActive) return FixMiraComms();
+                    var mushroom = ShipStatus.Instance.Systems[SystemTypes.MushroomMixupSabotage].Cast<MushroomMixupSabotageSystem>();
+                    if (mushroom.IsActive)
+                    {
+                        mushroom.currentSecondsUntilHeal = 0;
+                        return false;
+                    }
+                    break;
+                case 6:
                     var reactor5 = ShipStatus.Instance.Systems[SystemTypes.Reactor].Cast<ReactorSystemType>();
                     if (reactor5.IsActive) return FixReactor(SystemTypes.Reactor);
                     var lights5 = ShipStatus.Instance.Systems[SystemTypes.Electrical].Cast<SwitchSystem>();
@@ -79,7 +91,7 @@ namespace TownOfUs.CrewmateRoles.EngineerMod
                         }
                     }
                     break;
-                case 6:
+                case 7:
                     var comms6 = ShipStatus.Instance.Systems[SystemTypes.Comms].Cast<HudOverrideSystemType>();
                     if (comms6.IsActive) return FixComms();
                     var reactor6 = ShipStatus.Instance.Systems[SystemTypes.Reactor].Cast<ReactorSystemType>();

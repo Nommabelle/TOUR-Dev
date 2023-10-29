@@ -33,7 +33,6 @@ namespace TownOfUs
                 return false;
             }
 
-            // WARNING - FUNGLE AND SUBMERGED HAVE AN ID CLASH.
             var switchSystem = GameOptionsManager.Instance.currentNormalGameOptions.MapId == 5 ? null : __instance.Systems[SystemTypes.Electrical]?.TryCast<SwitchSystem>();
             if (player.IsImpostor() || player._object.Is(RoleEnum.Glitch) ||
                 player._object.Is(RoleEnum.Juggernaut) || player._object.Is(RoleEnum.Pestilence) ||
