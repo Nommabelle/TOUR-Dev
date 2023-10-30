@@ -59,7 +59,7 @@ namespace TownOfUs.CrewmateRoles.EngineerMod
                 case 4:
                     var comms4 = ShipStatus.Instance.Systems[SystemTypes.Comms].Cast<HudOverrideSystemType>();
                     if (comms4.IsActive) return FixComms();
-                    var reactor = ShipStatus.Instance.Systems[SystemTypes.Reactor].Cast<HeliSabotageSystem>();
+                    var reactor = ShipStatus.Instance.Systems[SystemTypes.HeliSabotage].Cast<HeliSabotageSystem>();
                     if (reactor.IsActive) return FixAirshipReactor();
                     var lights4 = ShipStatus.Instance.Systems[SystemTypes.Electrical].Cast<SwitchSystem>();
                     if (lights4.IsActive) return FixLights(lights4);
@@ -123,8 +123,8 @@ namespace TownOfUs.CrewmateRoles.EngineerMod
 
         private static bool FixAirshipReactor()
         {
-            ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Reactor, 16 | 0);
-            ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Reactor, 16 | 1);
+            ShipStatus.Instance.RpcUpdateSystem(SystemTypes.HeliSabotage, 16 | 0);
+            ShipStatus.Instance.RpcUpdateSystem(SystemTypes.HeliSabotage, 16 | 1);
             return false;
         }
 
