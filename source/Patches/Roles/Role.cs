@@ -483,7 +483,7 @@ namespace TownOfUs.Roles
                         __instance.__4__this.RoleBlurbText.color = role.Color;
                         __instance.__4__this.RoleBlurbText.text = role.ImpostorText();
                         //    __instance.__4__this.ImpostorText.gameObject.SetActive(true);
-                        __instance.__4__this.BackgroundBar.material.color = role.Color;
+                        // __instance.__4__this.BackgroundBar.material.color = role.Color;
                         //                        TestScale = Mathf.Max(__instance.__this.Title.scale, TestScale);
                         //                        __instance.__this.Title.scale = TestScale / role.Scale;
                     }
@@ -533,7 +533,7 @@ namespace TownOfUs.Roles
                         __instance.__4__this.YouAreText.color = role.Color;
                         __instance.__4__this.RoleBlurbText.color = role.Color;
                         __instance.__4__this.RoleBlurbText.text = role.ImpostorText();
-                        __instance.__4__this.BackgroundBar.material.color = role.Color;
+                        // __instance.__4__this.BackgroundBar.material.color = role.Color;
                     }
 
                     if (ModifierText != null)

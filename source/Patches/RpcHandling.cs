@@ -36,6 +36,7 @@ using TownOfUs.NeutralRoles.VampireMod;
 using TownOfUs.CrewmateRoles.MayorMod;
 using System.Reflection;
 using TownOfUs.Patches.NeutralRoles;
+using BepInEx.Logging;
 
 namespace TownOfUs
 {
@@ -1455,7 +1456,7 @@ namespace TownOfUs
                         GlobalModifiers.Add((typeof(Radar), CustomGameOptions.RadarOn));
                     #endregion
                     #region Impostor Modifiers
-                    if (Check(CustomGameOptions.DisperserOn) && GameOptionsManager.Instance.currentNormalGameOptions.MapId != 4 && GameOptionsManager.Instance.currentNormalGameOptions.MapId != 5)
+                    if (Check(CustomGameOptions.DisperserOn))
                         ImpostorModifiers.Add((typeof(Disperser), CustomGameOptions.DisperserOn));
 
                     if (Check(CustomGameOptions.DoubleShotOn))
