@@ -73,6 +73,10 @@ namespace TownOfUs.CrewmateRoles.HaunterMod
                 WillBeHaunter.gameObject.layer = LayerMask.NameToLayer("Players");
             }
 
+            WillBeHaunter.gameObject.GetComponent<PassiveButton>().OnClick = new UnityEngine.UI.Button.ButtonClickedEvent();
+            WillBeHaunter.gameObject.GetComponent<PassiveButton>().OnClick.AddListener((Action)(() => WillBeHaunter.OnClick()));
+            WillBeHaunter.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+
             if (PlayerControl.LocalPlayer != WillBeHaunter) return;
 
             if (Role.GetRole<Haunter>(PlayerControl.LocalPlayer).Caught) return;

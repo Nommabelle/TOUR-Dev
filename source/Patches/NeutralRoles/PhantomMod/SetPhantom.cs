@@ -66,6 +66,10 @@ namespace TownOfUs.NeutralRoles.PhantomMod
                 WillBePhantom.gameObject.layer = LayerMask.NameToLayer("Players");
             }
 
+            WillBePhantom.gameObject.GetComponent<PassiveButton>().OnClick = new UnityEngine.UI.Button.ButtonClickedEvent();
+            WillBePhantom.gameObject.GetComponent<PassiveButton>().OnClick.AddListener((Action)(() => WillBePhantom.OnClick()));
+            WillBePhantom.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+
             if (PlayerControl.LocalPlayer != WillBePhantom) return;
 
             if (Role.GetRole<Phantom>(PlayerControl.LocalPlayer).Caught) return;
