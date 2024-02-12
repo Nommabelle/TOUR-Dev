@@ -26,6 +26,9 @@ using TownOfUs.CrewmateRoles.ImitatorMod;
 using TownOfUs.CrewmateRoles.AurialMod;
 using Reactor.Networking;
 using Reactor.Networking.Extensions;
+using BepInEx.Unity.IL2CPP.Utils.Collections;
+using Il2CppInterop.Runtime;
+using MonoMod.Utils;
 
 namespace TownOfUs
 {
@@ -586,6 +589,12 @@ namespace TownOfUs
                 }
                 else killer.MyPhysics.StartCoroutine(killer.KillAnimations.Random().CoPerformKill(target, target));
 
+                if (!CustomGameOptions.GhostsDoTasks && PlayerControl.LocalPlayer == target)
+                {
+                    //RemoveTasks(PlayerControl.LocalPlayer, true);
+                    InvisCompleteTask(PlayerControl.LocalPlayer);
+                }
+
                 if (target.Is(ModifierEnum.Frosty))
                 {
                     var frosty = Modifier.GetModifier<Frosty>(target);
@@ -963,6 +972,26 @@ namespace TownOfUs
                 }
         }
 
+        public static void InvisCompleteTask(PlayerControl player)
+        {
+            foreach (var task in player.myTasks)
+            {
+                if (task.TryCast<NormalPlayerTask>() != null)
+                {
+                    var normalPlayerTask = task.Cast<NormalPlayerTask>();
+                    normalPlayerTask.Complete();
+
+                    
+                    //var pred = new Il2CppSystem.Predicate<GameData.TaskInfo>();
+                    var predd = delegate(GameData.TaskInfo x ) { return x.Id == task.Id; };
+                    var pred = predd.CastDelegate<Il2CppSystem.Predicate<GameData.TaskInfo>>();
+                    player.Data.Tasks.RemoveAll(pred);
+                    //var newList = ((List<GameData.TaskInfo>)player.Data.Tasks.TryCast(typeof(List<GameData.TaskInfo>)));
+                    //newList.RemoveAll(x=>x.Id == task.Id);
+                    //player.Data.Tasks = 
+                }
+            }
+        }
         public static void DestroyAll(this IEnumerable<Component> listie)
         {
             foreach (var item in listie)
