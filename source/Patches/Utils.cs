@@ -972,6 +972,10 @@ namespace TownOfUs
                 }
         }
 
+        /// <summary>
+        /// COME BACK TO
+        /// </summary>
+        /// <param name="player"></param>
         public static void InvisCompleteTask(PlayerControl player)
         {
             foreach (var task in player.myTasks)
@@ -983,9 +987,11 @@ namespace TownOfUs
 
                     
                     //var pred = new Il2CppSystem.Predicate<GameData.TaskInfo>();
-                    var predd = delegate(GameData.TaskInfo x ) { return x.Id == task.Id; };
-                    var pred = predd.CastDelegate<Il2CppSystem.Predicate<GameData.TaskInfo>>();
-                    player.Data.Tasks.RemoveAll(pred);
+                    
+                    //var predd = delegate(GameData.TaskInfo x ) { return x.Id == task.Id; };
+                    //var pred = predd.CastDelegate<Il2CppSystem.Predicate<GameData.TaskInfo>>();
+                    //player.Data.Tasks.RemoveAll(pred);
+                    
                     //var newList = ((List<GameData.TaskInfo>)player.Data.Tasks.TryCast(typeof(List<GameData.TaskInfo>)));
                     //newList.RemoveAll(x=>x.Id == task.Id);
                     //player.Data.Tasks = 

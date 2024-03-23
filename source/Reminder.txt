@@ -1,0 +1,16 @@
+﻿Auto complete tasks needs to be fixed, for ghosts
+
+todo:
+https://github.com/eDonnes124/Town-Of-Us-R/pull/208
+https://github.com/eDonnes124/Town-Of-Us-R/pull/207
+
+maybe:
+https://github.com/eDonnes124/Town-Of-Us-R/pull/206
+https://github.com/eDonnes124/Town-Of-Us-R/pull/204
+https://github.com/eDonnes124/Town-Of-Us-R/pull/199
+https://github.com/eDonnes124/Town-Of-Us-R/pull/200
+
+done:
+https://github.com/eDonnes124/Town-Of-Us-R/pull/216
+https://github.com/eDonnes124/Town-Of-Us-R/pull/212
+https://github.com/eDonnes124/Town-Of-Us-R/pull/211
