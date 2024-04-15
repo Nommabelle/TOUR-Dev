@@ -108,7 +108,7 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <ul> <li>Compatibility with the new Among Us version v2024.3.5</li> </ul>
   <ul> <li>Added ghosts ignore tasks option</li> </ul>
   <ul> <li>Hide vanilla roles in hudstring and its tab, courtesy of @whichtwix</li> </ul>
-  <ul> <li>Vampire Remains Vampire When Remembered, courtesy of @Loonie-Toons</li> </ul>
+  <ul> <li>Vampire Remains Vampire When Remembered, courtesy of @Loons-Loons</li> </ul>
   <ul> <li>Hats system standardised to Unity Addressables</li> </ul>
   <ul> <li>New Role: Hunter, courtesy of @fariparedes</li> </ul>
   </details>
@@ -945,6 +945,23 @@ However, this is done so in a random order, not stating who entered the trap, no
 | Maximum Number of Traps Per Game | The number of traps they can place in a game | Number | 5 |
 | Trap Size | The size of each trap | Factor | 0.25x |
 | Minimum Number of Roles required to Trigger Trap | The number of players that must enter the trap for it to be triggered | Number | 3 |
+
+-----------------------
+## Hunter
+### **Team: Crewmates**
+
+The Hunter is a Crewmate Killing role with the ability to track players and execute them if they do anything suspicious.\ 
+Unlike the Sheriff, the Hunter does not die if they kill an innocent player,\
+however the Hunter may only execute players who have given them probable cause.\
+### Game Options
+| Name | Description | Type | Default |
+|----------|:-------------:|:------:|:------:|
+| Hunter | The percentage probability of the Hunter appearing | Percentage | 0% |
+| Hunter Kill Cooldown | The cooldown of the Hunter's Kill button | Number | 25 |
+| Hunter Stalk Cooldown | The cooldown of the Hunter's Stalk button | Number | 10 |
+| Hunter Stalk Duration | The duration of the Hunter's Stalk | Number | 25 |
+| Maximum Stalk Uses | Maximum number of times a Hunter can Stalk | Number | 5 |
+| Hunter Can Report Who They've Killed |  Whether the Hunter is able to report their own kills | Toggle | True |
 
 -----------------------
 ## Sheriff
