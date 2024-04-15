@@ -33,9 +33,7 @@ namespace TownOfUs
         public const string Id = "com.slushiegoose.townofus";
         public const string VersionString = "5.0.4";
         public static System.Version Version = System.Version.Parse(VersionString);
-        public const string VersionTag = "<color=#ff33fc>s - DEV 3 - BETA Hats</color>";
-        public const string ComVer = "";
-        //public const string ComVer = "";
+        public const string VersionTag = "<color=#ff33fc>dev5 (BETA Hats)</color>";
 
         public static AssetLoader bundledAssets;
 
@@ -101,6 +99,7 @@ namespace TownOfUs
         public static Sprite HackSprite;
         public static Sprite MimicSprite;
         public static Sprite LockSprite;
+        public static Sprite StalkSprite;
 
         public static Sprite SettingsButtonSprite;
         public static Sprite CrewSettingsButtonSprite;
@@ -199,6 +198,7 @@ namespace TownOfUs
             HackSprite = CreateSprite("TownOfUs.Resources.Hack.png");
             MimicSprite = CreateSprite("TownOfUs.Resources.Mimic.png");
             LockSprite = CreateSprite("TownOfUs.Resources.Lock.png");
+            StalkSprite = CreateSprite("TownOfUs.Resources.Stalk.png");
 
             SettingsButtonSprite = CreateSprite("TownOfUs.Resources.SettingsButton.png");
             CrewSettingsButtonSprite = CreateSprite("TownOfUs.Resources.Crewmate.png");

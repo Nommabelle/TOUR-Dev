@@ -372,6 +372,16 @@ namespace TownOfUs
                 abilityUsed = true;
                 fullCooldownReset = true;
             }
+
+            if (abilityUsed)
+            {
+                foreach (Role role in Role.GetRoles(RoleEnum.Hunter))
+                {
+                    Hunter hunter = (Hunter)role;
+                    hunter.CatchPlayer(player);
+                }
+            }
+
             var reset = new List<bool>();
             reset.Add(fullCooldownReset);
             reset.Add(gaReset);
@@ -519,6 +529,19 @@ namespace TownOfUs
                     else if (killer != target) veteran.IncorrectKills += 1;
                 }
 
+                if (killer.Is(RoleEnum.Hunter))
+                {
+                    var hunter = Role.GetRole<Hunter>(killer);
+                    if (target.Is(RoleEnum.Doomsayer) || target.Is(Faction.Impostors) || target.Is(Faction.NeutralKilling))
+                    {
+                        hunter.CorrectKills += 1;
+                    }
+                    else
+                    {
+                        hunter.IncorrectKills += 1;
+                    }
+                }
+
                 target.gameObject.layer = LayerMask.NameToLayer("Ghost");
                 target.Visible = false;
 
@@ -531,6 +554,16 @@ namespace TownOfUs
                 {
                     var detective = Role.GetRole<Detective>(PlayerControl.LocalPlayer);
                     detective.LastKiller = killer;
+                }
+
+                // For Host
+                if (!CustomGameOptions.GhostsDoTasks)
+                {
+                    for (var i = 0; i < target.myTasks.Count; i++)
+                    {
+                        var playerTask = target.myTasks.ToArray()[i];
+                        GameData.Instance.CompleteTask(target, playerTask.Id);
+                    }
                 }
 
                 if (target.AmOwner)
@@ -559,11 +592,13 @@ namespace TownOfUs
                     target.RpcSetScanner(false);
                     var importantTextTask = new GameObject("_Player").AddComponent<ImportantTextTask>();
                     importantTextTask.transform.SetParent(AmongUsClient.Instance.transform, false);
-                    if (!GameOptionsManager.Instance.currentNormalGameOptions.GhostsDoTasks)
+                    if (!CustomGameOptions.GhostsDoTasks)
                     {
                         for (var i = 0; i < target.myTasks.Count; i++)
                         {
                             var playerTask = target.myTasks.ToArray()[i];
+                            GameData.Instance.CompleteTask(target, playerTask.Id);
+                            playerTask.Complete();
                             playerTask.OnRemove();
                             Object.Destroy(playerTask.gameObject);
                         }
@@ -588,12 +623,6 @@ namespace TownOfUs
                     killer.MyPhysics.StartCoroutine(killer.KillAnimations.Random().CoPerformKill(killer, target));
                 }
                 else killer.MyPhysics.StartCoroutine(killer.KillAnimations.Random().CoPerformKill(target, target));
-
-                if (!CustomGameOptions.GhostsDoTasks && PlayerControl.LocalPlayer == target)
-                {
-                    //RemoveTasks(PlayerControl.LocalPlayer, true);
-                    InvisCompleteTask(PlayerControl.LocalPlayer);
-                }
 
                 if (target.Is(ModifierEnum.Frosty))
                 {
@@ -972,32 +1001,6 @@ namespace TownOfUs
                 }
         }
 
-        /// <summary>
-        /// COME BACK TO
-        /// </summary>
-        /// <param name="player"></param>
-        public static void InvisCompleteTask(PlayerControl player)
-        {
-            foreach (var task in player.myTasks)
-            {
-                if (task.TryCast<NormalPlayerTask>() != null)
-                {
-                    var normalPlayerTask = task.Cast<NormalPlayerTask>();
-                    normalPlayerTask.Complete();
-
-                    
-                    //var pred = new Il2CppSystem.Predicate<GameData.TaskInfo>();
-                    
-                    //var predd = delegate(GameData.TaskInfo x ) { return x.Id == task.Id; };
-                    //var pred = predd.CastDelegate<Il2CppSystem.Predicate<GameData.TaskInfo>>();
-                    //player.Data.Tasks.RemoveAll(pred);
-                    
-                    //var newList = ((List<GameData.TaskInfo>)player.Data.Tasks.TryCast(typeof(List<GameData.TaskInfo>)));
-                    //newList.RemoveAll(x=>x.Id == task.Id);
-                    //player.Data.Tasks = 
-                }
-            }
-        }
         public static void DestroyAll(this IEnumerable<Component> listie)
         {
             foreach (var item in listie)
@@ -1166,6 +1169,11 @@ namespace TownOfUs
             {
                 var sheriff = Role.GetRole<Sheriff>(PlayerControl.LocalPlayer);
                 sheriff.LastKilled = DateTime.UtcNow;
+            }
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Hunter))
+            {
+                var hunter = Role.GetRole<Hunter>(PlayerControl.LocalPlayer);
+                hunter.LastKilled = DateTime.UtcNow;
             }
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Tracker))
             {

@@ -14,25 +14,29 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 | [Escapist](#escapist)        | [Detective](#detective)            | [Doomsayer](#doomsayer)          | [Button Barry](#button-barry)|
 | [Grenadier](#grenadier)      | [Engineer](#engineer)              | [Executioner](#executioner)      | [Diseased](#diseased)       |
 | [Janitor](#janitor)          | [Haunter](#haunter)                | [Guardian Angel](#guardian-angel)| [Disperser](#disperser)     |
-| [Miner](#miner)              | [Imitator](#imitator)              | [Jester](#jester)                | [Double Shot](#double-shot) |
-| [Morphling](#morphling)      | [Investigator](#investigator)      | [Juggernaut](#juggernaut)        | [Flash](#flash)             |
-| [Swooper](#swooper)          | [Mayor](#mayor)                    | [Phantom](#phantom)              | [Frosty](#frosty)           |
-| [Traitor](#traitor)          | [Medic](#medic)                    | [Plaguebearer](#plaguebearer)    | [Giant](#giant)             |
-| [Undertaker](#undertaker)    | [Medium](#medium)                  | [Survivor](#survivor)            | [Lovers](#lovers)           |
-| [Venerer](#venerer)          | [Mystic](#mystic)                  | [The Glitch](#the-glitch)        | [Multitasker](#multitasker)|
-| [Warlock](#warlock)          | [Oracle](#oracle)                  | [Vampire](#vampire)              | [Radar](#radar)             |
-|                             | [Prosecutor](#prosecutor)          | [Werewolf](#werewolf)            | [Sleuth](#sleuth)           |
-|                             | [Seer](#seer)                      |                                 | [Tiebreaker](#tiebreaker)   |
-|                             | [Sheriff](#sheriff)                |                                 | [Torch](#torch)             |
-|                             | [Snitch](#snitch)                  |                                 | [Underdog](#underdog)       |
+
+
+
+| [Miner](#miner)              | [Hunter](#hunter)                  | [Jester](#jester)                | [Double Shot](#double-shot) |
+| [Morphling](#morphling)      | [Imitator](#imitator)              | [Juggernaut](#juggernaut)        | [Flash](#flash)             |
+| [Swooper](#swooper)          | [Investigator](#investigator)      | [Phantom](#phantom)              | [Frosty](#frosty)           |
+| [Traitor](#traitor)          | [Mayor](#mayor)                    | [Plaguebearer](#plaguebearer)    | [Giant](#giant)             |
+| [Undertaker](#undertaker)    | [Medic](#medic)                    | [Survivor](#survivor)            | [Lovers](#lovers)           |
+| [Venerer](#venerer)          | [Medium](#medium)                  | [The Glitch](#the-glitch)        | [Multitasker](#multitasker)|
+| [Warlock](#warlock)          | [Mystic](#mystic)                  | [Vampire](#vampire)              | [Radar](#radar)             |
+|                             | [Oracle](#oracle)                  | [Werewolf](#werewolf)            | [Sleuth](#sleuth)           |
+|                             | [Prosecutor](#prosecutor)          |                                 | [Tiebreaker](#tiebreaker)   |
+|                             | [Seer](#seer)                      |                                 | [Torch](#torch)             |
+|                             | [Sheriff](#sheriff)                |                                 | [Underdog](#underdog)       |
+|                             | [Snitch](#snitch)                  |                                 |                             |
 |                             | [Spy](#spy)                        |                                 |                             |
+|                             | [Swapper](#swapper)                |                                 |                             |
 |                             | [Tracker](#tracker)                |                                 |                             |
 |                             | [Trapper](#trapper)                |                                 |                             |
 |                             | [Transporter](#transporter)        |                                 |                             |
 |                             | [Vampire Hunter](#vampire-hunter)  |                                 |                             |
 |                             | [Veteran](#veteran)                |                                 |                             |
 |                             | [Vigilante](#vigilante)            |                                 |                             |
-
 -----------------------
 # Releases
 | Among Us - Version| Mod Version | Link |
@@ -99,6 +103,15 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 
 <details>
   <summary> Changelog </summary>
+  <details>
+  <summary> v5.0.4 </summary>
+  <ul> <li>Compatibility with the new Among Us version v2024.3.5</li> </ul>
+  <ul> <li>Added ghosts ignore tasks option</li> </ul>
+  <ul> <li>Hide vanilla roles in hudstring and its tab, courtesy of @whichtwix</li> </ul>
+  <ul> <li>Vampire Remains Vampire When Remembered, courtesy of @Loonie-Toons</li> </ul>
+  <ul> <li>Hats system standardised to Unity Addressables</li> </ul>
+  <ul> <li>New Role: Hunter, courtesy of @fariparedes</li> </ul>
+  </details>
   <details>
   <summary> v5.0.3 </summary>
   <ul> <li>Compatibility with the new Among Us version v2023.11.28</li> </ul>
