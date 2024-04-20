@@ -592,7 +592,7 @@ namespace TownOfUs
                     target.RpcSetScanner(false);
                     var importantTextTask = new GameObject("_Player").AddComponent<ImportantTextTask>();
                     importantTextTask.transform.SetParent(AmongUsClient.Instance.transform, false);
-                    if (!CustomGameOptions.GhostsDoTasks)
+                    if (!CustomGameOptions.GhostsDoTasks && target.myTasks.ToArray().Count(x=>!x.IsComplete)+GameData.Instance.CompletedTasks < GameData.Instance.TotalTasks)
                     {
                         for (var i = 0; i < target.myTasks.Count; i++)
                         {

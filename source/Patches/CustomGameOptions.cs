@@ -381,5 +381,6 @@ namespace TownOfUs
         public static float HunterStalkDuration => Generate.HunterStalkDuration.Get();
         public static int HunterStalkUses => (int)Generate.HunterStalkUses.Get();
         public static bool HunterBodyReport => Generate.HunterBodyReport.Get();
+        public static bool DoomsayerCantObserve => Generate.DoomsayerCantObserve.Get();
     }
 }

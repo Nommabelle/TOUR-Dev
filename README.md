@@ -1268,6 +1268,7 @@ They have an additional observe ability that hints towards certain player's role
 | Doomsayer Guess Impostors  | Whether the Doomsayer can Guess Impostor roles | Toggle | False |
 | Doomsayer Can Guess After Voting  | Whether the Doomsayer can Guess after voting | Toggle | False |
 | Number Of Doomsayer Kills To Win | The amount of kills in order for the Doomsayer to win | Number | 3 |
+| (Experienced) Doomsayer Can't Observe | The Doomsayer doesn't have the observe feature | Toggle | False |
 
 -----------------------
 ## Executioner
