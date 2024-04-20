@@ -33,7 +33,7 @@ namespace TownOfUs
         public const string Id = "com.slushiegoose.townofus";
         public const string VersionString = "5.0.4";
         public static System.Version Version = System.Version.Parse(VersionString);
-        public const string VersionTag = "<color=#ff33fc>dev5 (BETA Hats)</color>";
+        public const string VersionTag = "<color=#ff33fc>- Release Candidate 1</color>";
 
         public static AssetLoader bundledAssets;
 

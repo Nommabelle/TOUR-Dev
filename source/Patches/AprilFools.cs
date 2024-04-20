@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using HarmonyLib;
+using Reactor.Utilities.Extensions;
 using TMPro;
 using UnityEngine;
 
@@ -38,7 +39,7 @@ namespace TownOfUs.Patches
                 aprilfoolstoggle.gameObject.transform.SetParent(GameObject.Find("RightPanel").transform);
                 var pos = aprilfoolstoggle.gameObject.AddComponent<AspectPosition>();
                 pos.Alignment = AspectPosition.EdgeAlignments.LeftBottom;
-                pos.DistanceFromEdge = new Vector3(2.1f, 2f, 0f);
+                pos.DistanceFromEdge = new Vector3(2.1f, 1f, 8f);
 
                 passive.OnClick.AddListener((Action)(() =>
                 {
@@ -55,7 +56,12 @@ namespace TownOfUs.Patches
                     pos.AdjustPosition();
                 })));
 
+                aprilfoolstoggle.transform.GetChild(0).transform.localScale = new Vector3(aprilfoolstoggle.transform.localScale.x + 1, 1f, 1f);
+                aprilfoolstoggle.transform.GetChild(0).transform.localPosition -= new Vector3(1.5f,0f,0f);
+                aprilfoolstoggle.transform.GetChild(1).GetChild(0).GetComponent<SpriteRenderer>().sprite = null;
                 aprilfoolstoggle.transform.GetChild(2).GetChild(0).GetComponent<SpriteRenderer>().sprite = null;
+                aprilfoolstoggle.GetComponent<NewsCountButton>().DestroyImmediate();
+                aprilfoolstoggle.transform.GetChild(3).gameObject.DestroyImmediate();
             }
         }
 
