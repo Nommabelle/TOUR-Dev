@@ -108,7 +108,8 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
   <ul> <li>Compatibility with the new Among Us version v2024.3.5</li> </ul>
   <ul> <li>Added ghosts ignore tasks option</li> </ul>
   <ul> <li>Hide vanilla roles in hudstring and its tab, courtesy of @whichtwix</li> </ul>
-  <ul> <li>Vampire Remains Vampire When Remembered, courtesy of @Loons-Loons</li> </ul>
+  <ul> <li>April fools options, courtesy of @whichtwix</li> </ul>
+  <ul> <li>Vampire Remains Vampire When Remembered, courtesy of @Loons-Loons/@Loonie-Toons</li> </ul>
   <ul> <li>Hats system standardised to Unity Addressables</li> </ul>
   <ul> <li>New Role: Hunter, courtesy of @fariparedes</li> </ul>
   </details>
