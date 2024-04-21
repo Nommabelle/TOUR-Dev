@@ -1,7 +1,4 @@
 ﻿using HarmonyLib;
-using System;
-using static CosmeticsLayer;
-using Il2CppSystem.Collections.Generic;
 
 namespace TownOfUs.Patches;
 

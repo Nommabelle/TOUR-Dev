@@ -36,7 +36,6 @@ using TownOfUs.NeutralRoles.VampireMod;
 using TownOfUs.CrewmateRoles.MayorMod;
 using System.Reflection;
 using TownOfUs.Patches.NeutralRoles;
-using BepInEx.Logging;
 
 namespace TownOfUs
 {

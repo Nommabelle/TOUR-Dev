@@ -36,8 +36,4 @@
 		<EmbeddedResource Include="Resources\*" />
 		<EmbeddedResource Include="Resources\Hats\**" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <None Remove="Resources\Stalk.png" />
-	</ItemGroup>
 </Project>
