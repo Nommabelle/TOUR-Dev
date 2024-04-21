@@ -14,9 +14,6 @@ Join our [Discord](https://discord.gg/ugyc4EVUYZ) if you have any problems or wa
 | [Escapist](#escapist)        | [Detective](#detective)            | [Doomsayer](#doomsayer)          | [Button Barry](#button-barry)|
 | [Grenadier](#grenadier)      | [Engineer](#engineer)              | [Executioner](#executioner)      | [Diseased](#diseased)       |
 | [Janitor](#janitor)          | [Haunter](#haunter)                | [Guardian Angel](#guardian-angel)| [Disperser](#disperser)     |
-
-
-
 | [Miner](#miner)              | [Hunter](#hunter)                  | [Jester](#jester)                | [Double Shot](#double-shot) |
 | [Morphling](#morphling)      | [Imitator](#imitator)              | [Juggernaut](#juggernaut)        | [Flash](#flash)             |
 | [Swooper](#swooper)          | [Investigator](#investigator)      | [Phantom](#phantom)              | [Frosty](#frosty)           |
