@@ -556,13 +556,28 @@ namespace TownOfUs
                     detective.LastKiller = killer;
                 }
 
-                // For Host
                 if (!CustomGameOptions.GhostsDoTasks)
                 {
-                    for (var i = 0; i < target.myTasks.Count; i++)
+                    if (AmongUsClient.Instance.AmHost)
                     {
-                        var playerTask = target.myTasks.ToArray()[i];
-                        GameData.Instance.CompleteTask(target, playerTask.Id);
+                        var modded_criteria = Role.ShipStatus_KMPKPPGPNIH.Prefix((LogicGameFlowNormal)GameManager.Instance.LogicFlow);
+                        if (modded_criteria) GameManager.Instance.LogicFlow.CheckEndCriteria();
+                        if (GameManager.Instance.ShouldCheckForGameEnd && target.myTasks.ToArray().Count(x => !x.IsComplete) + GameData.Instance.CompletedTasks < GameData.Instance.TotalTasks)
+                        {
+                            // Host should only process tasks being removed if the game wouldn't have ended otherwise.
+                            for (var i = 0; i < target.myTasks.Count; i++)
+                            {
+                                var playerTask = target.myTasks.ToArray()[i];
+                                GameData.Instance.CompleteTask(target, playerTask.Id);
+                            }
+                        }
+                    } else
+                    {
+                        for (var i = 0; i < target.myTasks.Count; i++)
+                        {
+                            var playerTask = target.myTasks.ToArray()[i];
+                            GameData.Instance.CompleteTask(target, playerTask.Id);
+                        }
                     }
                 }
 
@@ -592,8 +607,9 @@ namespace TownOfUs
                     target.RpcSetScanner(false);
                     var importantTextTask = new GameObject("_Player").AddComponent<ImportantTextTask>();
                     importantTextTask.transform.SetParent(AmongUsClient.Instance.transform, false);
-                    if (!CustomGameOptions.GhostsDoTasks && target.myTasks.ToArray().Count(x=>!x.IsComplete)+GameData.Instance.CompletedTasks < GameData.Instance.TotalTasks)
+                    if (!CustomGameOptions.GhostsDoTasks)//&& target.myTasks.ToArray().Count(x=>!x.IsComplete)+GameData.Instance.CompletedTasks < GameData.Instance.TotalTasks
                     {
+                        //GameManager.Instance.LogicFlow.CheckEndCriteria();
                         for (var i = 0; i < target.myTasks.Count; i++)
                         {
                             var playerTask = target.myTasks.ToArray()[i];
