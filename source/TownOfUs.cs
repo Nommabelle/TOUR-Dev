@@ -96,6 +96,7 @@ namespace TownOfUs
         public static Sprite CamoSprintSprite;
         public static Sprite CamoSprintFreezeSprite;
         public static Sprite RadiateSprite;
+        public static Sprite GiveUpSprite;
         public static Sprite HackSprite;
         public static Sprite MimicSprite;
         public static Sprite LockSprite;
@@ -195,6 +196,7 @@ namespace TownOfUs
             CamoSprintSprite = CreateSprite("TownOfUs.Resources.CamoSprint.png");
             CamoSprintFreezeSprite = CreateSprite("TownOfUs.Resources.CamoSprintFreeze.png");
             RadiateSprite = CreateSprite("TownOfUs.Resources.Radiate.png");
+            GiveUpSprite = CreateSprite("TownOfUs.Resources.Ignite.png");
             HackSprite = CreateSprite("TownOfUs.Resources.Hack.png");
             MimicSprite = CreateSprite("TownOfUs.Resources.Mimic.png");
             LockSprite = CreateSprite("TownOfUs.Resources.Lock.png");
